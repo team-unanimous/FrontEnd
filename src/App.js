@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Route, Routes } from "react-router-dom";
 
+
 // page import
 import Home from "./pages/Home";
 import MeetMake from "./pages/MeetMake";
