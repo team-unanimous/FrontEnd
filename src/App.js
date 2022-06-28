@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Route,Routes } from 'react-router-dom';
 
