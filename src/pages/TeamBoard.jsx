@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const TeamBoard = () => {
-  return (
-    <div>TeamBoard</div>
-  )
-}
+  return <div>TeamBoard</div>;
+};
 
-export default TeamBoard
+export default TeamBoard;
