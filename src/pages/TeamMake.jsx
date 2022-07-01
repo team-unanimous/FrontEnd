@@ -17,7 +17,7 @@ const TeamMake = () => {
         teamImage : teamImageRef.current.value,
         teamname : teamNameRef.current.value
     }
-    
+
     mutate(data)
 
     return (

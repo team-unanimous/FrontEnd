@@ -12,7 +12,7 @@ const TeamInvited = () => {
 
     const { mutate } = useMutation(findUUID)
     const data = {
-        uuid : uuidRef.current?.value
+        uuid : uuidRef.current.value
     }
 
     mutate(data);
