@@ -6,7 +6,8 @@ import { useRef } from "react";
 const TeamInvited = () => {
     return (
         <>
-            
+            <input type={text} placeholder={"UUID"}></input>
+            <button>팀 찾아보기</button>
         </>
     )
 }

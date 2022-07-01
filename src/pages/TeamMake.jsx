@@ -10,10 +10,14 @@ const TeamMake = () => {
 
     const makeTeam = (teamInfo)=> {
         return apis.postTeam(teamInfo);
-    } 
+    }
 
     const { mutate } = useMutation(makeTeam);
-    
+    const data = {
+        teamImage : teamImageRef,
+        teamname : teamNameRef
+    }
+    mutate(data)
 
     return (
         <>  

@@ -32,6 +32,7 @@ function App() {
         <Route path="/teamboard" element={<TeamBoard />} />
         <Route path="/teamselect" element={<TeamSelect />}/>
         <Route path="/teammake" element={<TeamMake />} />
+        <Route path="/teaminvited" element={<TeamInvited />} />
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>
