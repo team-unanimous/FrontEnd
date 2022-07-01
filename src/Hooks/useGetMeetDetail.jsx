@@ -7,4 +7,5 @@ export const useGetMeetDetail = ()=>{
         return data;
     }
     return useQuery("detail",fetcher);
+    
 }

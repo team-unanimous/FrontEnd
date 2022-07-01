@@ -1,7 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+
 
 const SignupOne = () => {
+
+  const navigate = useNavigate();
+
+
+  // 페이지 이동
+  const movenext = () => {
+    navigate('/signuptwo');
+  }
+
+  const movehome = () => {
+    navigate(`/`);
+  }
+
+
+  // 이용약관 동의 체크
+
+  const [checkOne,setCheckOne] = useState(false);
+  const [checkTwo,setCheckTwo] = useState(false);
+  const [active,setActive] = useState(false);
+
+  const checkone= () => {
+    setCheckOne(!checkOne);
+  }
+
+  const checktwo = () => {
+    setCheckTwo(!checkTwo);
+  }
+
+  useEffect(()=>{
+    if(checkOne==true && checkTwo==true){
+      setActive(true);
+    }
+    else{
+    setActive(false);
+    }
+    console.log("checkone : "+checkOne);
+    console.log("checktwo : "+checkTwo);
+  })
+
   return (
     <StBox>
       <StTitle>
@@ -9,7 +50,7 @@ const SignupOne = () => {
       </StTitle>
       <StContentBox>
         <StCheckOneBox>
-          <StCheckBoxOne type="checkbox"/>
+          <StCheckBoxOne onClick={checkone} type="checkbox"/>
           <StCheckOne>
             개인정보 수집 및 이용 약관을 확인하였으며 위 내용에 동의합니다.
           </StCheckOne>
@@ -18,18 +59,18 @@ const SignupOne = () => {
           </StContent>
         </StCheckOneBox>
         <StCheckTwoBox>
-          <StCheckBoxOne type="checkbox"/>
+          <StCheckBoxOne onClick={checktwo} type="checkbox"/>
           <StCheckTwo>만 14세 이상입니다.</StCheckTwo>
         </StCheckTwoBox>
         <StConfirm>필수 약관에 동의해주세요</StConfirm>
       </StContentBox>
       <StBtBox>
-        <StCancel>
+        <StCancel onClick={movehome}>
           취소
         </StCancel>
-        <StAgree>
+        {active?<StAgree onClick={movenext}>
           동의
-        </StAgree>
+        </StAgree>:<StDisagree>동의</StDisagree>}
       </StBtBox>
     </StBox>
   )
@@ -43,6 +84,18 @@ const StBtBox = styled.div`
   margin : 3.75rem 0 0 0;
 `;
 
+const StDisagree = styled.button`
+  width : 200px;
+  height : 54px;
+  background-color: grey;
+  font-weight: 700;
+  font-size: 20px;
+  color : white;
+  border-radius: 0.375rem;
+  border: 1px solid #000000;
+  cursor: pointer;
+`;
+
 const StAgree = styled.button`
   width : 200px;
   height : 54px;
@@ -52,6 +105,7 @@ const StAgree = styled.button`
   color : white;
   border-radius: 0.375rem;
   border: 1px solid #000000;
+  cursor: pointer;
 `;
 
 const StCancel = styled.button`
@@ -60,6 +114,7 @@ const StCancel = styled.button`
   font-weight: 700;
   font-size: 20px;
   border-radius: 0.375rem;
+  cursor: pointer;
 `;
 
 const StConfirm = styled.div`
@@ -80,6 +135,7 @@ const StContent = styled.button`
   height : 25px;
   border-radius: 5px;
   background-color: white;
+  cursor: pointer;
 `;
 
 const StCheckTwo = styled.div`
