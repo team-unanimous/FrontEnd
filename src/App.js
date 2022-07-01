@@ -7,11 +7,13 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import MeetMake from "./pages/MeetMake";
 import MeetDetail from "./pages/MeetDetail";
+import TeamSelect from "./pages/TeamSelect";
 import TeamBoard from "./pages/TeamBoard";
 import Login from "./pages/Login";
 import SignUpOne from "./pages/SignupOne";
 import SignUpTwo from "./pages/SignUpTwo";
 import SignUpThree from "./pages/SignUpThree";
+import TeamMake from "./pages/TeamMake";
 
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ function App() {
         <Route path="/meetmake" element={<MeetMake />} />
         <Route path="/meetdetail" element={<MeetDetail />} />
         <Route path="/teamboard" element={<TeamBoard />} />
+        <Route path="/teamselect" element={<TeamSelect />}/>
+        <Route path="/teammake" element={<TeamMake />} />
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>
