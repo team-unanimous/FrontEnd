@@ -4,8 +4,8 @@ const apis = {
     getTeamMain : ()=>api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
     postMeetRoom : ()=>api.post(`/api/teams/${teamId}/meetings`), // 미팅룸 만들기
     getMeetDetail : ()=>api.get(`/api/teams/${teamsId}/meetings/${meetingId}`), // 미팅룸 상세조회
-    postInviteTeam : ()=>api.get(`/api/teams/auth-code`), //초대받은 팀 찾기
-    postTeam : ()=>api.post(`/api/teams`), // 팀만들기
+    postInviteTeam : (data)=>api.get(`/api/teams/auth-code`, data), //초대받은 팀 찾기
+    postTeam : (data)=>api.post(`/api/teams`, data), // 팀만들기
     getTeam : ()=>api.get(`/api/teams`), // 팀선택페이지
     postLogin : (data)=>api.post(`/api/users/login`,data), // 로그인
     //kakao
