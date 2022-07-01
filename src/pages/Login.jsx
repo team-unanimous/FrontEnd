@@ -1,11 +1,12 @@
-import React from 'react'
+import React,{ useEffect }  from 'react'
 import styled from 'styled-components';
 import apis from '../api/main';
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react';
 import { useMutation } from 'react-query';
 import { setCookie } from '../Cookie';
-
+import GoogleLogin from 'react-google-login';
+import api from '../api/core';
 
 const Login = () => {
 
@@ -32,7 +33,6 @@ const { mutate } = useMutation(login,{
     }
   })
 
-
 const loginFunction = () =>{
   console.log(email.current.value);
   mutate({
@@ -42,8 +42,16 @@ const loginFunction = () =>{
 }
 
   const movesign = () =>{
-    navigate('/signuptwo');
+    navigate('/signupone');
   }
+
+  //로그인 성공했을 떄 처리 함수 
+
+  const responseGoogle = (response) => {
+    console.log(response);
+    setCookie("user_id",response.googleId);
+  }
+
 
   return (
     <StSignUp>
@@ -63,9 +71,15 @@ const loginFunction = () =>{
           비밀번호 찾기
         </StPwFind>
       </StButtonBox>
-      <StKakaoButton>
-        kakao 계정으로 로그인
-      </StKakaoButton>
+      <GoogleLogin
+        clientId='661918598129-vovfo203fkp7oq8avn3ak7sj24f9bu9k.apps.googleusercontent.com'
+        buttonText="Google Login"
+        response_type="token"
+        redirectUri='http://localhost:3000'
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+        />
     </StBox>
     </StSignUp>
   )

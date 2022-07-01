@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useRef } from 'react'
 import { useMutation,useQueryClient } from 'react-query'
@@ -10,16 +10,52 @@ import api from '../api/core'
 const SignUpTwo = () => {
   const navigate = useNavigate();
 
+  const reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
   const email = useRef(null);
-  const password = useRef(null);
+  const [password,setPassword] = useState(null);
   const passwordCheck = useRef(null);
+
+  const [active,setActive] = useState(false);
+
+  const [checkOne,setCheckOne] = useState(false);
+  const [checkTwo,setCheckTwo] = useState(false);
+
+
+  
+
+  // 이메일 코드 전송
+
+  const [warnning,setWarnning] = useState(false);
+
+  const formCheck = () =>{
+    if(reg_email.test(email.current.value)){
+      setWarnning(false);
+      alert("코드전송 완료")
+      setCheckOne(true);
+    }
+    else{
+      setWarnning(true);
+    }
+  }
+
+
+  //비밀번호 받기
+
+  const passwording = (event) =>{
+    
+  }
+
+  
+
+  // 회원가입 버튼시 포스트
 
   const signUp = async (data) => {
     const datas = await apis.postSignUp(data);
     return datas;
-}
+  }
 
-const { mutate } = useMutation(signUp,{
+  const { mutate } = useMutation(signUp,{
     onSuccess : () => {
         navigate('/login'); 
         alert("가입 완료")
@@ -29,33 +65,13 @@ const { mutate } = useMutation(signUp,{
     }
   })
 
-const signUpFunction = () =>{
-  console.log(email.current.value);
-  mutate({
-    username : email.current.value,
-    password : password.current.value,
-    passwordCheck : passwordCheck.current.value
-   })
-}
-
-//   const signUpQuery = () => {
-
-//     const queryClient = useQueryClient();
-
-//   return useMutation(signUp, {
-//     onSuccess : () => {
-//         queryClient.invalidateQueries("signs")  // 바로 invalidate -> 데이터가 새로 불러와짐
-//         alert("가입 완료")
-//     },
-//     onError : () => {
-//         alert("가입 불가")
-//     },
-//     onSettled : () => {
-//         alert("가입이 완료!")
-//     }
-//   })
-// }
-
+  const signUpFunction = () =>{
+    mutate({
+      username : email.current.value,
+      password : password.current.value,
+      passwordCheck : passwordCheck.current.value
+    })
+  }
 
   return (
     <StBox>
@@ -66,13 +82,13 @@ const signUpFunction = () =>{
             <StEmailTitle>이메일</StEmailTitle>
             <StEmailInputBox>
               <StEmailInput ref={email} placeholder='이메일 입력'/>
-              <StEmailButton>
+              <StEmailButton onClick={formCheck}>
                 코드 전송
               </StEmailButton>
             </StEmailInputBox>
-            <StEmailWarnning>
+            {warnning?<StEmailWarnning>
               이메일 형식에 맞게 입력해주세요
-            </StEmailWarnning>
+            </StEmailWarnning>:<StNotWarnning></StNotWarnning>}
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>회원가입 코드</StEmailTitle>
@@ -89,7 +105,7 @@ const signUpFunction = () =>{
           <StEmailBox>
             <StEmailTitle>비밀번호</StEmailTitle>
             <StEmailInputBox>
-              <StPwInput ref={password} placeholder='비밀번호 입력'/>
+              <StPwInput onChange={passwording} placeholder='비밀번호 입력'/>
             </StEmailInputBox>
             <StEmailWarnning>
               영문자 및 숫자 조합, 8~12자
@@ -147,6 +163,9 @@ const StBtBox = styled.div`
   margin : 3.75rem 0 0 0;
 `;
 
+const StNotWarnning = styled.div`
+  height : 19px;
+`;
 
 const StEmailWarnning = styled.div`
   height : 19px;

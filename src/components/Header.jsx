@@ -7,8 +7,8 @@ const Header = () => {
         <StLogo>
             Unanimous
         </StLogo>
-        <StSelect>
-            <option value="" disabled selected>팀이름</option>
+        <StSelect name='team'>
+            <option value="" defaultValue={""}>팀이름</option>
             <option value="boong">붕어빵</option>
             <option value="tako">타코야키</option>
             <option value="ddang">땅콩과자</option>

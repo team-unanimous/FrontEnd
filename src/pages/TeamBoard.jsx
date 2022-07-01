@@ -7,10 +7,11 @@ import MeetingRight from '../components/MeetingRight';
 import RecentMeet from '../components/RecentMeet';
 import TeamUser from '../components/TeamUser';
 import TodayMeet from '../components/TodayMeet';
+import useGetTeamMain from '../Hooks/useGetTeamMain'
 
 const TeamBoard = () => {
 
-
+  const {data} = useGetTeamMain();
 
   return  (
           <StBox>
@@ -63,7 +64,6 @@ const TeamBoard = () => {
                     <StRightButton>
                       &#187;
                     </StRightButton>
-
                     <LastMeeting/>
                     <LastMeeting/>
                     <LastMeeting/>
@@ -72,7 +72,6 @@ const TeamBoard = () => {
                 </StLastMeetBox>
                 <StMeetings>
                   <StMeetingInnerBox>
-
                     <StMeetingLeftBox>
                       진행중인 회의
                       <StMeetingLeft>
@@ -81,7 +80,6 @@ const TeamBoard = () => {
                         <MeetingLeft/>
                       </StMeetingLeft>
                     </StMeetingLeftBox>
-                      
                     <StMeetingRightBox>
                       예정된 회의
                       <StMeetingRight>
@@ -90,7 +88,6 @@ const TeamBoard = () => {
                         <MeetingRight/>
                       </StMeetingRight>
                     </StMeetingRightBox>
-
                   </StMeetingInnerBox>
                 </StMeetings>
               </StRight>
