@@ -20,6 +20,7 @@ const StOpenButton = styled.button`
     height : 25px;
     border: 1px solid #000000;
     border-radius: 5px;
+    cursor: pointer;
 `;
 
 const StBox = styled.div`

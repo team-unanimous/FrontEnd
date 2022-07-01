@@ -36,6 +36,7 @@ const StButton = styled.button`
     border-radius: 5px;
     color : white;
     background-color: black;
+    cursor: pointer;
 `;
 
 const StCount = styled.div`
