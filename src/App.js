@@ -14,10 +14,11 @@ import SignUpOne from "./pages/SignupOne";
 import SignUpTwo from "./pages/SignUpTwo";
 import SignUpThree from "./pages/SignUpThree";
 import TeamMake from "./pages/TeamMake";
+import TeamInvited from "./pages/TeamInvited";
 
 
 const queryClient = new QueryClient();
-
+TeamInvited
 function App() {
   return (
     <QueryClientProvider client={queryClient}>

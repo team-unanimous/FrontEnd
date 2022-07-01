@@ -12,14 +12,14 @@ const TeamInvited = () => {
 
     const { mutate } = useMutation(findUUID)
     const data = {
-        uuid : uuidRef.current.value
+        uuid : uuidRef.current?.value
     }
 
     mutate(data);
-    
+
     return (
         <>
-            <input type={text} placeholder={"UUID"} ref={uuidRef}></input>
+            <input type={"text"} placeholder={"UUID"} ref={uuidRef}></input>
             <button>팀 찾아보기</button>
 
         </>
