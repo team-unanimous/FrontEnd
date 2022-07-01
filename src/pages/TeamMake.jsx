@@ -14,9 +14,10 @@ const TeamMake = () => {
 
     const { mutate } = useMutation(makeTeam);
     const data = {
-        teamImage : teamImageRef,
-        teamname : teamNameRef
+        teamImage : teamImageRef.current.value,
+        teamname : teamNameRef.current.value
     }
+    
     mutate(data)
 
     return (
