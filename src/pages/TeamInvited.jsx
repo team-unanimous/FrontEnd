@@ -11,16 +11,20 @@ const TeamInvited = () => {
     }
 
     const { mutate } = useMutation(findUUID)
-    const data = {
-        uuid : uuidRef.current.value
-    }
 
-    mutate(data);
+    const teamFindHandler = ()=>{
+        const data = {
+            uuid : uuidRef.current.value
+        }
+        console.log(data);
+        mutate(data);
+    }
+    
 
     return (
         <>
             <input type={"text"} placeholder={"UUID"} ref={uuidRef}></input>
-            <button>팀 찾아보기</button>
+            <button onClick={teamFindHandler}>팀 찾아보기</button>
 
         </>
     )
