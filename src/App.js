@@ -15,6 +15,7 @@ import SignUpTwo from "./pages/SignUpTwo";
 import SignUpThree from "./pages/SignUpThree";
 import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
+import TeamJoin from "./pages/TeamJoin";
 
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ function App() {
         <Route path="/teamselect" element={<TeamSelect />}/>
         <Route path="/teammake" element={<TeamMake />} />
         <Route path="/teaminvited" element={<TeamInvited />} />
+        <Route path="/teamjoin" element={<TeamJoin />} />
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>
