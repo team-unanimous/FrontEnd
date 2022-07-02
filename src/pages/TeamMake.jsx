@@ -10,9 +10,18 @@ const TeamMake = () => {
 
     const makeTeam = (teamInfo)=> {
         return apis.postTeam(teamInfo);
-    } 
+    }
 
     const { mutate } = useMutation(makeTeam);
+    
+    const teamMakeHandler = ()=>{
+        const data = {
+            teamImage : teamImageRef.current.value,
+            teamname : teamNameRef.current.value
+        }
+        console.log(data);
+        mutate(data)
+    }
     
 
     return (
@@ -21,7 +30,7 @@ const TeamMake = () => {
             <img src="" ref={teamImageRef}></img>
             <input type={"text"} placeholder={"팀이름"} ref={teamNameRef}></input>
             <button onClick={()=>navigate('/')}> 초대 받은 팀에 들어가기 </button>
-            <button onClick={()=>navigate('/')}> 팀 만들기 </button>
+            <button onClick={teamMakeHandler}> 팀 만들기 </button>
             <a href=""> skip하고 빠르게 둘러보기 </a>
         </>
     )
