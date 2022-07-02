@@ -13,18 +13,18 @@ const SignupOne = () => {
     navigate('/signuptwo');
   }
 
-  const movehome = () => {
-    navigate(`/`);
+  const movelogin = () => {
+    navigate('/login');
   }
 
 
   // 이용약관 동의 체크
 
-  const [checkOne,setCheckOne] = useState(false);
-  const [checkTwo,setCheckTwo] = useState(false);
-  const [active,setActive] = useState(false);
+  const [checkOne, setCheckOne] = useState(false);
+  const [checkTwo, setCheckTwo] = useState(false);
+  const [active, setActive] = useState(false);
 
-  const checkone= () => {
+  const checkone = () => {
     setCheckOne(!checkOne);
   }
 
@@ -32,15 +32,15 @@ const SignupOne = () => {
     setCheckTwo(!checkTwo);
   }
 
-  useEffect(()=>{
-    if(checkOne==true && checkTwo==true){
+  useEffect(() => {
+    if (checkOne == true && checkTwo == true) {
       setActive(true);
     }
-    else{
-    setActive(false);
+    else {
+      setActive(false);
     }
-    console.log("checkone : "+checkOne);
-    console.log("checktwo : "+checkTwo);
+    console.log("checkone : " + checkOne);
+    console.log("checktwo : " + checkTwo);
   })
 
   return (
@@ -50,7 +50,7 @@ const SignupOne = () => {
       </StTitle>
       <StContentBox>
         <StCheckOneBox>
-          <StCheckBoxOne onClick={checkone} type="checkbox"/>
+          <StCheckBoxOne onClick={checkone} type="checkbox" />
           <StCheckOne>
             개인정보 수집 및 이용 약관을 확인하였으며 위 내용에 동의합니다.
           </StCheckOne>
@@ -59,18 +59,18 @@ const SignupOne = () => {
           </StContent>
         </StCheckOneBox>
         <StCheckTwoBox>
-          <StCheckBoxOne onClick={checktwo} type="checkbox"/>
+          <StCheckBoxOne onClick={checktwo} type="checkbox" />
           <StCheckTwo>만 14세 이상입니다.</StCheckTwo>
         </StCheckTwoBox>
         <StConfirm>필수 약관에 동의해주세요</StConfirm>
       </StContentBox>
       <StBtBox>
-        <StCancel onClick={movehome}>
+        <StCancel onClick={movelogin}>
           취소
         </StCancel>
-        {active?<StAgree onClick={movenext}>
+        {active ? <StAgree onClick={movenext}>
           동의
-        </StAgree>:<StDisagree>동의</StDisagree>}
+        </StAgree> : <StDisagree>동의</StDisagree>}
       </StBtBox>
     </StBox>
   )

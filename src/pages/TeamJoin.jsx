@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import apis from "../api/main";
 import { useRef } from "react";
 
-const TeamInvited = () => {
+const TeamJoin = () => {
     const uuidRef = useRef()
 
     const findUUID = (UUIDInfo)=> {
@@ -12,7 +12,7 @@ const TeamInvited = () => {
 
     const { mutate } = useMutation(findUUID)
 
-    const teamFindHandler = ()=>{
+    const teamJoinHandler = ()=>{
         const data = {
             uuid : uuidRef.current.value
         }
@@ -20,14 +20,13 @@ const TeamInvited = () => {
         mutate(data);
     }
     
-
     return (
         <>
             <input type={"text"} placeholder={"UUID"} ref={uuidRef}></input>
-            <button onClick={teamFindHandler}>팀 찾아보기</button>
+            <button onClick={teamJoinHandler}>팀 찾아보기</button>
 
         </>
     )
 }
 
-export default TeamInvited;
+export default TeamJoin;
