@@ -1,4 +1,4 @@
-import React,{ useEffect }  from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import apis from '../api/main';
 import { useNavigate } from 'react-router-dom'
@@ -12,6 +12,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  // ref안에 null넣는이유 
   const email = useRef(null);
   const password = useRef(null);
 
@@ -19,29 +20,29 @@ const Login = () => {
     const datas = await apis.postLogin(data);
     console.log(datas);
     const accessToken = datas.headers.authorization;
-    setCookie("token",accessToken);
+    setCookie("token", accessToken);
     return datas;
-}
+  }
 
-const { mutate } = useMutation(login,{
-    onSuccess : () => {
-        navigate('/login');  
-        alert("로그인 완료")
+  const { mutate } = useMutation(login, {
+    onSuccess: () => {
+      navigate('/');
+      alert("로그인 완료")
     },
-    onError : (error) => {
-        alert("로그인 불가")
+    onError: (error) => {
+      alert("로그인 불가")
     }
   })
 
-const loginFunction = () =>{
-  console.log(email.current.value);
-  mutate({
-    username : email.current.value,
-    password : password.current.value,
-   })
-}
+  const loginFunction = () => {
+    console.log(email.current.value);
+    mutate({
+      username: email.current.value,
+      password: password.current.value,
+    })
+  }
 
-  const movesign = () =>{
+  const movesign = () => {
     navigate('/signupone');
   }
 
@@ -49,38 +50,38 @@ const loginFunction = () =>{
 
   const responseGoogle = (response) => {
     console.log(response);
-    setCookie("user_id",response.googleId);
+    setCookie("user_id", response.googleId);
   }
 
 
   return (
     <StSignUp>
-    <StBox>
-      <StLogo>Logo</StLogo>
-      <StEmail ref={email} placeholder='이메일'/>
-      <StPassword ref={password} placeholder='비밀번호'/>
-      <StLoginButton onClick={loginFunction}>
-        로그인
-      </StLoginButton>
-      <StButtonBox>
-        <StSignUpButton onClick={movesign}>
-          회원가입
-        </StSignUpButton>
-        <StLine/>
-        <StPwFind>
-          비밀번호 찾기
-        </StPwFind>
-      </StButtonBox>
-      <GoogleLogin
-        clientId='661918598129-vovfo203fkp7oq8avn3ak7sj24f9bu9k.apps.googleusercontent.com'
-        buttonText="Google Login"
-        response_type="token"
-        redirectUri='http://localhost:3000'
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
+      <StBox>
+        <StLogo>Logo</StLogo>
+        <StEmail ref={email} placeholder='이메일' />
+        <StPassword type='password' ref={password} placeholder='비밀번호' />
+        <StLoginButton onClick={loginFunction}>
+          로그인
+        </StLoginButton>
+        <StButtonBox>
+          <StSignUpButton onClick={movesign}>
+            회원가입
+          </StSignUpButton>
+          <StLine />
+          <StPwFind>
+            비밀번호 찾기
+          </StPwFind>
+        </StButtonBox>
+        <GoogleLogin
+          clientId='661918598129-vovfo203fkp7oq8avn3ak7sj24f9bu9k.apps.googleusercontent.com'
+          buttonText="Google Login"
+          response_type="token"
+          redirectUri='http://localhost:3000'
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
         />
-    </StBox>
+      </StBox>
     </StSignUp>
   )
 }

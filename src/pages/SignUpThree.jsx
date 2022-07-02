@@ -1,7 +1,47 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components';
+import { useMutation, useQueryClient } from 'react-query'
+import apis from '../api/main'
+import { useNavigate } from 'react-router-dom';
+
 
 const SignUpThree = () => {
+  const navigate = useNavigate();
+
+  const nickname = useRef("");
+
+  // 닉네임,프로필 저장
+  const NickNameCreate = async (data) => {
+    const datas = await apis.postNickNameCreate(data);
+    return datas;
+  }
+
+  // 닉네임 중복 확인
+  const NickCheck = async (data) => {
+    const datas = await apis.postNickCheck(data);
+    return datas;
+  }
+
+  const { mutate } = useMutation(NickNameCreate, {
+    onSuccess: () => {
+      navigate('/');
+      alert("닉네임이 생성되었습니다")
+    },
+    onError: (error) => {
+      alert("닉네임이 생성에 실패하셨습니다")
+    }
+  })
+
+  const nickNameFunction = () => {
+    mutate({
+      nickname: nickname.current.value,
+    })
+  }
+
+  const movelogin = () => {
+    navigate('/login');
+  }
+
   return (
     <StBox>
       <StContentBox>
@@ -10,32 +50,30 @@ const SignUpThree = () => {
         </StTitle>
         <StProBox>
           <StImgBox>
-          <StProfile>
-            프로필 이미지
-          </StProfile>
-          <StProImg/>
-          <StProButton>
-            이미지 추가하기
-          </StProButton>
+            <StProfile>
+              프로필 이미지
+            </StProfile>
+            <StProImg />
+            <StProInput type="file" />
           </StImgBox>
         </StProBox>
         <StEmailBox>
-            <StEmailTitle>닉네임</StEmailTitle>
-            <StEmailInputBox>
-              <StEmailInput placeholder='닉네임 입력'/>
-              <StEmailButton>
-                중복 확인
-              </StEmailButton>
-            </StEmailInputBox>
-            <StEmailWarnning>
-              이미 있는 닉네임 입니다. 새로운 닉네임으로 다시 입력해주세요.
-            </StEmailWarnning>
-          </StEmailBox>
-          <StBtBox>
-          <StCancel>
+          <StEmailTitle>닉네임</StEmailTitle>
+          <StEmailInputBox>
+            <StEmailInput placeholder='닉네임 입력' ref={nickname} />
+            <StEmailButton>
+              중복 확인
+            </StEmailButton>
+          </StEmailInputBox>
+          <StEmailWarnning>
+            이미 있는 닉네임 입니다. 새로운 닉네임으로 다시 입력해주세요.
+          </StEmailWarnning>
+        </StEmailBox>
+        <StBtBox>
+          <StCancel onClick={movelogin}>
             취소
           </StCancel>
-          <StAgree>
+          <StAgree onClick={nickNameFunction}>
             동의
           </StAgree>
         </StBtBox>
@@ -118,7 +156,7 @@ height: 100px;
 margin : 0 0 0 0;
 `;
 
-const StProButton = styled.button`
+const StProInput = styled.input`
   width : 115px;
   height : 25px;
   margin : 1rem 0 0 0;
@@ -126,7 +164,7 @@ const StProButton = styled.button`
   border: 1px solid #000000;
 `;
 
-const StProImg= styled.div`
+const StProImg = styled.div`
   width : 117px;
   height : 117px;
   border-radius: 100px;

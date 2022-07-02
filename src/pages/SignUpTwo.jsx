@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { useRef } from 'react'
-import { useMutation,useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
 import api from '../api/core'
@@ -10,43 +9,76 @@ import api from '../api/core'
 const SignUpTwo = () => {
   const navigate = useNavigate();
 
-  const reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+  // 이메일 정규식
+  const reg_email = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$/;
 
-  const email = useRef(null);
-  const [password,setPassword] = useState(null);
-  const passwordCheck = useRef(null);
+  // 비밀번호 정규식
+  const pw_check = /^(?=.[a-zA-Z])(?=.\\d)(?=.[!@#$%^+=-]).{6,12}$/;
 
-  const [active,setActive] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
 
-  const [checkOne,setCheckOne] = useState(false);
-  const [checkTwo,setCheckTwo] = useState(false);
+  const [active, setActive] = useState(false);
+
+  const [checkOne, setCheckOne] = useState(false);
+  const [checkTwo, setCheckTwo] = useState(false);
+  const [checkThree, setCheckThree] = useState(false);
 
 
-  
+  // // 버튼 비활성화를 위한 함수
+  // const checkone = () => {
+  //   setCheckOne(!checkOne);
+  // }
+
+  // const checktwo = () => {
+  //   setCheckTwo(!checkTwo);
+  // }
+
+  // const checkthree = () => {
+  //   setCheckThree(!checkThree);
+  // }
+
+  // useEffect(() => {
+  //   if (checkOne == true && checkTwo && checkThree == true) {
+  //     setActive(true);
+  //   }
+  //   else {
+  //     setActive(false);
+  //   }
+  //   console.log("checkone : " + checkOne);
+  //   console.log("checktwo : " + checkTwo);
+  //   console.log("checktwo : " + checkThree);
+  // })
+
 
   // 이메일 코드 전송
 
-  const [warnning,setWarnning] = useState(false);
+  const [warnning, setWarnning] = useState(false);
 
-  const formCheck = () =>{
-    if(reg_email.test(email.current.value)){
+  const formCheck = () => {
+    if (reg_email.test(email.current.value)) {
       setWarnning(false);
       alert("코드전송 완료")
       setCheckOne(true);
     }
-    else{
+    else {
       setWarnning(true);
     }
+  }
+
+  // 비밀번호 정규식
+  const pwCheck = () => {
+    return (
+      pw_check(password)
+    );
   }
 
 
   //비밀번호 받기
 
-  const passwording = (event) =>{
-    
-  }
 
-  
+
 
   // 회원가입 버튼시 포스트
 
@@ -55,23 +87,44 @@ const SignUpTwo = () => {
     return datas;
   }
 
-  const { mutate } = useMutation(signUp,{
-    onSuccess : () => {
-        navigate('/login'); 
-        alert("가입 완료")
+  const { mutate } = useMutation(signUp, {
+    onSuccess: () => {
+      navigate('/login');
+      alert("가입 완료")
     },
-    onError : (error) => {
-        alert("가입 불가")
+    onError: (error) => {
+      navigate('/login');
+      alert("가입 불가")
     }
   })
 
-  const signUpFunction = () =>{
+  const signUpFunction = () => {
     mutate({
-      username : email.current.value,
-      password : password.current.value,
-      passwordCheck : passwordCheck.current.value
+      username: email,
+      password: password,
+      passwordCheck: passwordCheck
     })
   }
+
+
+  // 취소버튼시 로그인창
+  const movelogin = () => {
+    navigate('/login');
+  }
+
+
+  // // 버튼 비활성
+  // useEffect(() => {
+  //   if (checkOne == true && checkTwo == true) {
+  //     setActive(true);
+  //   }
+  //   else {
+  //     setActive(false);
+  //   }
+  //   console.log("checkone : " + checkOne);
+  //   console.log("checktwo : " + checkTwo);
+  // })
+
 
   return (
     <StBox>
@@ -81,48 +134,50 @@ const SignUpTwo = () => {
           <StEmailBox>
             <StEmailTitle>이메일</StEmailTitle>
             <StEmailInputBox>
-              <StEmailInput ref={email} placeholder='이메일 입력'/>
+              <StEmailInput onChange={(e) => setEmail(e.target.value)} placeholder='이메일 입력' />
               <StEmailButton onClick={formCheck}>
                 코드 전송
               </StEmailButton>
+              {reg_email == true ? <p style={{ color: 'green' }}>사용 가능한 이메일 입니다</p> : <p style={{ color: 'red' }}> 이메일 형식에 맞게 입력해주세요</p>}
             </StEmailInputBox>
-            {warnning?<StEmailWarnning>
-              이메일 형식에 맞게 입력해주세요
-            </StEmailWarnning>:<StNotWarnning></StNotWarnning>}
+            {warnning ? <StEmailWarnning>
+              <a style={{ color: 'red' }}>이메일 형식에 맞게 입력해주세요</a>
+            </StEmailWarnning> : <StNotWarnning></StNotWarnning>}
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>회원가입 코드</StEmailTitle>
             <StEmailInputBox>
-              <StEmailInput placeholder='코드입력'/>
+              <StEmailInput placeholder='코드입력' />
               <StEmailButton>
                 확인
               </StEmailButton>
             </StEmailInputBox>
             <StEmailWarnning>
-                확인되었습니다.
+              확인되었습니다.
             </StEmailWarnning>
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>비밀번호</StEmailTitle>
             <StEmailInputBox>
-              <StPwInput onChange={passwording} placeholder='비밀번호 입력'/>
+              <StPwInput type='password' onChange={(e) => setPassword(e.target.value)} placeholder='비밀번호 입력' />
             </StEmailInputBox>
             <StEmailWarnning>
-              영문자 및 숫자 조합, 8~12자
+              영문자 및 숫자 조합, 6~12자
             </StEmailWarnning>
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>비밀번호 확인</StEmailTitle>
             <StEmailInputBox>
-              <StPwInput ref={passwordCheck} placeholder='비밀번호 재입력'/>
+              <StPwInput type='password' onChange={(e) => setPasswordCheck(e.target.value)} placeholder='비밀번호 재입력' />
             </StEmailInputBox>
             <StEmailWarnning>
-              영문자 및 숫자 조합, 8~12자
+              영문자 및 숫자 조합, 6~12자
+              {password === passwordCheck && password.length != 0 ? <p style={{ color: 'green' }}>형식에 맞는 비밀번호 입니다.</p> : <p style={{ color: 'red' }}> 비밀번호가 일치하지 않거나 공백입니다.</p>}
             </StEmailWarnning>
           </StEmailBox>
         </StInfo>
         <StBtBox>
-          <StCancel>
+          <StCancel onClick={movelogin}>
             취소
           </StCancel>
           <StAgree onClick={signUpFunction}>
