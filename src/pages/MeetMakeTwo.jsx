@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import apis from '../api/main'
 
 
-const MeetMake = () => {
-
+const MeetMakeTwo = () => {
   const [input,setInput] = useState([{id:0,title:''}]);
   const [num,setNum] = useState(0);
 
@@ -15,20 +14,13 @@ const MeetMake = () => {
     return apis.postMeetRoom(meeting);
   };
 
-  const {mutate : addMeet, isLoading, isError,error} = useMutation(addMeeting);
+  const {mutate} = useMutation(addMeeting);
 
 
   const handleAddMeeting = ()=>{
     const meeting = {
       
     }
-  }
-
-  if(isLoading){
-    return <h2>Loading..</h2>;
-  }
-  if(isError){
-    return <h2>{error.message}</h2>;
   }
 
   const addInput = () =>{
@@ -54,6 +46,7 @@ const MeetMake = () => {
   }
 
   return (
+    <StBox>
     <StInputBox>
       <StInput placeholder='title'/>
       <StInput placeholder='date'/>
@@ -71,6 +64,7 @@ const MeetMake = () => {
         </StPlusBox>
       ))}
     </StInputBox>
+    </StBox>
   )
 }
 
@@ -96,6 +90,16 @@ const StInput = styled.input`
 const StInputBox = styled.div`
   display: flex;
   flex-direction: column;
+  width : 100;
+  background-color: tomato;
 `;
 
-export default MeetMake
+const StBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width : 100vw;
+  height : 100vh;
+`;
+
+export default MeetMakeTwo

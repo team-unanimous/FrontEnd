@@ -5,7 +5,8 @@ import { Route, Routes } from "react-router-dom";
 
 // page import
 import Home from "./pages/Home";
-import MeetMake from "./pages/MeetMake";
+import MeetMakeOne from "./pages/MeetMakeOne";
+import MeetMakeTwo from "./pages/MeetMakeTwo";
 import MeetDetail from "./pages/MeetDetail";
 import TeamSelect from "./pages/TeamSelect";
 import TeamBoard from "./pages/TeamBoard";
@@ -27,7 +28,8 @@ function App() {
         <Route path="/signuptwo" element={<SignUpTwo/>} />
         <Route path="/signupthree" element={<SignUpThree/>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/meetmake" element={<MeetMake />} />
+        <Route path="/meetmakeone" element={<MeetMakeOne />} />
+        <Route path="/meetmaketwo" element={<MeetMakeTwo />} />
         <Route path="/meetdetail" element={<MeetDetail />} />
         <Route path="/teamboard" element={<TeamBoard />} />
         <Route path="/teamselect" element={<TeamSelect />}/>
