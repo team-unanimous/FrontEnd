@@ -4,7 +4,7 @@ import apis from '../api/main';
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react';
 import { useMutation } from 'react-query';
-import { setCookie } from '../Cookie';
+import { setCookie, removeCookie } from '../Cookie';
 import GoogleLogin from 'react-google-login';
 import api from '../api/core';
 
@@ -12,15 +12,16 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+
   // ref안에 null넣는이유 
   const email = useRef(null);
   const password = useRef(null);
 
   const login = async (data) => {
     const datas = await apis.postLogin(data);
-    console.log(datas);
     const accessToken = datas.headers.authorization;
     setCookie("token", accessToken);
+    console.log(datas)
     return datas;
   }
 
@@ -30,7 +31,8 @@ const Login = () => {
       alert("로그인 완료")
     },
     onError: (error) => {
-      alert("로그인 불가")
+      navigate('/login');
+      alert("로그인 실패하셨습니다")
     }
   })
 
@@ -49,7 +51,6 @@ const Login = () => {
   //로그인 성공했을 떄 처리 함수 
 
   const responseGoogle = (response) => {
-    console.log(response);
     setCookie("user_id", response.googleId);
   }
 

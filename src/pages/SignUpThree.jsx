@@ -1,80 +1,93 @@
-import React, { useRef } from 'react'
-import styled from 'styled-components';
+import React, { useState, useEffect, useRef } from 'react'
+import styled from 'styled-components'
 import { useMutation, useQueryClient } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
-import { useNavigate } from 'react-router-dom';
+import api from '../api/core'
+import axios from 'axios'
+import { useSelector } from "react-redux"
 
+const SignupThree = () => {
 
-const SignUpThree = () => {
   const navigate = useNavigate();
 
-  const nickname = useRef("");
+  // const [usernameid, setUsernameid] = useState(null);
 
-  // 닉네임,프로필 저장
-  const NickNameCreate = async (data) => {
-    const datas = await apis.postNickNameCreate(data);
-    return datas;
-  }
+  const usersData = useSelector((state) => state.postReducer.users.userids)
+  console.log(usersData)
 
-  // 닉네임 중복 확인
-  const NickCheck = async (data) => {
-    const datas = await apis.postNickCheck(data);
-    return datas;
-  }
 
-  const { mutate } = useMutation(NickNameCreate, {
+  // 비밀번호 정규식
+  const pw_check = /^(?=.[a-zA-Z])(?=.\\d)(?=.[!@#$%^+=-]).{6,12}$/;
+
+  // 패스워드 
+  // const [password, setPassword] = useState("");
+  // const [passwordCheck, setPasswordCheck] = useState("");
+  const password = useRef("");
+  const passwordCheck = useRef("");
+
+  // const passwordPatch = async (data) => {
+  //   console.log(data)
+  //   const datas = await apis.patchPassword(data);
+  //   console.log(datas)
+  //   // setUsernameid(datas)
+  //   // console.log(usernameid)
+  //   return datas;
+  // }
+
+
+  const passwordPatch = (data) => { return apis.patchPassword(data); }
+
+  const { mutate } = useMutation(passwordPatch, {
     onSuccess: () => {
-      navigate('/');
-      alert("닉네임이 생성되었습니다")
+      navigate('/signupfour');
+      alert("비밀번호 생성에 성공했습니다")
     },
     onError: (error) => {
-      alert("닉네임이 생성에 실패하셨습니다")
+      navigate('/signupthree');
+      alert("비밀번호 생성에 실패했습니다")
     }
   })
 
-  const nickNameFunction = () => {
-    mutate({
-      nickname: nickname.current.value,
-    })
-  }
-
-  const movelogin = () => {
-    navigate('/login');
+  const passwordFunction = () => {
+    const data = {
+      password: password.current.value,
+      passwordCheck: passwordCheck.current.value,
+      userid: usersData
+    }
+    mutate(data)
   }
 
   return (
     <StBox>
       <StContentBox>
-        <StTitle>
-          상세정보를 추가해주세요
-        </StTitle>
-        <StProBox>
-          <StImgBox>
-            <StProfile>
-              프로필 이미지
-            </StProfile>
-            <StProImg />
-            <StProInput type="file" />
-          </StImgBox>
-        </StProBox>
-        <StEmailBox>
-          <StEmailTitle>닉네임</StEmailTitle>
-          <StEmailInputBox>
-            <StEmailInput placeholder='닉네임 입력' ref={nickname} />
-            <StEmailButton>
-              중복 확인
-            </StEmailButton>
-          </StEmailInputBox>
-          <StEmailWarnning>
-            이미 있는 닉네임 입니다. 새로운 닉네임으로 다시 입력해주세요.
-          </StEmailWarnning>
-        </StEmailBox>
+        <StTitle>비밀번호를 입력해주세요</StTitle>
+        <StInfo>
+          <StEmailBox>
+            <StEmailTitle>비밀번호</StEmailTitle>
+            <StEmailInputBox>
+              {/* <StPwInput type='password' onChange={(e) => setPassword(e.target.value)} placeholder='비밀번호 입력' /> */}
+              <StPwInput type='password' ref={password} placeholder='비밀번호 입력' />
+            </StEmailInputBox>
+            <StEmailWarnning>
+              영문자,숫자 및 특수문자 조합, 6~12자
+            </StEmailWarnning>
+          </StEmailBox>
+          <StEmailBox>
+            <StEmailTitle>비밀번호 확인</StEmailTitle>
+            <StEmailInputBox>
+              {/* <StPwInput type='password' onChange={(e) => setPasswordCheck(e.target.value)} placeholder='비밀번호 재입력' /> */}
+              <StPwInput type='password' ref={passwordCheck} placeholder='비밀번호 재입력' />
+            </StEmailInputBox>
+            <StEmailWarnning>
+              영문자,숫자 및 특수문자 조합, 6~12자
+              {/* {password === passwordCheck && password.length != 0 ? <p style={{ color: 'green' }}>형식에 맞는 비밀번호 입니다.</p> : <p style={{ color: 'red' }}> 비밀번호가 일치하지 않거나 공백입니다.</p>} */}
+            </StEmailWarnning>
+          </StEmailBox>
+        </StInfo>
         <StBtBox>
-          <StCancel onClick={movelogin}>
-            취소
-          </StCancel>
-          <StAgree onClick={nickNameFunction}>
-            동의
+          <StAgree onClick={passwordFunction}>
+            다음
           </StAgree>
         </StBtBox>
       </StContentBox>
@@ -91,107 +104,61 @@ const StAgree = styled.button`
   color : white;
   border-radius: 0.375rem;
   border: 1px solid #000000;
+  cursor: pointer;
 `;
 
-const StCancel = styled.button`
-  width : 200px;
-  height : 54px;
-  font-weight: 700;
-  font-size: 20px;
-  border-radius: 0.375rem;
-`;
-
-const StBtBox = styled.div`
+const StEmailBox = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 418px;
-  height: 54px;
-  margin : 3.75rem 0 0 0;
+  flex-direction: column;
+  justify-content: center;
+  width : 541px;
+  height: 150px;
+  margin : 0 0 0 0;
+`;
+
+const StEmailTitle = styled.div`
+  width : 200px;
+  height : 19px;
+  font-weight: 700;
+  font-size: 15px;
+`;
+
+const StEmailInputBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width : 541px;
+  height : 49px;
+`;
+
+
+const StPwInput = styled.input`
+  width : 541px;
+  height : 44px;
+  border-radius: 6px;
+  border: 1px solid #000000;
 `;
 
 const StEmailWarnning = styled.div`
   height : 19px;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 16px;
 `;
 
-const StEmailButton = styled.button`
-  width : 132px;
-  height : 49px;
-  margin : 0 0 0 9px;
-  background-color: black;
-  color : white;
-  border-radius: 6px;
-`;
-
-const StEmailInput = styled.input`
-width : 390px;
-height : 44px;
-border-radius: 6px;
-border: 1px solid #000000;
-`;
-
-const StEmailInputBox = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-width : 541px;
-height : 49px;
-`;
-
-const StEmailTitle = styled.div`
-width : 200px;
-height : 19px;
-font-weight: 700;
-font-size: 15px;
-
-`;
-
-const StEmailBox = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-width : 541px;
-height: 100px;
-margin : 0 0 0 0;
-`;
-
-const StProInput = styled.input`
-  width : 115px;
-  height : 25px;
-  margin : 1rem 0 0 0;
-  border-radius: 5px;
-  border: 1px solid #000000;
-`;
-
-const StProImg = styled.div`
-  width : 117px;
-  height : 117px;
-  border-radius: 100px;
-  background-color: #E5E7EB;
-`;
-
-const StProfile = styled.div`
-  width: 93px;
-  height: 19px;
-  font-weight: 700;
-  font-size: 14px;
-`;
-
-const StProBox = styled.div`
-  width : 100%;
-  height : 185px;
-  margin : 3.75rem 0 2.1875rem 0;
-`;
-
-const StImgBox = styled.div`
+const StContentBox = styled.div`
+  width : 541px;
+  height : 480px;
   display: flex;
   flex-direction: column;
-  //justify-content: center;
   align-items: center;
-  width : 117px;
-  height : 185px;
-  margin : 0 0 0 0;
+`;
+
+const StBtBox = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 418px;
+  height: 54px;
+  margin : 3.75rem 0 0 0;
 `;
 
 const StTitle = styled.div`
@@ -201,12 +168,13 @@ const StTitle = styled.div`
   font-size: 46px;
 `;
 
-const StContentBox = styled.div`
-  width : 541px;
-  height : 563px;
+const StInfo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  width : 541px;
+  height : 210px;
+  margin : 3.75rem 0 0 0;
 `;
 
 const StBox = styled.div`
@@ -218,4 +186,4 @@ const StBox = styled.div`
 `;
 
 
-export default SignUpThree
+export default SignupThree;
