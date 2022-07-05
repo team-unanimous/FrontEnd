@@ -6,7 +6,6 @@ import { useRef } from 'react';
 import { useMutation } from 'react-query';
 import { setCookie } from '../Cookie';
 import GoogleLogin from 'react-google-login';
-import api from '../api/core';
 
 const Login = () => {
 

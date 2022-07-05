@@ -1,9 +1,26 @@
 import api from "./core";
 
 const apis = {
+    //팀 게시판
     getTeamMain : ()=>api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
+    patchMeetProfile : () =>api.get(`/api/${meetingId}`), // 미팅 프로필 수정
+    deleteMeet : ()=>api.delete(`/api/meetings/${meetingId}`), // 미팅 삭제
+    postReserveMeet : ()=>api.post(`/api/teams/${teamId}/meetings`), // 미팅 예약 만들기
+    postStartMeet : ()=>api.post(`/api/teams/${teamId}/meetings/now`), // 미팅바로 시작하기
+    getMeetList : ()=>api.get(`/api/teams/${teamId}/meetings`), // 미팅 목록 가져오기
+    getMeetSpecific : ()=>api.get(`/api/meetings/${meetingId}`), // 특정 미팅 조회
+    patchMeetProfile : ()=>api.patch(`/api/meetings/${meetingId}`), // 미팅 프로필 수정
+    postMeetReserveIssue: (data)=>api.post(`/api/meetings/${meetingId}/issues`,data), // 미팅 예약하기 안건등록
+    postMeetStartIssue: ()=>api.post(`/api/meetings/${meetingId}/issues/now`), // 미팅 바로 시작하기 안건 등록
+    patchMeetIssue : ()=>api.patch(`/api/meetings/${meetingId}/issues/${issueId}`), // 안건 수정
+    deleteMeetIssue : ()=>api.delete(`/api/meetings/${meetingId}/issues/${issueId}`), // 안건 삭제
+    getMeetDetail : ()=>api.get(`/api/teams/${teamId}/meetings/${meetingId}`), // 미팅룸 상세조회
+    
+    
     postMeetRoom : ()=>api.post(`/api/teams/${teamId}/meetings`), // 미팅룸 만들기
     getMeetDetail : ()=>api.get(`/api/teams/${teamsId}/meetings/${meetingId}`), // 미팅룸 상세조회
+
+
     postInviteTeam : (data)=>api.post(`/api/teams/auth-code`, data), //초대받은 팀 찾기
     postTeamJoin : (data)=>api.post(`/api/teams/join`, data), //팀 참여하기 
     postTeam : (data)=>api.post(`/api/teams`, data), // 팀만들기
