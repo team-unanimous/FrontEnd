@@ -17,7 +17,8 @@ import TeamBoard from "./pages/TeamBoard";
 import Login from "./pages/Login";
 import SignUpOne from "./pages/SignupOne";
 import SignUpTwo from "./pages/SignUpTwo";
-import SignUpThree from "./pages/SignUpThree";
+import SignUpThree from "./pages/SignUpThree"
+import SignUpFour from "./pages/SignUpFour";
 import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
 import TeamJoin from "./pages/TeamJoin";
@@ -30,9 +31,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signupone" element={<SignUpOne/>} />
-        <Route path="/signuptwo" element={<SignUpTwo/>} />
-        <Route path="/signupthree" element={<SignUpThree/>} />
+        <Route path="/signupone" element={<SignUpOne />} />
+        <Route path="/signuptwo" element={<SignUpTwo />} />
+        <Route path="/signupthree" element={<SignUpThree />} />
+        <Route path="/signupfour" element={<SignUpFour />} />
         <Route path="/login" element={<Login />} />
         <Route path="/meetmakeone" element={<MeetMakeOne />} />
         <Route path="/meetmaketwoone" element={<MeetMakeTwoOne />} />
@@ -42,7 +44,7 @@ function App() {
         <Route path="/meetdetailone" element={<MeetDetailOne />} />
         <Route path="/meetdetailtwo" element={<MeetDetailTwo />} />
         <Route path="/teamboard" element={<TeamBoard />} />
-        <Route path="/teamselect" element={<TeamSelect />}/>
+        <Route path="/teamselect" element={<TeamSelect />} />
         <Route path="/teammake" element={<TeamMake />} />
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />

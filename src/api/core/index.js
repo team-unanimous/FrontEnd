@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setCookie , getCookie} from '../../Cookie';
+import { setCookie, getCookie } from '../../Cookie';
 
 // 1. Axios instance생성
 const api = axios.create({
