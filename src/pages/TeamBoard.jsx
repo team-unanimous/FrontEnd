@@ -7,11 +7,15 @@ import MeetingRight from '../components/MeetingRight';
 import RecentMeet from '../components/RecentMeet';
 import TeamUser from '../components/TeamUser';
 import TodayMeet from '../components/TodayMeet';
-import useGetTeamMain from '../Hooks/useGetTeamMain'
+import useGetTeamMain  from '../Hooks/useGetTeamMain'
+import { useGetMeetList } from '../Hooks/useGetMeetList'; // 수상함
+import { useMutation } from 'react-query';
+
 
 const TeamBoard = () => {
 
-  const {data} = useGetTeamMain();
+  const {data : main} = useGetTeamMain();
+  const {data : meetList} = useGetMeetList();
 
   return  (
           <StBox>
@@ -264,7 +268,6 @@ const StTeamList = styled.div`
   display: flex;
   flex-direction: column;
   margin : 4rem 2rem 0 2rem;
-  
   width : 79.3%;
   height : 50%;
 `;

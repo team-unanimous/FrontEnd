@@ -5,8 +5,13 @@ import { Route, Routes } from "react-router-dom";
 
 // page import
 import Home from "./pages/Home";
-import MeetMake from "./pages/MeetMake";
-import MeetDetail from "./pages/MeetDetail";
+import MeetMakeOne from "./pages/MeetMakeOne";
+import MeetMakeTwoOne from "./pages/MeetMakeTwoOne";
+import MeetMakeTwoTwo from "./pages/MeetMakeTwoTwo";
+import MeetMakeThreeOne from "./pages/MeetMakeThreeOne";
+import MeetMakeThreeTwo from "./pages/MeetMakeThreeTwo";
+import MeetDetailOne from "./pages/MeetDetailOne";
+import MeetDetailTwo from "./pages/MeetDetailTwo";
 import TeamSelect from "./pages/TeamSelect";
 import TeamBoard from "./pages/TeamBoard";
 import Login from "./pages/Login";
@@ -15,6 +20,8 @@ import SignUpTwo from "./pages/SignUpTwo";
 import SignUpThree from "./pages/SignUpThree"
 import SignUpFour from "./pages/SignUpFour";
 import TeamMake from "./pages/TeamMake";
+import TeamInvited from "./pages/TeamInvited";
+import TeamJoin from "./pages/TeamJoin";
 
 
 const queryClient = new QueryClient();
@@ -29,11 +36,18 @@ function App() {
         <Route path="/signupthree" element={<SignUpThree />} />
         <Route path="/signupfour" element={<SignUpFour />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/meetmake" element={<MeetMake />} />
-        <Route path="/meetdetail" element={<MeetDetail />} />
+        <Route path="/meetmakeone" element={<MeetMakeOne />} />
+        <Route path="/meetmaketwoone" element={<MeetMakeTwoOne />} />
+        <Route path="/meetmaketwotwo" element={<MeetMakeTwoTwo />} />
+        <Route path="/meetmakethreeone" element={<MeetMakeThreeOne />} />
+        <Route path="/meetmakethreetwo" element={<MeetMakeThreeTwo />} />
+        <Route path="/meetdetailone" element={<MeetDetailOne />} />
+        <Route path="/meetdetailtwo" element={<MeetDetailTwo />} />
         <Route path="/teamboard" element={<TeamBoard />} />
         <Route path="/teamselect" element={<TeamSelect />} />
         <Route path="/teammake" element={<TeamMake />} />
+        <Route path="/teaminvited" element={<TeamInvited />} />
+        <Route path="/teamjoin" element={<TeamJoin />} />
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>
