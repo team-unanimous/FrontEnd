@@ -1,162 +1,129 @@
-import React, { useRef, useState } from 'react'
-import { useMutation } from 'react-query'
-import styled from 'styled-components';
-import apis from '../api/main'
-
+import React from 'react'
+import styled from 'styled-components'
+import { useNavigate } from 'react-router'
 
 const MeetMakeOne = () => {
+    const navigate = useNavigate();
 
+    const movetwoone = () => {
+        navigate('/meetmaketwoone')
+    }
+
+    const movetwotwo = () => {
+        navigate('/meetmaketwotwo')
+    }
 
   return (
-    <StBox>
-      <StModal>
-        <StTitle>
-          새로운 미팅룸을 만들어보세요
-        </StTitle>
-        <StMeetNameBox>
-          <StMeetName>
-            미팅룸 이름 
-          </StMeetName>
-          <StMeetInput placeholder='미팅룸 이름을 입력해주세요.'/>
-        </StMeetNameBox>
-        <StSumnailBox>
-          <StSumTitle>
-            썸네일 이미지 선택
-          </StSumTitle>
-          <StSumnail>
-            <StSumnailImg/>
-            <StSumnailImg/>
-            <StSumnailImg/>
-            <StSumnailImg/>
-            <StSumnailImg/>
-          </StSumnail>
-        </StSumnailBox>
-        <StTheme>
-          <StThemeTitle>
-            테마 선택
-          </StThemeTitle>
-          <StThemeSmallBox>
-            <StThemeInnerBox/>
-            <StThemeInnerBox/>
-          </StThemeSmallBox>
-        </StTheme>
-      </StModal>
-    </StBox>
+    <StMeetMake>
+        <StBox>
+            <StInnerBox>
+                <StTitle>
+                    <StMainTitle>
+                        새로운 미팅룸을 만들어보세요
+                    </StMainTitle>
+                    <StSubTitle>
+                        지금 회의를 열고 싶다면 '회의 시작하기'를<br/>
+                        다른 시간대에 회의를 열고 싶다면 '회의 예약하기'를 선택해주세요
+                    </StSubTitle>
+                </StTitle>
+                <StButtonBox>
+                    <StButton onClick={movetwoone}>
+                        <StText>
+                            회의 시작하기
+                        </StText>
+                    </StButton>
+                    <StButton onClick={movetwotwo}>
+                        <StText>
+                            회의 예약하기
+                        </StText>
+                    </StButton>
+                </StButtonBox>
+
+            </StInnerBox>
+        </StBox>
+    </StMeetMake>
   )
 }
 
-const StThemeInnerBox = styled.img`
-  width : 148px;
-  height : 186.74px;
-  border-radius: 8px;
-  border: none;
-  background-color: #D9D9D9;
+const StText = styled.div`
+    width : 170px;
+    height : 29px;
+    margin : 0 0 35px 0;
+    color : white;
+    font-size: 24px;
+    font-weight: 700;
 `;
 
-const StThemeSmallBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width : 306px;
-  height : 186.74px;
-  border-radius: 6px;
-  margin : 12px 0 0 0;
-  padding : 15px;
-  border: 1px solid black;
+const StButton = styled.button`
+    width : 320px;
+    height : 380px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    border: none;
+    border-radius: 8px;
+    background-color: black;
+    cursor: pointer;
 `;
 
-const StThemeTitle = styled.div`
-  width : 73px;
-  height : 19px;
-  font-weight: 700;
-  font-size: 16px;
+const StButtonBox = styled.div`
+    width : 657px;
+    height : 380px;
+    display: flex;
+    justify-content: space-between;
+    margin : 48px 0 0 0;
+    
 `;
 
-const StTheme = styled.div`
-  width : 336px;
-  height : 247.74px;
-  margin : 51px 0 0 73px;
+const StSubTitle = styled.div`
+    width :657px;
+    height : 44px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
 `;
 
-const StSumnailImg = styled.img`
-  width : 62px;
-  height : 62px;
-  border-radius: 8px;
-  background-color: #D9D9D9;
-`;
-
-const StSumnail = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width : 350px;
-  height : 62px;
-  padding : 15px;
-  margin : 12px 0 0 0;
-  border-radius: 6px;
-  border: 1px solid black;
-`;
-
-const StSumTitle = styled.div`
-  width : 140px;
-  height : 19px;
-  font-weight: 700;
-  font-size: 16px;
-`;
-
-const StSumnailBox = styled.div`
-  width : 380px;
-  height : 123px;
-  margin : 51px 0 0 73px;
-`;
-
-const StMeetInput = styled.input`
-  width : 344px;
-  height : 15px;
-  margin : 12px 0 0 0;
-  padding : 15px;
-  border: 1px solid black;
-  border-radius: 6px;
-  background-color: #EAEAEA;
-`;
-
-
-
-const StMeetName = styled.div`
-  width : 86px;
-  height : 19px;
-  font-weight: 700;
-  font-size: 16px;
-`;
-
-
-const StMeetNameBox = styled.div`
-  width : 380px;
-  height : 80px;
-  margin : 52px 0 0 73px;
+const StMainTitle = styled.div`
+    width : 657px;
+    height : 44px;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 36px;
 `;
 
 const StTitle = styled.div`
-  width : 495px;
-  height : 44px;
-  margin : 103px 0 0 73px;
-  font-weight: 600;
-  font-size: 36px;
+    width : 657px;
+    height : 108px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 `;
 
-const StModal = styled.div`
-  width : 996px;
-  height : 867px;
-  border-radius: 32px;
-  background-color: #EAEAEA;
+const StInnerBox = styled.div`
+    width : 657px;
+    height : 536px;
 `;
 
 const StBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width : 100vw;
-  height : 100vh;
-  background-color: #818181;
+    width: 657px;
+    height : 536px;
+    padding : 80px;
+    border-radius: 32px;
+    background-color: white;
+`;
+
+const StMeetMake = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width : 100vw;
+    height : 100vh;
+    background-color: #818181;
+
 `;
 
 export default MeetMakeOne
