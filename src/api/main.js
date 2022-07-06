@@ -6,16 +6,17 @@ const apis = {
     getTeamMain: () => api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
     patchMeetProfile: () => api.get(`/api/${meetingId}`), // 미팅 프로필 수정
     deleteMeet: () => api.delete(`/api/meetings/${meetingId}`), // 미팅 삭제
-    postReserveMeet: () => api.post(`/api/teams/${teamId}/meetings`), // 미팅 예약 만들기
-    postStartMeet: () => api.post(`/api/teams/${teamId}/meetings/now`), // 미팅바로 시작하기
+    postReserveMeet: (data) => api.post(`/api/teams/${data.teamId}/meetings`,data), // 미팅 예약 만들기
+    postStartMeet: (data) => api.post(`/api/teams/${data.teamId}/meetings/now`,data), // 미팅바로 시작하기
     getMeetList: () => api.get(`/api/teams/${teamId}/meetings`), // 미팅 목록 가져오기
-    getMeetSpecific: () => api.get(`/api/meetings/${meetingId}`), // 특정 미팅 조회
+    getMeetSpecific: ({meetingId}) => api.get(`/api/meetings/${meetingId}`), // 특정 미팅 조회
     patchMeetProfile: () => api.patch(`/api/meetings/${meetingId}`), // 미팅 프로필 수정
-    postMeetReserveIssue: (data) => api.post(`/api/meetings/${meetingId}/issues`, data), // 미팅 예약하기 안건등록
-    postMeetStartIssue: () => api.post(`/api/meetings/${meetingId}/issues/now`), // 미팅 바로 시작하기 안건 등록
-    patchMeetIssue: () => api.patch(`/api/meetings/${meetingId}/issues/${issueId}`), // 안건 수정
-    deleteMeetIssue: () => api.delete(`/api/meetings/${meetingId}/issues/${issueId}`), // 안건 삭제
-    getMeetDetail: () => api.get(`/api/teams/${teamId}/meetings/${meetingId}`), // 미팅룸 상세조회
+    postMeetReserveIssue: (data) => api.post(`/api/meetings/${data.meetingId}/issues`, data), // 미팅 예약하기 안건등록
+    postMeetStartIssue: (data) => api.post(`/api/meetings/${data.meetingId}/issues/now`,data), // 미팅 바로 시작하기 안건 등록
+    patchStartMeetIssue: () => api.patch(`/api/meetings/${meetingId}/issues/${issueId}/now`), // 미팅 바로시작하기 안건 수정
+    patchReserveMeetIssue: () => api.patch(`/api/meetings/${meetingId}/issues/${issueId}`), // 예약 안건 수정
+    deleteMeetIssue: () => api.delete(`/api/meetings/${meetingId}/issues/${issueId}/now`), // 미팅 바로시작하기 안건 삭제
+    deleteMeetIssue: () => api.delete(`/api/meetings/${meetingId}/issues/${issueId}`), // 예약 안건 삭제
 
 
     postMeetRoom: () => api.post(`/api/teams/${teamId}/meetings`), // 미팅룸 만들기

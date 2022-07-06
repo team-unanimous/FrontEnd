@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react'
 import { useMutation } from 'react-query'
 import styled from 'styled-components';
 import apis from '../api/main'
+import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router'
 import { StBox,StButton,StBarBox,StBarG,StBarC } from '../style/styled';
 import IssueBox from '../components/IssueBoxTwo';
@@ -10,7 +12,10 @@ const MeetMakeThreeTwo = () => {
 
   const navigate = useNavigate();
 
+  const teamID = useParams().teamid;
+  const meetID = useSelector(state=>state.meetReducer.meetID).meetid
   const issue = useRef("");
+  console.log(meetID);
 
   const makeIssue = async(data)=>{
     const datas = apis.postMeetReserveIssue(data)
@@ -19,6 +24,7 @@ const MeetMakeThreeTwo = () => {
 
   const {mutate} = useMutation(makeIssue,{
     onSuccess:()=>{
+        alert("안건등록 성공")
     },
     onError:(error)=>{
         alert("안건등록 실패")
@@ -27,7 +33,8 @@ const MeetMakeThreeTwo = () => {
 
   const makeFunction =()=>{
     mutate({
-        issueContent : issue.current.value
+        issueContent : issue.current.value,
+        meetingId : meetID
     })
   }
 
@@ -54,7 +61,7 @@ const MeetMakeThreeTwo = () => {
               </StInfoInner>
             </StInfoBox>
           </StInnerBox>
-          <StButton onClick={()=>{navigate('/meetdetail')}}>다음</StButton>
+          <StButton onClick={()=>{navigate(`/teamboard/${teamID}/${meetID}/meetdetailtwo`)}}>다음</StButton>
         </StOutBox>
       </StModal>
     </StBox>

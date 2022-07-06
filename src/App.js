@@ -23,7 +23,6 @@ import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
 import TeamJoin from "./pages/TeamJoin";
 
-
 const queryClient = new QueryClient();
 
 function App() {
@@ -36,14 +35,14 @@ function App() {
         <Route path="/signupthree" element={<SignUpThree />} />
         <Route path="/signupfour" element={<SignUpFour />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/meetmakeone" element={<MeetMakeOne />} />
-        <Route path="/meetmaketwoone" element={<MeetMakeTwoOne />} />
-        <Route path="/meetmaketwotwo" element={<MeetMakeTwoTwo />} />
-        <Route path="/meetmakethreeone" element={<MeetMakeThreeOne />} />
-        <Route path="/meetmakethreetwo" element={<MeetMakeThreeTwo />} />
-        <Route path="/meetdetailone" element={<MeetDetailOne />} />
-        <Route path="/meetdetailtwo" element={<MeetDetailTwo />} />
-        <Route path="/teamboard" element={<TeamBoard />} />
+        <Route path="/teamboard/:teamid/meetmakeone" element={<MeetMakeOne />} />
+        <Route path="/teamboard/:teamid/meetmaketwoone" element={<MeetMakeTwoOne />} />
+        <Route path="/teamboard/:teamid/meetmaketwotwo" element={<MeetMakeTwoTwo />} />
+        <Route path="/teamboard/:teamid/meetmakethreeone" element={<MeetMakeThreeOne />} />
+        <Route path="/teamboard/:teamid/meetmakethreetwo" element={<MeetMakeThreeTwo />} />
+        <Route path="/teamboard/:teamid/:meetid/meetdetailone" element={<MeetDetailOne />} />
+        <Route path="/teamboard/:teamid/:meetid/meetdetailtwo" element={<MeetDetailTwo />} />
+        <Route path="/teamboard/:teamid" element={<TeamBoard />} />
         <Route path="/teamselect" element={<TeamSelect />} />
         <Route path="/teammake" element={<TeamMake />} />
         <Route path="/teaminvited" element={<TeamInvited />} />

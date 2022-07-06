@@ -10,9 +10,14 @@ import TodayMeet from '../components/TodayMeet';
 import useGetTeamMain  from '../Hooks/useGetTeamMain'
 import { useGetMeetList } from '../Hooks/useGetMeetList'; // 수상함
 import { useMutation } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const TeamBoard = () => {
+
+  const navigate = useNavigate();
+
+  const teamId = useParams().teamid;
 
   const {data : main} = useGetTeamMain();
   const {data : meetList} = useGetMeetList();
@@ -96,9 +101,27 @@ const TeamBoard = () => {
                 </StMeetings>
               </StRight>
             </StDownBox>
+            <StMeetMake onClick={()=>{navigate(`/teamboard/${teamId}/meetmakeone`)}}>+</StMeetMake>
           </StBox>
     );
 };
+
+const StMeetMake = styled.div`
+  position: fixed;
+  bottom :50px;
+  right : 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width :56px;
+  height : 56px;
+  border-radius: 56px;
+  background-color: black;
+  color : white;
+  font-size: 50px;
+  cursor: pointer;
+`;
+
 
 const StLeftButton = styled.div`
   width : 52px;
