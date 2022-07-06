@@ -3,46 +3,68 @@ import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query'
 import apis from '../api/main'
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from "react-redux"
 
 const SignUpFour = () => {
+
   const navigate = useNavigate();
+  const usersData = useSelector((state) => state.postReducer.users.userids)
 
-  const nickname = useRef("");
+  // 닉네임 
+  const [nickname, setNickname] = useState("");
 
-
-
+  // const NickCheck = async (data) => {
+  //   const datas = await apis.postNickCheck(data);
+  //   console.log(data)
+  //   return datas;
+  // }
 
   // 닉네임 중복 확인
-  const NickCheck = async (data) => {
-    const datas = await apis.postNickCheck(data);
+  const NickCheck = (data) => {
     console.log(data)
-    return datas;
+    return apis.postNickCheck(data);
   }
 
-  // 닉네임 업로드
   const { mutate: NickCk } = useMutation(NickCheck, {
     onSuccess: () => {
-      alert("닉네임이 생성되었습니다")
+      alert("사용 가능한 닉네임입니다")
     },
     onError: (error) => {
-      alert(`${error.message}`)
+      alert("사용 불가능한 닉네임입니다")
     }
   })
 
-
-  // 닉네임 버튼
   const nickCheckFunction = () => {
     NickCk({
-      nickname: nickname.current.value,
+      nickname: nickname,
     })
   }
 
 
-  // 닉네임,프로필 저장
-  const NickNameCreate = async (data) => {
-    const datas = await apis.postNickNameCreate(data);
-    return datas;
+
+
+  // 닉네임 저장
+  const NickSave = (data) => {
+    console.log(data)
+    return apis.patchNickSave(data);
+  }
+
+  const { mutate: NickSv } = useMutation(NickSave, {
+    onSuccess: () => {
+      navigate('/')
+      alert("닉네임 생성에 성공하셨습니다")
+    },
+    onError: (error) => {
+      navigate('/signupfour')
+      alert("닉네임 생성에 실패하셨습니다")
+    }
+  })
+
+  const nickSaveFunction = () => {
+    NickSv({
+      nickname: nickname,
+      userid: usersData
+    })
   }
 
 
@@ -55,7 +77,7 @@ const SignUpFour = () => {
         <StEmailBox>
           <StEmailTitle></StEmailTitle>
           <StEmailInputBox>
-            <StEmailInput placeholder='닉네임 입력' ref={nickname} />
+            <StEmailInput placeholder='닉네임 입력' onChange={(e) => setNickname(e.target.value)} />
             <StEmailButton onClick={nickCheckFunction}>
               중복 확인
             </StEmailButton>
@@ -65,7 +87,7 @@ const SignUpFour = () => {
           </StEmailWarnning>
         </StEmailBox>
         <StBtBox>
-          <StAgree >
+          <StAgree onClick={nickSaveFunction}>
             완료
           </StAgree>
         </StBtBox>
@@ -83,14 +105,6 @@ const StAgree = styled.button`
   color : white;
   border-radius: 0.375rem;
   border: 1px solid #000000;
-`;
-
-const StCancel = styled.button`
-  width : 200px;
-  height : 54px;
-  font-weight: 700;
-  font-size: 20px;
-  border-radius: 0.375rem;
 `;
 
 const StBtBox = styled.div`
@@ -113,6 +127,7 @@ const StEmailButton = styled.button`
   background-color: black;
   color : white;
   border-radius: 6px;
+  cursor: pointer;
 `;
 
 const StEmailInput = styled.input`
@@ -122,10 +137,6 @@ border-radius: 6px;
 border: 1px solid #000000;
 `;
 
-const StBtnBox = styled.div`
-display: flex;
-justify-content: center;
-`
 
 const StEmailInputBox = styled.div`
 display: flex;
@@ -150,53 +161,6 @@ justify-content: space-between;
 width : 541px;
 height: 100px;
 margin : 0 0 0 0;
-`;
-
-const StProInput = styled.input`
-  width : 115px;
-  height : 25px;
-  margin : 1rem 0 0 0;
-  border-radius: 5px;
-  border: 1px solid #000000;
-`;
-
-const StProbtn = styled.button`
-  width : 115px;
-  height : 25px;
-  margin : 1rem 0 0 0;
-  border-radius: 5px;
-  border: 1px solid #000000;
-  cursor: pointer;
-`;
-
-const StProImg = styled.div`
-  width : 117px;
-  height : 117px;
-  border-radius: 100px;
-  background-color: #E5E7EB;
-`;
-
-const StProfile = styled.div`
-  width: 93px;
-  height: 19px;
-  font-weight: 700;
-  font-size: 14px;
-`;
-
-const StProBox = styled.div`
-  width : 100%;
-  height : 185px;
-  margin : 3.75rem 0 2.1875rem 0;
-`;
-
-const StImgBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  //justify-content: center;
-  align-items: center;
-  width : 117px;
-  height : 185px;
-  margin : 0 0 0 0;
 `;
 
 const StTitle = styled.div`
