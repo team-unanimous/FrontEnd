@@ -181,7 +181,6 @@ const StBox = styled.div`
   align-items: center;
   width : 400px;
   height : 515px;
-
   margin : auto auto auto auto;
 `;
 

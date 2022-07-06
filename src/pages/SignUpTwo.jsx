@@ -47,8 +47,6 @@ const SignUpTwo = () => {
     return datas;
   }
 
-
-
   const { mutate } = useMutation(emailPost, {
     onSuccess: () => {
       navigate('/signupthree');
