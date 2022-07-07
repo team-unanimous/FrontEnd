@@ -9,7 +9,7 @@ const TeamInvited = () => {
     const findUUID = (UUIDInfo)=> {
         return apis.postInviteTeam(UUIDInfo);
     }
-
+        
     const { mutate } = useMutation(findUUID, {
         onSuccess: (data) => {
             console.log(data.data)

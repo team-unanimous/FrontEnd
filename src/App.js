@@ -21,6 +21,7 @@ import SignUpThree from "./pages/SignUpThree";
 import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
 import TeamJoin from "./pages/TeamJoin";
+import Landing from "./pages/Landing";
 
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/landing" element={<Landing />} />
         <Route path="/signupone" element={<SignUpOne/>} />
         <Route path="/signuptwo" element={<SignUpTwo/>} />
         <Route path="/signupthree" element={<SignUpThree/>} />
