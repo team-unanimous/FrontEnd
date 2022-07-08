@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router'
 import { StBox,StButton,StBarBox,StBarG,StBarC } from '../style/styled';
 import IssueBox from '../components/IssueBoxTwo';
+import useGetIssueList from '../Hooks/useGetIssueList';
+
 
 const MeetMakeThreeTwo = () => {
 
@@ -15,8 +17,13 @@ const MeetMakeThreeTwo = () => {
   const teamID = useParams().teamid;
   const meetID = useSelector(state=>state.meetReducer.meetID).meetid
   const issue = useRef("");
-  console.log(meetID);
 
+
+  const { data } = useGetIssueList({meetID});
+  console.log(data);
+
+
+  //안건 등록
   const makeIssue = async(data)=>{
     const datas = apis.postMeetReserveIssue(data)
     return datas;
@@ -57,7 +64,9 @@ const MeetMakeThreeTwo = () => {
             </StInputBox>
             <StInfoBox>
               <StInfoInner>
-                <IssueBox/>
+                {data?.map((value,index)=>{
+                  return <IssueBox key={index} issueId={value.issueId} meetId={meetID} prop={value.issueContent}/>
+                })}
               </StInfoInner>
             </StInfoBox>
           </StInnerBox>

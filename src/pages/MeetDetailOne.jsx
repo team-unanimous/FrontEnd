@@ -3,14 +3,15 @@ import styled from 'styled-components'
 import { useParams } from 'react-router';
 import { useGetMeetSpecific } from '../Hooks/useGetMeetSpecific';
 import { StButton,StBarBox,StBarG,StBarC } from '../style/styled';
+import { useMutation } from 'react-query';
+import apis from '../api/main';
 
 const MeetDetailOne = () => {
   
   const meetingId = useParams().meetid;
   console.log(meetingId);
   const {data} = useGetMeetSpecific({meetingId});
-  console.log(data);
-  console.log(data?.issues);
+
 
   return (
     <StPage>
@@ -55,8 +56,8 @@ s
                 안건
               </StInfoLeft> 
               <StIssueRight>
-                {data?.issues.map((value,index)=>{ 
-                  return <StIssue>{value.issueContent}</StIssue>})}
+                {data?.issues?.map((value,index)=>{ 
+                  return <StIssue>{index+1}. {value.issueContent}</StIssue>})}
               </StIssueRight>
             </StIssueBox>
             <StUrlBox>
@@ -106,6 +107,7 @@ const StMeetTitleBox = styled.div`
 const StIssue = styled.div`
   width : 640px;
   height : 25px;
+  padding : 0 0 0 0;
   font-weight: 500;
   font-size: 16px;
 `;

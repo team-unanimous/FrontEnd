@@ -22,19 +22,20 @@ const MeetMakeTwoTwo = () => {
 
   // 시간 옵션
   const [clicked,setClicked] = useState(false);
-  const [time,setTime] = useState("");
+  const [time,setTime] = useState("00:00");
   
-  const times = [1,2,3,4,5,6,7,8,9,10,11,12];
-
+  const times = [0,1,2,3,4,5,6,7,8,9];
+  const timess = [10,11,12,13,14,15,16,17,18,19,20,21,22,23];
   // 기간 옵션
   const durations = [1,2,3,4,5];
 
   const [duClicked, setDuClicked] = useState(false);
-  const [duration,setDuration] = useState("")
+  const [duration,setDuration] = useState("0시간")
 
 
   // 팀 만들기
   const makeTeam = async(data)=>{
+    console.log(data);
     const datas = await apis.postReserveMeet(data);
     dispatch(teamID({
       meetid : datas.data
@@ -120,14 +121,14 @@ const MeetMakeTwoTwo = () => {
                     </StDateText>
                     <StDropBox>
                       {time?<StDefault onClick={()=>{setClicked(!clicked)}}>{time}</StDefault>:
-                      <StDefault onClick={()=>{setClicked(!clicked)}}>오전 0:00</StDefault>}
+                      <StDefault onClick={()=>{setClicked(!clicked)}}>00:00</StDefault>}
                       <StOption clicked = {clicked}>
                         <StHidden>
                           {times.map((value,index)=>{
-                            return <StTime key={index} onClick={()=>{setTime(`오전 ${value}:00`);setClicked(!clicked)}}>오전 {value}:00</StTime>
+                            return <StTime key={index} onClick={()=>{setTime(`0${value}:00`);setClicked(!clicked)}}>0{value}:00</StTime>
                           })}
-                          {times.map((value,index)=>{
-                            return <StTime key={index} onClick={()=>{setTime(`오후 ${value}:00`);setClicked(!clicked)}}>오후 {value}:00</StTime>
+                          {timess.map((value,index)=>{
+                            return <StTime key={index} onClick={()=>{setTime(`${value}:00`);setClicked(!clicked)}}>{value}:00</StTime>
                           })}
                         </StHidden>
                       </StOption>

@@ -3,8 +3,6 @@ import styled from 'styled-components'
 import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
-import api from '../api/core'
-import axios from 'axios'
 import { useSelector } from "react-redux"
 
 const SignupThree = () => {
@@ -14,7 +12,6 @@ const SignupThree = () => {
   // const [usernameid, setUsernameid] = useState(null);
 
   const usersData = useSelector((state) => state.postReducer.users.userids)
-  console.log(usersData)
 
 
   // 비밀번호 정규식
@@ -26,6 +23,8 @@ const SignupThree = () => {
   const password = useRef("");
   const passwordCheck = useRef("");
 
+
+
   // const passwordPatch = async (data) => {
   //   console.log(data)
   //   const datas = await apis.patchPassword(data);
@@ -35,8 +34,9 @@ const SignupThree = () => {
   //   return datas;
   // }
 
-
-  const passwordPatch = (data) => { return apis.patchPassword(data); }
+  const passwordPatch = (data) => {
+    return apis.patchPassword(data);
+  }
 
   const { mutate } = useMutation(passwordPatch, {
     onSuccess: () => {

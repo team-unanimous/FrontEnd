@@ -6,7 +6,8 @@ import apis from '../api/main'
 import { useNavigate } from 'react-router'
 import { useParams } from 'react-router';
 import { StBox,StButton,StBarBox,StBarG,StBarC } from '../style/styled';
-import IssueBoxOne from '../components/IssueBoxOne';
+import IssueBox from '../components/IssueBoxOne';
+import useGetIssueList from '../Hooks/useGetIssueList';
 
 const MeetMakeThreeOne = () => {
 
@@ -15,6 +16,13 @@ const MeetMakeThreeOne = () => {
   const teamID = useParams().teamid;
   const meetID = useSelector(state=>state.meetReducer.meetID).meetid
   const issue = useRef("");
+
+  const { data } = useGetIssueList({meetID});
+
+
+  if(meetID==null){
+    navigate(`/teamboard/${teamID}/meetmaketwoone`)
+  }
   
   const makeIssue = async(data)=>{
     const datas = await apis.postMeetStartIssue(data);
@@ -56,7 +64,9 @@ const MeetMakeThreeOne = () => {
             </StInputBox>
             <StInfoBox>
               <StInfoInner>
-                <IssueBoxOne/>
+                {data?.map((value,index)=>{
+                  return <IssueBox key={index} issueId={value.issueId} meetId={meetID} prop={value.issueContent}/>
+                })}
               </StInfoInner>
             </StInfoBox>
           </StInnerBox>

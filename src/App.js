@@ -22,6 +22,7 @@ import SignUpFour from "./pages/SignUpFour";
 import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
 import TeamJoin from "./pages/TeamJoin";
+import Mypage from "./pages/Mypage";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ function App() {
         <Route path="/teammake" element={<TeamMake />} />
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />
+        <Route path="/mypage" element={<Mypage />} />
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>

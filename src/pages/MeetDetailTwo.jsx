@@ -42,7 +42,7 @@ const MeetDetailTwo = () => {
                 주최자
               </StInfoLeft> 
               <StInfoRight>
-
+                {data?.meetingCreator}
               </StInfoRight>
             </StLeaderBox>
             <StDateBox>
@@ -59,7 +59,7 @@ const MeetDetailTwo = () => {
               </StInfoLeft> 
               <StIssueRight>
                 {data?.issues?.map((value,index)=>{ 
-                  return <StIssue>{value.issueContent}</StIssue>})}
+                  return <StIssue>{index+1}. {value.issueContent} </StIssue>})}
               </StIssueRight>
             </StIssueBox>
             <StUrlBox>
@@ -67,7 +67,6 @@ const MeetDetailTwo = () => {
                 미팅 URL
               </StInfoLeft> 
               <StInfoRight>
-
               </StInfoRight>
             </StUrlBox>
           </StInfo>
@@ -107,8 +106,11 @@ const StMeetTitleBox = styled.div`
 `;
 
 const StIssue = styled.div`
+  display: flex;
+  align-items: center;
   width : 640px;
   height : 25px;
+  margin : 0 0 16px 0;
   font-weight: 500;
   font-size: 16px;
 `;
@@ -117,9 +119,21 @@ const StIssueRight = styled.div`
   display: flex;
   flex-direction: column;
   width : 654px;
-  height : 100px;
+  height : 125px;
   margin : 0 0 0 40px;
+  border : 1px solid ;
   overflow-x: hidden;
+  ::-webkit-scrollbar{
+    width:10px;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #2f3542;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-track{
+    
+    border-radius: 1rem;
+  }
 `;
 
 

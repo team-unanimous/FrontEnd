@@ -38,7 +38,7 @@ const MeetMakeTwoOne = () => {
       navigate(`/teamboard/${teamId}/meetmakethreeone`);
     },
     onError: (error) => {
-      alert("로그인 불가")
+      alert("미팅 만들기 실패")
     }
   });
 
@@ -73,7 +73,7 @@ const MeetMakeTwoOne = () => {
                   <StMeetName>
                     미팅룸 이름 
                   </StMeetName>
-                  <StMeetInput ref={meetTitle} placeholder='미팅룸 이름을 입력해주세요.'/>
+                  <StMeetInput type="text" maxLength='20' required ref={meetTitle} placeholder='미팅룸 이름을 입력해주세요.'/>
                 </StMeetNameBox>
                 <StSumnailBox>
                   <StSumTitle>
