@@ -4,20 +4,35 @@ import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
 import { useSelector } from "react-redux"
+import { useDispatch } from 'react-redux'
+import { postUserId } from '../redux/modules/post'
 
 const SignupThree = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // const [usernameid, setUsernameid] = useState(null);
+  const userEmail = useSelector((state) => state.userReducer.usersid.email)
+  console.log(userEmail)
 
-  const usersData = useSelector((state) => state.postReducer.users.userids)
-  const userId = useSelector((state) => state.postReducer.users.email)
-  console.log(usersData)
-  console.log(userId)
+
 
   // 비밀번호 정규식
-  const pw_check = /^(?=.[a-zA-Z])(?=.\\d)(?=.[!@#$%^+=-]).{6,12}$/;
+  // 상우님 const passwordlock = /^(?=.[a-zA-Z])(?=.\\d)(?=.[!@#$%^+=-]).{6,12}$/;
+  const passwordlock = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{3,16}$/;
+  const pwcheck = (pw) => {
+    return passwordlock.test(pw)
+  }
+
+  // 비활성화 버튼 false일때 기존 색상 나옴
+  const DisableFunction = () => {
+    if (pwcheck(password) === false)
+      return true;
+    else if (password !== passwordCheck)
+      return true;
+    else return false;
+  }
+
 
   // 패스워드 
   const [password, setPassword] = useState("");
@@ -36,14 +51,16 @@ const SignupThree = () => {
   //   return datas;
   // }
 
-  const passwordPatch = (data) => {
+  const postPW = async (data) => {
     console.log(data)
-    console.log(password)
-    console.log(password)
-    return apis.postPassword(data);
+    const datas = await apis.postPassword(data);
+    const userids = datas.data.userId
+    console.log(userids)
+    dispatch(postUserId({ userids }))
+    return datas
   }
 
-  const { mutate } = useMutation(passwordPatch, {
+  const { mutate } = useMutation(postPW, {
     onSuccess: () => {
       navigate('/signupfour');
       alert("비밀번호 생성에 성공했습니다")
@@ -56,10 +73,9 @@ const SignupThree = () => {
 
   const passwordFunction = () => {
     const data = {
-      username: userId,
+      username: userEmail,
       password: password,
       passwordCheck: passwordCheck,
-      userid: usersData
     }
     mutate(data)
   }
@@ -67,6 +83,7 @@ const SignupThree = () => {
   const Caencelbtn = () => {
     navigate('/login')
   }
+
 
   return (
     <StBox>
@@ -98,7 +115,8 @@ const SignupThree = () => {
           <StNotAgree onClick={Caencelbtn}>
             취소
           </StNotAgree>
-          <StAgree onClick={passwordFunction}>
+          <StAgree onClick={passwordFunction}
+            disabled={DisableFunction()}>
             다음
           </StAgree>
         </StBtBox>
@@ -138,6 +156,9 @@ const StAgree = styled.button`
   border-radius: 0.375rem;
   border: 1px solid #000000;
   cursor: pointer;
+  &:disabled{
+    background-color: gray;
+  }
 `;
 
 const StEmailBox = styled.div`

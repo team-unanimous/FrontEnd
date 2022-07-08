@@ -47,6 +47,10 @@ const Login = () => {
     navigate('/signupone');
   }
 
+  const movepwfind = () => {
+    navigate('/PasswordFindOne')
+  }
+
   //로그인 성공했을 떄 처리 함수 
 
   const responseGoogle = (response) => {
@@ -68,7 +72,7 @@ const Login = () => {
             회원가입
           </StSignUpButton>
           <StLine />
-          <StPwFind>
+          <StPwFind onClick={movepwfind}>
             비밀번호 찾기
           </StPwFind>
         </StButtonBox>

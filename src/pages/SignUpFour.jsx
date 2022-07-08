@@ -8,6 +8,8 @@ import { useSelector } from "react-redux"
 const SignUpFour = () => {
 
   const navigate = useNavigate();
+
+
   const usersData = useSelector((state) => state.postReducer.users.userids)
   console.log(usersData)
 
@@ -42,8 +44,6 @@ const SignUpFour = () => {
   }
 
 
-
-
   // 닉네임 저장
   const NickSave = (data) => {
     console.log(data)
@@ -52,7 +52,7 @@ const SignUpFour = () => {
 
   const { mutate: NickSv } = useMutation(NickSave, {
     onSuccess: () => {
-      navigate('/mypage')
+      navigate('/')
       alert("닉네임 생성에 성공하셨습니다")
     },
     onError: (error) => {

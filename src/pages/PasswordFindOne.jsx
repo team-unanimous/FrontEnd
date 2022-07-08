@@ -3,124 +3,123 @@ import styled from 'styled-components'
 import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
-import api from '../api/core'
-import { useDispatch } from 'react-redux'
-import { postUserId, tossUserId } from '../redux/modules/post'
 
 
 const PasswordFindOne = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
 
-    // 이메일 정규식
-    // 해석 
-    // const reg_email = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$/;
-    const reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,8}$/i;
-    const [email, setEmail] = useState("");
-    // const [usernameid, setUsernameid] = useState(null);
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
 
 
 
-    // 이메일 코드 전송
+  // 이메일 코드 전송 버튼
+  const emailCodePost = (data) => {
+    return apis.postEmailCode(data);
+  }
 
-    const [warnning, setWarnning] = useState(false);
-
-    const formCheck = () => {
-        if (reg_email.test(email)) {
-            setWarnning(false);
-            alert("코드전송 완료")
-            setCheckOne(true);
-        }
-        else {
-            setWarnning(false);
-        }
+  const { mutate: emailGo } = useMutation(emailCodePost, {
+    onSuccess: () => {
+      alert("이메일 생성에 성공했습니다")
+    },
+    onError: (error) => {
+      alert("이메일 생성에 실패했습니다")
     }
+  })
 
-    const EmailFunction = () => {
-        if (reg_email.test(email)) {
-            dispatch(tossUserId({ email }))
-            alert("이메일 생성에 성공했습니다")
-            navigate('/passwordfindtwo');
-        }
-        else {
-            navigate('/passwordfindone');
-            alert("이메일 생성에 실패했습니다")
-        }
-    }
-
-    // 이메일 코드전송
-    const passwordPatch = (data) => {
-        return apis.postPassword(data);
-    }
-
-    const { mutate } = useMutation(passwordPatch, {
-        onSuccess: () => {
-            alert("인증메시지가 전송에 성공하셨습니다")
-            navigate('/passwordfindtwo');
-
-        },
-        onError: (error) => {
-            alert("인증메시지가 전송에 실패하셨습니다")
-            navigate('/passwordfindone');
-
-        }
+  const EmailFunction = () => {
+    emailGo({
+      username: email,
     })
+  }
 
-    const passwordFunction = () => {
-        const data = {
-            username: userId,
-            password: password,
-            passwordCheck: passwordCheck,
-            userid: usersData
-        }
-            (data)
+
+
+  // 코드 인증 버튼
+  const passwordCode = (data) => {
+    return apis.postPasswordCode(data);
+  }
+
+  const { mutate: passwordGo } = useMutation(passwordCode, {
+    onSuccess: () => {
+      navigate("/passwordfindtwo")
+      alert("코드 인증에 성공하셨습니다")
+    },
+    onError: (error) => {
+      navigate("/passwordfindone")
+      alert("코드 인증에 실패하셨습니다")
     }
+  })
 
+  const passwordFucntion = () => {
+    passwordGo({
+      code: code,
+    })
+  }
 
-    const Caencelbtn = () => {
-        navigate('/login')
-    }
+  // 취소 버튼
+  const Caencelbtn = () => {
+    navigate('/login')
+  }
 
-    return (
-        <StBox>
-            <StContentBox>
-                <StTitle>비밀번호 찾기</StTitle>
-                <StInfo>
-                    <StEmailBox>
-                        <StEmailTitle>이메일</StEmailTitle>
-                        <StEmailInputBox>
-                            <StEmailInput onChange={(e) => setEmail(e.target.value)} placeholder='이메일 입력' />
-                            <StEmailButton onClick={formCheck} >
-                                코드 전송
-                            </StEmailButton>
-                        </StEmailInputBox>
-                        {reg_email.test(email) === false
-                            ? <StWarningTitle style={{ color: 'red' }}> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
-                            : warnning === true
-                                ? <StWarningTitle style={{ color: 'red' }}> 이미 사용중인 이메일 입니다</StWarningTitle>
-                                : <p></p>
-                        }
-                    </StEmailBox>
-                    <StEmailBox>
-                        <StEmailTitle>인증코드</StEmailTitle>
-                        <StEmailInputBox>
-                            <StEmailInputtwo placeholder='코드입력' />
-                        </StEmailInputBox>
-                        <StEmailWarnning>
-                        </StEmailWarnning>
-                    </StEmailBox>
-                </StInfo>
-                <StBtBox>
-                    <StNotAgree onClick={Caencelbtn}>
-                        취소
-                    </StNotAgree>
-                    <StAgree onClick={EmailFunction}>
-                        다음
-                    </StAgree>
-                </StBtBox>
-            </StContentBox>
-        </StBox>
-    );
+  // 이메일 정규식
+  const reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,8}$/i;
+  const rockemail = (id) => {
+    return reg_email.test(id)
+  }
+
+  // 비활성화 함수
+  const disableFunction = () => {
+    if (rockemail(email) === false)
+      return true;
+    else
+      return false;
+  }
+
+  return (
+    <StBox>
+      <StContentBox>
+        <StTitle>비밀번호 찾기</StTitle>
+        <StInfo>
+          <StEmailBox>
+            <StEmailTitle>이메일</StEmailTitle>
+            <StEmailInputBox>
+              <StEmailInput onChange={(e) => setEmail(e.target.value)} placeholder='이메일 입력' />
+              <StEmailButton onClick={EmailFunction}>
+                코드 전송
+              </StEmailButton>
+            </StEmailInputBox>
+            {reg_email.test(email) === false
+              ? <StWarningTitle style={{ color: 'red' }}> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
+              : email === true
+                ? <StWarningTitle style={{ color: 'red' }}> 이미 사용중인 이메일 입니다</StWarningTitle>
+                : <p></p>
+            }
+          </StEmailBox>
+          <StEmailBox>
+            <StEmailTitle>인증코드</StEmailTitle>
+            <StEmailInputBox>
+              <StEmailInputtwo onChange={(e) => setCode(e.target.value)} placeholder='코드입력' />
+            </StEmailInputBox>
+            <StEmailWarnning>
+            </StEmailWarnning>
+          </StEmailBox>
+        </StInfo>
+        <StBtBox>
+          <StNotAgree onClick={Caencelbtn}>
+            취소
+          </StNotAgree>
+          <StAgree
+            onClick={passwordFucntion}
+            disabled={disableFunction()}
+          >
+            다음
+          </StAgree>
+        </StBtBox>
+      </StContentBox>
+    </StBox>
+  );
 }
 
 
@@ -156,6 +155,9 @@ const StAgree = styled.button`
   border-radius: 0.375rem;
   border: 1px solid #000000;
   cursor: pointer;
+  &:disabled{
+  background-color: gray;
+}
 `;
 
 const StBtBox = styled.div`
@@ -180,6 +182,7 @@ const StEmailButton = styled.button`
   background-color: black;
   color : white;
   border-radius: 6px;
+  cursor: pointer;
 `;
 
 const StEmailInput = styled.input`
