@@ -6,18 +6,18 @@ import editIcon from '../img/edit.png'
 import deleteIcon from '../img/delete.png'
 import completeIcon from '../img/confirm.png'
 
-const IssueBox = (prop) => {
+const IssueBox = () => {
 
     const [isEdit,setIsEdit] = useState(false);
 
     const editItem = useRef()
-    
+
+    const editIssue = async(data)=>{
+        const datas = await apis.patchMeetIssue(data);
+        return datas;
+    }
 
     // 수정 부분
-    const editIssue = async(data)=>{
-      const datas = await apis.patchStartMeetIssue(data);
-      return datas;
-    }
 
     const { mutate:editing } = useMutation(editIssue,{
         onSuccess:()=>{
@@ -28,23 +28,21 @@ const IssueBox = (prop) => {
         }
     })
 
+    const edit = () =>{
+        setIsEdit(true);
+    }
+
     const complete = () =>{
         setIsEdit(false);
         editing({
-            issueContent : editItem.current.value,
-            meetingId : prop.meetId,
-            issueId : prop.issueId
+            issueContent : editItem.current.value
         })
     }
 
-    const edit = () =>{
-      setIsEdit(true);
-    }
-
-
     // 삭제 부분
+
     const deleteIssue = async(data) =>{
-      const datas = await apis.deleteStartMeetIssue(data);
+      const datas = await apis.deleteMeetIssue();
       return datas;
     }
     
@@ -59,18 +57,17 @@ const IssueBox = (prop) => {
 
     const delet=()=>{
       deleting({
-        meetingId : prop.meetId,
-        issueId : prop.issueId
+        meetingId : meetingId,
+        issueId : issueId
       })
     }
 
-    
   return (
     <StIssueBox>
         <StInfo>
-            <StIssueTitle>&#183; 안건</StIssueTitle>
-            {isEdit?<StIssueEdit ref={editItem} defaultValue={prop.prop}/>:
-            <StIssue> {prop.prop}</StIssue>}
+            <StIssueTitle>&#183; 안건1</StIssueTitle>
+            {isEdit?<StIssueEdit ref={editItem} defaultValue="이번 안건은 이거지롱"/>:
+            <StIssue> 이번 안건은 이거지롱</StIssue>}
         </StInfo>
         {isEdit?
          <StBtBox>

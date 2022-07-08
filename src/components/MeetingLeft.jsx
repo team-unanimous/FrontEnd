@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const MeetingLeft = (prop) => {
-
+const MeetingLeft = () => {
   return (
     <StBox>
         <StImg/>
@@ -25,6 +24,7 @@ const MeetingLeft = (prop) => {
 const StUserImg = styled.img`
     width : 22.4px;
     height: 22.4px;
+   
     border-radius: 22.4px;
     background-color: #E5E7EB;
 `;

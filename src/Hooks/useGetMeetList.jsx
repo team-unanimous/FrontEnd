@@ -1,12 +1,10 @@
 import { useQuery } from "react-query";
 import apis from "../api/main";
 
-const useGetMeetList = ({teamId}) => {
+export const useGetMeetList = () => {
     const fetcher = async () => {
-        const { data } = await apis.getMeetList({teamId});
+        const { data } = await apis.getMeetList();
         return data;
     }
     return useQuery("teamInfo", fetcher);
 }
-
-export default useGetMeetList;

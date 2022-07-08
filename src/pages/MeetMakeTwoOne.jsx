@@ -3,53 +3,38 @@ import { useMutation } from 'react-query'
 import styled from 'styled-components';
 import apis from '../api/main'
 import {useNavigate} from "react-router"
-import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router';
-import { teamID } from '../redux/modules/meetReducer';
-import { StBox,StSumnailBox,StSumTitle,StSumnail,StModal,StInnerBox,StButton,StBarBox,StBarG,StBarC,StOutBox,StInfo, } from '../style/styled';
-import meetReducer from '../redux/modules/meetReducer';
+import { StBox,StSumnailBox,StSumTitle,StSumnail,StSumnailImg,StModal,StInnerBox,StButton,StBarBox,StBarG,StBarC,StOutBox,StInfo, } from '../style/styled';
 
 const MeetMakeTwoOne = () => {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const meetTitle = useRef("");
   const [sumImg,setSumImg] = useState(1);
   const [theme,setTheme] = useState(1);
-  const [boardId,setBoardId] = useState();
-
-  const teamId = useParams().teamid;
 
   const today = new Date();
 
-  const date = today.getFullYear()+"/" + today.getMonth()+"/" + today.getDate();
-  const time = today.getHours()+":"+today.getMinutes();
   const meetMake = async(data)=>{
-    const datas = await apis.postStartMeet(data);
-    dispatch(teamID({
-      meetid : datas.data,
-    }))
+    const datas = await apis.postMeetStartIssue(data);
     return datas;
   }
 
   const { mutate } = useMutation(meetMake,{
     onSuccess: () => {
-      navigate(`/teamboard/${teamId}/meetmakethreeone`);
+      navigate('/meetmakethree');
     },
     onError: (error) => {
-      alert("미팅 만들기 실패")
+      alert("로그인 불가")
     }
   });
 
   const makeFunction = () =>{
     mutate({
       meetingTitle : meetTitle.current.value,
-      meetingDate : date,
+      meetingDate : today.getFullYear,
       meetingSum : sumImg,
       meetingTheme : theme,
-      meetingTime : time,
-      teamId :teamId,
     })
   }
 
@@ -73,18 +58,18 @@ const MeetMakeTwoOne = () => {
                   <StMeetName>
                     미팅룸 이름 
                   </StMeetName>
-                  <StMeetInput type="text" maxLength='20' required ref={meetTitle} placeholder='미팅룸 이름을 입력해주세요.'/>
+                  <StMeetInput ref={meetTitle} placeholder='미팅룸 이름을 입력해주세요.'/>
                 </StMeetNameBox>
                 <StSumnailBox>
                   <StSumTitle>
                     썸네일 이미지 선택
                   </StSumTitle>
                   <StSumnail>
-                    <StSumnailImg1 clicked={sumImg} onClick={()=>{setSumImg(1)}}/>
-                    <StSumnailImg2 clicked={sumImg} onClick={()=>{setSumImg(2)}}/>
-                    <StSumnailImg3 clicked={sumImg} onClick={()=>{setSumImg(3)}}/>
-                    <StSumnailImg4 clicked={sumImg} onClick={()=>{setSumImg(4)}}/>
-                    <StSumnailImg5 clicked={sumImg} onClick={()=>{setSumImg(5)}}/>
+                    <StSumnailImg onClick={()=>{setSumImg(1)}}/>
+                    <StSumnailImg onClick={()=>{setSumImg(2)}}/>
+                    <StSumnailImg onClick={()=>{setSumImg(3)}}/>
+                    <StSumnailImg onClick={()=>{setSumImg(4)}}/>
+                    <StSumnailImg onClick={()=>{setSumImg(5)}}/>
                   </StSumnail>
                 </StSumnailBox>
               </StLeft>
@@ -93,8 +78,8 @@ const MeetMakeTwoOne = () => {
                   테마 선택
                 </StThemeTitle>
                 <StThemeSmallBox>
-                  <StThemeInnerBox1 clicked={theme} onClick={()=>{setTheme(1)}}/>
-                  <StThemeInnerBox2 clicked={theme} onClick={()=>{setTheme(2)}}/>
+                  <StThemeInnerBox onClick={()=>{setTheme(1)}}/>
+                  <StThemeInnerBox onClick={()=>{setTheme(2)}}/>
                 </StThemeSmallBox>
               </StTheme>
             </StInfo>
@@ -106,50 +91,7 @@ const MeetMakeTwoOne = () => {
   )
 }
 
-const StSumnailImg1 = styled.img`
-  border : ${props=>(props.clicked == 1 ? "1px solid black" :"none")};
-  width : 62px;
-  height : 62px;
-  border-radius: 8px;
-  background-color: #D9D9D9;
-  cursor: pointer;
-`;
 
-const StSumnailImg2 = styled.img`
-  border: ${props=>(props.clicked == 2 ? "1px solid black" :"none")};
-  width : 62px;
-  height : 62px;
-  border-radius: 8px;
-  background-color: #D9D9D9;
-  cursor: pointer;
-`;
-
-const StSumnailImg3 = styled.img`
-  border: ${props=>(props.clicked == 3 ? "1px solid black" :"none")};
-  width : 62px;
-  height : 62px;
-  border-radius: 8px;
-  background-color: #D9D9D9;
-  cursor: pointer;
-`;
-
-const StSumnailImg4 = styled.img`
-  border: ${props=>(props.clicked == 4 ? "1px solid black" :"none")};
-  width : 62px;
-  height : 62px;
-  border-radius: 8px;
-  background-color: #D9D9D9;
-  cursor: pointer;
-`;
-
-const StSumnailImg5 = styled.img`
-  border: ${props=>(props.clicked == 5 ? "1px solid black" :"none")};
-  width : 62px;
-  height : 62px;
-  border-radius: 8px;
-  background-color: #D9D9D9;
-  cursor: pointer;
-`;
 
 const StLeft = styled.div`
   display: flex;
@@ -159,20 +101,12 @@ const StLeft = styled.div`
   justify-content: space-between;
 `;
 
-const StThemeInnerBox2 = styled.img`
-  width : 170px;
-  height : 167px;
-  border-radius: 8px;
-  border: ${props=>(props.clicked == 2 ? "1px solid black" :"none")};
-  background-color: #D9D9D9;
-  cursor: pointer;
-`;
 
-const StThemeInnerBox1 = styled.img`
+const StThemeInnerBox = styled.img`
   width : 170px;
   height : 167px;
   border-radius: 8px;
-  border: ${props=>(props.clicked == 1 ? "1px solid black" :"none")};
+  border: none;
   background-color: #D9D9D9;
   cursor: pointer;
 `;

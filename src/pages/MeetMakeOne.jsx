@@ -1,12 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router'
-import { useParams } from 'react-router'
 
 const MeetMakeOne = () => {
     const navigate = useNavigate();
-    const teamId = useParams().teamid;
-    
+
+    const movetwoone = () => {
+        navigate('/meetmaketwoone')
+    }
+
+    const movetwotwo = () => {
+        navigate('/meetmaketwotwo')
+    }
+
   return (
     <StMeetMake>
         <StBox>
@@ -21,12 +27,12 @@ const MeetMakeOne = () => {
                     </StSubTitle>
                 </StTitle>
                 <StButtonBox>
-                    <StButton onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwoone`)}}>
+                    <StButton onClick={movetwoone}>
                         <StText>
                             회의 시작하기
                         </StText>
                     </StButton>
-                    <StButton onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwotwo`)}}>
+                    <StButton onClick={movetwotwo}>
                         <StText>
                             회의 예약하기
                         </StText>
