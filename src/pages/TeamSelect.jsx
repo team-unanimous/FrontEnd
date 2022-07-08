@@ -21,16 +21,14 @@ const TeamSelect = () => {
         <StTeamBox>
             {data.map((team)=>(
                 <>
-                <StTeamItemBox>
+                <StTeamItemBox onClick={()=>{navigate(`/teamboard/${team.teamId}`)}}>
                 <StTeamItem
-                    key = {team.team_id}
-                    className = "team-title"
-                    // onClick={()=> setSelectedTeam(team)}
-                    >
+                    key = {team.teamId}
+                    className = "team-title">
                         <img src={`${team.teamImage}`}></img>
                 </StTeamItem>
                 <StTeamName>
-                {team.teamname}
+                    {team.teamname}
                 </StTeamName>
                 </StTeamItemBox>
                 </>
