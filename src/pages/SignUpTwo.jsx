@@ -5,39 +5,36 @@ import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
 import api from '../api/core'
 import { useDispatch } from 'react-redux'
-import { postUserId, tossUserId } from '../redux/modules/post'
+import { tossUserId } from '../redux/modules/user'
+
 
 
 const SignUpTwo = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // 이메일 정규식
-  // 해석 
-  // const reg_email = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$/;
-  const reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,8}$/i;
   const [email, setEmail] = useState("");
-  // const [usernameid, setUsernameid] = useState(null);
 
 
 
-  // 이메일 코드 전송
-
-  const [warnning, setWarnning] = useState(false);
-
-  const formCheck = () => {
-    if (reg_email.test(email)) {
-      setWarnning(false);
-      alert("코드전송 완료")
-      setCheckOne(true);
-    }
-    else {
-      setWarnning(false);
-    }
+  // 이메일 정규식
+  //  상우님const reg_email = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$/;
+  const reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,8}$/i;
+  const rockemail = (id) => {
+    return reg_email.test(id)
   }
 
-  console.log(warnning)
-  console.log(reg_email.test(email))
+  // 비활성화 함수
+  const disableFunction = () => {
+    if (rockemail(email) === false)
+      return true;
+    else
+      return false;
+  }
+
+
+  console.log(rockemail(email))
 
   // // 이메일 버튼시 포스트
   // const emailPost = async (data) => {
@@ -82,18 +79,7 @@ const SignUpTwo = () => {
     }
   }
 
-
-  // // 버튼 비활성
-  // useEffect(() => {
-  //   if (checkOne == true && checkTwo == true) {
-  //     setActive(true);
-  //   }
-  //   else {
-  //     setActive(false);
-  //   }
-  //   console.log("checkone : " + checkOne);
-  //   console.log("checktwo : " + checkTwo);
-  // })
+  // 로그인으로 
   const Caencelbtn = () => {
     navigate('/login')
   }
@@ -107,13 +93,13 @@ const SignUpTwo = () => {
             <StEmailTitle>이메일</StEmailTitle>
             <StEmailInputBox>
               <StEmailInput onChange={(e) => setEmail(e.target.value)} placeholder='이메일 입력' />
-              <StEmailButton onClick={formCheck} >
+              <StEmailButton >
                 코드 전송
               </StEmailButton>
             </StEmailInputBox>
             {reg_email.test(email) === false
               ? <StWarningTitle style={{ color: 'red' }}> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
-              : warnning === true
+              : email === true
                 ? <StWarningTitle style={{ color: 'red' }}> 이미 사용중인 이메일 입니다</StWarningTitle>
                 : <p></p>
             }
@@ -134,7 +120,9 @@ const SignUpTwo = () => {
           <StNotAgree onClick={Caencelbtn}>
             취소
           </StNotAgree>
-          <StAgree onClick={EmailFunction}>
+          <StAgree
+            onClick={EmailFunction}
+            disabled={disableFunction()}>
             다음
           </StAgree>
         </StBtBox>
@@ -165,6 +153,10 @@ const StAgree = styled.button`
   border-radius: 0.375rem;
   border: 1px solid #000000;
   cursor: pointer;
+  &:disabled{
+  background-color: #cccccc;
+  color: black;
+}
 `;
 
 const StBtBox = styled.div`
