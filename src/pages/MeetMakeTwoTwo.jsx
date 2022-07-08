@@ -1,25 +1,69 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { useState } from 'react'
 import { StTheme,StThemeTitle,StThemeSmallBox,StThemeInnerBox,StSumnailBox,StSumTitle,StSumnail,StSumnailImg,StBarBox,StBarC,StBarG,StTitle } from '../style/styled'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useMutation } from 'react-query'
+import apis from '../api/main'
+import { teamID } from '../redux/modules/meetReducer'
 
 const MeetMakeTwoTwo = () => {
 
-  
+  const dispatch = useDispatch();
+
+  const title = useRef("");
+  const date = useRef("");
   const navigate = useNavigate();
+  const [sumImg,setSumImg] = useState(1);
+  const [theme,setTheme] = useState(1);
+
+  const teamId = useParams().teamid;
 
   // 시간 옵션
   const [clicked,setClicked] = useState(false);
-  const [time,setTime] = useState("");
+  const [time,setTime] = useState("00:00");
   
-  const times = [1,2,3,4,5,6,7,8,9,10,11,12];
-
+  const times = [0,1,2,3,4,5,6,7,8,9];
+  const timess = [10,11,12,13,14,15,16,17,18,19,20,21,22,23];
   // 기간 옵션
   const durations = [1,2,3,4,5];
 
   const [duClicked, setDuClicked] = useState(false);
-  const [duration,setDuration] = useState("")
+  const [duration,setDuration] = useState("0시간")
+
+
+  // 팀 만들기
+  const makeTeam = async(data)=>{
+    console.log(data);
+    const datas = await apis.postReserveMeet(data);
+    dispatch(teamID({
+      meetid : datas.data
+    }))
+    return datas;
+  }
+
+  const { mutate } = useMutation(makeTeam,{
+    onSuccess:()=>{
+      navigate(`/teamboard/${teamId}/meetmakethreetwo`)
+      alert("미팅 만들기 성공")
+    },
+    onError:(error)=>{
+      alert("미팅 만들기 실패");
+    }   
+  });
+
+  const makeFunction = () =>{
+    mutate({
+      meetingTitle : title.current.value,
+      meetingDate : date.current.value,
+      meetingTime : time,
+      meetingSum : sumImg,
+      meetingTheme : theme,
+      meetingDuration : duration,
+      teamId : teamId
+    })
+  }
 
 
   return (
@@ -39,18 +83,18 @@ const MeetMakeTwoTwo = () => {
               <StLeft>
                 <StTitleBox>
                   <StTitleName>미팅룸 이름</StTitleName>
-                  <StTitleInput placeholder='미팅룸 이름을 입력해주세요'/>
+                  <StTitleInput ref={title} placeholder='미팅룸 이름을 입력해주세요'/>
                 </StTitleBox>
                 <StSumnailBox>
                     <StSumTitle>
                       썸네일 이미지 선택
                     </StSumTitle>
                     <StSumnail>
-                      <StSumnailImg/>
-                      <StSumnailImg/>
-                      <StSumnailImg/>
-                      <StSumnailImg/>
-                      <StSumnailImg/>
+                      <StSumnailImg1 clicked={sumImg} onClick={()=>{setSumImg(1)}}/>
+                      <StSumnailImg2 clicked={sumImg} onClick={()=>{setSumImg(2)}}/>
+                      <StSumnailImg3 clicked={sumImg} onClick={()=>{setSumImg(3)}}/>
+                      <StSumnailImg4 clicked={sumImg} onClick={()=>{setSumImg(4)}}/>
+                      <StSumnailImg5 clicked={sumImg} onClick={()=>{setSumImg(5)}}/>
                     </StSumnail>
                   </StSumnailBox>
                   <StTheme>
@@ -58,8 +102,8 @@ const MeetMakeTwoTwo = () => {
                       테마 선택
                     </StThemeTitle>
                     <StThemeSmallBox>
-                      <StThemeInnerBox/>
-                      <StThemeInnerBox/>
+                      <StThemeInnerBox1 clicked={theme} onClick={()=>{setTheme(1)}}/>
+                      <StThemeInnerBox2 clicked={theme} onClick={()=>{setTheme(2)}}/>
                     </StThemeSmallBox>
                   </StTheme>
               </StLeft>
@@ -69,7 +113,7 @@ const MeetMakeTwoTwo = () => {
                     <StDateText>
                       날짜
                     </StDateText>
-                    <StDate type='date'/>
+                    <StDate ref={date} type='date'/>
                   </StDateBox>
                   <StTimeBox>
                     <StDateText>
@@ -77,14 +121,14 @@ const MeetMakeTwoTwo = () => {
                     </StDateText>
                     <StDropBox>
                       {time?<StDefault onClick={()=>{setClicked(!clicked)}}>{time}</StDefault>:
-                      <StDefault onClick={()=>{setClicked(!clicked)}}>오전 0:00</StDefault>}
+                      <StDefault onClick={()=>{setClicked(!clicked)}}>00:00</StDefault>}
                       <StOption clicked = {clicked}>
                         <StHidden>
                           {times.map((value,index)=>{
-                            return <StTime key={index} onClick={()=>{setTime(`오전 ${value}:00`);setClicked(!clicked)}}>오전 {value}:00</StTime>
+                            return <StTime key={index} onClick={()=>{setTime(`0${value}:00`);setClicked(!clicked)}}>0{value}:00</StTime>
                           })}
-                          {times.map((value,index)=>{
-                            return <StTime key={index} onClick={()=>{setTime(`오후 ${value}:00`);setClicked(!clicked)}}>오후 {value}:00</StTime>
+                          {timess.map((value,index)=>{
+                            return <StTime key={index} onClick={()=>{setTime(`${value}:00`);setClicked(!clicked)}}>{value}:00</StTime>
                           })}
                         </StHidden>
                       </StOption>
@@ -110,12 +154,78 @@ const MeetMakeTwoTwo = () => {
               </StRight>
             </StInfoBox>
           </StInnerBox>
-          <StButton onClick={()=>{navigate('/meetmakethree')}}>다음</StButton>
+          <StButton onClick={makeFunction}>다음</StButton>
         </StInBox>
       </StModal>
     </StBox>
   )
 }
+
+
+const StThemeInnerBox2 = styled.img`
+  width : 170px;
+  height : 167px;
+  border-radius: 8px;
+  border: ${props=>(props.clicked == 2 ? "1px solid black" :"none")};
+  background-color: #D9D9D9;
+  cursor: pointer;
+`;
+
+const StThemeInnerBox1 = styled.img`
+  width : 170px;
+  height : 167px;
+  border-radius: 8px;
+  border: ${props=>(props.clicked == 1 ? "1px solid black" :"none")};
+  background-color: #D9D9D9;
+  cursor: pointer;
+`;
+
+
+const StSumnailImg1 = styled.img`
+  border : ${props=>(props.clicked == 1 ? "1px solid black" :"none")};
+  width : 62px;
+  height : 62px;
+  border-radius: 8px;
+  background-color: #D9D9D9;
+  cursor: pointer;
+`;
+
+const StSumnailImg2 = styled.img`
+  border: ${props=>(props.clicked == 2 ? "1px solid black" :"none")};
+  width : 62px;
+  height : 62px;
+  border-radius: 8px;
+  background-color: #D9D9D9;
+  cursor: pointer;
+`;
+
+const StSumnailImg3 = styled.img`
+  border: ${props=>(props.clicked == 3 ? "1px solid black" :"none")};
+  width : 62px;
+  height : 62px;
+  border-radius: 8px;
+  background-color: #D9D9D9;
+  cursor: pointer;
+`;
+
+const StSumnailImg4 = styled.img`
+  border: ${props=>(props.clicked == 4 ? "1px solid black" :"none")};
+  width : 62px;
+  height : 62px;
+  border-radius: 8px;
+  background-color: #D9D9D9;
+  cursor: pointer;
+`;
+
+const StSumnailImg5 = styled.img`
+  border: ${props=>(props.clicked == 5 ? "1px solid black" :"none")};
+  width : 62px;
+  height : 62px;
+  border-radius: 8px;
+  background-color: #D9D9D9;
+  cursor: pointer;
+`;
+
 
 const StButton = styled.div`
   display: flex;
