@@ -9,6 +9,7 @@ const SignUpFour = () => {
 
   const navigate = useNavigate();
   const usersData = useSelector((state) => state.postReducer.users.userids)
+  console.log(usersData)
 
   // 닉네임 
   const [nickname, setNickname] = useState("");
@@ -51,7 +52,7 @@ const SignUpFour = () => {
 
   const { mutate: NickSv } = useMutation(NickSave, {
     onSuccess: () => {
-      navigate('/')
+      navigate('/mypage')
       alert("닉네임 생성에 성공하셨습니다")
     },
     onError: (error) => {
@@ -65,6 +66,10 @@ const SignUpFour = () => {
       nickname: nickname,
       userid: usersData
     })
+  }
+
+  const Caencelbtn = () => {
+    navigate('/login')
   }
 
 
@@ -87,6 +92,9 @@ const SignUpFour = () => {
           </StEmailWarnning>
         </StEmailBox>
         <StBtBox>
+          <StNotAgree onClick={Caencelbtn}>
+            취소
+          </StNotAgree>
           <StAgree onClick={nickSaveFunction}>
             완료
           </StAgree>
@@ -95,6 +103,19 @@ const SignUpFour = () => {
     </StBox>
   )
 }
+
+
+const StNotAgree = styled.button`
+  width : 200px;
+  height : 54px;
+  background-color: white;
+  font-weight: 700;
+  font-size: 20px;
+  color : black;
+  border-radius: 0.375rem;
+  border: 1px solid #000000;
+  cursor: pointer;
+`;
 
 const StAgree = styled.button`
   width : 200px;
@@ -109,7 +130,8 @@ const StAgree = styled.button`
 
 const StBtBox = styled.div`
   display: flex;
-  width: 208px;
+  justify-content: space-between;
+  width: 418px;
   height: 54px;
   margin : 3.75rem 0 0 0;
 `;
@@ -135,6 +157,7 @@ width : 390px;
 height : 44px;
 border-radius: 6px;
 border: 1px solid #000000;
+padding-left: 10px;
 `;
 
 
@@ -151,7 +174,6 @@ width : 200px;
 height : 19px;
 font-weight: 700;
 font-size: 15px;
-
 `;
 
 const StEmailBox = styled.div`

@@ -12,16 +12,18 @@ const SignupThree = () => {
   // const [usernameid, setUsernameid] = useState(null);
 
   const usersData = useSelector((state) => state.postReducer.users.userids)
-
+  const userId = useSelector((state) => state.postReducer.users.email)
+  console.log(usersData)
+  console.log(userId)
 
   // 비밀번호 정규식
   const pw_check = /^(?=.[a-zA-Z])(?=.\\d)(?=.[!@#$%^+=-]).{6,12}$/;
 
   // 패스워드 
-  // const [password, setPassword] = useState("");
-  // const [passwordCheck, setPasswordCheck] = useState("");
-  const password = useRef("");
-  const passwordCheck = useRef("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  // const password = useRef("");
+  // const passwordCheck = useRef("");
 
 
 
@@ -35,7 +37,10 @@ const SignupThree = () => {
   // }
 
   const passwordPatch = (data) => {
-    return apis.patchPassword(data);
+    console.log(data)
+    console.log(password)
+    console.log(password)
+    return apis.postPassword(data);
   }
 
   const { mutate } = useMutation(passwordPatch, {
@@ -51,11 +56,16 @@ const SignupThree = () => {
 
   const passwordFunction = () => {
     const data = {
-      password: password.current.value,
-      passwordCheck: passwordCheck.current.value,
+      username: userId,
+      password: password,
+      passwordCheck: passwordCheck,
       userid: usersData
     }
     mutate(data)
+  }
+
+  const Caencelbtn = () => {
+    navigate('/login')
   }
 
   return (
@@ -66,26 +76,28 @@ const SignupThree = () => {
           <StEmailBox>
             <StEmailTitle>비밀번호</StEmailTitle>
             <StEmailInputBox>
-              {/* <StPwInput type='password' onChange={(e) => setPassword(e.target.value)} placeholder='비밀번호 입력' /> */}
-              <StPwInput type='password' ref={password} placeholder='비밀번호 입력' />
+              <StPwInput type='password' onChange={(e) => setPassword(e.target.value)} placeholder='비밀번호 입력' />
+              {/* <StPwInput type='password' ref={password} placeholder='비밀번호 입력' /> */}
             </StEmailInputBox>
             <StEmailWarnning>
-              영문자,숫자 및 특수문자 조합, 6~12자
+              <StWarningTitle>영문자,숫자 및 특수문자 조합, 6~12자</StWarningTitle>
             </StEmailWarnning>
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>비밀번호 확인</StEmailTitle>
             <StEmailInputBox>
-              {/* <StPwInput type='password' onChange={(e) => setPasswordCheck(e.target.value)} placeholder='비밀번호 재입력' /> */}
-              <StPwInput type='password' ref={passwordCheck} placeholder='비밀번호 재입력' />
+              <StPwInput type='password' onChange={(e) => setPasswordCheck(e.target.value)} placeholder='비밀번호 재입력' />
+              {/* <StPwInput type='password' ref={passwordCheck} placeholder='비밀번호 재입력' /> */}
             </StEmailInputBox>
             <StEmailWarnning>
-              영문자,숫자 및 특수문자 조합, 6~12자
               {/* {password === passwordCheck && password.length != 0 ? <p style={{ color: 'green' }}>형식에 맞는 비밀번호 입니다.</p> : <p style={{ color: 'red' }}> 비밀번호가 일치하지 않거나 공백입니다.</p>} */}
             </StEmailWarnning>
           </StEmailBox>
         </StInfo>
         <StBtBox>
+          <StNotAgree onClick={Caencelbtn}>
+            취소
+          </StNotAgree>
           <StAgree onClick={passwordFunction}>
             다음
           </StAgree>
@@ -94,6 +106,27 @@ const SignupThree = () => {
     </StBox>
   )
 }
+
+
+const StWarningTitle = styled.div`
+  width : 400px;
+  height : 19px;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 25px;
+`;
+
+const StNotAgree = styled.button`
+  width : 200px;
+  height : 54px;
+  background-color: white;
+  font-weight: 700;
+  font-size: 20px;
+  color : black;
+  border-radius: 0.375rem;
+  border: 1px solid #000000;
+  cursor: pointer;
+`;
 
 const StAgree = styled.button`
   width : 200px;
@@ -120,7 +153,8 @@ const StEmailTitle = styled.div`
   width : 200px;
   height : 19px;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 16px;
+  margin-bottom: 25px;
 `;
 
 const StEmailInputBox = styled.div`
@@ -137,12 +171,15 @@ const StPwInput = styled.input`
   height : 44px;
   border-radius: 6px;
   border: 1px solid #000000;
+  padding-left: 10px;
+  margin-bottom: 20px;
 `;
 
 const StEmailWarnning = styled.div`
   height : 19px;
   font-weight: 500;
   font-size: 16px;
+  margin-bottom: 23px;
 `;
 
 const StContentBox = styled.div`
@@ -155,7 +192,7 @@ const StContentBox = styled.div`
 
 const StBtBox = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 418px;
   height: 54px;
   margin : 3.75rem 0 0 0;

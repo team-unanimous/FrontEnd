@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
 import api from '../api/core'
 import { useDispatch } from 'react-redux'
-import { postUserid } from '../redux/modules/post'
+import { postUserId, tossUserId } from '../redux/modules/post'
 
 
 const SignUpTwo = () => {
@@ -13,8 +13,9 @@ const SignUpTwo = () => {
   const dispatch = useDispatch();
 
   // 이메일 정규식
-  const reg_email = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$/;
-
+  // 해석 
+  // const reg_email = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$/;
+  const reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,8}$/i;
   const [email, setEmail] = useState("");
   // const [usernameid, setUsernameid] = useState(null);
 
@@ -25,47 +26,61 @@ const SignUpTwo = () => {
   const [warnning, setWarnning] = useState(false);
 
   const formCheck = () => {
-    if (reg_email.test(email.current.value)) {
+    if (reg_email.test(email)) {
       setWarnning(false);
       alert("코드전송 완료")
       setCheckOne(true);
     }
     else {
-      setWarnning(true);
+      setWarnning(false);
     }
   }
 
+  console.log(warnning)
+  console.log(reg_email.test(email))
 
-  // 이메일 버튼시 포스트
+  // // 이메일 버튼시 포스트
+  // const emailPost = async (data) => {
+  //   console.log(data)
+  //   const datas = await apis.postEmailCheck(data);
+  //   const userids = datas.data.userId
+  //   console.log(userids)
+  //   dispatch(postUserid({ userids }))
+  //   return datas;
+  // }
 
-  const emailPost = async (data) => {
-    console.log(data)
-    const datas = await apis.postEmailCheck(data);
-    const userids = datas.data.userId
-    console.log(userids)
-    dispatch(postUserid({ userids }))
-    return datas;
-  }
+  // const { mutate } = useMutation(emailPost, {
+  //   onSuccess: () => {
+  //     navigate('/signupthree');
+  //     alert("이메일 생성에 성공했습니다")
+  //   },
+  //   onError: (error) => {
+  //     navigate('/signuptwo');
+  //     alert("이메일 생성에 실패했습니다")
+  //   },
+  //   // onSettled: () => { // 요청이 성공하든, 에러가 발생되든 실행하고 싶은 경우
+  //   //   return copy
+  // })
 
-  const { mutate } = useMutation(emailPost, {
-    onSuccess: () => {
-      navigate('/signupthree');
-      alert("이메일 생성에 성공했습니다")
-    },
-    onError: (error) => {
-      navigate('/signuptwo');
-      alert("이메일 생성에 실패했습니다")
-    },
-    // onSettled: () => { // 요청이 성공하든, 에러가 발생되든 실행하고 싶은 경우
-    //   return copy
-  })
+  // const EmailFunction = () => {
+  //   mutate({
+  //     username: email,
+  //   })
+  // }
+
+
 
   const EmailFunction = () => {
-    mutate({
-      username: email,
-    })
+    if (reg_email.test(email)) {
+      dispatch(tossUserId({ email }))
+      alert("이메일 생성에 성공했습니다")
+      navigate('/signupthree');
+    }
+    else {
+      navigate('/signuptwo');
+      alert("이메일 생성에 실패했습니다")
+    }
   }
-
 
 
   // // 버튼 비활성
@@ -79,7 +94,9 @@ const SignUpTwo = () => {
   //   console.log("checkone : " + checkOne);
   //   console.log("checktwo : " + checkTwo);
   // })
-
+  const Caencelbtn = () => {
+    navigate('/login')
+  }
 
   return (
     <StBox>
@@ -90,12 +107,16 @@ const SignUpTwo = () => {
             <StEmailTitle>이메일</StEmailTitle>
             <StEmailInputBox>
               <StEmailInput onChange={(e) => setEmail(e.target.value)} placeholder='이메일 입력' />
-              <StEmailButton onClick={formCheck}>
+              <StEmailButton onClick={formCheck} >
                 코드 전송
               </StEmailButton>
             </StEmailInputBox>
-            {reg_email == true ? <p style={{ color: 'green' }}>사용 가능한 이메일 입니다</p> : <p> 이메일 형식에 맞게 입력해주세요</p>}
-            {<p>이미 사용중인 이메일 입니다</p>}
+            {reg_email.test(email) === false
+              ? <StWarningTitle style={{ color: 'red' }}> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
+              : warnning === true
+                ? <StWarningTitle style={{ color: 'red' }}> 이미 사용중인 이메일 입니다</StWarningTitle>
+                : <p></p>
+            }
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>회원가입 코드</StEmailTitle>
@@ -106,11 +127,13 @@ const SignUpTwo = () => {
               </StEmailButton>
             </StEmailInputBox>
             <StEmailWarnning>
-              확인되었습니다.
             </StEmailWarnning>
           </StEmailBox>
         </StInfo>
         <StBtBox>
+          <StNotAgree onClick={Caencelbtn}>
+            취소
+          </StNotAgree>
           <StAgree onClick={EmailFunction}>
             다음
           </StAgree>
@@ -119,6 +142,18 @@ const SignUpTwo = () => {
     </StBox>
   )
 }
+
+const StNotAgree = styled.button`
+  width : 200px;
+  height : 54px;
+  background-color: white;
+  font-weight: 700;
+  font-size: 20px;
+  color : black;
+  border-radius: 0.375rem;
+  border: 1px solid #000000;
+  cursor: pointer;
+`;
 
 const StAgree = styled.button`
   width : 200px;
@@ -134,7 +169,8 @@ const StAgree = styled.button`
 
 const StBtBox = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: flex-end;
   width: 418px;
   height: 54px;
   margin : 3.75rem 0 0 0;
@@ -160,6 +196,8 @@ const StEmailInput = styled.input`
   height : 44px;
   border-radius: 6px;
   border: 1px solid #000000;
+  // placeholder 앞간격
+  padding-left: 10px;
 `;
 
 const StEmailInputBox = styled.div`
@@ -175,8 +213,16 @@ const StEmailTitle = styled.div`
   height : 19px;
   font-weight: 700;
   font-size: 15px;
-  
+  margin-bottom: 12px;
 `;
+
+const StWarningTitle = styled.div`
+  width : 400px;
+  height : 19px;
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 10px;
+`
 
 const StEmailBox = styled.div`
   display: flex;

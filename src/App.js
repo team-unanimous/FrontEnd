@@ -23,6 +23,8 @@ import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
 import TeamJoin from "./pages/TeamJoin";
 import Mypage from "./pages/Mypage";
+import PasswordFindOne from "./pages/PasswordFindOne"
+import PasswordFindTwo from "./pages/PasswordFindTwo"
 
 
 const queryClient = new QueryClient();
@@ -50,6 +52,8 @@ function App() {
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/passwordfindone" element={<PasswordFindOne />} />
+        <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>
