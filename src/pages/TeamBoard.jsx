@@ -3,11 +3,17 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 import TeamboardHome from '../components/TeamboardHome';
-import TeamboardLeft from '../components/TeamboardLeft';
 import MeetingManage from '../components/MeetingManage';
 import TeamSetting from '../components/TeamSetting';
 import useGetTeamMain from '../Hooks/useGetTeamMain';
-import useGetMeetList from '../Hooks/useGetMeetList';
+import home from '../img/home.png';
+import homeselect from '../img/homeselect.png';
+import meeting from '../img/meeting.png';
+import meetingselect from '../img/meetingselect.png';
+import setting from '../img/setting.png';
+import settingselect from '../img/settingselect.png';
+
+
 
 const TeamBoard = () => {
 
@@ -18,7 +24,6 @@ const TeamBoard = () => {
   const teamId = useParams().teamid;
 
   const {data : main}= useGetTeamMain({teamId});
-  const {data : list}= useGetMeetList({teamId});
  
   return  (
           <StBox>
@@ -34,9 +39,9 @@ const TeamBoard = () => {
                       </StInfoBox>
                   </StTeamInfoBox>
                   <StBtBox>
-                      <StButton1 page={page} onClick={()=>{setPage(1)}}> 홈 </StButton1>
-                      <StButton2 page={page} onClick={()=>{setPage(2)}}> 미팅 관리 </StButton2>
-                      <StButton3 page={page} onClick={()=>{setPage(3)}}> 환경설정 </StButton3>
+                      <StButton1 page={page} onClick={()=>{setPage(1)}}> {page==1?<StImg src={homeselect}/>:<StImg src={home}/>}홈 </StButton1>
+                      <StButton2 page={page} onClick={()=>{setPage(2)}}> {page==2?<StImg src={meetingselect}/>:<StImg src={meeting}/>}미팅 관리 </StButton2>
+                      <StButton3 page={page} onClick={()=>{setPage(3)}}> {page==3?<StImg src={settingselect}/>:<StImg src={setting}/>}환경설정 </StButton3>
                   </StBtBox>
                 </StSmallBox>
               </StLeft>
@@ -48,6 +53,12 @@ const TeamBoard = () => {
           </StBox>
     );
 };
+
+const StImg = styled.img`
+  width : 24px;
+  height : 24px;
+  margin : 0 16px 0 16px;
+`;
 
 
 const StButton3 = styled.div`

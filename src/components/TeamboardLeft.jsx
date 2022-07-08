@@ -1,5 +1,12 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import home from '../img/home.png';
+import homeselect from '../img/homeselect.png';
+import meeting from '../img/meeting.png';
+import meetingselect from '../img/meetingselect.png';
+import setting from '../img/setting.png';
+import settingselect from '../img/settingselect.png';
+
 
 const TeamboardLeft = () => {
 
@@ -16,7 +23,7 @@ const TeamboardLeft = () => {
                     </StInfoBox>
                 </StTeamInfoBox>
                 <StBtBox>
-                    <StButton1 page={page} onClick={()=>{setPage(1)}}> 홈 </StButton1>
+                    <StButton1 page={page} onClick={()=>{setPage(1)}}><StIcon src='home'/> 홈 </StButton1>
                     <StButton2 page={page} onClick={()=>{setPage(2)}}> 미팅 관리 </StButton2>
                     <StButton3 page={page} onClick={()=>{setPage(3)}}> 환경설정 </StButton3>
                 </StBtBox>
@@ -50,6 +57,11 @@ const StButton1 = styled.div`
     height : 44px;
     border-radius: 8px;
     background-color: ${props=>(props.page == 1 ? "#E2E2E2;" :"none")};
+`;
+
+const StIcon = styled.img`
+    width: 24px;
+    height: 24px;
 `;
 
 const StBtBox = styled.div`

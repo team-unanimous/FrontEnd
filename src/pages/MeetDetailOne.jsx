@@ -40,7 +40,7 @@ const MeetDetailOne = () => {
                 주최자
               </StInfoLeft> 
               <StInfoRight>
-s
+                {data?.meetingCreator}
               </StInfoRight>
             </StLeaderBox>
             <StDateBox>

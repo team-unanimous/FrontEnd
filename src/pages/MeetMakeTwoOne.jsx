@@ -24,7 +24,7 @@ const MeetMakeTwoOne = () => {
   const today = new Date();
 
   const date = today.getFullYear()+"/" + today.getMonth()+"/" + today.getDate();
-  const time = today.getHours()+"시 "+today.getMinutes()+"분 "
+  const time = today.getHours()+":"+today.getMinutes();
   const meetMake = async(data)=>{
     const datas = await apis.postStartMeet(data);
     dispatch(teamID({
