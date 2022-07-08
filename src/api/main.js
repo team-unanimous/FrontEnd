@@ -35,10 +35,10 @@ const apis = {
     postLogin: (data) => api.post(`/api/users/login`, data), // 로그인
     postEmailCheck: (data) => api.post(`/api/users/emails`, data), // 이메일 인증
     postAuth: (data) => api.post(`/api/users/emails/auth-code`, data), // 이메일 코드인증
-    patchPassword: (data) => api.patch(`/api/users/password/${data.userid}`, data), // 패스워드 생성
+    postPassword: (data) => api.post(`/api/users/signup`, data), // 아이디 패스워드 생성
     postNickCheck: (data) => api.post(`/api/users/nickname`, data), // 닉네임 중복체크
     patchNickSave: (data) => api.patch(`/api/users/nickname/${data.userid}`, data), // 닉네임 저장
-    postPicturePost: () => api.post(`/api/users/signup/profile`,), // 프로필사진 등록
+    postPicturePost: (data) => api.post(`/api/users/signup/1`, data), // 프로필사진 등록
     postNickNameCreate: (data) => api.post(`api/users/signup/profile/{userid}`, data), // 닉네임 프로필 저장
 }
 
