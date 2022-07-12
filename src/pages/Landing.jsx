@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LandingHeader from "../components/LandingHeader";
 import img_placeholder from "../img/img_placeholder.png"
 
 const Landing = () => {
@@ -7,12 +9,13 @@ const Landing = () => {
     
     return (
         <>
-            <StHeader style={{position: "sticky", top:"0"}}>
+        <LandingHeader></LandingHeader>
+            {/* <StHeader style={{position: "sticky", top:"0"}}>
                 <StLogo>
                     Unanimous
                 </StLogo>
-                {/* <StStartButton>접속하기</StStartButton> */}
-            </StHeader>
+                <StStartButton>접속하기</StStartButton>
+            </StHeader> */}
             <StJumbotronContainer>
                 <StTitleContainer>
                     <StTitleText>

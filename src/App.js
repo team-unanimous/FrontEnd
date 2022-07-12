@@ -22,6 +22,8 @@ import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
 import TeamJoin from "./pages/TeamJoin";
 import Landing from "./pages/Landing";
+import MeetingRoomChat from "./components/MeetingRoomChat";
+import MeetingRoomStyle from "./components/MeetingRoomStyle";
 
 
 const queryClient = new QueryClient();
@@ -48,6 +50,8 @@ function App() {
         <Route path="/teammake" element={<TeamMake />} />
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />
+        <Route path="/chat" element={<MeetingRoomChat />} />
+        <Route path="/chatstyle" element={<MeetingRoomStyle />} />
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>

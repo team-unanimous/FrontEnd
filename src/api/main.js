@@ -5,7 +5,7 @@ const apis = {
     getTeamMain : ()=>api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
     patchMeetProfile : () =>api.get(`/api/${meetingId}`), // 미팅 프로필 수정
     deleteMeet : ()=>api.delete(`/api/meetings/${meetingId}`), // 미팅 삭제
-    postReserveMeet : ()=>api.post(`/api/teams/${teamId}/meetings`), // 미팅 예약 만들기
+    postReserveMeet : (data)=>api.post(`/api/teams/${data.teamId}/meetings`, data), // 미팅 예약 만들기
     postStartMeet : ()=>api.post(`/api/teams/${teamId}/meetings/now`), // 미팅바로 시작하기
     getMeetList : ()=>api.get(`/api/teams/${teamId}/meetings`), // 미팅 목록 가져오기
     getMeetSpecific : ()=>api.get(`/api/meetings/${meetingId}`), // 특정 미팅 조회
@@ -32,6 +32,9 @@ const apis = {
     postNickCheck: () => api.post(`/api/users/nickname`), // 닉네임 중복체크
     postEmailCheck: () => api.post(`/api/users/emails`), // 이메일 인증
     postSignUp: (data) => api.post(`/api/users/signup`, data), // 회원가입
+
+    //meeting room
+    postMeetingroom : (data) => api.post(`api/chat/meetings/${data.meetingId}/rooms`, data)
 }
 
 export default apis;
