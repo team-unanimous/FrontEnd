@@ -1,50 +1,44 @@
 import { getCookie } from "../Cookie";
-import Stomp from "stompjs";
-import sockJS from "sockjs-client"
-// import jwt_decode from "jwt-decode";
 import { SocketConnect, ws } from "../api/websocket";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import apis from "../api/main";
 import { useMutation } from "react-query";
-import { useState } from "react";
 
 const MeetingRoomChat = ()=>{
     const inputRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
     const token = getCookie("token");
+
+    const data = {
+        token: token,
+        roomId: "2"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+    }
+
     useEffect(()=>{
-        SocketConnect(token);
+        SocketConnect(data);
     })
 
-//handshake 
-const target = "http://52.79.226.242:8080/ws-stomp" // http URL
-const socket = new sockJS(target);
-const ws = Stomp.over(socket);
-const roomId = "";
-
-// server에서 Login, passcode 뭐 받는지 확인 필요
-const SocketConnect = (token) => { 
-    try{
-        ws.connect({
-            token: token
-        }, ()=> {
-            ws.subscribe(`/sub/api/chat/rooms/2`,
-            (response) => {
-                const newMessage = JSON.parse(response.body);
-                console.log("보낸사람:", newMessage.sender);
-                console.log("받은 메세지:", newMessage.message)
-            },
-            {
-                token: token
-            }
-            );
-        });
-    } catch (error) {
-        console.log(error.response);
-    }}
+// const SocketConnect = (token) => { 
+//     try{
+//         ws.connect({
+//             token: token
+//         }, ()=> {
+//             ws.subscribe(`/sub/api/chat/rooms/2`,
+//             (response) => {
+//                 const newMessage = JSON.parse(response.body);
+//                 console.log("보낸사람:", newMessage.sender);
+//                 console.log("받은 메세지:", newMessage.message)
+//             },
+//             {
+//                 token: token
+//             }
+//             );
+//         });
+//     } catch (error) {
+//         console.log(error.response);
+//     }}
     
 
     const makeMeetingroom = (meetingInfo) => {

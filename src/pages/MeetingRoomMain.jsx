@@ -47,6 +47,7 @@ const StBottomNav = styled.div`
 const StSidebarBox = styled.div`
     background-color: yellow;
     width: 22.5rem;
+    /* width: 40rem; */
     height: 100%;
 `
 const StMeetingRoomMainWrapper = styled.div`
@@ -56,7 +57,7 @@ const StMeetingRoomMainWrapper = styled.div`
     z-index: 1;
 `
 const StChattingWrapper = styled.div`
-    background-color: red;
+    background-color: #EAEAEA;
     width: 22.5rem;
     height: 100%;
 `

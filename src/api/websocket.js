@@ -8,15 +8,14 @@ const token = getCookie("token");
 const target = "http://52.79.226.242:8080/ws-stomp" // http URL
 export const socket = new sockJS(target);
 export const ws = Stomp.over(socket);
-const roomId = "";
 
 // server에서 Login, passcode 뭐 받는지 확인 필요
-export const SocketConnect = (token) => { 
+export const SocketConnect = (data) => { 
     try{
         ws.connect({
-            token: token
+            token: data.token
         }, ()=> {
-            ws.subscribe(`/sub/api/chat/rooms/${roomId}`,
+            ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
             (response) => {
                 const newMessage = JSON.parse(response.body);
                 console.log("보낸사람:", newMessage.sender);
@@ -30,6 +29,7 @@ export const SocketConnect = (token) => {
     } catch (error) {
         console.log(error.response);
     }}
+    
 
     // ws.connect(
     //     {token: accessToken},

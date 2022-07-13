@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import inputEnterVector from "../img/InputEnterVector.png"
-import Header from "./Header";
-
+import xbutton from "../img/Xbutton.png"
 
 const MeetingRoomStyle = ()=>{
 
@@ -10,6 +9,18 @@ const MeetingRoomStyle = ()=>{
         <>
             <StChattingContainer>
                 <StChattingHeader>
+                    <StChattingHeaderWrapper>
+                        <StChattingTitle>
+                            <StChattingTitleBox>
+                                채팅 (0)
+                            </StChattingTitleBox>
+                        </StChattingTitle>
+                        <StChattingXbutton>
+                            <StChattingXbuttonBox type={"image"} src={xbutton}>
+
+                            </StChattingXbuttonBox>
+                        </StChattingXbutton>
+                    </StChattingHeaderWrapper>
 
                 </StChattingHeader>
                 <StChattingBody>
@@ -33,40 +44,80 @@ const StChattingContainer = styled.div`
     right: 0px;
     display: flex;
     flex-direction: column;
-    align-self:flex-end;
 `
 const StChattingHeader = styled.div`
+    /* background-color: blue; */
     /* Frame 146 */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 0px;
 
-    position: absolute;
+    /* position: absolute;
     left: 0%;
     right: 0%;
     top: 0%;
-    bottom: 91.95%;
+    bottom: 91.95%; */
+    height: 100px;
 
     background: #EAEAEA;
 `
+const StChattingHeaderWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    width: 90%;
+    height: 4rem;
+    /* background-color: yellow; */
+    border-bottom: 1px solid #D9D9D9;
+`
+const StChattingTitle = styled.div`
+    background-color: #EAEAEA;
+    display:flex;
+    flex-direction: row;
+    width: 50%;
+    height: 100%;;
+    justify-content: flex-start;
+    align-items: center;
+`
+const StChattingTitleBox = styled.span`
+    font-size: 1.25rem;
+`
+
+const StChattingXbutton = styled.div`
+    /* align-self: flex-end; */
+    /* background-color: blue; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+`
+const StChattingXbuttonBox = styled.input`
+    /* background-color: #fff; */
+    height: 1rem;
+    width: 1rem;
+`
+
 const StChattingBody = styled.div`
-    background-color: black;
+    /* background-color: black; */
     /* Frame 150 */
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-
-    position: absolute;
+    height: 100%;
+    /* position: absolute;
     left: 0%;
     right: 0%;
     top: 8.08%;
-    bottom: 0.03%;
+    bottom: 0.03%; */
 `
 const StChattingInputWrapper = styled.div`
-    /* background: #EAEAEA; */
-    background-color: red;
+    background: #EAEAEA;
+    /* background-color: blue; */
     /* Frame 142 */
     display: flex;
     flex-direction: column;
@@ -79,7 +130,7 @@ const StChattingInputWrapper = styled.div`
     width: 100%;
     height: 84px;
 
-    border-top: 2px solid white;
+    border-top: 1px solid #D9D9D9;
 
     flex: none;
     order: 1;
@@ -109,8 +160,6 @@ const StChattingInputBox = styled.input`
 
     background: #FFFFFF;
     border-radius: 8px;
-
-    /* Inside auto layout */
 
     flex: none;
     order: 0;
