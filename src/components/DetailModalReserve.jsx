@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import doorIcon from '../img/outdoor.png'
 
 const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,meetingCreator,issues, meetingId}) => {
-      
+
     
   return (
     <>
@@ -27,7 +27,8 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
                     <StHostLeft>안건</StHostLeft>
                     <StIssues>
                         {issues?.map((value,index)=>{
-                        return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>})}
+                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                        })}
                     </StIssues>
                 </StIssueBox>
                 <StDateBox>

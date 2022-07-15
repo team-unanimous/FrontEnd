@@ -83,7 +83,7 @@ const MeetMakeTwoTwo = () => {
               <StLeft>
                 <StTitleBox>
                   <StTitleName>미팅룸 이름</StTitleName>
-                  <StTitleInput ref={title} placeholder='미팅룸 이름을 입력해주세요'/>
+                  <StTitleInput maxLength="19" ref={title} placeholder='미팅룸 이름을 입력해주세요'/>
                 </StTitleBox>
                 <StSumnailBox>
                     <StSumTitle>
