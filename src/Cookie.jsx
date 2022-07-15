@@ -11,6 +11,7 @@ export const getCookie = (name) => {
     return cookies.get(name);
 }
 // 쿠키에 있는 값을 지울때
-export const removeCookie = (name) =>{
+export const removeCookie = (name) => {
     return cookies.remove(name);
 }
+

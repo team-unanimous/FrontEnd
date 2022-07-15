@@ -24,13 +24,14 @@ const SignupThree = () => {
     return passwordlock.test(pw)
   }
 
-  // 비활성화 버튼 false일때 기존 색상 나옴
+  // 비밀번호 비활성화 버튼 false일때 활성화
   const DisableFunction = () => {
     if (pwcheck(password) === false)
       return true;
     else if (password !== passwordCheck)
       return true;
-    else return false;
+    else
+      return false;
   }
 
 
@@ -51,6 +52,8 @@ const SignupThree = () => {
   //   return datas;
   // }
 
+
+  // 비밀번호 쏘기
   const postPW = async (data) => {
     console.log(data)
     const datas = await apis.postPassword(data);
