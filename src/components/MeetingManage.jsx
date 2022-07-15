@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import useGetMeetList from '../Hooks/useGetMeetList';
 import { useGetPassed } from '../Hooks/useGetPassed';
 import { useGetOnAir } from '../Hooks/useGetOnAir'
 import { useGetReserve } from '../Hooks/useGetReserve'
 import DetailModalReserve from './DetailModalReserve';
 import DetailModalOnAir from './DetailModalOnAir';
 import DetailModalPassed from './DetailModalPassed';
+import doorIcon from '../img/outdoor.png'
+
 
 const MeetingManage = () => {
 
@@ -36,6 +37,8 @@ const MeetingManage = () => {
   const closeModal3 = () => {
     setOpenReserve(false);
   }
+
+
   
   return (
     <>
@@ -72,33 +75,44 @@ const MeetingManage = () => {
           <StBlack1 state={state} onClick={()=>{setState(1)}}>이전 미팅</StBlack1>
           <StBlack2 state={state} onClick={()=>{setState(2)}}>예약된 미팅</StBlack2>
         </StBlackBox>
+        <StLine/>
         <StfListBox>  
           <StListTop>
-            <StDate>날짜</StDate>
-            <StHost>주최자</StHost>
-            <StTitle>회의명</StTitle>
-            <StTime>시간</StTime>
+            <StDateTop>날짜</StDateTop>
+            <StHostTop>주최자</StHostTop>
+            <StTitleTop>회의명</StTitleTop>
           </StListTop>
           {state==0?
           <>{onAir?.map((value,index)=>
-            <StList onClick={
-              ()=>{
-                setMeetingId(value.meetingId); 
-                setOpenOnAir(true);
-                setMeetingTitle(value.meetingTitle);
-                setMeetingDate(value.meetingDate);
-                setMeetingTime(value.meetingTime);
-                setMeetingCreator(value.meetingCreator);
-                setIssues(value.issues);
-                }} key={index}>
-              <StDate>{value.meetingDate}</StDate>
-              <StHost>{value.meetingCreator}</StHost>
-              <StTitle>{value.meetingTitle}</StTitle>
-              <StTime>{value.meetingTime}~</StTime>
-            </StList>)}
+            <>
+              <StInfoBox>
+                <StList onClick={
+                  ()=>{
+                    setMeetingId(value.meetingId); 
+                    setOpenOnAir(true);
+                    setMeetingTitle(value.meetingTitle);
+                    setMeetingDate(value.meetingDate);
+                    setMeetingTime(value.meetingTime);
+                    setMeetingCreator(value.meetingCreator);
+                    setIssues(value.issues);
+                    }} key={index}>
+                  <StDateBox>
+                    <StDate>{value.meetingDate}</StDate>
+                    <StTime>{value.meetingTime}~</StTime>
+                  </StDateBox>
+                  <StHost>{value.meetingCreator}</StHost>
+                  <StTitle>{value.meetingTitle}</StTitle>
+                </StList>
+                <StButton>
+                  <StIcon src={doorIcon}/>참여
+                </StButton>
+              </StInfoBox>
+              <StLine2/>
+            </>)}
           </>:<></>}
           {state==1?
           <>{passed?.map((value,index)=>
+            <><StInfoBox>
             <StList onClick={
               ()=>{
                 setMeetingId(value.meetingId); 
@@ -109,37 +123,108 @@ const MeetingManage = () => {
                 setMeetingCreator(value.meetingCreator);
                 setIssues(value.issues);
                 }} key={index}>
-              <StDate>{value.meetingDate}</StDate>
+              <StDateBox>
+                <StDate>{value.meetingDate}</StDate>
+                <StTime>{value.meetingTime}~</StTime>
+              </StDateBox>
               <StHost>{value.meetingCreator}</StHost>
               <StTitle>{value.meetingTitle}</StTitle>
-              <StTime>{value.meetingTime}~{value.meetingOverTime}</StTime>
-            </StList>)}
+            </StList>
+            </StInfoBox><StLine2/></>)}
           </>:<></>}
           {state==2?
           <>{reserve?.map((value,index)=>
-            <StList onClick={
-              ()=>{
-                setMeetingId(value.meetingId); 
-                setOpenReserve(true);
-                setMeetingTitle(value.meetingTitle);
-                setMeetingDate(value.meetingDate);
-                setMeetingTime(value.meetingTime);
-                setMeetingCreator(value.meetingCreator);
-                setIssues(value.issues);
-                }} key={index}>
-              <StDate>{value.meetingDate}</StDate>
-              <StHost>{value.meetingCreator}</StHost>
-              <StTitle>{value.meetingTitle}</StTitle>
-              <StTime>{value.meetingTime} ~ {value.meetingOverTime}</StTime>
-            </StList>)}
+            <><StInfoBox>
+              <StList onClick={
+                ()=>{
+                  setMeetingId(value.meetingId); 
+                  setOpenReserve(true);
+                  setMeetingTitle(value.meetingTitle);
+                  setMeetingDate(value.meetingDate);
+                  setMeetingTime(value.meetingTime);
+                  setMeetingCreator(value.meetingCreator);
+                  setIssues(value.issues);
+                  }} key={index}>
+                <StDateBox>
+                  <StDate>{value.meetingDate}</StDate>
+                  <StTime>{value.meetingTime}-{value.meetingOverTime}</StTime>
+                </StDateBox>
+                <StHost>{value.meetingCreator}</StHost>
+                <StTitle>{value.meetingTitle}</StTitle>
+              </StList>
+              <StButtonBox>
+                <StButton>
+                  <StIcon src={doorIcon}/>참여
+                </StButton>
+                <StSmallButton>수정</StSmallButton>
+                <StSmallButton>삭제</StSmallButton>
+              </StButtonBox>
+            </StInfoBox><StLine2/></>)}
           </>:<></>}
             
         </StfListBox>
-        <StLine/>
+
       </StRight>
     </>
   )
 }
+
+const StButtonBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width : 290px;
+  margin : 0 3px 0 0 ;
+`;
+
+const StLine2 = styled.div`
+  width : 900px;
+  height : 2px;
+  background-color: #EAEAEA;
+`;
+
+const StInfoBox = styled.div`
+  display: flex;
+  align-items: center;
+  width : 900px;
+  height : 46px;
+  margin : 24px 0 24px 0;
+`;
+
+const StIcon = styled.img`
+  width : 18px;
+  height : 18px;
+  margin : 0 0 0 0;
+`;
+
+const StSmallButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width : 64px;
+  height : 35px;
+  margin : 0 0 0 0;
+  border-radius: 6px;
+  border : 1px solid black;
+  color : black;
+`;
+
+const StButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width : 58px;
+  height : 18px;
+  padding : 10px 20px 10px 20px;
+  margin : 0 0 0 0;
+  border-radius: 6px;
+  color : black;
+`;
+
+const StDateBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  height : 46px;
+`;
 
 const StTime = styled.div`
   display: flex;
@@ -149,59 +234,110 @@ const StTime = styled.div`
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
+  color: #818181;
 `;
 
 const StTitle = styled.div`
   display: flex;
-  justify-content: center;
-  width : 320px;
-  height : 20px;
+  justify-content: start;
+  align-items: center;
+  width : 340px;
+  height : 46px;
+  padding : 0 0px 0 20px;
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 16px;
   line-height: 20px;
 `;
 
 const StHost = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  align-items: center;
   width : 120px;
-  height : 20px;
+  height : 46px;
+  padding : 0 0px 0 20px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
+`;
+
+const StTitleTop = styled.div`
+  display: flex;
+  justify-content: start;
+  width : 320px;
+  height : 20px;
+  padding : 0 0 0 20px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+`;
+
+const StHostTop = styled.div`
+  display: flex;
+  justify-content: start;
+  width : 120px;
+  height : 20px;
+  padding : 0 0 0 20px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+
+`;
+
+const StDateTop = styled.div`
+  display: flex;
+  justify-content: start;
+  width : 120px;
+  height : 20px;
+  padding : 0 0 0 20px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+
 `;
 
 const StDate = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  align-items: center;
   width : 120px;
-  height : 20px;
+  height : 46px;
+  padding : 0 0px 0 20px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
+
 `;
 
 const StListTop = styled.div`
   display: flex;
-  width : 700px;
-  height : 20px;
+  align-items: center;
+  width : 900px;
+  height : 56px;
   margin : 5px 0 5px 0;
   border-radius: 6px;
+  background: #EFEFEF;
 `;
 
 const StList = styled.div`
   display: flex;
-  width : 700px;
-  height : 20px;
-  margin : 5px 0 5px 0;
+  width : 750px;
+  height : 46px;
+  margin : 0 0 0 0;
   border-radius: 6px;
   transition: 0.1s ease-in-out;
   &:hover{
@@ -215,7 +351,7 @@ const StfListBox = styled.div`
   flex-direction: column;
   width : 700px;
   height : 50vh;
-  margin: 100px auto 0 40px;
+  margin: 36px auto 0 30px;
 `;
 
 const StBlackBox = styled.div`

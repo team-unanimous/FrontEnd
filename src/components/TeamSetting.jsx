@@ -5,16 +5,23 @@ import styled from 'styled-components';
 import xicon from '../img/delete.png'
 import apis from '../api/main';
 import useGetTeamMain from '../Hooks/useGetTeamMain'
+import jwt_decode from "jwt-decode";
+import { getCookie } from '../Cookie';
 
 const TeamSetting = (props) => {
 
     const [state,setState] =useState(0);
     const teamId = useParams().teamid;
 
-    // 팀 정보 받아오기
+    console.log(props.teamLeader)
 
+    const teamLeader = props.teamLeader;
+
+    const decoded = jwt_decode(getCookie('token'));
+    const nickname = decoded.USER_NICKNAME;
+
+    // 팀 정보 받아오기
     const { data } = useGetTeamMain({teamId});
-    console.log(data);
 
     const teamname = useRef("");
 
@@ -62,8 +69,58 @@ const TeamSetting = (props) => {
 
 
   return (
-    <StRight>
-        {state==0?<StBox>
+    <>
+    {teamLeader!==nickname?
+        <StRight>
+        <StTeamOutBox>
+            <StTeamBox>
+                    <StUpBox2>
+                        <StManage>환경설정</StManage>
+                        <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
+                    </StUpBox2>
+                    <StLine/>
+                    <StDown>
+                        <StComeOn>
+                            <StBlack>
+                                팀 초대코드
+                            </StBlack>
+                            <StInputBox>
+                                <StInput>{data.uuid}</StInput>
+                                <StBt onClick={()=>handleCopyClipBoard(`${data.uuid}`)}>복사하기</StBt>
+                            </StInputBox>
+                        </StComeOn>
+                        <StListBox>
+                            <StBlack>
+                                팀원 관리
+                            </StBlack>
+                            <StBt2>사용자 초대</StBt2>
+                            <StMateList>
+                                {props?.prop.map((value,index)=>{
+                                    return <StUserBox key={index}>
+                                        <StUserImg/>
+                                        <StUserInfo>
+                                            <StUserName>{value.nickname}</StUserName>
+                                            <StEmail>{value.username}</StEmail>
+                                        </StUserInfo>
+                                        <StXicon src={xicon}/>
+                                    </StUserBox>
+                                })}
+                            </StMateList>
+                        </StListBox>
+                        <StMovePower>
+                            <StBlack>
+                                팀장 권한 위임
+                            </StBlack>
+                            <StBt3>사용자 선택</StBt3>
+                        </StMovePower>
+                    </StDown>
+                    <StLine/>
+                    <StOut onClick={leaving}>팀 탈퇴하기</StOut>
+             </StTeamBox>
+        </StTeamOutBox></StRight>:<></>}
+        {state==0&&teamLeader==nickname?
+            <StRight>
+                <StBox>
                     <StUpBox1>
                         <StSetting>환경설정</StSetting>
                         <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
@@ -76,9 +133,11 @@ const TeamSetting = (props) => {
                             <StA>기본 정보 수정</StA>
                         </StDLeft>
                     </StDownBox>
-                </StBox>:<></>
+                </StBox>
+            </StRight>:<></>
         }
-        {state==1?
+        {state==1&&teamLeader==nickname?
+        <StRight>
         <StTeamOutBox>
             <StTeamBox>
                     <StUpBox2>
@@ -128,9 +187,10 @@ const TeamSetting = (props) => {
                         <StConfirmBt>변경</StConfirmBt>
                     </StBtBox>
              </StTeamBox>
-        </StTeamOutBox>:<></>
+        </StTeamOutBox></StRight>:<></>
         }
-        {state==2?
+        {state==2&&teamLeader==nickname?
+        <StRight>
         <StEdit>
             <StUpBox1>
                 <StSetting>기본 정보 수정</StSetting>
@@ -158,9 +218,10 @@ const TeamSetting = (props) => {
                 <StCancelBt onClick={()=>{setState(0)}}>취소</StCancelBt>
                 <StConfirmBt>변경</StConfirmBt>
             </StBtBox>
-        </StEdit>:<></>
+        </StEdit>
+        </StRight>:<></>
         }
-    </StRight>
+    </>
   )
 }
 

@@ -73,7 +73,7 @@ const MeetMakeTwoOne = () => {
                   <StMeetName>
                     미팅룸 이름 
                   </StMeetName>
-                  <StMeetInput type="text" maxLength='20' required ref={meetTitle} placeholder='미팅룸 이름을 입력해주세요.'/>
+                  <StMeetInput type="text" maxLength='19' required ref={meetTitle} placeholder='미팅룸 이름을 입력해주세요.'/>
                 </StMeetNameBox>
                 <StSumnailBox>
                   <StSumTitle>
