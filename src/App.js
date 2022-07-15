@@ -22,6 +22,10 @@ import SignUpFour from "./pages/SignUpFour";
 import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
 import TeamJoin from "./pages/TeamJoin";
+import Landing from "./pages/Landing";
+import MeetingRoomChat from "./components/MeetingRoomChat";
+import MeetingRoomStyle from "./components/MeetingRoomStyle";
+import MeetingRoomMain from "./pages/MeetingRoomMain";
 import Mypage from "./pages/Mypage";
 import PasswordFindOne from "./pages/PasswordFindOne"
 import PasswordFindTwo from "./pages/PasswordFindTwo"
@@ -34,6 +38,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route path="/signupone" element={<SignUpOne/>} />
+        <Route path="/signuptwo" element={<SignUpTwo/>} />
+        <Route path="/signupthree" element={<SignUpThree/>} />
         <Route path="/signupone" element={<SignUpOne />} />
         <Route path="/signuptwo" element={<SignUpTwo />} />
         <Route path="/signupthree" element={<SignUpThree />} />
@@ -51,6 +59,9 @@ function App() {
         <Route path="/teammake" element={<TeamMake />} />
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />
+        <Route path="/chat" element={<MeetingRoomChat />} />
+        <Route path="/chatstyle" element={<MeetingRoomStyle />} />
+        <Route path="/meetingroom" element={<MeetingRoomMain />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/passwordfindone" element={<PasswordFindOne />} />
         <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />

@@ -2,6 +2,14 @@ import api from "./core";
 
 const apis = {
     //팀 게시판
+    postInviteTeam : (data)=>api.post(`/api/teams/auth-code`, data), //초대받은 팀 찾기
+    postTeamJoin : (data)=>api.post(`/api/teams/join`, data), //팀 참여하기 
+    postTeam : (data)=>api.post(`/api/teams`, data), // 팀만들기
+    getTeam : ()=>api.get(`/api/teams`), // 팀선택페이지
+
+    //meeting room
+    postMeetingroom : (data) => api.post(`api/chat/meetings/${data.meetingId}/rooms`, data),
+
     getTeamMain: ({ teamId }) => api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
     patchTeamPofile: () => api.patch(`/api/teams/${teamId}`),
     patchMeetProfile: () => api.get(`/api/${meetingId}`), // 미팅 프로필 수정
@@ -26,10 +34,6 @@ const apis = {
     getOnAir: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/now`),
     getPassed: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/done`),
 
-    postInviteTeam: (data) => api.post(`/api/teams/auth-code`, data), //초대받은 팀 찾기
-    postTeamJoin: (data) => api.post(`/api/teams/join`, data), //팀 참여하기 
-    postTeam: (data) => api.post(`/api/teams`, data), // 팀만들기
-    getTeam: () => api.get(`/api/teams`), // 팀선택페이지
     // 경계
     postLogin: (data) => api.post(`/api/users/login`, data), // 로그인
     postEmailCheck: (data) => api.post(`/api/users/emails`, data), // 이메일 인증

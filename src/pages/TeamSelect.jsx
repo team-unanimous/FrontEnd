@@ -4,119 +4,243 @@ import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
 import styled from "styled-components"
 
 const TeamSelect = () => {
+    //key, team select undefined, vector img, team img box
     const navigate = useNavigate();
-    const [selectedTeam, setSelectedTeam] = useState(null);
+    // const [selectedTeam, setSelectedTeam] = useState(null);
 
     const { data } = useGetTeamInfo();
 
     if (!data){
         return <>Something wrong!</>
     }
-    console.log(data);
-
+    // console.log(data);
     return (
         <>
-        <StContainer>
-        <StTitle>접속할 팀 페이지를 선택해주세요</StTitle>
-        <StTeamBox>
-            {data.map((team)=>(
-                <>
-                <StTeamItemBox onClick={()=>{navigate(`/teamboard/${team.teamId}`)}}>
-                <StTeamItem
-                    key = {team.teamId}
-                    className = "team-title">
-                        <img src={`${team.teamImage}`}></img>
-                </StTeamItem>
-                <StTeamName>
-                    {team.teamname}
-                </StTeamName>
-                </StTeamItemBox>
-                </>
-            ))}
-        </StTeamBox>
-        </StContainer>
-        <button onClick={()=>navigate("/teaminvited")}>초대 받은 팀에 들어가기</button>
-        <button onClick={()=>navigate("/teammake")}>팀 만들기</button>
+        <StBox>
+            <StContainer>
+                <StTitleWrapper>
+                    <StTitle>접속할 팀 페이지를 선택해주세요</StTitle>
+                    <StUnanimousTeamJoin 
+                    onClick={()=>navigate('/teamboard/1')}
+                    >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin>
+                </StTitleWrapper>
+                <StTeamBox>
+                    {data.map((team)=>(
+                        <>
+                        <StTeamItemBox>
+                        <StTeamItem
+                            key = {team.teamId}
+                            className = "team-title"
+                            onClick={()=> {navigate(`/teamboard/${team.teamId}`)}}
+                            >
+                                <img src={`${team.teamImage}`}></img>
+                        </StTeamItem>
+                        <StTeamName>
+                        {team.teamname}
+                        </StTeamName>
+                        </StTeamItemBox>
+                        </>
+                    ))}
+                </StTeamBox>
+                <StButtonWrapper>
+                    <StInvitedButton onClick={()=>navigate("/teaminvited")}>
+                    이미 초대된 팀 페이지에 접속하고 싶으신가요?
+                    </StInvitedButton>
+                    <StTeamMakeButton onClick={()=>navigate("/teammake")}>
+                    새로운 팀 페이지를 만들고 싶으신가요?
+                    </StTeamMakeButton>
+                </StButtonWrapper>
+            </StContainer>
+        </StBox>
         </>
     )
 }
+
+const StBox = styled.div`
+  width : 100%;
+  height : 100vh;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding : 0;
+  justify-content: center;
+  align-items: center;
+  `;
 
 const StContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; 
+    justify-content: center; 
     
-    position: absolute;
+    /* position: relative; */
     width: 1028px;
-    height: 378px;
-    left: 446px;
-    top: 352px;
-`
+    height: 562px;
+    /* left: 446px;
+    top: 352px; */
+    `
+const StTitleWrapper = styled.div`
+    /* Frame 318 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    
+    width: 654px;
+    height: 101px;
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    `
 const StTitle = styled.div`
     width: 654px;
     height: 58px;
-    margin-bottom: 40px;
-
+    margin-bottom: 24px;
+    
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 48px;
     line-height: 58px;
     /* identical to box height */
-
+    
     text-align: center;
-
+    
     color: #000000;
-
-
-    /* Inside auto layout */
-
+    
     flex: none;
     order: 0;
     flex-grow: 0;
-`
+    `
+const StUnanimousTeamJoin = styled.div`
+    /* Unanimous팀에 참여하시겠습니까? */
+    width: 246px;
+    height: 19px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    
+    margin-bottom: 20px;
+    
+    color: #000000;
+    
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    cursor: pointer;
+    `
 const StTeamBox = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-around; 
-`
+    justify-content: space-around;
+    margin-top: 60px;
+    `
 
 const StTeamItemBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`
+    `
 const StTeamItem = styled.div`
     width: 180px;
     height: 180px;
-
+    
     background-color: #D9D9d9;
     border-radius: 87px;
-`
+    `
 const StTeamName = styled.div`
     /* 팀이름 */
-
+    
     width: 100px;
     height: 24px;
-
+    
     margin-top: 24px;
-
+    
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
     text-align: center;
-
+    
     color: #000000;
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    `
+const StButtonWrapper = styled.div`
+    /* Frame 282 */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    /* gap: 290px; */
+    
+    width: 1028px;
+    height: 53px;
+    
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    
+    margin-top: 120px;
+`
+const StInvitedButton = styled.div`
+    /* Frame 281 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 18px 25px;
+    /* gap: 10px; */
+    box-sizing: border-box;
+
+    width: 353px;
+    height: 53px;
+
+    background: #F5F5F5;
+    border-radius: 100px;
 
     /* Inside auto layout */
 
     flex: none;
     order: 0;
     flex-grow: 0;
+    cursor: pointer;
+`
+const StTeamMakeButton = styled.div`
+    /* Frame 282 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 18px 25px;
+    gap: 10px;
+    box-sizing: border-box;
+
+    width: 309px;
+    height: 53px;
+
+    background: #F5F5F5;
+    border-radius: 100px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    cursor: pointer;
 `
 
 
