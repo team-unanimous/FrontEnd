@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const MeetingLeft = () => {
+const MeetingLeft = (prop) => {
+    
   return (
     <StBox>
         <StImg/>
         <StInfo>
             <StName>
-                저녁에 뭐먹을지 정하기
+                {prop.prop.meetingTitle}
             </StName>
             <StCount>
                 <StUserImg/>
@@ -24,7 +25,6 @@ const MeetingLeft = () => {
 const StUserImg = styled.img`
     width : 22.4px;
     height: 22.4px;
-   
     border-radius: 22.4px;
     background-color: #E5E7EB;
 `;
@@ -76,6 +76,7 @@ const StBox = styled.div`
     padding: 24px;
     width : 342px;
     height : 50.4px;
+    margin : 0.7rem 0 0rem 0;
     background-color: white;
     border-radius : 6px;
 `;

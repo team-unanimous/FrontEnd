@@ -17,6 +17,16 @@ const TeamInvited = () => {
         
     const { mutate } = useMutation(findUUID, {
         onSuccess: (data) => {
+            // try {
+            //     console.log(data, "성공");
+            //     setWarning(false);
+            //     setTeamData(true);
+            // }
+            // catch {
+            //     console.log(data, "error")
+            //     setTeamData(false);
+            //     setWarning(true);    
+            // }
             console.log(data, "성공");
             setWarning(false);
             setTeamData(true);

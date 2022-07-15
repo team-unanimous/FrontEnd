@@ -31,7 +31,6 @@ const TeamMake = () => {
         console.log(data);
         mutate(data)
     }
-    
 
     return (
         <>

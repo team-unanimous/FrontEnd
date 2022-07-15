@@ -1,9 +1,9 @@
 import {useQuery} from 'react-query'
 import apis from '../api/main'
 
-const useGetTeamMain=()=>{
+const useGetTeamMain=({teamId})=>{
     const fetcher = async ()=>{
-        const {data} = await apis.getTeamMain();
+        const {data} = await apis.getTeamMain({teamId});
         return data;
     }
     return useQuery("teamMain",fetcher);

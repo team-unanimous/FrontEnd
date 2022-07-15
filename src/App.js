@@ -17,7 +17,8 @@ import TeamBoard from "./pages/TeamBoard";
 import Login from "./pages/Login";
 import SignUpOne from "./pages/SignupOne";
 import SignUpTwo from "./pages/SignUpTwo";
-import SignUpThree from "./pages/SignUpThree";
+import SignUpThree from "./pages/SignUpThree"
+import SignUpFour from "./pages/SignUpFour";
 import TeamMake from "./pages/TeamMake";
 import TeamInvited from "./pages/TeamInvited";
 import TeamJoin from "./pages/TeamJoin";
@@ -25,7 +26,10 @@ import Landing from "./pages/Landing";
 import MeetingRoomChat from "./components/MeetingRoomChat";
 import MeetingRoomStyle from "./components/MeetingRoomStyle";
 import MeetingRoomMain from "./pages/MeetingRoomMain";
-
+import Mypage from "./pages/Mypage";
+import PasswordFindOne from "./pages/PasswordFindOne"
+import PasswordFindTwo from "./pages/PasswordFindTwo"
+import MeetingRoom from "./pages/MeetingRoom"
 
 const queryClient = new QueryClient();
 
@@ -38,23 +42,30 @@ function App() {
         <Route path="/signupone" element={<SignUpOne/>} />
         <Route path="/signuptwo" element={<SignUpTwo/>} />
         <Route path="/signupthree" element={<SignUpThree/>} />
+        <Route path="/signupone" element={<SignUpOne />} />
+        <Route path="/signuptwo" element={<SignUpTwo />} />
+        <Route path="/signupthree" element={<SignUpThree />} />
+        <Route path="/signupfour" element={<SignUpFour />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/meetmakeone" element={<MeetMakeOne />} />
-        <Route path="/meetmaketwoone" element={<MeetMakeTwoOne />} />
-        <Route path="/meetmaketwotwo" element={<MeetMakeTwoTwo />} />
-        <Route path="/meetmakethreeone" element={<MeetMakeThreeOne />} />
-        <Route path="/meetmakethreetwo" element={<MeetMakeThreeTwo />} />
-        <Route path="/meetdetailone" element={<MeetDetailOne />} />
-        <Route path="/meetdetailtwo" element={<MeetDetailTwo />} />
-        <Route path="/teamboard" element={<TeamBoard />} />
-        <Route path="/teamselect" element={<TeamSelect />}/>
+        <Route path="/teamboard/:teamid/meetmakeone" element={<MeetMakeOne />} />
+        <Route path="/teamboard/:teamid/meetmaketwoone" element={<MeetMakeTwoOne />} />
+        <Route path="/teamboard/:teamid/meetmaketwotwo" element={<MeetMakeTwoTwo />} />
+        <Route path="/teamboard/:teamid/meetmakethreeone" element={<MeetMakeThreeOne />} />
+        <Route path="/teamboard/:teamid/meetmakethreetwo" element={<MeetMakeThreeTwo />} />
+        <Route path="/teamboard/:teamid/:meetid/meetdetailone" element={<MeetDetailOne />} />
+        <Route path="/teamboard/:teamid/:meetid/meetdetailtwo" element={<MeetDetailTwo />} />
+        <Route path="/teamboard/:teamid" element={<TeamBoard />} />
+        <Route path="/teamselect" element={<TeamSelect />} />
         <Route path="/teammake" element={<TeamMake />} />
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />
         <Route path="/chat" element={<MeetingRoomChat />} />
         <Route path="/chatstyle" element={<MeetingRoomStyle />} />
         <Route path="/meetingroom" element={<MeetingRoomMain />} />
-
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/passwordfindone" element={<PasswordFindOne />} />
+        <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />
+        <Route path="/meetingroom" element={<MeetingRoom/>}/>
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>
