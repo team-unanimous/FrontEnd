@@ -9,7 +9,7 @@ const TeamMake = () => {
     // const teamImageRef = useRef(null);
     const teamNameRef = useRef(null);
 
-    const makeTeam = (teamInfo)=> {
+    const makeTeam = async (teamInfo)=> {
         return apis.postTeam(teamInfo);
     }
 
@@ -44,7 +44,7 @@ const TeamMake = () => {
             <StEmailBox>
                 <StEmailTitle>팀명</StEmailTitle>
                 <StEmailInputBox>
-                <StPwInput type='text' placeholder='팀명 입력' ref={teamNameRef}/>
+                <StPwInput type='text' placeholder='팀명 입력' ref={teamNameRef} maxLength="10"/>
                 </StEmailInputBox>
                 <StEmailWarnning>
                 최대 10자
@@ -53,7 +53,7 @@ const TeamMake = () => {
             <StEmailBox>
                 <StEmailTitle>팀원 추가하기</StEmailTitle>
                 <StEmailInputBox>
-                <StPwInput type='text' placeholder='이메일 입력' ref={teamNameRef}/>
+                <StPwInput type='text' placeholder='이메일 입력'/>
                 <StEmailButton>
                 추가
               </StEmailButton>

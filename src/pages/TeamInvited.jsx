@@ -6,26 +6,29 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const TeamInvited = () => {
-    const uuidRef = useRef()
+    const uuidRef = useRef();
+    const navigate = useNavigate();
     const [warning, setWarning] = useState(null);
     const [teamData, setTeamData] = useState(null);
 
-    const findUUID = (UUIDInfo)=> {
+    const findUUID = async (UUIDInfo)=> {
         return apis.postInviteTeam(UUIDInfo);
     }
         
     const { mutate } = useMutation(findUUID, {
-        onSuccess: (resp) => {
-            console.log(resp);
+        onSuccess: (data) => {
+            console.log(data, "성공");
             setWarning(false);
             setTeamData(true);
         },
-        onError: () => {
-            console.log("error")
-            setTeam(false);
+        onError: (data) => {
+            console.log(data, "error")
+            setTeamData(false);
             setWarning(true);
         }
-    })
+    });
+
+    // const mutation = useMutation(findUUID);
 
     const teamFindHandler = ()=>{
         const data = {
@@ -56,14 +59,25 @@ const TeamInvited = () => {
                         : <></>}
                     </StTitleWrapper>
                 </StTitleBox>
-                <StTeamBox>
+                {teamData
+                ? <StTeamBox>
+                    <StTeamDataBox>
                     <StTeamDataWrapper>
                         <StTeamProfileImg>
-                            <img src={resp?.data.teamImage}></img>
+                            {/* <img src={data?.data?.teamImage}></img> */}
 
                         </StTeamProfileImg>
+                        <StTeamTitleDiv>
+                            {/* {data?.data?.teamname} */}
+                        </StTeamTitleDiv>
                     </StTeamDataWrapper>
+                    <StTeamJoinButton onClick={()=>navigate('/teamboard')}>
+                        입장하기
+                    </StTeamJoinButton>
+                    </StTeamDataBox>
                 </StTeamBox>
+                :<></>}
+                
             </StContainer>
         </StBox>
         </>
@@ -81,7 +95,6 @@ const StBox = styled.div`
     order: 1;
 `
 const StContainer = styled.div`
-    background-color: red;
     /* Frame 270 */
     /* Auto layout */
     display: flex;
@@ -113,7 +126,6 @@ const StTitle = styled.div`
     flex-grow: 0;
 `
 const StTitleBox = styled.div`
-    background-color: yellow;
     width: 799px;
     height: 197px;
     display: flex;
@@ -175,6 +187,7 @@ const StWarning = styled.div`
 `
 const StTeamBox = styled.div`
     /* Frame 277 */
+    background: #F5F5F5;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -185,7 +198,6 @@ const StTeamBox = styled.div`
     width: 336px;
     height: 414px;
 
-    background: #F5F5F5;
     border-radius: 8px;
 
     box-sizing: border-box;
@@ -197,9 +209,23 @@ const StTeamBox = styled.div`
     order: 1;
     flex-grow: 0;
 `
+const StTeamDataBox = styled.div`
+    /* Frame 276 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    /* gap: 32px; */
+
+    width: 236px;
+    height: 314px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+`
 const StTeamDataWrapper = styled.div`
     /* Frame 196 */
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -213,6 +239,30 @@ const StTeamDataWrapper = styled.div`
     order: 0;
     flex-grow: 0;
 `
+const StTeamJoinButton = styled.div`
+    /* Frame 36 */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* padding: 15px; */
+    /* gap: 10px; */
+
+    width: 236px;
+    height: 54px;
+
+    background: #000000;
+    border-radius: 6px;
+    margin-top: 32px;
+    color: white;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    cursor: pointer;
+`
 const StTeamProfileImg = styled.div`
     background-color: #000;
     /* Rectangle 151 */
@@ -221,6 +271,26 @@ const StTeamProfileImg = styled.div`
 
     background: #F1F1F1;
     border-radius: 87px;
+`
+const StTeamTitleDiv = styled.div`
+    /* background-color: black; */
+    /* 팀이름 */
+    width: 56px;
+    height: 24px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+
+    color: #000000;
+    margin-top: 24px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 `
 
 export default TeamInvited;

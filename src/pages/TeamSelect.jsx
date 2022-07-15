@@ -29,9 +29,9 @@ const TeamSelect = () => {
                         <>
                         <StTeamItemBox>
                         <StTeamItem
-                            key = {team.team_id}
+                            key = {team.teamId}
                             className = "team-title"
-                            onClick={()=> {navigate(`/teamboard/${team.team_id}`)}}
+                            onClick={()=> {navigate(`/teamboard/${team.teamId}`)}}
                             >
                                 <img src={`${team.teamImage}`}></img>
                         </StTeamItem>
