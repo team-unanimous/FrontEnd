@@ -2,8 +2,61 @@ import React from "react";
 import styled from "styled-components";
 import inputEnterVector from "../img/InputEnterVector.png"
 import xbutton from "../img/Xbutton.png"
+import { getCookie } from "../Cookie";
+import { SocketConnect, ws } from "../api/websocket";
+import { useRef, useEffect, useState } from "react";
+import apis from "../api/main";
+import { useMutation } from "react-query";
+
 
 const MeetingRoomStyle = ()=>{
+    const inputRef = useRef(null);
+    // const [roomId, setRoomId] = useState(null);
+    const token = getCookie("token");
+
+    const data = {
+        token: token,
+        roomId: "2"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+    }
+
+    useEffect(()=>{
+        SocketConnect(data);
+    })
+
+    function waitForConnection(ws, callback){
+        setTimeout(
+            function () {
+                if (ws.ws.readyState === 1) {
+                    callback();
+                } else {
+                    waitForConnection(ws, callback);
+                }
+            },1
+        )
+    }
+
+    const HandleSend = async (event)=>{
+        event.preventDefault();
+        try {
+            const data = {
+                type: "TALK",
+                roomId: "2",
+                nickname: "string",
+                sender: "string",
+                message: `this is a message from the client : ${inputRef.current.value}`,
+                createdAt: "10시"
+            }
+            const token = getCookie("token")
+            waitForConnection(ws, function(){
+                ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
+                // ws.send("/queue/test", {}, "this is a message from the client")
+                console.log("clicked anyway");
+                console.log(JSON.stringify(data))  
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>
@@ -12,7 +65,7 @@ const MeetingRoomStyle = ()=>{
                     <StChattingHeaderWrapper>
                         <StChattingTitle>
                             <StChattingTitleBox>
-                                채팅 (0)
+                                채팅 (0){/* 데이터 바인딩 필요   */}
                             </StChattingTitleBox>
                         </StChattingTitle>
                         <StChattingXbutton>
@@ -25,8 +78,8 @@ const MeetingRoomStyle = ()=>{
                 </StChattingHeader>
                 <StChattingBody>
                     <StChattingInputWrapper>
-                        <StChattingInputForm>
-                            <StChattingInputBox placeholder="내용을 입력해주세요..."/>
+                        <StChattingInputForm onSubmit={HandleSend}>
+                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef}/>
                             <StSendButton type={"image"} src={inputEnterVector}/>
                         </StChattingInputForm>
                     </StChattingInputWrapper>

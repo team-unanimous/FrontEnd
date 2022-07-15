@@ -19,7 +19,7 @@ const LandingHeader = () => {
             </StLogo>
             {scrollPosition < 700 
             ? <><StStartButton visibility="hidden">접속하기</StStartButton></> 
-            : <><StStartButton onClick={()=>navigate('/login')}>접속하기</StStartButton></>}
+            : <><StStartButton visibility="visible" onClick={()=>navigate('/login')}>접속하기</StStartButton></>}
         </StHeader>
     )
 }
@@ -41,7 +41,7 @@ const StLogo = styled.div`
 `
 
 const StStartButton = styled.div`
-    transition: all 10s ease-in-out;
+    transition: visibility 3s ease-in-out;
     /* Button */
     display: flex;
     visibility: ${props => props.visibility};

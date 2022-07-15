@@ -18,6 +18,7 @@ export const SocketConnect = (data) => {
             ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
             (response) => {
                 const newMessage = JSON.parse(response.body);
+                console.log(newMessage);
                 console.log("보낸사람:", newMessage.sender);
                 console.log("받은 메세지:", newMessage.message)
             },
