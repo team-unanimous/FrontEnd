@@ -5,74 +5,74 @@ import { useRef } from "react";
 import styled from "styled-components";
 
 const TeamMake = () => {
-    const navigate = useNavigate();
-    // const teamImageRef = useRef(null);
-    const teamNameRef = useRef(null);
+  const navigate = useNavigate();
+  // const teamImageRef = useRef(null);
+  const teamNameRef = useRef(null);
 
-    const makeTeam = async (teamInfo)=> {
-        return apis.postTeam(teamInfo);
+  const makeTeam = async (teamInfo) => {
+    return apis.postTeam(teamInfo);
+  }
+
+  const { mutate } = useMutation(makeTeam, {
+    onSuccess: (data) => {
+      console.log(data.data);
+      navigate('/teammakesuccess')
+    },
+    onError: (error) => {
+      console.log(error)
     }
+  });
 
-    const { mutate } = useMutation(makeTeam, {
-        onSuccess: (data) => {
-            console.log(data.data);
-            navigate('/teammakesuccess')
-        },
-        onError: (error)=>{
-            console.log(error)
-        }
-    });
-    
-    const teamMakeHandler = ()=>{
-        const data = {
-            teamImage : "randomImageURL",
-            teamname : teamNameRef.current.value
-        }
-        console.log(data);
-        mutate(data)
+  const teamMakeHandler = () => {
+    const data = {
+      teamImage: "randomImageURL",
+      teamname: teamNameRef.current.value
     }
+    console.log(data);
+    mutate(data)
+  }
 
-    return (
-        <>
-        <StBox>
-            <StContainer>
-            {/* // 이미지 업로드 기능 추가 */}
-            <StTitle>새로운 팀 정보를 입력해주세요</StTitle>
-            {/* <img src="" ref={teamImageRef}></img> */}
-            <StInputWrapper>
+  return (
+    <>
+      <StBox>
+        <StContainer>
+          {/* // 이미지 업로드 기능 추가 */}
+          <StTitle>새로운 팀 정보를 입력해주세요</StTitle>
+          {/* <img src="" ref={teamImageRef}></img> */}
+          <StInputWrapper>
             <StEmailBox>
-                <StEmailTitle>팀명</StEmailTitle>
-                <StEmailInputBox>
-                <StPwInput type='text' placeholder='팀명 입력' ref={teamNameRef} maxLength="10"/>
-                </StEmailInputBox>
-                <StEmailWarnning>
+              <StEmailTitle>팀명</StEmailTitle>
+              <StEmailInputBox>
+                <StPwInput type='text' placeholder='팀명 입력' ref={teamNameRef} maxLength="10" />
+              </StEmailInputBox>
+              <StEmailWarnning>
                 최대 10자
-                </StEmailWarnning>
+              </StEmailWarnning>
             </StEmailBox>
             <StEmailBox>
-                <StEmailTitle>팀원 추가하기</StEmailTitle>
-                <StEmailInputBox>
-                <StPwInput type='text' placeholder='이메일 입력'/>
+              <StEmailTitle>팀원 추가하기</StEmailTitle>
+              <StEmailInputBox>
+                <StPwInput type='text' placeholder='이메일 입력' />
                 <StEmailButton>
-                추가
-              </StEmailButton>
-                </StEmailInputBox>
-                <StEmailWarnning>
-                </StEmailWarnning>
+                  추가
+                </StEmailButton>
+              </StEmailInputBox>
+              <StEmailWarnning>
+              </StEmailWarnning>
             </StEmailBox>
-            </StInputWrapper>
-            <StBtBox>
-                <StCancel onClick={()=>navigate('/teamselect')}>
-                    취소
-                </StCancel>
-                <StAgree onClick={teamMakeHandler}>
-                    완료
-                </StAgree>
-            </StBtBox>
-            </StContainer>
-        </StBox>
-        </>
-    )
+          </StInputWrapper>
+          <StBtBox>
+            <StCancel onClick={() => navigate('/teamselect')}>
+              취소
+            </StCancel>
+            <StAgree onClick={teamMakeHandler}>
+              완료
+            </StAgree>
+          </StBtBox>
+        </StContainer>
+      </StBox>
+    </>
+  )
 }
 const StBox = styled.div`
     width : 100%;
@@ -107,7 +107,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 48px;
+    font-size: 43px;
     line-height: 58px;
     /* identical to box height */
     text-align: center;
