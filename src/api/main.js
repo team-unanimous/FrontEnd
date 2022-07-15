@@ -1,5 +1,8 @@
 import api from "./core";
 
+
+// 토큰에서 뽑아오기
+
 const apis = {
     //팀 게시판
     postInviteTeam : (data)=>api.post(`/api/teams/auth-code`, data), //초대받은 팀 찾기
@@ -43,7 +46,9 @@ const apis = {
     patchNickSave: (data) => api.patch(`/api/users/nickname/${data.userid}`, data), // 닉네임 저장
     postEmailCode: (data) => api.post(`/api/users/pwsearch`, data), // 이메일 코드 전송(비밀번호 찾기)
     postPasswordCode: (data) => api.post(`/api/users/pwsearch/code`, data), // 비밀번호 코드
-    patchPasswordChange: (data) => api.patch(`/api/users/passwordchange}`, data), // 비밀번호 변경
+    patchPasswordChange: (data) => api.patch(`/api/users/passwordChange`, data), // 비밀번호 변경
+    postPicturePost: (data) => api.post(`/api/users/signup/${data.userid}`, data.profileImage), // 이미지 쏘기
+    postPasswordChange: (data) => api.post(`/api/users/passwordCheck`, data) // 비밀번호 변경모달로 이동 버튼
 }
 
 export default apis;

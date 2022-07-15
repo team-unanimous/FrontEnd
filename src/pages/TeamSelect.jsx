@@ -10,51 +10,52 @@ const TeamSelect = () => {
 
     const { data } = useGetTeamInfo();
 
-    if (!data){
+    if (!data) {
         return <>Something wrong!</>
     }
     // console.log(data);
     return (
         <>
-        <StBox>
-            <StContainer>
-                <StTitleWrapper>
-                    <StTitle>접속할 팀 페이지를 선택해주세요</StTitle>
-                    <StUnanimousTeamJoin 
-                    onClick={()=>navigate('/teamboard/1')}
-                    >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin>
-                </StTitleWrapper>
-                <StTeamBox>
-                    {data.map((team)=>(
-                        <>
-                        <StTeamItemBox>
-                        <StTeamItem
-                            key = {team.teamId}
-                            className = "team-title"
-                            onClick={()=> {navigate(`/teamboard/${team.teamId}`)}}
-                            >
-                                <img src={`${team.teamImage}`}></img>
-                        </StTeamItem>
-                        <StTeamName>
-                        {team.teamname}
-                        </StTeamName>
-                        </StTeamItemBox>
-                        </>
-                    ))}
-                </StTeamBox>
-                <StButtonWrapper>
-                    <StInvitedButton onClick={()=>navigate("/teaminvited")}>
-                    이미 초대된 팀 페이지에 접속하고 싶으신가요?
-                    </StInvitedButton>
-                    <StTeamMakeButton onClick={()=>navigate("/teammake")}>
-                    새로운 팀 페이지를 만들고 싶으신가요?
-                    </StTeamMakeButton>
-                </StButtonWrapper>
-            </StContainer>
-        </StBox>
+            <StBox>
+                <StContainer>
+                    <StTitleWrapper>
+                        <StTitle>접속할 팀 페이지를 선택해주세요</StTitle>
+                        <StUnanimousTeamJoin
+                            onClick={() => navigate('/teamboard/1')}
+                        >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin>
+                    </StTitleWrapper>
+                    <StTeamBox>
+                        {data.map((team) => (
+                            <>
+                                <StTeamItemBox>
+                                    <StTeamItem
+                                        key={team.teamId}
+                                        className="team-title"
+                                        onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
+                                    >
+                                        <img src={`${team.teamImage}`}></img>
+                                    </StTeamItem>
+                                    <StTeamName>
+                                        {team.teamname}
+                                    </StTeamName>
+                                </StTeamItemBox>
+                            </>
+                        ))}
+                    </StTeamBox>
+                    <StButtonWrapper>
+                        <StInvitedButton onClick={() => navigate("/teaminvited")}>
+                            이미 초대된 팀 페이지에 접속하고 싶으신가요?
+                        </StInvitedButton>
+                        <StTeamMakeButton onClick={() => navigate("/teammake")}>
+                            새로운 팀 페이지를 만들고 싶으신가요?
+                        </StTeamMakeButton>
+                    </StButtonWrapper>
+                </StContainer>
+            </StBox>
         </>
     )
 }
+
 
 const StBox = styled.div`
   width : 100%;
@@ -101,7 +102,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 48px;
+    font-size: 43px;
     line-height: 58px;
     /* identical to box height */
     
@@ -121,7 +122,7 @@ const StUnanimousTeamJoin = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 19px;
     text-align: center;
     
@@ -213,6 +214,7 @@ const StInvitedButton = styled.div`
     border-radius: 100px;
 
     /* Inside auto layout */
+    font-size: 14px;
 
     flex: none;
     order: 0;
@@ -234,6 +236,7 @@ const StTeamMakeButton = styled.div`
 
     background: #F5F5F5;
     border-radius: 100px;
+    font-size: 14px;
 
     /* Inside auto layout */
 
