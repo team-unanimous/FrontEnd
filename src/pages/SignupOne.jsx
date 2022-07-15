@@ -39,8 +39,7 @@ const SignupOne = () => {
     else {
       setActive(false);
     }
-    console.log("checkone : " + checkOne);
-    console.log("checktwo : " + checkTwo);
+   
   })
 
   return (

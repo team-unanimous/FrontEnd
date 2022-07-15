@@ -4,7 +4,6 @@ import TodayMeet from '../components/TodayMeet';
 import LastMeeting from '../components/LastMeeting';
 import MeetingLeft from '../components/MeetingLeft';
 import MeetingRight from '../components/MeetingRight';
-import RecentMeet from '../components/RecentMeet';
 import { useGetPassed } from '../Hooks/useGetPassed';
 import { useGetReserve } from '../Hooks/useGetReserve';
 import { useGetOnAir } from '../Hooks/useGetOnAir';
@@ -17,6 +16,7 @@ const TeamboardHome = () => {
   const {data : passed} = useGetPassed({teamId});
   const {data : onAir} = useGetOnAir({teamId});
   const {data : reserve} = useGetReserve({teamId});
+  
 
   return (
     <StRight>
@@ -36,15 +36,17 @@ const TeamboardHome = () => {
         <StMeetingLeftBox>
           진행중인 회의
           <StMeetingLeft>
-            {onAir?.map((value,index)=><MeetingLeft key={index} prop={value}/>)}
+            {onAir?<>{onAir[0]?<MeetingLeft prop={onAir[0]}/>:<></>}</>:<></>}
+            {onAir?<>{onAir[1]?<MeetingLeft prop={onAir[1]}/>:<></>}</>:<></>}
+            {onAir?<>{onAir[2]?<MeetingLeft prop={onAir[2]}/>:<></>}</>:<></>}
           </StMeetingLeft>
         </StMeetingLeftBox>
         <StMeetingRightBox>
           예정된 회의
           <StMeetingRight>
-            <MeetingRight/>
-            <MeetingRight/>
-            <MeetingRight/>
+            {reserve?<>{reserve[0]?<MeetingRight prop={reserve[0]}/>:<></>}</>:<></>}
+            {reserve?<>{reserve[1]?<MeetingRight prop={reserve[1]}/>:<></>}</>:<></>}
+            {reserve?<>{reserve[2]?<MeetingRight prop={reserve[2]}/>:<></>}</>:<></>}
           </StMeetingRight>
         </StMeetingRightBox>
       </StMeetingInnerBox>
@@ -78,13 +80,13 @@ const StLastInnerBox = styled.div`
 
 const StMeetingRightBox = styled.div`
   width : 390px;
-  height : 330px;
+  height : 343px;
   margin : 1rem 0 0 0; 
 `;
 
 const StMeetingLeftBox = styled.div`
   width : 390px;
-  height : 330px;
+  height : 343px;
   margin : 1rem 0 0 0; 
 `;
 
@@ -97,11 +99,10 @@ const StMeetingInnerBox = styled.div`
 const StMeetingRight = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width : 390px;
-  height : 311.2px;
+  height : 343px;
   margin : 1rem 0 0 0;
-  padding : 1rem 1rem 1rem 1rem;
+  padding : 0rem 1rem 0rem 1rem;
   border-radius: 0.5rem;
   background-color: #D9D9D9;
 `;
@@ -109,11 +110,10 @@ const StMeetingRight = styled.div`
 const StMeetingLeft = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width : 390px;
-  height : 311.2px;
+  height : 343px;
   margin : 1rem 0 0 0;
-  padding : 1rem 1rem 1rem 1rem;
+  padding : 0 1rem 0 1rem;
   border-radius: 0.5rem;
   background-color: #D9D9D9;
 `;

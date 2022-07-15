@@ -12,7 +12,8 @@ import meeting from '../img/meeting.png';
 import meetingselect from '../img/meetingselect.png';
 import setting from '../img/setting.png';
 import settingselect from '../img/settingselect.png';
-
+import jwt_decode from "jwt-decode";
+import { getCookie } from '../Cookie';
 
 
 const TeamBoard = () => {
@@ -24,10 +25,16 @@ const TeamBoard = () => {
   const teamId = useParams().teamid;
 
   const {data : main}= useGetTeamMain({teamId});
- 
+
+  console.log(main);
+
+  const decoded = jwt_decode(getCookie('token'));
+  const nickname = decoded.USER_NICKNAME;
+
+
   return  (
           <StBox>
-            <Header/>
+            <Header teamname={main?.teamname}/>
             <StDownBox> 
               <StLeft>
                 <StSmallBox>
@@ -35,7 +42,7 @@ const TeamBoard = () => {
                       <StTeamImg/>
                       <StInfoBox>
                           <StTeamName>{main?.teamname}</StTeamName>
-                          <StTeamClass>member</StTeamClass>
+                          {main?.user[0].nickname==nickname?<StTeamClass>Leader</StTeamClass>:<StTeamClass>member</StTeamClass>}
                       </StInfoBox>
                   </StTeamInfoBox>
                   <StBtBox>
@@ -47,7 +54,7 @@ const TeamBoard = () => {
               </StLeft>
               {page==1?<TeamboardHome/>:<></>}
               {page==2?<MeetingManage/>:<></>}
-              {page==3?<TeamSetting prop={main?.user}/>:<></>}
+              {page==3?<TeamSetting teamLeader={main?.user[0].nickname} prop={main?.user}/>:<></>}
             </StDownBox>
             {page==1?<StMeetMake onClick={()=>{navigate(`/teamboard/${teamId}/meetmakeone`)}}>+</StMeetMake>:<></>}
           </StBox>

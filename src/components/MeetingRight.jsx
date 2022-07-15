@@ -1,18 +1,26 @@
 import React from 'react'
 import styled from 'styled-components';
 
-const MeetingRight = () => {
+const MeetingRight = (prop) => {
+    
+    const date = prop.prop.meetingDate;
+    let k;
+    let a;
+    k = date.split("-")
+    a= k.slice(1)
+    a=a.join('.');
+    
   return (
     <StBox>
         <StInfo>
             <StTime>
-                <Stdate>6.30</Stdate>
-                <StLong>09:00 - 12:00</StLong>
+                <Stdate>{a}</Stdate>
+                <StLong>{prop.prop.meetingTime} - {prop.prop.meetingOverTime}</StLong>
             </StTime>
             <StLine/>
             <StContent>
-                <StTitle>저녁에 뭐 먹을지 정하기</StTitle>
-                <StOwner>주최자 : 아무개씨</StOwner>
+                <StTitle>{prop.prop.meetingTitle}</StTitle>
+                <StOwner>주최자 : {prop.prop.meetingCreator}</StOwner>
             </StContent>
         </StInfo>
     </StBox>
@@ -84,6 +92,7 @@ const StBox = styled.div`
     padding: 24px;
     width : 342px;
     height : 50.4px;
+    margin : 0.7rem 0 0 0;
     background-color: white;
     border-radius : 6px;
 `;
