@@ -10,13 +10,15 @@ const TeamInvited = () => {
     const navigate = useNavigate();
     const [warning, setWarning] = useState(null);
     const [teamData, setTeamData] = useState(null);
+    const [teamName, setTeamName] = useState(null);
+    const [UUID, setUUID] = useState('');
 
     const findUUID = async (UUIDInfo)=> {
         return apis.postInviteTeam(UUIDInfo);
     }
         
-    const { mutate } = useMutation(findUUID, {
-        onSuccess: (data) => {
+    const { mutate:findMutate } = useMutation(findUUID, {
+        onSuccess: (resp) => {
             // try {
             //     console.log(data, "성공");
             //     setWarning(false);
@@ -27,7 +29,9 @@ const TeamInvited = () => {
             //     setTeamData(false);
             //     setWarning(true);    
             // }
-            console.log(data, "성공");
+            console.log(resp, "성공");
+            setTeamName(resp.data.teamname);
+            setUUID(resp.data.uuid);
             setWarning(false);
             setTeamData(true);
         },
@@ -37,6 +41,19 @@ const TeamInvited = () => {
             setWarning(true);
         }
     });
+    const teamJoin = async (data) =>{
+        return apis.postTeamJoin(data);
+    }
+    const { mutate : joinMutate } = useMutation(teamJoin, {
+        onSuccess: (data)=>{
+            console.log(data.data);
+            ()=>navigate('/teamboard/1')
+        },
+        onError: (error)=>{
+            console.log(error);
+            alert("오류가 발생했습니다");
+        }
+    })
 
     // const mutation = useMutation(findUUID);
 
@@ -45,9 +62,15 @@ const TeamInvited = () => {
             uuid : uuidRef.current.value
         }
         console.log(data);
-        mutate(data);
+        findMutate(data);
     }
-    
+    const teamJoinHandler = ()=>{
+        const data = {
+            uuid : UUID
+        }
+        console.log(data);
+        joinMutate(data);
+    }
 
     return (
         <>
@@ -78,10 +101,10 @@ const TeamInvited = () => {
 
                         </StTeamProfileImg>
                         <StTeamTitleDiv>
-                            {/* {data?.data?.teamname} */}
+                            {teamName}
                         </StTeamTitleDiv>
                     </StTeamDataWrapper>
-                    <StTeamJoinButton onClick={()=>navigate('/teamboard')}>
+                    <StTeamJoinButton onClick={teamJoinHandler}>
                         입장하기
                     </StTeamJoinButton>
                     </StTeamDataBox>
