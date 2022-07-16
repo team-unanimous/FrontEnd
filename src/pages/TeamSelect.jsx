@@ -32,12 +32,13 @@ const TeamSelect = () => {
 
     const { data } = useGetTeamInfo();
 
-    if (!data){
+    if (!data) {
         return <>Something wrong!</>
     }
     // console.log(data);
     return (
         <>
+
         <StBox>
             <StContainer>
                 <StTitleWrapper>
@@ -74,9 +75,11 @@ const TeamSelect = () => {
                 </StButtonWrapper>
             </StContainer>
         </StBox>
+
         </>
     )
 }
+
 
 const StBox = styled.div`
   width : 100%;
@@ -123,7 +126,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 48px;
+    font-size: 43px;
     line-height: 58px;
     /* identical to box height */
     
@@ -143,7 +146,7 @@ const StUnanimousTeamJoin = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 19px;
     text-align: center;
     
@@ -235,6 +238,7 @@ const StInvitedButton = styled.div`
     border-radius: 100px;
 
     /* Inside auto layout */
+    font-size: 14px;
 
     flex: none;
     order: 0;
@@ -256,6 +260,7 @@ const StTeamMakeButton = styled.div`
 
     background: #F5F5F5;
     border-radius: 100px;
+    font-size: 14px;
 
     /* Inside auto layout */
 

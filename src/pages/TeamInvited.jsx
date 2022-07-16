@@ -13,9 +13,10 @@ const TeamInvited = () => {
     const [teamName, setTeamName] = useState(null);
     const [UUID, setUUID] = useState('');
 
-    const findUUID = async (UUIDInfo)=> {
+    const findUUID = async (UUIDInfo) => {
         return apis.postInviteTeam(UUIDInfo);
     }
+
         
     const { mutate:findMutate } = useMutation(findUUID, {
         onSuccess: (resp) => {
@@ -57,9 +58,9 @@ const TeamInvited = () => {
 
     // const mutation = useMutation(findUUID);
 
-    const teamFindHandler = ()=>{
+    const teamFindHandler = () => {
         const data = {
-            uuid : uuidRef.current.value
+            uuid: uuidRef.current.value
         }
         console.log(data);
         findMutate(data);
@@ -72,24 +73,46 @@ const TeamInvited = () => {
         joinMutate(data);
     }
 
+
     return (
         <>
-        <StBox>
-            <StContainer>
-                <StTitleBox>
-                    <StTitle>메일로 전송된 초대 코드를 입력해주세요</StTitle>
-                    <StTitleWrapper>
-                        <StTitleInputBox>
-                            <StTitleInput placeholder="초대 코드 입력" type={"text"} ref={uuidRef}>
+            <StBox>
+                <StContainer>
+                    <StTitleBox>
+                        <StTitle>메일로 전송된 초대 코드를 입력해주세요</StTitle>
+                        <StTitleWrapper>
+                            <StTitleInputBox>
+                                <StTitleInput placeholder="초대 코드 입력" type={"text"} ref={uuidRef}>
 
-                            </StTitleInput>
-                            <StTitleButton onClick={teamFindHandler}>
-                                코드 확인
-                            </StTitleButton>
-                        </StTitleInputBox>
-                        {warning 
-                        ?<StWarning>올바르지 않은 코드가 입력되었습니다. 다시 입력해주세요.</StWarning> 
+                                </StTitleInput>
+                                <StTitleButton onClick={teamFindHandler}>
+                                    코드 확인
+                                </StTitleButton>
+                            </StTitleInputBox>
+                            {warning
+                                ? <StWarning>올바르지 않은 코드가 입력되었습니다. 다시 입력해주세요.</StWarning>
+                                : <></>}
+                        </StTitleWrapper>
+                    </StTitleBox>
+                    {teamData
+                        ? <StTeamBox>
+                            <StTeamDataBox>
+                                <StTeamDataWrapper>
+                                    <StTeamProfileImg>
+                                        {/* <img src={data?.data?.teamImage}></img> */}
+
+                                    </StTeamProfileImg>
+                                    <StTeamTitleDiv>
+                                        {/* {data?.data?.teamname} */}
+                                    </StTeamTitleDiv>
+                                </StTeamDataWrapper>
+                                <StTeamJoinButton onClick={() => navigate('/teamboard')}>
+                                    입장하기
+                                </StTeamJoinButton>
+                            </StTeamDataBox>
+                        </StTeamBox>
                         : <></>}
+
                     </StTitleWrapper>
                 </StTitleBox>
                 {teamData
@@ -109,8 +132,7 @@ const TeamInvited = () => {
                     </StTeamJoinButton>
                     </StTeamDataBox>
                 </StTeamBox>
-                :<></>}
-                
+                :<></>} 
             </StContainer>
         </StBox>
         </>
@@ -148,7 +170,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 48px;
+    font-size: 43px;
     line-height: 58px;
     /* identical to box height */
     text-align: center;

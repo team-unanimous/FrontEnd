@@ -34,7 +34,6 @@ const SignUpTwo = () => {
   }
 
 
-  console.log(rockemail(email))
 
   // // 이메일 버튼시 포스트
   // const emailPost = async (data) => {
@@ -96,6 +95,7 @@ const SignUpTwo = () => {
               <StEmailButton >
                 코드 전송
               </StEmailButton>
+
             </StEmailInputBox>
             {reg_email.test(email) === false
               ? <StWarningTitle style={{ color: 'red' }}> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
@@ -107,10 +107,7 @@ const SignUpTwo = () => {
           <StEmailBox>
             <StEmailTitle>회원가입 코드</StEmailTitle>
             <StEmailInputBox>
-              <StEmailInput placeholder='코드입력' />
-              <StEmailButton>
-                확인
-              </StEmailButton>
+              <StlongEmailInput placeholder='코드입력' />
             </StEmailInputBox>
             <StEmailWarnning>
             </StEmailWarnning>
@@ -130,6 +127,15 @@ const SignUpTwo = () => {
     </StBox>
   )
 }
+
+const StlongEmailInput = styled.input`
+  width : 540px;
+  height : 44px;
+  border-radius: 6px;
+  border: 1px solid #000000;
+  // placeholder 앞간격
+  padding-left: 10px;
+`;
 
 const StNotAgree = styled.button`
   width : 200px;

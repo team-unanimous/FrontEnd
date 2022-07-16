@@ -12,7 +12,6 @@ const Login = () => {
   const navigate = useNavigate();
 
 
-  // ref안에 null넣는이유 
   const email = useRef(null);
   const password = useRef(null);
 
