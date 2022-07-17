@@ -3,11 +3,12 @@ import { setCookie, getCookie } from '../../Cookie';
 
 // 1. Axios instance생성
 const api = axios.create({
-    baseURL: "https://dkworld.shop"
+    baseURL: "http://52.79.226.242"
 })
 
 // 상우님 api http://13.125.217.152
 // 동관님 api https://dkworld.shop/
+// 승훈님 api https://52.79.226.242
 
 // 2. request interceptor
 api.interceptors.request.use(
@@ -24,7 +25,6 @@ api.interceptors.request.use(
 // 3. response interceptor
 api.interceptors.response.use(
     response => {
-        console.log(response);
         return response;
     },
     error => {

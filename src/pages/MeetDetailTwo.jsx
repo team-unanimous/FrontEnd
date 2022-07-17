@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useParams,useNavigate } from 'react-router';
 import { useGetMeetSpecific } from '../Hooks/useGetMeetSpecific';
 import { StButton,StBarBox,StBarG,StBarC } from '../style/styled';
+import { useQueryClient } from 'react-query';
 
 const MeetDetailTwo = () => {
   
@@ -10,10 +11,9 @@ const MeetDetailTwo = () => {
 
   const teamId = useParams().teamid;
   const meetingId = useParams().meetid;
-  console.log(teamId);
-  const {data} = useGetMeetSpecific({meetingId});
-  console.log(data);
-  console.log(data?.issues);
+  const {data:meeting} = useGetMeetSpecific({meetingId});
+  console.log(meeting);
+  const queryClient = useQueryClient();
 
   return (
     <StPage>
@@ -34,7 +34,7 @@ const MeetDetailTwo = () => {
                 미팅 이름
               </StInfoLeft>
               <StInfoRight>
-                {data?.meetingTitle}
+                {meeting?.meetingTitle}
               </StInfoRight>
             </StMeetTitleBox>
             <StLeaderBox>
@@ -42,7 +42,7 @@ const MeetDetailTwo = () => {
                 주최자
               </StInfoLeft> 
               <StInfoRight>
-                {data?.meetingCreator}
+                {meeting?.meetingCreator}
               </StInfoRight>
             </StLeaderBox>
             <StDateBox>
@@ -50,7 +50,7 @@ const MeetDetailTwo = () => {
                 날짜
               </StInfoLeft> 
               <StInfoRight>
-                {data?.meetingDate}  {data?.meetingTime}~
+                {meeting?.meetingDate}  {meeting?.meetingTime}~
               </StInfoRight>
             </StDateBox>
             <StIssueBox>
@@ -58,7 +58,7 @@ const MeetDetailTwo = () => {
                 안건
               </StInfoLeft> 
               <StIssueRight>
-                {data?.issues?.map((value,index)=>{ 
+                {meeting?.issues?.map((value,index)=>{ 
                   return <StIssue>{index+1}. {value.issueContent} </StIssue>})}
               </StIssueRight>
             </StIssueBox>

@@ -8,7 +8,7 @@ import { useMutation } from 'react-query'
 import apis from '../api/main'
 import { teamID } from '../redux/modules/meetReducer'
 
-const MeetMakeTwoTwo = () => {
+const MeetingEditTwoOne = () => {
 
   const dispatch = useDispatch();
 
@@ -19,7 +19,8 @@ const MeetMakeTwoTwo = () => {
   const [theme,setTheme] = useState(1);
 
   const teamId = useParams().teamid;
-
+  const meetId = useParams().meetid
+  console.log(meetId)
   // 시간 옵션
   const [clicked,setClicked] = useState(false);
   const [time,setTime] = useState("00:00");
@@ -33,25 +34,24 @@ const MeetMakeTwoTwo = () => {
   const [duration,setDuration] = useState("0시간")
 
 
-  // 팀 만들기
-  const makeTeam = async(data)=>{
-    console.log(data);
-    const datas = await apis.postReserveMeet(data);
-    console.log(data)
-    dispatch(teamID({
-      meetid : datas.data
-    }))
+  // 미팅 수정하기
+  const patchMeetProfile = async(data)=>{
+    const datas = await apis.patchMeetProfile(data);
+    console.log(datas)
+    // dispatch(teamID({
+    //   meetid : datas.data
+    // }))
     return datas;
   }
 
-  const { mutate } = useMutation(makeTeam,{
+  const { mutate } = useMutation(patchMeetProfile,{
     onSuccess:()=>{
-      navigate(`/teamboard/${teamId}/meetmakethreetwo`)
-      alert("미팅 만들기 성공")
+      navigate(`/teamboard/${teamId}/${meetId}/meetingedittwo`)
+      alert("미팅 수정 성공")
     },
     onError:(error)=>{
-      alert("미팅 만들기 실패");
-    }   
+      alert("미팅 수정 실패");
+    }
   });
 
   const makeFunction = () =>{
@@ -62,7 +62,7 @@ const MeetMakeTwoTwo = () => {
       meetingSum : sumImg,
       meetingTheme : theme,
       meetingDuration : duration,
-      teamId : teamId
+      meetId : meetId
     })
   }
 
@@ -436,5 +436,4 @@ const StBox = styled.div`
   height : 100vh;
   background-color: #818181;
 `;
-
-export default MeetMakeTwoTwo
+export default MeetingEditTwoOne
