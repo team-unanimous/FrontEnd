@@ -8,7 +8,8 @@ const DetailModalOnAir = ({open, close,meetingTitle,meetingDate,meetingTime,meet
   return (
     <>
     {open?
-    <StBack onClick={close}>
+    <>
+    <StBack onClick={close}/>
         <StBox>
             <StImg/>
             <StTitle>회의명 '{meetingTitle}'</StTitle>
@@ -37,7 +38,7 @@ const DetailModalOnAir = ({open, close,meetingTitle,meetingDate,meetingTime,meet
             <StLine/>
             <StButton><StIconImg src={doorIcon}/>참여하기</StButton>
         </StBox>
-    </StBack>:<></>}
+    </>:<></>}
     </>
   )
 }

@@ -1,20 +1,24 @@
 import React from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components'
 import { useGetTeamInfo } from '../Hooks/useGetTeamInfo'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
+import { useEffect } from 'react';
+import { useQueryClient } from 'react-query';
 
 const Header = ({ teamname }) => {
 
+  const navigate = useNavigate();
+
   const [clicked, setClicked] = useState(false);
   const teamId = useParams().teamid;
-  const { data } = useGetTeamInfo();
-
+  const { data: user } = useGetTeamInfo();
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
-  const usersimg = decoded.USER_IMAGE
+  const img = decoded.USER_IMAGE;
+  const queryClient = useQueryClient();
 
   return (
     <StWhole>
@@ -27,13 +31,13 @@ const Header = ({ teamname }) => {
             <StDefault onClick={() => { setClicked(!clicked) }}>{teamname}</StDefault>
             <StOption clicked={clicked}>
               <StHidden>
-                {/* {data?.map((value,index)=>{
-                                return <StTime key={index} onClick={()=>{setClicked(!clicked)}}>{value.teamname}</StTime>
-                            })} */}
+                {user?.map((value, index) => {
+                  return <StTime key={index} onClick={() => { setClicked(!clicked); queryClient.invalidateQueries("meeting"); navigate(`/teamboard/${value.teamId}`) }}>{value.teamname}</StTime>
+                })}
               </StHidden>
             </StOption>
           </StDropBox>
-          <StMyPage src={usersimg} />
+          <StMyPage onClick={() => { navigate(`/mypage`) }} src={img} />
           <StNick>{nickname}</StNick>
         </StRightBox>
       </StTimeBox>
@@ -69,6 +73,7 @@ const StTime = styled.div`
   border-radius: 6px;
   font-weight: 500;
   font-size: 16px;
+  z-index: 4;
   &:hover{
     background-color: #EAEAEA;
   }
@@ -115,7 +120,6 @@ const StTimeBox = styled.div`
     width : 186px;
     height : 81px;
 `;
-
 
 const StOption = styled.div`
   position: absolute;

@@ -26,8 +26,6 @@ const TeamBoard = () => {
 
   const { data: main } = useGetTeamMain({ teamId });
 
-  // console.log(main);
-
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
   const userimage = decoded.USER_IMAGE;

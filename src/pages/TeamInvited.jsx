@@ -10,14 +10,16 @@ const TeamInvited = () => {
     const navigate = useNavigate();
     const [warning, setWarning] = useState(null);
     const [teamData, setTeamData] = useState(null);
-    const [teamimg, setTeamimg] = useState(null);
+    const [teamName, setTeamName] = useState(null);
+    const [UUID, setUUID] = useState('');
 
     const findUUID = async (UUIDInfo) => {
         return apis.postInviteTeam(UUIDInfo);
     }
 
-    const { mutate } = useMutation(findUUID, {
-        onSuccess: (data) => {
+
+    const { mutate: findMutate } = useMutation(findUUID, {
+        onSuccess: (resp) => {
             // try {
             //     console.log(data, "성공");
             //     setWarning(false);
@@ -28,8 +30,9 @@ const TeamInvited = () => {
             //     setTeamData(false);
             //     setWarning(true);    
             // }
-            setTeamimg(data.data.teamImage)
-            console.log(data, "성공");
+            console.log(resp, "성공");
+            setTeamName(resp.data.teamname);
+            setUUID(resp.data.uuid);
             setWarning(false);
             setTeamData(true);
         },
@@ -39,6 +42,19 @@ const TeamInvited = () => {
             setWarning(true);
         }
     });
+    const teamJoin = async (data) => {
+        return apis.postTeamJoin(data);
+    }
+    const { mutate: joinMutate } = useMutation(teamJoin, {
+        onSuccess: (data) => {
+            console.log(data.data);
+            () => navigate('/teamboard/1')
+        },
+        onError: (error) => {
+            console.log(error);
+            alert("오류가 발생했습니다");
+        }
+    })
 
     // const mutation = useMutation(findUUID);
 
@@ -47,7 +63,14 @@ const TeamInvited = () => {
             uuid: uuidRef.current.value
         }
         console.log(data);
-        mutate(data);
+        findMutate(data);
+    }
+    const teamJoinHandler = () => {
+        const data = {
+            uuid: UUID
+        }
+        console.log(data);
+        joinMutate(data);
     }
 
 
@@ -75,7 +98,10 @@ const TeamInvited = () => {
                         ? <StTeamBox>
                             <StTeamDataBox>
                                 <StTeamDataWrapper>
-                                    <StTeamProfileImg src={teamimg} />
+                                    <StTeamProfileImg>
+                                        {/* <img src={data?.data?.teamImage}></img> */}
+
+                                    </StTeamProfileImg>
                                     <StTeamTitleDiv>
                                         {/* {data?.data?.teamname} */}
                                     </StTeamTitleDiv>
@@ -86,7 +112,24 @@ const TeamInvited = () => {
                             </StTeamDataBox>
                         </StTeamBox>
                         : <></>}
+                    {teamData
+                        ? <StTeamBox>
+                            <StTeamDataBox>
+                                <StTeamDataWrapper>
+                                    <StTeamProfileImg>
+                                        {/* <img src={data?.data?.teamImage}></img> */}
 
+                                    </StTeamProfileImg>
+                                    <StTeamTitleDiv>
+                                        {teamName}
+                                    </StTeamTitleDiv>
+                                </StTeamDataWrapper>
+                                <StTeamJoinButton onClick={teamJoinHandler}>
+                                    입장하기
+                                </StTeamJoinButton>
+                            </StTeamDataBox>
+                        </StTeamBox>
+                        : <></>}
                 </StContainer>
             </StBox>
         </>
@@ -272,7 +315,7 @@ const StTeamJoinButton = styled.div`
     flex-grow: 0;
     cursor: pointer;
 `
-const StTeamProfileImg = styled.img`
+const StTeamProfileImg = styled.div`
     background-color: #000;
     /* Rectangle 151 */
     width: 180px;
@@ -280,7 +323,6 @@ const StTeamProfileImg = styled.img`
 
     background: #F1F1F1;
     border-radius: 87px;
-    object-fit: cover;
 `
 const StTeamTitleDiv = styled.div`
     /* background-color: black; */

@@ -2,11 +2,33 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
 import styled from "styled-components"
+import apis from "../api/main"
+import { useMutation } from "react-query"
 
 const TeamSelect = () => {
-    //key, team select undefined, vector img, team img box
+    //key, vector img, team img box
     const navigate = useNavigate();
     // const [selectedTeam, setSelectedTeam] = useState(null);
+    const teamJoin = async (data) => {
+        return apis.postTeamJoin(data);
+    }
+    const { mutate: joinMutate } = useMutation(teamJoin, {
+        onSuccess: (data) => {
+            console.log(data.data);
+            () => navigate('/teamboard/1')
+        },
+        onError: (error) => {
+            console.log(error);
+        }
+    })
+
+    const unaTeamJoinHandler = () => {
+        const data = {
+            uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2"
+        }
+        console.log(data.data)
+        joinMutate(data);
+    }
 
     const { data } = useGetTeamInfo();
 
@@ -21,7 +43,7 @@ const TeamSelect = () => {
                     <StTitleWrapper>
                         <StTitle>접속할 팀 페이지를 선택해주세요</StTitle>
                         <StUnanimousTeamJoin
-                            onClick={() => navigate('/teamboard/1')}
+                            onClick={unaTeamJoinHandler}
                         >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin>
                     </StTitleWrapper>
                     <StTeamBox>
@@ -32,7 +54,6 @@ const TeamSelect = () => {
                                         key={team.teamId}
                                         className="team-title"
                                         onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
-                                        src={`${team.teamImage}`}
                                     >
                                         {/* <img src={`${team.teamImage}`}></img> */}
                                     </StTeamItem>
@@ -96,7 +117,7 @@ const StTitleWrapper = styled.div`
     flex-grow: 0;
     `
 const StTitle = styled.div`
-    width: 654px;
+    width: 800px;
     height: 58px;
     margin-bottom: 24px;
     
@@ -117,7 +138,7 @@ const StTitle = styled.div`
     `
 const StUnanimousTeamJoin = styled.div`
     /* Unanimous팀에 참여하시겠습니까? */
-    width: 246px;
+    width: 300px;
     height: 19px;
     
     font-family: 'Inter';
