@@ -113,8 +113,7 @@ const TeamInvited = () => {
                         </StTeamBox>
                         : <></>}
 
-                    </StTitleWrapper>
-                </StTitleBox>
+                    
                 {teamData
                 ? <StTeamBox>
                     <StTeamDataBox>
@@ -133,11 +132,12 @@ const TeamInvited = () => {
                     </StTeamDataBox>
                 </StTeamBox>
                 :<></>} 
-            </StContainer>
-        </StBox>
+                </StContainer>
+            </StBox>
         </>
     )
 }
+
 const StBox = styled.div`
     width : 100%;
     height : 100vh;
