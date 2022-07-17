@@ -30,6 +30,9 @@ import Mypage from "./pages/Mypage";
 import PasswordFindOne from "./pages/PasswordFindOne"
 import PasswordFindTwo from "./pages/PasswordFindTwo"
 import MeetingRoom from "./pages/MeetingRoom"
+import MeetingEditTwoOne from "./pages/MeetingEditTwoOne";
+import MeetingEditTwoTwo from "./pages/MeetingEditTwoTwo";
+
 
 const queryClient = new QueryClient();
 
@@ -37,8 +40,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/landing" element={<Landing />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/signupone" element={<SignUpOne/>} />
         <Route path="/signuptwo" element={<SignUpTwo/>} />
         <Route path="/signupthree" element={<SignUpThree/>} />
@@ -46,6 +48,8 @@ function App() {
         <Route path="/signuptwo" element={<SignUpTwo />} />
         <Route path="/signupthree" element={<SignUpThree />} />
         <Route path="/signupfour" element={<SignUpFour />} />
+        <Route path="/teamboard/:teamid/:meetid/meetingeditone" element={<MeetingEditTwoOne/>}/>
+        <Route path="/teamboard/:teamid/:meetid/meetingedittwo" element={<MeetingEditTwoTwo/>}/>
         <Route path="/login" element={<Login />} />
         <Route path="/teamboard/:teamid/meetmakeone" element={<MeetMakeOne />} />
         <Route path="/teamboard/:teamid/meetmaketwoone" element={<MeetMakeTwoOne />} />

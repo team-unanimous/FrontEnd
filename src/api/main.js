@@ -15,13 +15,12 @@ const apis = {
 
     getTeamMain: ({ teamId }) => api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
     patchTeamPofile: () => api.patch(`/api/teams/${teamId}`),
-    patchMeetProfile: () => api.get(`/api/${meetingId}`), // 미팅 프로필 수정
-    deleteMeet: () => api.delete(`/api/meetings/${meetingId}`), // 미팅 삭제
+    patchMeetProfile: (data) => api.patch(`/api/meetings/${data.meetId}`,data), // 미팅 프로필 수정
+    deleteMeet: (data) => api.delete(`/api/meetings/${data.meetingId}`), // 미팅 삭제
     postReserveMeet: (data) => api.post(`/api/teams/${data.teamId}/meetings`, data), // 미팅 예약 만들기
     postStartMeet: (data) => api.post(`/api/teams/${data.teamId}/meetings/now`, data), // 미팅바로 시작하기
     getMeetList: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings`), // 미팅 목록 가져오기
     getMeetSpecific: ({ meetingId }) => api.get(`/api/meetings/${meetingId}`), // 특정 미팅 조회
-    patchMeetProfile: () => api.patch(`/api/meetings/${meetingId}`), // 미팅 프로필 수정
     postMeetReserveIssue: (data) => api.post(`/api/meetings/${data.meetingId}/issues`, data), // 미팅 예약하기 안건등록
     postMeetStartIssue: (data) => api.post(`/api/meetings/${data.meetingId}/issues/now`, data), // 미팅 바로 시작하기 안건 등록
     patchStartMeetIssue: (data) => api.patch(`/api/meetings/${data.meetingId}/issues/${data.issueId}/now`, data), // 미팅 바로시작하기 안건 수정

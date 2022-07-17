@@ -1,5 +1,3 @@
-import { Action } from 'history';
-import React from 'react'
 
 const initialState={
     meetID:0,

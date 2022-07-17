@@ -184,7 +184,6 @@ const TeamSetting = (props) => {
                     <StOut onClick={leaving}>팀 탈퇴하기</StOut>
                     <StBtBox>
                         <StCancelBt onClick={()=>{setState(0)}}>취소</StCancelBt>
-                        <StConfirmBt>변경</StConfirmBt>
                     </StBtBox>
              </StTeamBox>
         </StTeamOutBox></StRight>:<></>
@@ -216,7 +215,6 @@ const TeamSetting = (props) => {
             </StNameBox>
             <StBtBox>
                 <StCancelBt onClick={()=>{setState(0)}}>취소</StCancelBt>
-                <StConfirmBt>변경</StConfirmBt>
             </StBtBox>
         </StEdit>
         </StRight>:<></>
@@ -327,7 +325,7 @@ const StCancelBt = styled.div`
 
 const StBtBox = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width : 418px;
     height : 54px;
     margin : 0 auto 0 auto;
