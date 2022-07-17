@@ -25,7 +25,7 @@ const Login = () => {
 
   const { mutate } = useMutation(login, {
     onSuccess: () => {
-      navigate('/');
+      navigate('/teamselect');
       alert("로그인 완료")
     },
     onError: (error) => {

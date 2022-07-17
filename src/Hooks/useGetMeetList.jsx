@@ -6,7 +6,7 @@ const useGetMeetList = ({teamId}) => {
         const { data } = await apis.getMeetList({teamId});
         return data;
     }
-    return useQuery("teamInfo", fetcher);
+    return useQuery("meetList", fetcher);
 }
 
 export default useGetMeetList;

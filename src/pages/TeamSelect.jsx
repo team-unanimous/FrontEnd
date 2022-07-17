@@ -119,7 +119,7 @@ const StTitleWrapper = styled.div`
     flex-grow: 0;
     `
 const StTitle = styled.div`
-    width: 654px;
+    width: 800px;
     height: 58px;
     margin-bottom: 24px;
     
@@ -140,7 +140,7 @@ const StTitle = styled.div`
     `
 const StUnanimousTeamJoin = styled.div`
     /* Unanimous팀에 참여하시겠습니까? */
-    width: 246px;
+    width: 300px;
     height: 19px;
     
     font-family: 'Inter';
