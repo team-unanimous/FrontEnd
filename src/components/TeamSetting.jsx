@@ -10,10 +10,10 @@ import { getCookie } from '../Cookie';
 
 const TeamSetting = (props) => {
 
-    const [state,setState] =useState(0);
+    const [state, setState] = useState(0);
     const teamId = useParams().teamid;
 
-    console.log(props.teamLeader)
+    // console.log(props.teamLeader)
 
     const teamLeader = props.teamLeader;
 
@@ -21,8 +21,8 @@ const TeamSetting = (props) => {
     const nickname = decoded.USER_NICKNAME;
 
     // 팀 정보 받아오기
-    const { data } = useGetTeamMain({teamId});
-
+    const { data } = useGetTeamMain({ teamId });
+    const teamid = { data }.data.teamid
     const teamname = useRef("");
 
     // 복사하기 버튼
@@ -31,197 +31,245 @@ const TeamSetting = (props) => {
     };
 
     // 팀에서 나가기
-    const leave = async(data)=>{
+    const leave = async (data) => {
         const datas = await apis.deleteTeamLeave(data);
         return datas;
-      }
-    
-      const {mutate:leaves} = useMutation(leave,{
-        onSuccess:()=>{
+    }
+
+    const { mutate: leaves } = useMutation(leave, {
+        onSuccess: () => {
             alert("나가기완료");
         },
-        onError:(error)=>{
+        onError: (error) => {
             alert("나가기 불가");
         }
-      });
+    });
 
-      const leaving = ()=>{
+    const leaving = () => {
         leaves({
-            teamId : teamId
+            teamId: teamId
         })
-      }
+    }
 
 
-      // 팀 프로필 수정
-      const editProfile = async(data)=>{
-        const datas = await apis.patchTeamPofile(data);
+    // 이미지 올리기
+    const [imgfiles, setImgfiles] = useState();
+
+    const onLoadFile = (e) => {
+        const file = e.target.files[0]
+        console.log(file);
+        setImgfiles(file)
+    }
+
+    const formData = new FormData();
+    formData.append('profileTeamImage', imgfiles)
+    for (let key of formData.keys()) {
+        console.log(key);
+    }
+    for (let value of formData.values()) {
+        console.log(value);
+    }
+
+    // 팀 프로필이미지 수정
+    const editImage = async (data) => {
+        const datas = await apis.patchTeamImage(data);
         return datas;
-      }
+    }
 
-      const { mutate:edit } = useMutation(editProfile,{
-        onSuccess:()=>{
+    const { mutate: editimg } = useMutation(editImage, {
+        onSuccess: () => {
             alert("수정 완료");
         },
-        onError:()=>{
+        onError: () => {
             alert("수정 실패");
         }
-      });
+    });
 
+    const editingimg = () => {
+        editimg({
+            teamImage: formData,
+            teamId: teamid,
+        })
+    }
 
-  return (
-    <>
-    {teamLeader!==nickname?
-        <StRight>
-        <StTeamOutBox>
-            <StTeamBox>
-                    <StUpBox2>
-                        <StManage>환경설정</StManage>
-                        <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
-                    </StUpBox2>
-                    <StLine/>
-                    <StDown>
-                        <StComeOn>
-                            <StBlack>
-                                팀 초대코드
-                            </StBlack>
-                            <StInputBox>
-                                <StInput>{data.uuid}</StInput>
-                                <StBt onClick={()=>handleCopyClipBoard(`${data.uuid}`)}>복사하기</StBt>
-                            </StInputBox>
-                        </StComeOn>
-                        <StListBox>
-                            <StBlack>
-                                팀원 관리
-                            </StBlack>
-                            <StBt2>사용자 초대</StBt2>
-                            <StMateList>
-                                {props?.prop.map((value,index)=>{
-                                    return <StUserBox key={index}>
-                                        <StUserImg/>
-                                        <StUserInfo>
-                                            <StUserName>{value.nickname}</StUserName>
-                                            <StEmail>{value.username}</StEmail>
-                                        </StUserInfo>
-                                        <StXicon src={xicon}/>
-                                    </StUserBox>
-                                })}
-                            </StMateList>
-                        </StListBox>
-                        <StMovePower>
-                            <StBlack>
-                                팀장 권한 위임
-                            </StBlack>
-                            <StBt3>사용자 선택</StBt3>
-                        </StMovePower>
-                    </StDown>
-                    <StLine/>
-                    <StOut onClick={leaving}>팀 탈퇴하기</StOut>
-             </StTeamBox>
-        </StTeamOutBox></StRight>:<></>}
-        {state==0&&teamLeader==nickname?
-            <StRight>
-                <StBox>
-                    <StUpBox1>
-                        <StSetting>환경설정</StSetting>
-                        <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
-                    </StUpBox1>    
-                    <StDownBox>
-                        <StDLeft onClick={()=>{setState(1)}}>
-                            <StA>팀원 관리</StA>
-                        </StDLeft>
-                        <StDLeft onClick={()=>{setState(2)}}>
-                            <StA>기본 정보 수정</StA>
-                        </StDLeft>
-                    </StDownBox>
-                </StBox>
-            </StRight>:<></>
+    // 팀 프로필닉네임 수정
+    const editNick = async (data) => {
+        const datas = await apis.patchTeamNick(data);
+        return datas;
+    }
+
+    const { mutate: editnick } = useMutation(editNick, {
+        onSuccess: () => {
+            alert("수정 완료");
+        },
+        onError: () => {
+            alert("수정 실패");
         }
-        {state==1&&teamLeader==nickname?
-        <StRight>
-        <StTeamOutBox>
-            <StTeamBox>
-                    <StUpBox2>
-                        <StManage>팀원 관리</StManage>
-                        <StSmall>팀원 목록을 관리 및 수정할 수 있습니다.</StSmall>
-                    </StUpBox2>
-                    <StLine/>
-                    <StDown>
-                        <StComeOn>
+    });
+
+    const editingnick = () => {
+        editnick({
+            teamname: teamname.current.value,
+            teamId: teamid,
+        })
+    }
+
+    return (
+        <>
+            {teamLeader !== nickname ?
+                <StRight>
+                    <StTeamOutBox>
+                        <StTeamBox>
+                            <StUpBox2>
+                                <StManage>환경설정</StManage>
+                                <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
+                            </StUpBox2>
+                            <StLine />
+                            <StDown>
+                                <StComeOn>
+                                    <StBlack>
+                                        팀 초대코드
+                                    </StBlack>
+                                    <StInputBox>
+                                        <StInput>{data.uuid}</StInput>
+                                        <StBt onClick={() => handleCopyClipBoard(`${data.uuid}`)}>복사하기</StBt>
+                                    </StInputBox>
+                                </StComeOn>
+                                <StListBox>
+                                    <StBlack>
+                                        팀원 관리
+                                    </StBlack>
+                                    <StBt2>사용자 초대</StBt2>
+                                    <StMateList>
+                                        {props?.prop.map((value, index) => {
+                                            return <StUserBox key={index}>
+                                                <StUserImg />
+                                                <StUserInfo>
+                                                    <StUserName>{value.nickname}</StUserName>
+                                                    <StEmail>{value.username}</StEmail>
+                                                </StUserInfo>
+                                                <StXicon src={xicon} />
+                                            </StUserBox>
+                                        })}
+                                    </StMateList>
+                                </StListBox>
+                                <StMovePower>
+                                    <StBlack>
+                                        팀장 권한 위임
+                                    </StBlack>
+                                    <StBt3>사용자 선택</StBt3>
+                                </StMovePower>
+                            </StDown>
+                            <StLine />
+                            <StOut onClick={leaving}>팀 탈퇴하기</StOut>
+                        </StTeamBox>
+                    </StTeamOutBox></StRight> : <></>}
+            {state == 0 && teamLeader == nickname ?
+                <StRight>
+                    <StBox>
+                        <StUpBox1>
+                            <StSetting>환경설정</StSetting>
+                            <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
+                        </StUpBox1>
+                        <StDownBox>
+                            <StDLeft onClick={() => { setState(1) }}>
+                                <StA>팀원 관리</StA>
+                            </StDLeft>
+                            <StDLeft onClick={() => { setState(2) }}>
+                                <StA>기본 정보 수정</StA>
+                            </StDLeft>
+                        </StDownBox>
+                    </StBox>
+                </StRight> : <></>
+            }
+            {state == 1 && teamLeader == nickname ?
+                <StRight>
+                    <StTeamOutBox>
+                        <StTeamBox>
+                            <StUpBox2>
+                                <StManage>팀원 관리</StManage>
+                                <StSmall>팀원 목록을 관리 및 수정할 수 있습니다.</StSmall>
+                            </StUpBox2>
+                            <StLine />
+                            <StDown>
+                                <StComeOn>
+                                    <StBlack>
+                                        팀 초대코드
+                                    </StBlack>
+                                    <StInputBox>
+                                        <StInput>{data.uuid}</StInput>
+                                        <StBt onClick={() => handleCopyClipBoard(`${data.uuid}`)}>복사하기</StBt>
+                                    </StInputBox>
+                                </StComeOn>
+                                <StListBox>
+                                    <StBlack>
+                                        팀원 관리
+                                    </StBlack>
+                                    <StBt2>사용자 초대</StBt2>
+                                    <StMateList>
+                                        {props?.prop.map((value, index) => {
+                                            return <StUserBox key={index}>
+                                                <StUserImg />
+                                                <StUserInfo>
+                                                    <StUserName>{value.nickname}</StUserName>
+                                                    <StEmail>{value.username}</StEmail>
+                                                </StUserInfo>
+                                                <StXicon src={xicon} />
+                                            </StUserBox>
+                                        })}
+                                    </StMateList>
+                                </StListBox>
+                                <StMovePower>
+                                    <StBlack>
+                                        팀장 권한 위임
+                                    </StBlack>
+                                    <StBt3>사용자 선택</StBt3>
+                                </StMovePower>
+                            </StDown>
+                            <StLine />
+                            <StOut onClick={leaving}>팀 탈퇴하기</StOut>
+                            <StBtBox>
+                                <StCancelBt onClick={() => { setState(0) }}>취소</StCancelBt>
+                            </StBtBox>
+                        </StTeamBox>
+                    </StTeamOutBox></StRight> : <></>
+            }
+            {state == 2 && teamLeader == nickname ?
+                <StRight>
+                    <StEdit>
+                        <StUpBox1>
+                            <StSetting>기본 정보 수정</StSetting>
+                            <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
+                        </StUpBox1>
+                        <StLine />
+                        <StProfile>
                             <StBlack>
-                                팀 초대코드
+                                팀 프로필 이미지
                             </StBlack>
-                            <StInputBox>
-                                <StInput>{data.uuid}</StInput>
-                                <StBt onClick={()=>handleCopyClipBoard(`${data.uuid}`)}>복사하기</StBt>
-                            </StInputBox>
-                        </StComeOn>
-                        <StListBox>
+                            <StImg />
+                            <StImgInput htmlFor='file'>이미지 추가하기</StImgInput>
+                        </StProfile>
+                        <input type="file" id="file" style={{ display: "none" }} />
+                        <StNameBox>
                             <StBlack>
-                                팀원 관리
+                                팀명
                             </StBlack>
-                            <StBt2>사용자 초대</StBt2>
-                            <StMateList>
-                                {props?.prop.map((value,index)=>{
-                                    return <StUserBox key={index}>
-                                        <StUserImg/>
-                                        <StUserInfo>
-                                            <StUserName>{value.nickname}</StUserName>
-                                            <StEmail>{value.username}</StEmail>
-                                        </StUserInfo>
-                                        <StXicon src={xicon}/>
-                                    </StUserBox>
-                                })}
-                            </StMateList>
-                        </StListBox>
-                        <StMovePower>
-                            <StBlack>
-                                팀장 권한 위임
-                            </StBlack>
-                            <StBt3>사용자 선택</StBt3>
-                        </StMovePower>
-                    </StDown>
-                    <StLine/>
-                    <StOut onClick={leaving}>팀 탈퇴하기</StOut>
-                    <StBtBox>
-                        <StCancelBt onClick={()=>{setState(0)}}>취소</StCancelBt>
-                    </StBtBox>
-             </StTeamBox>
-        </StTeamOutBox></StRight>:<></>
-        }
-        {state==2&&teamLeader==nickname?
-        <StRight>
-        <StEdit>
-            <StUpBox1>
-                <StSetting>기본 정보 수정</StSetting>
-                <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
-            </StUpBox1>
-            <StLine/>
-            <StProfile>
-                <StBlack>
-                    팀 프로필 이미지
-                </StBlack>
-                <StImg/>
-                <StImgInput htmlFor='file'>이미지 추가하기</StImgInput>
-            </StProfile>  
-                <input type="file" id="file" style={{display:"none"}}/>  
-            <StNameBox>
-                <StBlack>
-                    팀명
-                </StBlack>
-                <StNameDown>
-                    <StNameInput ref={teamname}/>
-                    <StNameBt>변경</StNameBt>
-                </StNameDown>
-            </StNameBox>
-            <StBtBox>
-                <StCancelBt onClick={()=>{setState(0)}}>취소</StCancelBt>
-            </StBtBox>
-        </StEdit>
-        </StRight>:<></>
-        }
-    </>
-  )
+                            <StNameDown>
+                                <StNameInput ref={teamname} />
+                                <StNameBt onClick={editingnick}>변경</StNameBt>
+                            </StNameDown>
+                        </StNameBox>
+                        <StBtBox>
+                            <StCancelBt onClick={() => { setState(0) }}>취소</StCancelBt>
+                        </StBtBox>
+                    </StEdit>
+                </StRight> : <></>
+            }
+        </>
+    )
 }
+
+
 
 const StEdit = styled.div`
     width : 100%;
@@ -282,6 +330,7 @@ const StImg = styled.img`
     border-radius: 125px;
     background-color: #E5E7EB;
     margin : 12px 0 12px 0;
+    object-fit: cover;
 `;
 
 const StProfile = styled.div`

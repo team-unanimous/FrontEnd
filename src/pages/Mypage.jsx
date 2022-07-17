@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useReducer } from "react";
 import styled from "styled-components";
 import { useMutation } from "react-query";
 import apis from "../api/main";
@@ -9,6 +9,7 @@ import NickNameModal from "../components/MypageModal/NickNameModal";
 import PasswordModal from "../components/MypageModal/PasswordModal";
 import DefaultImg from "../img/DefaultImg.jpg"
 import jwt_decode from "jwt-decode";
+import Header from "../components/Header"
 
 const Mypage = () => {
 
@@ -82,14 +83,20 @@ const Mypage = () => {
     const onLoadFile = (e) => {
         const file = e.target.files[0]
         console.log(file);
-        setFiles(file)
+        setFiles(file) // state가 렌더링되지않기때문에 이함수중간에서 렌더링된다면 고칠수있는데 사실상 불가능해보인다
         // 미리보기 부분 > 파일이미지를 url변경후 state에 저장
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file)
         fileReader.onload = (e) => setLoadimg(e.target.result)
         // 이미지 업로드 비동기 문제발생
         picturePostFunction()
-        // ImgModalCancel()
+        ImgModalCancel()
+    }
+
+
+    const exfunction = () => {
+        picturePostFunction()
+        ImgModalCancel()
     }
 
 
@@ -215,7 +222,11 @@ const Mypage = () => {
         })
     }
 
-
+    // useEffect(() => {
+    //     if (Boolean(files) === true)
+    //         picturePostFunction()
+    //     ImgModalCancel()
+    // });
 
     // 로그아웃
     const UserLogout = () => {
@@ -228,11 +239,13 @@ const Mypage = () => {
 
     return (
         <StWrap>
+            <Header />
             <ImageModal
                 open={imgmodalopen}
                 select={onLoadFile}
                 defaultimage={defaultFile}
                 close={ImgModalCancel}
+                plus={exfunction}
             />
             <NickNameModal
                 open={nicknamemodalopen}
@@ -256,17 +269,17 @@ const Mypage = () => {
                 <StProfileBox>
                     <StprofileText>프로필</StprofileText>
                     <StprofileTextmini>프로필 이미지</StprofileTextmini>
-                    <StProfile src={loadimg} />
+                    <StProfile src={usersimg} />
                     <StImgChangeBtn onClick={ImgModalOpen}>
                         변경
                     </StImgChangeBtn>
-                    <StProfileInput type="file" accept='img/*'
+                    {/* <StProfileInput type="file" accept='img/*'
                         onChange={onLoadFile}
                     >
                     </StProfileInput>
                     <StProfileBtn onClick={picturePostFunction}>
                         이미지 저장하기
-                    </StProfileBtn>
+                    </StProfileBtn> */}
                     <StprofileTextmini>
                         닉네임
                     </StprofileTextmini>
@@ -358,7 +371,7 @@ const StWrap = styled.div`
                 flex-direction: column;
                 align-items: center;
                 width : 100vw;
-                height : 100vh;
+                height : 100%;
                 `
 
 const StBigBox = styled.div`
@@ -366,18 +379,19 @@ const StBigBox = styled.div`
                 flex-direction: column;
                 align-items: flex-start;
                 width: 850px;
-                height: 900px;
+                height: 1000px;
                 `
 
 const Stmybox = styled.div`
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 30px 30px 30px 30px;
+                padding: 30px 0px 30px 30px;
                 width : 820px;
                 height : 84px;
                 background: #EAEAEA;
                 border-radius: 16px;
+                margin-top: 48px;
                 `
 
 const StTextBox = styled.div`
@@ -413,8 +427,8 @@ const StProfileBox = styled.div`
                 flex-direction: column;
                 align-items: flex-start;
                 width: 573px;
-                height: 800px;
-                padding-top: 50px;
+                height: 769px;
+                margin-top: 60px;
                 `
 
 const StProfile = styled.img`
@@ -455,7 +469,7 @@ const StBtnBox = styled.div`
                 align-items: flex-start;
                 width: 418px;
                 height: 54px;
-                margin-top: 62px;
+                margin-top: 0px;
                 `
 
 const StCancelBtn = styled.button`

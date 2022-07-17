@@ -17,8 +17,8 @@ const TeamInvited = () => {
         return apis.postInviteTeam(UUIDInfo);
     }
 
-        
-    const { mutate:findMutate } = useMutation(findUUID, {
+
+    const { mutate: findMutate } = useMutation(findUUID, {
         onSuccess: (resp) => {
             // try {
             //     console.log(data, "성공");
@@ -42,15 +42,15 @@ const TeamInvited = () => {
             setWarning(true);
         }
     });
-    const teamJoin = async (data) =>{
+    const teamJoin = async (data) => {
         return apis.postTeamJoin(data);
     }
-    const { mutate : joinMutate } = useMutation(teamJoin, {
-        onSuccess: (data)=>{
+    const { mutate: joinMutate } = useMutation(teamJoin, {
+        onSuccess: (data) => {
             console.log(data.data);
-            ()=>navigate('/teamboard/1')
+            () => navigate('/teamboard/1')
         },
-        onError: (error)=>{
+        onError: (error) => {
             console.log(error);
             alert("오류가 발생했습니다");
         }
@@ -65,9 +65,9 @@ const TeamInvited = () => {
         console.log(data);
         findMutate(data);
     }
-    const teamJoinHandler = ()=>{
+    const teamJoinHandler = () => {
         const data = {
-            uuid : UUID
+            uuid: UUID
         }
         console.log(data);
         joinMutate(data);
@@ -112,29 +112,26 @@ const TeamInvited = () => {
                             </StTeamDataBox>
                         </StTeamBox>
                         : <></>}
+                    {teamData
+                        ? <StTeamBox>
+                            <StTeamDataBox>
+                                <StTeamDataWrapper>
+                                    <StTeamProfileImg>
+                                        {/* <img src={data?.data?.teamImage}></img> */}
 
-                    </StTitleWrapper>
-                </StTitleBox>
-                {teamData
-                ? <StTeamBox>
-                    <StTeamDataBox>
-                    <StTeamDataWrapper>
-                        <StTeamProfileImg>
-                            {/* <img src={data?.data?.teamImage}></img> */}
-
-                        </StTeamProfileImg>
-                        <StTeamTitleDiv>
-                            {teamName}
-                        </StTeamTitleDiv>
-                    </StTeamDataWrapper>
-                    <StTeamJoinButton onClick={teamJoinHandler}>
-                        입장하기
-                    </StTeamJoinButton>
-                    </StTeamDataBox>
-                </StTeamBox>
-                :<></>} 
-            </StContainer>
-        </StBox>
+                                    </StTeamProfileImg>
+                                    <StTeamTitleDiv>
+                                        {teamName}
+                                    </StTeamTitleDiv>
+                                </StTeamDataWrapper>
+                                <StTeamJoinButton onClick={teamJoinHandler}>
+                                    입장하기
+                                </StTeamJoinButton>
+                            </StTeamDataBox>
+                        </StTeamBox>
+                        : <></>}
+                </StContainer>
+            </StBox>
         </>
     )
 }

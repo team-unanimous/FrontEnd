@@ -15,6 +15,10 @@ const SignUpTwo = () => {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [warning, setWarning] = useState(false);
+  const [warningmsg, setWarningmsg] = useState(false);
+  const [codein, setCodein] = useState(false);
 
 
 
@@ -25,58 +29,83 @@ const SignUpTwo = () => {
     return reg_email.test(id)
   }
 
-  // 비활성화 함수
+
+
+  // 페이지 이동 비활성화 함수
   const disableFunction = () => {
     if (rockemail(email) === false)
+      return true;
+    else if (codein === false)
       return true;
     else
       return false;
   }
 
+  console.log()
+
+  // 이메일 전송
+  const emailPost = async (data) => {
+    return await apis.postEmailCheck(data) // api > error 
+      .then((response) => {
+        console.log(response)
+        setWarning(response.data)
+        alert("이메일 생성에 성공했습니다")
+        setCodein(true)
+      })
+      .catch((error) => {
+        console.log(error)
+        console.log(error.response)
+        setWarningmsg(true)
+        alert("이메일 생성에 실패했습니다")
+      })
+  }
 
 
-  // // 이메일 버튼시 포스트
-  // const emailPost = async (data) => {
-  //   console.log(data)
-  //   const datas = await apis.postEmailCheck(data);
-  //   const userids = datas.data.userId
-  //   console.log(userids)
-  //   dispatch(postUserid({ userids }))
-  //   return datas;
-  // }
-
-  // const { mutate } = useMutation(emailPost, {
-  //   onSuccess: () => {
-  //     navigate('/signupthree');
-  //     alert("이메일 생성에 성공했습니다")
-  //   },
-  //   onError: (error) => {
-  //     navigate('/signuptwo');
-  //     alert("이메일 생성에 실패했습니다")
-  //   },
-  //   // onSettled: () => { // 요청이 성공하든, 에러가 발생되든 실행하고 싶은 경우
-  //   //   return copy
-  // })
-
-  // const EmailFunction = () => {
-  //   mutate({
-  //     username: email,
-  //   })
-  // }
-
-
+  const { mutate: emailgo } = useMutation(emailPost, {
+    onSuccess: () => {
+      alert("성공")
+    },
+    onError: (error) => {
+      console.log(error)
+      alert("실패")
+    },
+  })
 
   const EmailFunction = () => {
-    if (reg_email.test(email)) {
-      dispatch(tossUserId({ email }))
-      alert("이메일 생성에 성공했습니다")
-      navigate('/signupthree');
-    }
-    else {
-      navigate('/signuptwo');
-      alert("이메일 생성에 실패했습니다")
-    }
+    emailgo({
+      username: email,
+    })
   }
+
+
+  // 코드 전송
+  const codePost = async (data) => {
+    console.log(data)
+    const datas = await apis.postAuth(data);
+    console.log(datas)
+    return datas;
+  }
+
+  const { mutate: codego } = useMutation(codePost, {
+    onSuccess: () => {
+      dispatch(tossUserId({ email }))
+      alert("코드 인증에 성공했습니다")
+      navigate('/signupthree');
+    },
+    onError: (error) => {
+      alert("코드 인증에 실패했습니다")
+      navigate('/signuptwo');
+    },
+  })
+
+  const CodeFunction = () => {
+    codego
+      ({
+        code: code
+      })
+  }
+
+
 
   // 로그인으로 
   const Caencelbtn = () => {
@@ -92,22 +121,23 @@ const SignUpTwo = () => {
             <StEmailTitle>이메일</StEmailTitle>
             <StEmailInputBox>
               <StEmailInput onChange={(e) => setEmail(e.target.value)} placeholder='이메일 입력' />
-              <StEmailButton >
+              <StEmailButton onClick={EmailFunction}>
                 코드 전송
               </StEmailButton>
 
             </StEmailInputBox>
-            {reg_email.test(email) === false
-              ? <StWarningTitle style={{ color: 'red' }}> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
-              : email === true
-                ? <StWarningTitle style={{ color: 'red' }}> 이미 사용중인 이메일 입니다</StWarningTitle>
-                : <p></p>
-            }
+            {/* {warning
+              ? <StWarningTitle> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
+              : warningmsg
+                ? <StWarningTitle> 이미 사용중인 이메일 입니다</StWarningTitle>
+                : <StWarningTitle></StWarningTitle>
+            } */}
+            {<StWarningTitle>{warning}</StWarningTitle>}
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>회원가입 코드</StEmailTitle>
             <StEmailInputBox>
-              <StlongEmailInput placeholder='코드입력' />
+              <StlongEmailInput onChange={(e) => setCode(e.target.value)} placeholder='코드입력' />
             </StEmailInputBox>
             <StEmailWarnning>
             </StEmailWarnning>
@@ -117,8 +147,7 @@ const SignUpTwo = () => {
           <StNotAgree onClick={Caencelbtn}>
             취소
           </StNotAgree>
-          <StAgree
-            onClick={EmailFunction}
+          <StAgree onClick={CodeFunction}
             disabled={disableFunction()}>
             다음
           </StAgree>
