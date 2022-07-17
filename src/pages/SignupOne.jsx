@@ -39,7 +39,7 @@ const SignupOne = () => {
     else {
       setActive(false);
     }
-   
+
   })
 
   return (

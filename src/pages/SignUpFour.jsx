@@ -3,17 +3,12 @@ import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query'
 import apis from '../api/main'
 import { useNavigate } from 'react-router-dom';
-import jwt_decode from "jwt-decode";
-import { getCookie } from '../Cookie';
 import { useSelector } from "react-redux"
 
 const SignUpFour = () => {
 
   const navigate = useNavigate();
 
-  // 토큰
-  // const ontoken = jwt_decode(getCookie('token'));
-  // const usersid = ontoken.userId
   const usersData = useSelector((state) => state.postReducer.users.userids)
   console.log(usersData)
 
@@ -36,7 +31,7 @@ const SignUpFour = () => {
   }
 
   // 닉네임 중복 확인
-  const NickCheck = (data) => {
+  const NicknameCheck = (data) => {
     apis.postNickCheck(data)
       .then((response) => {
         // response.data
@@ -51,7 +46,7 @@ const SignUpFour = () => {
       })
   }
 
-  const { mutate: NickCk } = useMutation(NickCheck, {
+  const { mutate: NickCk } = useMutation(NicknameCheck, {
     onSuccess: () => {
     },
     onError: (error) => {
@@ -73,7 +68,7 @@ const SignUpFour = () => {
 
   const { mutate: NickSv } = useMutation(NickSave, {
     onSuccess: () => {
-      navigate('/')
+      navigate('/login')
       alert("닉네임 생성에 성공하셨습니다")
     },
     onError: (error) => {

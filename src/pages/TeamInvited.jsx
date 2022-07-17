@@ -10,6 +10,7 @@ const TeamInvited = () => {
     const navigate = useNavigate();
     const [warning, setWarning] = useState(null);
     const [teamData, setTeamData] = useState(null);
+    const [teamimg, setTeamimg] = useState(null);
 
     const findUUID = async (UUIDInfo) => {
         return apis.postInviteTeam(UUIDInfo);
@@ -27,6 +28,7 @@ const TeamInvited = () => {
             //     setTeamData(false);
             //     setWarning(true);    
             // }
+            setTeamimg(data.data.teamImage)
             console.log(data, "성공");
             setWarning(false);
             setTeamData(true);
@@ -73,10 +75,7 @@ const TeamInvited = () => {
                         ? <StTeamBox>
                             <StTeamDataBox>
                                 <StTeamDataWrapper>
-                                    <StTeamProfileImg>
-                                        {/* <img src={data?.data?.teamImage}></img> */}
-
-                                    </StTeamProfileImg>
+                                    <StTeamProfileImg src={teamimg} />
                                     <StTeamTitleDiv>
                                         {/* {data?.data?.teamname} */}
                                     </StTeamTitleDiv>
@@ -273,7 +272,7 @@ const StTeamJoinButton = styled.div`
     flex-grow: 0;
     cursor: pointer;
 `
-const StTeamProfileImg = styled.div`
+const StTeamProfileImg = styled.img`
     background-color: #000;
     /* Rectangle 151 */
     width: 180px;
@@ -281,6 +280,7 @@ const StTeamProfileImg = styled.div`
 
     background: #F1F1F1;
     border-radius: 87px;
+    object-fit: cover;
 `
 const StTeamTitleDiv = styled.div`
     /* background-color: black; */

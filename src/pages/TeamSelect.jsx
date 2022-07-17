@@ -32,8 +32,9 @@ const TeamSelect = () => {
                                         key={team.teamId}
                                         className="team-title"
                                         onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
+                                        src={`${team.teamImage}`}
                                     >
-                                        <img src={`${team.teamImage}`}></img>
+                                        {/* <img src={`${team.teamImage}`}></img> */}
                                     </StTeamItem>
                                     <StTeamName>
                                         {team.teamname}
@@ -148,12 +149,13 @@ const StTeamItemBox = styled.div`
     flex-direction: column;
     align-items: center;
     `
-const StTeamItem = styled.div`
+const StTeamItem = styled.img`
     width: 180px;
     height: 180px;
     
     background-color: #D9D9d9;
     border-radius: 87px;
+    object-fit: cover;
     `
 const StTeamName = styled.div`
     /* 팀이름 */

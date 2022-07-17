@@ -6,8 +6,10 @@ const api = axios.create({
     baseURL: "https://dkworld.shop"
 })
 
-// 상우님 api http://13.125.217.152
-// 동관님 api https://dkworld.shop/
+// 상우님 api https://shayangju.shop
+// 동관님 api https://dkworld.shop
+// h2 https://dkworld.shop/h2-console/login.jsp?jsessionid=c2e65e7cdcb83d6b04d83acdc20b8073
+// 합쳐진서버 api http://52.79.226.242/
 
 // 2. request interceptor
 api.interceptors.request.use(
@@ -24,7 +26,7 @@ api.interceptors.request.use(
 // 3. response interceptor
 api.interceptors.response.use(
     response => {
-        console.log(response);
+        // console.log(response);
         return response;
     },
     error => {

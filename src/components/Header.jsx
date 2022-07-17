@@ -2,41 +2,41 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components'
-import {useGetTeamInfo} from '../Hooks/useGetTeamInfo'
+import { useGetTeamInfo } from '../Hooks/useGetTeamInfo'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
 
-const Header = ({teamname}) => {
+const Header = ({ teamname }) => {
 
-    const [clicked,setClicked] = useState(false);
-    const teamId = useParams().teamid;
-    const {data} = useGetTeamInfo();
+  const [clicked, setClicked] = useState(false);
+  const teamId = useParams().teamid;
+  const { data } = useGetTeamInfo();
 
-    const decoded = jwt_decode(getCookie('token'));
-    const nickname = decoded.USER_NICKNAME;
-
+  const decoded = jwt_decode(getCookie('token'));
+  const nickname = decoded.USER_NICKNAME;
+  const usersimg = decoded.USER_IMAGE
 
   return (
     <StWhole>
-        <StLogo>
-            Unanimous
-        </StLogo>
-        <StTimeBox>
-            <StRightBox>
-                <StDropBox>
-                    <StDefault onClick={()=>{setClicked(!clicked)}}>{teamname}</StDefault>
-                    <StOption clicked = {clicked}>
-                        <StHidden>
-                            {/* {data?.map((value,index)=>{
+      <StLogo>
+        Unanimous
+      </StLogo>
+      <StTimeBox>
+        <StRightBox>
+          <StDropBox>
+            <StDefault onClick={() => { setClicked(!clicked) }}>{teamname}</StDefault>
+            <StOption clicked={clicked}>
+              <StHidden>
+                {/* {data?.map((value,index)=>{
                                 return <StTime key={index} onClick={()=>{setClicked(!clicked)}}>{value.teamname}</StTime>
                             })} */}
-                        </StHidden>
-                    </StOption>
-                </StDropBox>
-                <StMyPage/>
-                <StNick>{nickname}</StNick>
-            </StRightBox>
-        </StTimeBox>
+              </StHidden>
+            </StOption>
+          </StDropBox>
+          <StMyPage src={usersimg} />
+          <StNick>{nickname}</StNick>
+        </StRightBox>
+      </StTimeBox>
     </StWhole>
   )
 }
@@ -119,7 +119,7 @@ const StTimeBox = styled.div`
 
 const StOption = styled.div`
   position: absolute;
-  display: ${props=>(props.clicked ? "" :"none")};
+  display: ${props => (props.clicked ? "" : "none")};
   top : 55px;
   left : 0;
   width: 160px;
