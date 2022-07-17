@@ -13,7 +13,7 @@ const MeetingRoomChat = ()=>{
 
     const data = {
         token: token,
-        roomId: "2"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+        roomId: "1"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
 
     useEffect(()=>{
@@ -47,7 +47,7 @@ const MeetingRoomChat = ()=>{
     const { mutate : meetingMutate } = useMutation(makeMeetingroom, {
         onSuccess: (resp) => {
             console.log(resp)
-            setRoomId(resp.data.roomId)
+            // setRoomId(resp.data.roomId)
         }
     });
 
@@ -102,7 +102,7 @@ const MeetingRoomChat = ()=>{
         try {
             const data = {
                 type: "TALK",
-                roomId: "2",
+                roomId: "1",
                 nickname: "string",
                 sender: "string",
                 message: `this is a message from the client : ${inputRef.current.value}`,
