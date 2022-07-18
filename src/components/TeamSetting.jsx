@@ -7,6 +7,7 @@ import apis from '../api/main';
 import useGetTeamMain from '../Hooks/useGetTeamMain'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
+import ImageModal from './MypageModal/ImageModal';
 
 const TeamSetting = (props) => {
 
@@ -24,6 +25,7 @@ const TeamSetting = (props) => {
     const { data } = useGetTeamMain({ teamId });
     const teamid = { data }.data.teamid
     const teamname = useRef("");
+
 
     // 복사하기 버튼
     const handleCopyClipBoard = async (text) => {
@@ -52,6 +54,23 @@ const TeamSetting = (props) => {
     }
 
 
+    const [imgmodalopen, setImgmodalopen] = useState(false);
+
+    //모달 열
+    const ImgModalOpen = () => {
+        setImgmodalopen(true);
+    }
+    //모달 닫
+    const ImgModalCancel = () => {
+        setImgmodalopen(false);
+    }
+    // 실행 후 닫기
+    const exfunction = () => {
+        editingimg()
+        ImgModalCancel()
+    }
+
+
     // 이미지 올리기
     const [imgfiles, setImgfiles] = useState();
 
@@ -63,16 +82,19 @@ const TeamSetting = (props) => {
 
     const formData = new FormData();
     formData.append('profileTeamImage', imgfiles)
-    for (let key of formData.keys()) {
-        console.log(key);
-    }
-    for (let value of formData.values()) {
-        console.log(value);
-    }
+    // for (let key of formData.keys()) {
+    //     console.log(key);
+    // }
+    // for (let value of formData.values()) {
+    //     console.log(value);
+    // }
 
     // 팀 프로필이미지 수정
     const editImage = async (data) => {
+        console.log(data)
+        console.log(data.teamImage)
         const datas = await apis.patchTeamImage(data);
+        console.log(datas)
         return datas;
     }
 
@@ -91,6 +113,8 @@ const TeamSetting = (props) => {
             teamId: teamid,
         })
     }
+
+
 
     // 팀 프로필닉네임 수정
     const editNick = async (data) => {
@@ -116,6 +140,12 @@ const TeamSetting = (props) => {
 
     return (
         <>
+            <ImageModal
+                open={imgmodalopen}
+                select={onLoadFile}
+                save={exfunction}
+                close={ImgModalCancel}
+            />
             {teamLeader !== nickname ?
                 <StRight>
                     <StTeamOutBox>
@@ -246,10 +276,9 @@ const TeamSetting = (props) => {
                             <StBlack>
                                 팀 프로필 이미지
                             </StBlack>
-                            <StImg />
-                            <StImgInput htmlFor='file'>이미지 추가하기</StImgInput>
+                            <StImg src={{ data }.data.teamImage} />
+                            <StImgInput htmlFor='file' onClick={ImgModalOpen}>이미지 추가하기</StImgInput>
                         </StProfile>
-                        <input type="file" id="file" style={{ display: "none" }} />
                         <StNameBox>
                             <StBlack>
                                 팀명
@@ -312,7 +341,7 @@ const StNameBox = styled.div`
 `;
 
 
-const StImgInput = styled.label`
+const StImgInput = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;

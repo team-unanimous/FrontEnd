@@ -14,6 +14,7 @@ import setting from '../img/setting.png';
 import settingselect from '../img/settingselect.png';
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
+import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
 
 
 const TeamBoard = () => {
@@ -30,6 +31,8 @@ const TeamBoard = () => {
   const nickname = decoded.USER_NICKNAME;
   const userimage = decoded.USER_IMAGE;
 
+  const { data } = useGetTeamInfo();
+
 
   return (
     <StBox>
@@ -38,7 +41,7 @@ const TeamBoard = () => {
         <StLeft>
           <StSmallBox>
             <StTeamInfoBox>
-              <StTeamImg />
+              <StTeamImg src={data[0].teamImage} />
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
                 {main?.user[0].nickname == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
