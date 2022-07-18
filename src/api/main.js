@@ -27,14 +27,15 @@ const apis = {
     patchReserveMeetIssue: (data) => api.patch(`/api/meetings/${data.meetingId}/issues/${data.issueId}`, data), // 예약 안건 수정
     deleteStartMeetIssue: (data) => api.delete(`/api/meetings/${data.meetingId}/issues/${data.issueId}/now`), // 미팅 바로시작하기 안건 삭제
     deleteReserveMeetIssue: (data) => api.delete(`/api/meetings/${data.meetingId}/issues/${data.issueId}`), // 예약 안건 삭제
-    deleteTeamMember: () => api.delete(`/api/teams/${teamId}/exit`),
-    deleteTeamLeave: (data) => api.delete(`/api/teams/${data.teamId}/ban`),
+    deleteTeamLeave: (data) => api.delete(`/api/teams/${data.teamId}/${data.userId}/exit`), //팀 탈퇴
+    deleteTeamMember: (data) => api.delete(`/api/teams/${data.teamId}/${data.userId}/ban`), //팀원 추방
     postMeetRoom: () => api.post(`/api/teams/${teamId}/meetings`), // 미팅룸 만들기
     getMeetDetail: ({ teamId, meetingId }) => api.get(`/api/teams/${teamId}/meetings/${meetingId}`), // 미팅룸 상세조회
     getIssueList: ({ meetID }) => api.get(`/api/meetings/${meetID}/issues`),
     getReserve: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/yet`),
     getOnAir: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/now`),
     getPassed: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/done`),
+    postLeader:(data)=>api.post(`/api/teams/${data.teamId}/manager`,data),
 
     // 경계
     postLogin: (data) => api.post(`/api/users/login`, data), // 로그인

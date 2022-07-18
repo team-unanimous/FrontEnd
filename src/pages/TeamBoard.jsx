@@ -26,12 +26,11 @@ const TeamBoard = () => {
   const teamId = useParams().teamid;
 
   const { data: main } = useGetTeamMain({ teamId });
-
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
-  const userimage = decoded.USER_IMAGE;
 
   const { data } = useGetTeamInfo();
+  console.log(main?.teamManager)
 
 
   return (
@@ -44,7 +43,7 @@ const TeamBoard = () => {
               <StTeamImg src={data[0].teamImage} />
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
-                {main?.user[0].nickname == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
+                {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
               </StInfoBox>
             </StTeamInfoBox>
             <StBtBox>
@@ -56,7 +55,7 @@ const TeamBoard = () => {
         </StLeft>
         {page == 1 ? <TeamboardHome /> : <></>}
         {page == 2 ? <MeetingManage /> : <></>}
-        {page == 3 ? <TeamSetting teamLeader={main?.user[0].nickname} prop={main?.user} /> : <></>}
+        {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
       </StDownBox>
       {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}>+</StMeetMake> : <></>}
     </StBox>
@@ -68,7 +67,6 @@ const StImg = styled.img`
   height : 24px;
   margin : 0 16px 0 16px;
 `;
-
 
 const StButton3 = styled.div`
     display: flex;
