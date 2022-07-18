@@ -8,6 +8,7 @@ import { useMutation } from "react-query";
 
 const MeetingRoomChat = ()=>{
     const inputRef = useRef(null);
+    const EnterRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
     const token = getCookie("token");
 
@@ -120,6 +121,29 @@ const MeetingRoomChat = ()=>{
         }
     }
 
+    const EndterSendHandle = async (event)=>{
+        event.preventDefault();
+        try {
+            const data = {
+                type: "ISSUE",
+                roomId: "1",
+                nickname: "string",
+                sender: "string",
+                message: `this is a Enter message from the client : ${EnterRef.current.value}`,
+                createdAt: "10시"
+            }
+            const token = getCookie("token")
+            waitForConnection(ws, function(){
+                ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
+                // ws.send("/queue/test", {}, "this is a message from the client")
+                console.log("clicked anyway");
+                console.log(JSON.stringify(data))  
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const callbackFn = (message)=>{
         if (message.body) {
             console.log(message)
@@ -147,6 +171,10 @@ const MeetingRoomChat = ()=>{
             <form>
                 <input type="text" ref={inputRef} id="input"/>
                 <input type="submit" value="Send" onClick={HandleSend} />
+            </form>
+            <form>
+                <input type="text" ref={EnterRef} id="Enter"/>
+                <input type="submit" value="Send Enter" onClick={EndterSendHandle} />
             </form>
 
             <button onClick={HandleUnsubscribe}>연결 끊기</button>

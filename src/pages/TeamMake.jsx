@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import apis from "../api/main";
 import { useRef } from "react";
 import styled from "styled-components";
+import InviteTeamMember from "../components/InviteTeamMemeber";
 
 const TeamMake = () => {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ const TeamMake = () => {
                 최대 10자
                 </StEmailWarnning>
             </StEmailBox>
-            <StEmailBox>
+            {/* <StEmailBox>
                 <StEmailTitle>팀원 추가하기</StEmailTitle>
                 <StEmailInputBox>
                 <StPwInput type='text' placeholder='이메일 입력'/>
@@ -59,7 +60,8 @@ const TeamMake = () => {
                 </StEmailInputBox>
                 <StEmailWarnning>
                 </StEmailWarnning>
-            </StEmailBox>
+            </StEmailBox> */}
+            {/* <InviteTeamMember></InviteTeamMember> */}
             </StInputWrapper>
             <StBtBox>
                 <StCancel onClick={()=>navigate('/teamselect')}>

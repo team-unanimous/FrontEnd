@@ -30,6 +30,7 @@ import Mypage from "./pages/Mypage";
 import PasswordFindOne from "./pages/PasswordFindOne"
 import PasswordFindTwo from "./pages/PasswordFindTwo"
 import MeetingRoom from "./pages/MeetingRoom"
+import InviteTeamMember from "./components/InviteTeamMemeber";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,7 @@ function App() {
         <Route path="/teamboard/:teamid" element={<TeamBoard />} />
         <Route path="/teamselect" element={<TeamSelect />} />
         <Route path="/teammake" element={<TeamMake />} />
+        <Route path="/invitemember" element={<InviteTeamMember />} />        
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />
         <Route path="/chat" element={<MeetingRoomChat />} />
