@@ -20,42 +20,41 @@ const TeamBoard = () => {
 
   const navigate = useNavigate();
 
-  const [page,setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
   const teamId = useParams().teamid;
 
-  const {data : main}= useGetTeamMain({teamId});
-
+  const { data: main } = useGetTeamMain({ teamId });
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
 
-  return  (
-          <StBox>
-            <Header teamname={main?.teamname}/>
-            <StDownBox> 
-              <StLeft>
-                <StSmallBox>
-                  <StTeamInfoBox>
-                      <StTeamImg/>
-                      <StInfoBox>
-                          <StTeamName>{main?.teamname}</StTeamName>
-                          {main?.user[0].nickname==nickname?<StTeamClass>Leader</StTeamClass>:<StTeamClass>member</StTeamClass>}
-                      </StInfoBox>
-                  </StTeamInfoBox>
-                  <StBtBox>
-                      <StButton1 page={page} onClick={()=>{setPage(1)}}> {page==1?<StImg src={homeselect}/>:<StImg src={home}/>}홈 </StButton1>
-                      <StButton2 page={page} onClick={()=>{setPage(2)}}> {page==2?<StImg src={meetingselect}/>:<StImg src={meeting}/>}미팅 관리 </StButton2>
-                      <StButton3 page={page} onClick={()=>{setPage(3)}}> {page==3?<StImg src={settingselect}/>:<StImg src={setting}/>}환경설정 </StButton3>
-                  </StBtBox>
-                </StSmallBox>
-              </StLeft>
-              {page==1?<TeamboardHome/>:<></>}
-              {page==2?<MeetingManage/>:<></>}
-              {page==3?<TeamSetting teamLeader={main?.user[0].nickname} prop={main?.user}/>:<></>}
-            </StDownBox>
-            {page==1?<StMeetMake onClick={()=>{navigate(`/teamboard/${teamId}/meetmakeone`)}}>+</StMeetMake>:<></>}
-          </StBox>
-    );
+  return (
+    <StBox>
+      <Header teamname={main?.teamname} />
+      <StDownBox>
+        <StLeft>
+          <StSmallBox>
+            <StTeamInfoBox>
+              <StTeamImg />
+              <StInfoBox>
+                <StTeamName>{main?.teamname}</StTeamName>
+                {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
+              </StInfoBox>
+            </StTeamInfoBox>
+            <StBtBox>
+              <StButton1 page={page} onClick={() => { setPage(1) }}> {page == 1 ? <StImg src={homeselect} /> : <StImg src={home} />}홈 </StButton1>
+              <StButton2 page={page} onClick={() => { setPage(2) }}> {page == 2 ? <StImg src={meetingselect} /> : <StImg src={meeting} />}미팅 관리 </StButton2>
+              <StButton3 page={page} onClick={() => { setPage(3) }}> {page == 3 ? <StImg src={settingselect} /> : <StImg src={setting} />}환경설정 </StButton3>
+            </StBtBox>
+          </StSmallBox>
+        </StLeft>
+        {page == 1 ? <TeamboardHome /> : <></>}
+        {page == 2 ? <MeetingManage /> : <></>}
+        {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
+      </StDownBox>
+      {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}>+</StMeetMake> : <></>}
+    </StBox>
+  );
 };
 
 const StImg = styled.img`
@@ -64,14 +63,13 @@ const StImg = styled.img`
   margin : 0 16px 0 16px;
 `;
 
-
 const StButton3 = styled.div`
     display: flex;
     align-items: center;
     width : 286px;
     height : 44px;
     border-radius: 8px;
-    background-color: ${props=>(props.page == 3 ? "#E2E2E2;" :"none")};
+    background-color: ${props => (props.page == 3 ? "#E2E2E2;" : "none")};
 `;
 
 const StButton2 = styled.div`
@@ -80,7 +78,7 @@ const StButton2 = styled.div`
     width : 286px;
     height : 44px;
     border-radius: 8px;
-    background-color: ${props=>(props.page == 2 ? "#E2E2E2;" :"none")};
+    background-color: ${props => (props.page == 2 ? "#E2E2E2;" : "none")};
 `;
 
 const StButton1 = styled.div`
@@ -89,7 +87,7 @@ const StButton1 = styled.div`
     width : 286px;
     height : 44px;
     border-radius: 8px;
-    background-color: ${props=>(props.page == 1 ? "#E2E2E2;" :"none")};
+    background-color: ${props => (props.page == 1 ? "#E2E2E2;" : "none")};
 `;
 
 const StBtBox = styled.div`
@@ -137,6 +135,7 @@ const StTeamImg = styled.img`
     height : 60px;
     border-radius: 60px;
     background: #8C8C8C;
+    object-fit: cover;
 `;
 
 const StTeamInfoBox = styled.div`

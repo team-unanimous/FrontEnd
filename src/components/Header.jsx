@@ -2,45 +2,45 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components'
-import {useGetTeamInfo} from '../Hooks/useGetTeamInfo'
+import { useGetTeamInfo } from '../Hooks/useGetTeamInfo'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
 import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 
-const Header = ({teamname}) => {
+const Header = ({ teamname }) => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [clicked,setClicked] = useState(false);
-    const teamId = useParams().teamid;
-    const {data:user} = useGetTeamInfo();
-    const decoded = jwt_decode(getCookie('token'));
-    const nickname = decoded.USER_NICKNAME;
-    const img = decoded.USER_IMAGE;
-    const queryClient = useQueryClient();
+  const [clicked, setClicked] = useState(false);
+  const teamId = useParams().teamid;
+  const { data: user } = useGetTeamInfo();
+  const decoded = jwt_decode(getCookie('token'));
+  const nickname = decoded.USER_NICKNAME;
+  const img = decoded.USER_IMAGE;
+  const queryClient = useQueryClient();
 
   return (
     <StWhole>
-        <StLogo>
-            Unanimous
-        </StLogo>
-        <StTimeBox>
-            <StRightBox>
-                <StDropBox>
-                    <StDefault onClick={()=>{setClicked(!clicked)}}>{teamname}</StDefault>
-                    <StOption clicked = {clicked}>
-                        <StHidden>
-                            {user?.map((value,index)=>{
-                                return <StTime key={index} onClick={()=>{setClicked(!clicked); queryClient.invalidateQueries("meeting"); navigate(`/teamboard/${value.teamId}`)}}>{value.teamname}</StTime>
-                            })}
-                        </StHidden>
-                    </StOption>
-                </StDropBox>
-                <StMyPage onClick={()=>{navigate(`/mypage`)}} src={img}/>
-                <StNick>{nickname}</StNick>
-            </StRightBox>
-        </StTimeBox>
+      <StLogo>
+        Unanimous
+      </StLogo>
+      <StTimeBox>
+        <StRightBox>
+          <StDropBox>
+            <StDefault onClick={() => { setClicked(!clicked) }}>{teamname}</StDefault>
+            <StOption clicked={clicked}>
+              <StHidden>
+                {user?.map((value, index) => {
+                  return <StTime key={index} onClick={() => { setClicked(!clicked); queryClient.invalidateQueries("meeting"); navigate(`/teamboard/${value.teamId}`) }}>{value.teamname}</StTime>
+                })}
+              </StHidden>
+            </StOption>
+          </StDropBox>
+          <StMyPage onClick={() => { navigate(`/mypage`) }} src={img} />
+          <StNick>{nickname}</StNick>
+        </StRightBox>
+      </StTimeBox>
     </StWhole>
   )
 }
@@ -123,7 +123,7 @@ const StTimeBox = styled.div`
 
 const StOption = styled.div`
   position: absolute;
-  display: ${props=>(props.clicked ? "" :"none")};
+  display: ${props => (props.clicked ? "" : "none")};
   top : 55px;
   left : 0;
   width: 160px;

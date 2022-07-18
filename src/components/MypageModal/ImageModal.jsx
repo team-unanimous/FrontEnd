@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import cancel from "../../img/cancel.png"
 
-const ImageModal = ({ open, close, select, defaultimage }) => {
+const ImageModal = ({ open, close, select, defaultimage, plus }) => {
     return (
         <>
             {open ?
