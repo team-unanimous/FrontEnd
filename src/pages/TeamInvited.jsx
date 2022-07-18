@@ -118,7 +118,6 @@ const TeamInvited = () => {
                                 <StTeamDataWrapper>
                                     <StTeamProfileImg>
                                         {/* <img src={data?.data?.teamImage}></img> */}
-
                                     </StTeamProfileImg>
                                     <StTeamTitleDiv>
                                         {teamName}
@@ -127,14 +126,15 @@ const TeamInvited = () => {
                                 <StTeamJoinButton onClick={teamJoinHandler}>
                                     입장하기
                                 </StTeamJoinButton>
-                            </StTeamDataBox>
-                        </StTeamBox>
-                        : <></>}
+                                </StTeamDataBox>
+                            </StTeamBox>
+                            :<></>} 
                 </StContainer>
             </StBox>
         </>
     )
 }
+
 const StBox = styled.div`
     width : 100%;
     height : 100vh;

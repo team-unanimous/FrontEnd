@@ -1,25 +1,31 @@
 import React, { useRef, useState } from 'react'
 import { useMutation } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import xicon from '../img/delete.png'
 import apis from '../api/main';
 import useGetTeamMain from '../Hooks/useGetTeamMain'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
+import LeaderModal from './LeaderModal';
 
 const TeamSetting = (props) => {
 
     const [state, setState] = useState(0);
+    
+    const [openLeader,setOpenLeader] = useState(false);
+
     const teamId = useParams().teamid;
 
-    // console.log(props.teamLeader)
+    const navigate = useNavigate();
 
+    // console.log(props.teamLeader)
+    
     const teamLeader = props.teamLeader;
 
     const decoded = jwt_decode(getCookie('token'));
     const nickname = decoded.USER_NICKNAME;
-
+    const userId = decoded.userId;
     // 팀 정보 받아오기
     const { data } = useGetTeamMain({ teamId });
     const teamid = { data }.data.teamid
@@ -39,6 +45,7 @@ const TeamSetting = (props) => {
     const { mutate: leaves } = useMutation(leave, {
         onSuccess: () => {
             alert("나가기완료");
+            navigate(`/teamselect`)
         },
         onError: (error) => {
             alert("나가기 불가");
@@ -47,7 +54,30 @@ const TeamSetting = (props) => {
 
     const leaving = () => {
         leaves({
-            teamId: teamId
+            teamId: teamId,
+            userId : userId
+        })
+    }
+
+    // 팀원 추방
+    const ban = async (data)=>{
+        const datas = await apis.deleteTeamMember(data);
+        return datas
+    }
+
+    const { mutate : bann } = useMutation(ban,{
+        onSuccess : () => {
+            alert("내보내기 완료");
+        },
+        onError : () => {
+            alert("내보내기 실패");
+        }
+    })
+
+    const banning=(userId)=>{
+        bann({
+            teamId : teamId,
+            userId : userId
         })
     }
 
@@ -64,10 +94,10 @@ const TeamSetting = (props) => {
     const formData = new FormData();
     formData.append('profileTeamImage', imgfiles)
     for (let key of formData.keys()) {
-        console.log(key);
+
     }
     for (let value of formData.values()) {
-        console.log(value);
+
     }
 
     // 팀 프로필이미지 수정
@@ -114,8 +144,16 @@ const TeamSetting = (props) => {
         })
     }
 
+    const closeLeader = () =>{
+        setOpenLeader(false);
+    }
+
     return (
         <>
+            <LeaderModal 
+            open={openLeader} 
+            close={closeLeader}
+            teamId={teamId}/>
             {teamLeader !== nickname ?
                 <StRight>
                     <StTeamOutBox>
@@ -148,13 +186,13 @@ const TeamSetting = (props) => {
                                                     <StUserName>{value.nickname}</StUserName>
                                                     <StEmail>{value.username}</StEmail>
                                                 </StUserInfo>
-                                                <StXicon src={xicon} />
+                                                
                                             </StUserBox>
                                         })}
                                     </StMateList>
                                 </StListBox>
                                 <StMovePower>
-                                    <StBlack>
+                                    <StBlack >
                                         팀장 권한 위임
                                     </StBlack>
                                     <StBt3>사용자 선택</StBt3>
@@ -202,7 +240,7 @@ const TeamSetting = (props) => {
                                     </StInputBox>
                                 </StComeOn>
                                 <StListBox>
-                                    <StBlack>
+                                    <StBlack >
                                         팀원 관리
                                     </StBlack>
                                     <StBt2>사용자 초대</StBt2>
@@ -214,7 +252,9 @@ const TeamSetting = (props) => {
                                                     <StUserName>{value.nickname}</StUserName>
                                                     <StEmail>{value.username}</StEmail>
                                                 </StUserInfo>
-                                                <StXicon src={xicon} />
+                                                <StXBox onClick={()=>banning(value.userId)}>
+                                                    <StXicon src={xicon}/>
+                                                </StXBox>
                                             </StUserBox>
                                         })}
                                     </StMateList>
@@ -223,7 +263,7 @@ const TeamSetting = (props) => {
                                     <StBlack>
                                         팀장 권한 위임
                                     </StBlack>
-                                    <StBt3>사용자 선택</StBt3>
+                                    <StBt3 onClick={()=>{setOpenLeader(true)}}>사용자 선택</StBt3>
                                 </StMovePower>
                             </StDown>
                             <StLine />
@@ -341,10 +381,16 @@ const StProfile = styled.div`
     margin : 0 0 36px 0;
 `;
 
-const StXicon = styled.img`
+const StXBox = styled.div`
     width : 18px;
     height : 18px;
     margin : 0 10px 0 auto;
+    cursor: pointer;
+`;
+
+const StXicon = styled.img`
+    width : 18px;
+    height : 18px;
     cursor: pointer;
 `;
 
