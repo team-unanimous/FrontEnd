@@ -3,7 +3,7 @@ import styled from "styled-components";
 import inputEnterVector from "../img/InputEnterVector.png"
 import xbutton from "../img/Xbutton.png"
 import { getCookie } from "../Cookie";
-import { SocketConnect, ws } from "../api/websocket";
+import { ws } from "../api/websocket";
 import { useRef, useEffect, useState } from "react";
 import apis from "../api/main";
 import { useMutation } from "react-query";
@@ -18,6 +18,28 @@ const MeetingRoomStyle = ()=>{
         token: token,
         roomId: "2"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
+
+    const SocketConnect = (data) => {
+        try{
+            ws.connect({
+                token: data.token
+            }, ()=> {
+                ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
+                (response) => {
+                    const newMessage = JSON.parse(response.body);
+                    console.log(newMessage);
+                    setMsg(newMessage.message);
+                    console.log("보낸사람:", newMessage.sender);
+                    console.log("받은 메세지:", newMessage.message)
+                },
+                {
+                    token: token
+                });
+            });
+            console.log("구독 성공")
+        } catch (error) {
+            console.log(error.response);
+        }}
 
     useEffect(()=>{
         SocketConnect(data);
@@ -77,6 +99,8 @@ const MeetingRoomStyle = ()=>{
 
                 </StChattingHeader>
                 <StChattingBody>
+                    <StChattingMessageWrapper>
+                    </StChattingMessageWrapper>
                     <StChattingInputWrapper>
                         <StChattingInputForm onSubmit={HandleSend}>
                             <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef}/>
@@ -93,7 +117,7 @@ const StChattingContainer = styled.div`
     /* 채팅창 */
     position: relative;
     width: 360px;
-    height: 100%;
+    height: 100vh;
     right: 0px;
     display: flex;
     flex-direction: column;
@@ -159,14 +183,16 @@ const StChattingBody = styled.div`
     /* background-color: black; */
     /* Frame 150 */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     height: 100%;
-    /* position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 8.08%;
-    bottom: 0.03%; */
+`
+const StChattingMessageWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: #EAEAEA;
 `
 const StChattingInputWrapper = styled.div`
     background: #EAEAEA;

@@ -1,25 +1,91 @@
 import { getCookie } from "../Cookie";
-import { SocketConnect, ws } from "../api/websocket";
+import { ws } from "../api/websocket";
 import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import apis from "../api/main";
 import { useMutation } from "react-query";
+import { useCallback } from "react";
+
+import Stomp from "stompjs";
+import sockJS from "sockjs-client"
+import { useNavigate } from "react-router-dom";
 
 const MeetingRoomChat = ()=>{
+    const navigate = useNavigate()
+    useEffect(()=>{
+        SocketConnect(data);
+        return () => {
+            alert("alert!!!!")
+            console.log("언마운트 됨");
+            HandleUnsubscribe();
+        }
+    }, [])
+
+    const target = "https://sparta-ysh.shop/ws-stomp" //"http://52.79.226.242:8080/ws-stomp" 
+    const socket = new sockJS(target);
+    const ws = Stomp.over(socket);
+    
     const inputRef = useRef(null);
     const EnterRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
+    const [msg, setMsg] = useState("");
     const token = getCookie("token");
+
+    const SocketConnect = (data) => {
+        console.log("뿅")
+    try{
+        ws.connect({
+            token: data.token
+        }, ()=> {
+            ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
+            (response) => {
+                const newMessage = JSON.parse(response.body);
+                console.log(newMessage);
+                setMsg(newMessage.message);
+                console.log("보낸사람:", newMessage.sender);
+                console.log("받은 메세지:", newMessage.message)
+            },
+            {
+                token: token
+            });
+        });
+        console.log("구독 성공")
+    } catch (error) {
+        console.log(error.response);
+    }}
+
+    const HandleUnsubscribe = useCallback(()=>{
+        try{
+            ws.disconnect(
+                ()=>{
+                    ws.unsubscribe("sub-0");
+                    console.log("Disconnected...")
+                },
+                {token: getCookie("token")}
+            );
+            // ws.unsubscribe(`/sub/api/chat/rooms/${data.roomId}`);
+        } catch (error) {
+            console.log(error);
+        }
+    })
+    
+    function waitForConnection(ws, callback){
+        setTimeout(
+            function () {
+                if (ws.ws.readyState === 1) {
+                    callback();
+                } else {
+                    waitForConnection(ws, callback);
+                }
+            },1
+        )
+    }
 
     const data = {
         token: token,
         roomId: "1"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
-
-    useEffect(()=>{
-        SocketConnect(data);
-    })
 
 // const SocketConnect = (token) => { 
 //     try{
@@ -125,7 +191,7 @@ const MeetingRoomChat = ()=>{
         event.preventDefault();
         try {
             const data = {
-                type: "ISSUE",
+                type: "ENTER",
                 roomId: "1",
                 nickname: "string",
                 sender: "string",
@@ -155,11 +221,6 @@ const MeetingRoomChat = ()=>{
     
     // const subscription = ws.subscribe("/sub/api/chat/rooms/3", callbackFn)
 
-    const HandleUnsubscribe = ()=>{
-        subscription.unsubscribe();
-        alert("연결 끊김");
-    }
-
 
     return (
         <>  
@@ -178,6 +239,7 @@ const MeetingRoomChat = ()=>{
             </form>
 
             <button onClick={HandleUnsubscribe}>연결 끊기</button>
+            <button onClick={()=>navigate('/')}>나가기</button>
             </StChattingItem>
         </StChattingContainer>
 

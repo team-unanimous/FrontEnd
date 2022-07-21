@@ -4,8 +4,19 @@ import apis from "../api/main";
 import { useRef } from "react";
 import styled from "styled-components";
 import InviteTeamMember from "../components/InviteTeamMemeber";
+import { useEffect } from "react";
+
+
 
 const TeamMake = () => {
+
+    useEffect(()=>{
+      console.log("mount")
+      return(()=>{
+        alert("unmount")
+        console.log("unmount")
+      })
+    })
     const navigate = useNavigate();
     // const teamImageRef = useRef(null);
     const teamNameRef = useRef(null);

@@ -24,7 +24,7 @@ const TeamSelect = () => {
 
     const unaTeamJoinHandler = () =>{
         const data = {
-            uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2"
+            uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2" //unanimous UUID로 교체 필요
         }
         console.log(data.data)
         joinMutate(data);
@@ -35,7 +35,6 @@ const TeamSelect = () => {
     if (!data){
         return <>Something wrong!</>
     }
-    // console.log(data);
     return (
         <>
         <StBox>

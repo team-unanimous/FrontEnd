@@ -6,6 +6,7 @@ const apis = {
     postTeamJoin : (data)=>api.post(`/api/teams/join`, data), //팀 참여하기 
     postTeam : (data)=>api.post(`/api/teams`, data), // 팀만들기
     getTeam : ()=>api.get(`/api/teams`), // 팀선택페이지
+    postTeamMailSend : (data)=>api.post(`/api/teams/emails/${data.teamId}`, data), // 팀 참가시 UUID 보내기
 
     //meeting room
     postMeetingroom : (data) => api.post(`api/chat/meetings/${data.meetingId}/rooms`, data),

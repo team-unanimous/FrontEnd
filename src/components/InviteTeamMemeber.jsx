@@ -1,12 +1,37 @@
 import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import { useMutation } from "react-query";
 import styled from "styled-components";
+import apis from "../api/main";
+import xbutton from "../img/Xbutton.png"
+
+
+
 
 const InviteTeamMember = ()=> {
     const [memberEmail, setMemberEmail] = useState("");
     const emailRef = useRef();
 
+    const mailSend = (emailInfo) =>{
+        return apis.postTeamMailSend(emailInfo);
+    }
+
+    const { mutate : mailSendMutate } = useMutation(mailSend, {
+        onSuccess: (resp) => {
+            console.log(resp);
+        }
+    })
+
+    const SendMemberListHandler = () => {
+        console.log(memberEmail);
+        const data = {
+            emailRequestDtoList: memberEmail,
+            teamId: 1, // teammake 페이지에서 상태 값으로 받아 와서 전달해야됨 
+        }
+        console.log(data);
+        mailSendMutate(data);
+    } 
 
 
     return(
@@ -30,17 +55,38 @@ const InviteTeamMember = ()=> {
                     추가
                     </StEmailButton>
                     </StEmailInputBox>
-                    {
+                    {/* {
                         !memberEmail
                         ? <></>
                         : <>{memberEmail.map((email, i)=>(
                                 <StUl key={i}>
                                     <StLi>{`${email}, ${i}`}<button
                                     onClick={()=>{
-                                        setMemberEmail(memberEmail.filter((email, index) => index !== i))
+                                        setMemberEmail(memberEmail.filter(( _, index) => index !== i))
                                         console.log();
-                                    }}>X</button></StLi>
+                                    }}>X</button>
+                                    </StLi>
                                 </StUl>
+                        ))}</>
+                    } */}
+                    {
+                        !memberEmail
+                        ? <></>
+                        : <>{memberEmail.map((email, i)=>(
+                                <StUlContainer key={i}>
+                                    <StLiItem>{`${email}`}
+                                    {/* <button
+                                    onClick={()=>{
+                                        setMemberEmail(memberEmail.filter(( _, index) => index !== i))
+                                        console.log(memberEmail);
+                                    }}>X</button> */}
+                                    <input style={{width:"1rem"}} type={"image"} src={xbutton} onClick={
+                                        ()=>{
+                                            setMemberEmail(memberEmail.filter(( _, index) => index !== i))
+                                            console.log(memberEmail);
+                                    }}/>
+                                    </StLiItem>
+                                </StUlContainer>
                         ))}</>
                     }
                     <StEmailWarnning>
@@ -51,7 +97,7 @@ const InviteTeamMember = ()=> {
                 <StCancel onClick={()=>navigate(-1)}>
                     취소
                 </StCancel>
-                <StAgree>
+                <StAgree onClick={SendMemberListHandler}>
                     완료
                 </StAgree>
             </StBtBox>
@@ -60,13 +106,24 @@ const InviteTeamMember = ()=> {
         </>
     )
 }
-const StUl = styled.ul`
-    line-height: 100%;
-    list-style: none;
+const StUlContainer = styled.div`
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `
-const StLi = styled.li`
-    /* margin-top: -20px; */
+const StLiItem = styled.div`
+    font-size: 16px;
+    align-self: flex-start;
 `
+// const StUl = styled.ul`
+//     line-height: 100%;
+//     list-style: none;
+// `
+// const StLi = styled.li`
+//     /* margin-top: -20px; */
+// `
+
 const StBox = styled.div`
     width : 100%;
     height : 100vh;
