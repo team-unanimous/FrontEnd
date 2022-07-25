@@ -32,7 +32,6 @@ const TeamSelect = () => {
     }
 
     const { data } = useGetTeamInfo();
-    console.log()
 
     if (!data) {
         return <>Something wrong!</>
