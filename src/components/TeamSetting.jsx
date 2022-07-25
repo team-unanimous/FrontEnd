@@ -7,9 +7,11 @@ import apis from '../api/main';
 import useGetTeamMain from '../Hooks/useGetTeamMain'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
+import ImageModal from './MypageModal/ImageModal';
 import LeaderModal from './LeaderModal';
 import BanModal from './BanModal';
 import InviteMember from './InviteMember';
+
 
 const TeamSetting = (props) => {
 
@@ -20,12 +22,13 @@ const TeamSetting = (props) => {
     const [openInvite,setOpenInvite] = useState(false);
     const [userid,setUserid] = useState();
 
+
     const teamId = useParams().teamid;
 
     const navigate = useNavigate();
 
     // console.log(props.teamLeader)
-    
+
     const teamLeader = props.teamLeader;
 
     const decoded = jwt_decode(getCookie('token'));
@@ -35,6 +38,7 @@ const TeamSetting = (props) => {
     const { data } = useGetTeamMain({ teamId });
     const teamid = { data }.data.teamid
     const teamname = useRef("");
+
 
     // 복사하기 버튼
     const handleCopyClipBoard = async (text) => {
@@ -60,30 +64,47 @@ const TeamSetting = (props) => {
     const leaving = () => {
         leaves({
             teamId: teamId,
-            userId : userId
+            userId: userId
         })
     }
 
     // 팀원 추방
-    const ban = async (data)=>{
+    const ban = async (data) => {
         const datas = await apis.deleteTeamMember(data);
         return datas
     }
 
-    const { mutate : bann } = useMutation(ban,{
-        onSuccess : () => {
+    const { mutate: bann } = useMutation(ban, {
+        onSuccess: () => {
             alert("내보내기 완료");
         },
-        onError : () => {
+        onError: () => {
             alert("내보내기 실패");
         }
     })
 
-    const banning=(userId)=>{
+    const banning = (userId) => {
         bann({
-            teamId : teamId,
-            userId : userId
+            teamId: teamId,
+            userId: userId
         })
+    }
+
+
+    const [imgmodalopen, setImgmodalopen] = useState(false);
+
+    //모달 열
+    const ImgModalOpen = () => {
+        setImgmodalopen(true);
+    }
+    //모달 닫
+    const ImgModalCancel = () => {
+        setImgmodalopen(false);
+    }
+    // 실행 후 닫기
+    const exfunction = () => {
+        editingimg()
+        ImgModalCancel()
     }
 
 
@@ -98,16 +119,20 @@ const TeamSetting = (props) => {
 
     const formData = new FormData();
     formData.append('profileTeamImage', imgfiles)
-    for (let key of formData.keys()) {
+    // for (let key of formData.keys()) {
+    //     console.log(key);
+    // }
+    // for (let value of formData.values()) {
+    //     console.log(value);
+    // }
 
-    }
-    for (let value of formData.values()) {
-
-    }
 
     // 팀 프로필이미지 수정
     const editImage = async (data) => {
+        console.log(data)
+        console.log(data.teamImage)
         const datas = await apis.patchTeamImage(data);
+        console.log(datas)
         return datas;
     }
 
@@ -126,6 +151,8 @@ const TeamSetting = (props) => {
             teamId: teamid,
         })
     }
+
+
 
     // 팀 프로필닉네임 수정
     const editNick = async (data) => {
@@ -149,7 +176,7 @@ const TeamSetting = (props) => {
         })
     }
 
-    const closeLeader = () =>{
+    const closeLeader = () => {
         setOpenLeader(false);
     }
 
@@ -163,7 +190,12 @@ const TeamSetting = (props) => {
 
     return (
         <>
-            
+            <ImageModal
+            open={imgmodalopen}
+            select={onLoadFile}
+            save={exfunction}
+            close={ImgModalCancel}
+            />    
             <LeaderModal 
             open={openLeader} 
             close={closeLeader}
@@ -210,7 +242,7 @@ const TeamSetting = (props) => {
                                                     <StUserName>{value.nickname}</StUserName>
                                                     <StEmail>{value.username}</StEmail>
                                                 </StUserInfo>
-                                                
+
                                             </StUserBox>
                                         })}
                                     </StMateList>
@@ -281,7 +313,7 @@ const TeamSetting = (props) => {
                                     <StBlack>
                                         팀장 권한 위임
                                     </StBlack>
-                                    <StBt3 onClick={()=>{setOpenLeader(true)}}>사용자 선택</StBt3>
+                                    <StBt3 onClick={() => { setOpenLeader(true) }}>사용자 선택</StBt3>
                                 </StMovePower>
                             </StDown>
                             <StLine />
@@ -304,10 +336,9 @@ const TeamSetting = (props) => {
                             <StBlack>
                                 팀 프로필 이미지
                             </StBlack>
-                            <StImg />
-                            <StImgInput htmlFor='file'>이미지 추가하기</StImgInput>
+                            <StImg src={{ data }.data.teamImage} />
+                            <StImgInput htmlFor='file' onClick={ImgModalOpen}>이미지 추가하기</StImgInput>
                         </StProfile>
-                        <input type="file" id="file" style={{ display: "none" }} />
                         <StNameBox>
                             <StBlack>
                                 팀명
@@ -370,7 +401,7 @@ const StNameBox = styled.div`
 `;
 
 
-const StImgInput = styled.label`
+const StImgInput = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;

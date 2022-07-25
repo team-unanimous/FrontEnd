@@ -89,13 +89,13 @@ const Mypage = () => {
         fileReader.readAsDataURL(file)
         fileReader.onload = (e) => setLoadimg(e.target.result)
         // 이미지 업로드 비동기 문제발생
-        picturePostFunction()
-        ImgModalCancel()
     }
 
 
     const exfunction = () => {
         picturePostFunction()
+        // deletetoken()
+        // tokenreceive()
         ImgModalCancel()
     }
 
@@ -105,30 +105,39 @@ const Mypage = () => {
     const formData = new FormData();
     formData.append('profileImage', files)
     // 사진 값보기
-    // for (var value of formData.values()) {
+    // for (let key of formData.keys()) {
+    //     console.log(key);
+    // }
+    // for (let value of formData.values()) {
     //     console.log(value);
     // }
-    // console.log(formData)
 
     // 이미지 전송
     // FormData() 새로운 FormData 객체를 생성
     // formdata.append(key,value) 새로운 값을 추가해준다
     // 키값이 있으면 해당 키값으로 데이터만 넣어줌
     // formdata는 key랑 value 값을 확인할 수가 없다 > formdata넣는값은 확인가능
-    const picturePost = (data) => {
+    const picturePost = async (data) => {
         console.log(data)
         console.log(data.profileImage) // data.profileImage = formdata
-        const formdataimg = apis.postPicturePost(data);
-        console.log(formdataimg)
+        const formdataimg = await apis.postPicturePost(data);
+        setCookie("token", formdataimg.headers.authorization);
+        console.log(formdataimg);
+        console.log(formdataimg.headers);
         return formdataimg;
     }
 
-    // 토큰 삭제 재생성 받기
-    // const tokenreceive = () => {
-    // removeCookie('token')
-    // setCookie("token", formdataimg.headers.authorization);
-    // jwt_decode(formdataimg.headers.authorization);
-    // }
+    const deletetoken = () => {
+        removeCookie('token')
+    }
+
+    // 토큰 재생성 받기
+    const tokenreceive = async (data) => {
+        const datas = await apis.postNickCheck(data);
+        setCookie("token", datas.headers.authorization);
+        console.log(datas);
+        console.log(datas.headers);
+    }
 
     // 이미지 업로드
     const { mutate: pictureGo } = useMutation(picturePost, {
@@ -194,6 +203,7 @@ const Mypage = () => {
 
     // 비밀번호 변경모달로 이동
     const passwordPost = (data) => {
+        console.log(data)
         return apis.postPasswordChange(data)
             .then((response) => {
                 // response.data
@@ -215,7 +225,6 @@ const Mypage = () => {
             // alert("비밀번호를 틀리셨습니다")
         }
     })
-
     const posswordPostFunction = () => {
         passwordGo({
             password: password,
@@ -243,9 +252,8 @@ const Mypage = () => {
             <ImageModal
                 open={imgmodalopen}
                 select={onLoadFile}
-                defaultimage={defaultFile}
                 close={ImgModalCancel}
-                plus={exfunction}
+                save={exfunction}
             />
             <NickNameModal
                 open={nicknamemodalopen}

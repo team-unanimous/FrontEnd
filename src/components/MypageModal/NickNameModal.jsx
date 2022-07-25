@@ -5,8 +5,7 @@ import apis from '../../api/main'
 import cancel from "../../img/cancel.png"
 import { useSelector } from "react-redux"
 import jwt_decode from "jwt-decode";
-import { getCookie } from "../../Cookie";
-
+import { setCookie, getCookie } from "../../Cookie";
 
 const NickNameModal = ({ open, close }) => {
 
@@ -66,8 +65,10 @@ const NickNameModal = ({ open, close }) => {
 
 
     // 닉네임 저장
-    const NickSave = (data) => {
-        return apis.patchNickSave(data)
+    const NickSave = async (data) => {
+        const datas = await apis.patchNickSave(data)
+        setCookie("token", datas.headers.authorization);
+        return datas;
     }
 
     const { mutate: NickSv } = useMutation(NickSave, {

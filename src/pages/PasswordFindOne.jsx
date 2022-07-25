@@ -3,28 +3,54 @@ import styled from 'styled-components'
 import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
+import axis from '../api/sub'
+import { useDispatch } from 'react-redux'
+import { tossUserId } from '../redux/modules/user'
 
 
 const PasswordFindOne = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [codein, setCodein] = useState(false);
+  const [warning, setWarning] = useState(false);
 
+  // 이메일 정규식
+  const reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,8}$/i;
+  const rockemail = (id) => {
+    return reg_email.test(id)
+  }
+
+  // 비활성화 함수
+  const disableFunction = () => {
+    if (rockemail(email) === false)
+      return true;
+    else if (codein === false)
+      return true;
+    else
+      return false;
+  }
 
 
   // 이메일 코드 전송 버튼
   const emailCodePost = (data) => {
-    return apis.postEmailCode(data);
+    return axis.postEmailCode(data)
   }
 
   const { mutate: emailGo } = useMutation(emailCodePost, {
-    onSuccess: () => {
+    onSuccess: (response) => {
+      console.log(response)
+      dispatch(tossUserId({ email }))
       alert("이메일 생성에 성공했습니다")
+      setCodein(true)
     },
     onError: (error) => {
-      alert("이메일 생성에 실패했습니다")
+      console.log(error)
+      setWarning(error.response.data)
+      alert(error.response.data)
     }
   })
 
@@ -38,17 +64,17 @@ const PasswordFindOne = () => {
 
   // 코드 인증 버튼
   const passwordCode = (data) => {
-    return apis.postPasswordCode(data);
+    return axis.postAuth(data);
   }
 
   const { mutate: passwordGo } = useMutation(passwordCode, {
     onSuccess: () => {
-      navigate("/passwordfindtwo")
       alert("코드 인증에 성공하셨습니다")
+      navigate("/passwordfindtwo")
     },
     onError: (error) => {
-      navigate("/passwordfindone")
       alert("코드 인증에 실패하셨습니다")
+      navigate("/passwordfindone")
     }
   })
 
@@ -63,19 +89,7 @@ const PasswordFindOne = () => {
     navigate('/login')
   }
 
-  // 이메일 정규식
-  const reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,8}$/i;
-  const rockemail = (id) => {
-    return reg_email.test(id)
-  }
 
-  // 비활성화 함수
-  const disableFunction = () => {
-    if (rockemail(email) === false)
-      return true;
-    else
-      return false;
-  }
 
   return (
     <StBox>
@@ -90,12 +104,7 @@ const PasswordFindOne = () => {
                 코드 전송
               </StEmailButton>
             </StEmailInputBox>
-            {reg_email.test(email) === false
-              ? <StWarningTitle style={{ color: 'red' }}> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
-              : email === true
-                ? <StWarningTitle style={{ color: 'red' }}> 이미 사용중인 이메일 입니다</StWarningTitle>
-                : <p></p>
-            }
+            {<StWarningTitle>{warning}</StWarningTitle>}
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>인증코드</StEmailTitle>

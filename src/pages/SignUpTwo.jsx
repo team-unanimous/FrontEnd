@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
-import api from '../api/core'
 import { useDispatch } from 'react-redux'
 import { tossUserId } from '../redux/modules/user'
+import axis from '../api/sub'
 
 
 
@@ -16,9 +16,8 @@ const SignUpTwo = () => {
 
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
-  const [warning, setWarning] = useState(false);
-  const [warningmsg, setWarningmsg] = useState(false);
   const [codein, setCodein] = useState(false);
+  const [warningmsg, setWarningmsg] = useState(false);
 
 
 
@@ -28,8 +27,6 @@ const SignUpTwo = () => {
   const rockemail = (id) => {
     return reg_email.test(id)
   }
-
-
 
   // 페이지 이동 비활성화 함수
   const disableFunction = () => {
@@ -41,33 +38,21 @@ const SignUpTwo = () => {
       return false;
   }
 
-  console.log()
-
   // 이메일 전송
-  const emailPost = async (data) => {
-    return await apis.postEmailCheck(data) // api > error 
-      .then((response) => {
-        console.log(response)
-        setWarning(response.data)
-        alert("이메일 생성에 성공했습니다")
-        setCodein(true)
-      })
-      .catch((error) => {
-        console.log(error)
-        console.log(error.response)
-        setWarningmsg(true)
-        alert("이메일 생성에 실패했습니다")
-      })
+  const emailPost = (data) => {
+    return axis.postEmailCheck(data) // api > error
   }
 
-
   const { mutate: emailgo } = useMutation(emailPost, {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setCodein(true)
+      setWarningmsg(false)
       alert("성공")
     },
     onError: (error) => {
-      console.log(error)
-      alert("실패")
+      navigate('/signuptwo')
+      setWarningmsg(error.response.data.message)
+      alert(error.response.data.message)
     },
   })
 
@@ -79,11 +64,8 @@ const SignUpTwo = () => {
 
 
   // 코드 전송
-  const codePost = async (data) => {
-    console.log(data)
-    const datas = await apis.postAuth(data);
-    console.log(datas)
-    return datas;
+  const codePost = (data) => {
+    return axis.postAuth(data);
   }
 
   const { mutate: codego } = useMutation(codePost, {
@@ -93,7 +75,7 @@ const SignUpTwo = () => {
       navigate('/signupthree');
     },
     onError: (error) => {
-      alert("코드 인증에 실패했습니다")
+      alert(error.response.data)
       navigate('/signuptwo');
     },
   })
@@ -104,8 +86,6 @@ const SignUpTwo = () => {
         code: code
       })
   }
-
-
 
   // 로그인으로 
   const Caencelbtn = () => {
@@ -126,13 +106,7 @@ const SignUpTwo = () => {
               </StEmailButton>
 
             </StEmailInputBox>
-            {/* {warning
-              ? <StWarningTitle> 이메일 형식에 맞게 입력해주세요</StWarningTitle>
-              : warningmsg
-                ? <StWarningTitle> 이미 사용중인 이메일 입니다</StWarningTitle>
-                : <StWarningTitle></StWarningTitle>
-            } */}
-            {<StWarningTitle>{warning}</StWarningTitle>}
+            {<StWarningTitle>{warningmsg}</StWarningTitle>}
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>회원가입 코드</StEmailTitle>

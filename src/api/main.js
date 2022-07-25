@@ -13,7 +13,7 @@ const apis = {
     //meeting room
     postMeetingroom: (data) => api.post(`api/chat/meetings/${data.meetingId}/rooms`, data),
     getTeamMain: ({ teamId }) => api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
-    patchTeamImage: (data) => api.patch(`/api/teams/${data.teamId}/teamImage`, data), //팀 이미지 수정
+    patchTeamImage: (data) => api.patch(`/api/teams/${data.teamId}/teamImage`, data.teamImage), //팀 이미지 수정
     patchTeamNick: (data) => api.patch(`/api/teams/${data.teamId}`, data), // 팀 닉네임 수정
     patchMeetProfile: (data) => api.patch(`/api/meetings/${data.meetId}`, data), // 미팅 프로필 수정
     deleteMeet: (data) => api.delete(`/api/meetings/${data.meetingId}`), // 미팅 삭제
@@ -31,11 +31,11 @@ const apis = {
     deleteTeamMember: (data) => api.delete(`/api/teams/${data.teamId}/${data.userId}/ban`), //팀원 추방
     postMeetRoom: () => api.post(`/api/teams/${teamId}/meetings`), // 미팅룸 만들기
     getMeetDetail: ({ teamId, meetingId }) => api.get(`/api/teams/${teamId}/meetings/${meetingId}`), // 미팅룸 상세조회
-    getIssueList: ({ meetID }) => api.get(`/api/meetings/${meetID}/issues`),
+    getIssueList: ({meetID}) => api.get(`/api/meetings/${meetID}/issues`),
     getReserve: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/yet`),
     getOnAir: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/now`),
     getPassed: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/done`),
-    postLeader:(data)=>api.post(`/api/teams/${data.teamId}/manager`,data),
+    postLeader: (data) => api.post(`/api/teams/${data.teamId}/manager`, data),
 
     // 경계
     postLogin: (data) => api.post(`/api/users/login`, data), // 로그인
@@ -44,7 +44,7 @@ const apis = {
     postPassword: (data) => api.post(`/api/users/signup`, data), // 아이디 패스워드 생성
     postNickCheck: (data) => api.post(`/api/users/nickname`, data), // 닉네임 중복체크
     patchNickSave: (data) => api.patch(`/api/users/nickname/${data.userid}`, data), // 닉네임 저장
-    postEmailCode: (data) => api.post(`/api/users/pwsearch`, data), // 이메일 코드 전송(비밀번호 찾기)
+    postEmailCode: (data) => api.post(`/api/users/passwordFind`, data), // 이메일 코드 전송(비밀번호 찾기)
     postPasswordCode: (data) => api.post(`/api/users/pwsearch/code`, data), // 비밀번호 코드
     patchPasswordChange: (data) => api.patch(`/api/users/passwordChange`, data), // 비밀번호 변경
     postPicturePost: (data) => api.post(`/api/users/signup/${data.userid}`, data.profileImage), // 이미지 쏘기

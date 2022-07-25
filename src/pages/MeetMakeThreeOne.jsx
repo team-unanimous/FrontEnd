@@ -16,8 +16,9 @@ const MeetMakeThreeOne = () => {
   const teamID = useParams().teamid;
   const meetID = useSelector(state=>state.meetReducer.meetID).meetid
   const issue = useRef("");
-
+  console.log(meetID)
   const { data } = useGetIssueList({meetID});
+  console.log(data);
 
 
   if(meetID==null){

@@ -6,6 +6,7 @@ import apis from '../api/main'
 import { useSelector } from "react-redux"
 import { useDispatch } from 'react-redux'
 import { postUserId } from '../redux/modules/post'
+import axis from '../api/sub'
 
 const SignupThree = () => {
 
@@ -38,29 +39,15 @@ const SignupThree = () => {
   // 패스워드 
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
-  // const password = useRef("");
-  // const passwordCheck = useRef("");
 
-
-
-  // const passwordPatch = async (data) => {
-  //   console.log(data)
-  //   const datas = await apis.patchPassword(data);
-  //   console.log(datas)
-  //   // setUsernameid(datas)
-  //   // console.log(usernameid)
-  //   return datas;
-  // }
-
-
-  // 비밀번호 쏘기
+  // 비밀번호 post
   const postPW = async (data) => {
     console.log(data)
-    const datas = await apis.postPassword(data);
+    const datas = await axis.postPassword(data);
     const userids = datas.data.userId
     console.log(userids)
     dispatch(postUserId({ userids }))
-    return datas
+    return datas;
   }
 
   const { mutate } = useMutation(postPW, {
@@ -97,7 +84,6 @@ const SignupThree = () => {
             <StEmailTitle>비밀번호</StEmailTitle>
             <StEmailInputBox>
               <StPwInput type='password' onChange={(e) => setPassword(e.target.value)} placeholder='비밀번호 입력' />
-              {/* <StPwInput type='password' ref={password} placeholder='비밀번호 입력' /> */}
             </StEmailInputBox>
             <StEmailWarnning>
               <StWarningTitle>영문자,숫자 및 특수문자 조합, 6~12자</StWarningTitle>
@@ -107,10 +93,8 @@ const SignupThree = () => {
             <StEmailTitle>비밀번호 확인</StEmailTitle>
             <StEmailInputBox>
               <StPwInput type='password' onChange={(e) => setPasswordCheck(e.target.value)} placeholder='비밀번호 재입력' />
-              {/* <StPwInput type='password' ref={passwordCheck} placeholder='비밀번호 재입력' /> */}
             </StEmailInputBox>
             <StEmailWarnning>
-              {/* {password === passwordCheck && password.length != 0 ? <p style={{ color: 'green' }}>형식에 맞는 비밀번호 입니다.</p> : <p style={{ color: 'red' }}> 비밀번호가 일치하지 않거나 공백입니다.</p>} */}
             </StEmailWarnning>
           </StEmailBox>
         </StInfo>

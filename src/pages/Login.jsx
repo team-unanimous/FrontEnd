@@ -16,10 +16,10 @@ const Login = () => {
   const password = useRef(null);
 
   const login = async (data) => {
+    console.log(data)
     const datas = await apis.postLogin(data);
     const accessToken = datas.headers.authorization;
     setCookie("token", accessToken);
-    console.log(datas)
     return datas;
   }
 

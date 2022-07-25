@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from 'react-query'
 import apis from '../api/main'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux"
+import axis from '../api/sub';
 
 const SignUpFour = () => {
 
@@ -32,24 +33,19 @@ const SignUpFour = () => {
 
   // 닉네임 중복 확인
   const NicknameCheck = (data) => {
-    apis.postNickCheck(data)
-      .then((response) => {
-        // response.data
-        console.log(response.data);
-        setNickcheck(true)
-        alert("사용 가능한 닉네임입니다")
-        setWarning(false)
-      })
-      .catch(error => {
-        setWarning(true)
-        alert("사용 불가능한 닉네임입니다")
-      })
+    return axis.postNickCheck(data)
   }
 
   const { mutate: NickCk } = useMutation(NicknameCheck, {
-    onSuccess: () => {
+    onSuccess: (response) => {
+      console.log(response.data);
+      setNickcheck(true)
+      setWarning(false)
+      alert("사용 가능한 닉네임입니다")
     },
     onError: (error) => {
+      setWarning(error.response.data.message)
+      alert(error.response.data.message)
     }
   })
 
@@ -63,7 +59,7 @@ const SignUpFour = () => {
   // 닉네임 저장
   const NickSave = (data) => {
     console.log(data)
-    return apis.patchNickSave(data);
+    return axis.patchNickSave(data);
   }
 
   const { mutate: NickSv } = useMutation(NickSave, {
@@ -103,12 +99,7 @@ const SignUpFour = () => {
               중복 확인
             </StEmailButton>
           </StEmailInputBox>
-          {warning ?
-            <StEmailWarnning>
-              이미 있는 닉네임 입니다. 새로운 닉네임으로 다시 입력해주세요.
-            </StEmailWarnning>
-            : <></>
-          }
+          {<StEmailWarnning>{warning}</StEmailWarnning>}
         </StEmailBox>
         <StBtBox>
           <StNotAgree onClick={Caencelbtn}>
