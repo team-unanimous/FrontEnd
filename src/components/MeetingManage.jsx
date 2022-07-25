@@ -62,9 +62,6 @@ const MeetingManage = () => {
       })
   }
 
-
-  
-
   return (
     <>
       <DetailModalOnAir

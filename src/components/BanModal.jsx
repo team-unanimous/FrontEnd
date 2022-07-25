@@ -4,29 +4,28 @@ import { useMutation } from 'react-query'
 import styled from 'styled-components'
 import { useRef } from 'react'
 
-const LeaderModal = ({open,close,teamId}) => {
-
-        const nickname = useRef();
+const BanModal = ({open,close,teamId,userId}) => {
     
-        // 팀장 권한 위임
-        const pass = async (data)=>{
-            const datas = await apis.postLeader(data);
-            return datas;
+        // 강퇴하기
+        const ban = async (data)=>{
+            const datas = await apis.deleteTeamMember(data);
+            return datas
         }
     
-        const {mutate : leader} = useMutation(pass,{
-            onSuccess:()=>{
-                alert("위임 성공!")
+        const { mutate : bann } = useMutation(ban,{
+            onSuccess : () => {
+                alert("내보내기 완료");
             },
-            onError:()=>{
-                alert("위임 실패!")
+            onError : () => {
+                alert("내보내기 실패");
             }
         })
     
-        const leaders = ()=>{
-            leader({
-                teamId:teamId,
-                nickname:nickname.current.value
+        const banning=()=>{
+            {close}
+            bann({
+                teamId : teamId,
+                userId : userId
             })
         }
 
@@ -36,13 +35,15 @@ const LeaderModal = ({open,close,teamId}) => {
     <>
     <StBack onClick={close}/>
         <StBox>
-            <StTitle>팀장 권한 위임</StTitle>
-            <StInfoBox>
-                <StUp>받는 사람</StUp>
-                <StInput ref={nickname}/>
-                {<StDown>등록되지 않은 사용자입니다. 다시 입력해주세요.</StDown>}
-            </StInfoBox>
-            <StButton onClick={leaders}>위임하기</StButton>
+            <StTitle>정말 내보내시겠습니까?</StTitle>
+                <StUp>내보내기를 완료하면 취소할 수 없습니다.</StUp>
+                
+                    <StButton onClick={banning}>
+                        <div onClick={close}>
+                            내보내기
+                        </div>
+                    </StButton>
+               
         </StBox>
     </>:<></>}
     </>
@@ -67,42 +68,17 @@ const StButton = styled.div`
     cursor: pointer;
 `;
 
-const StDown = styled.div`
-    width : 321px;
+const StUp = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 302px;
     height: 19px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-`;
-
-const StInput = styled.input`
-    width : 510px;
-    height : 19px;
-    padding : 15px;
-    border-radius: 6px;
+    margin : 0 auto 0 auto;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
-`;
-
-const StUp = styled.div`
-    display: flex;
-    width : 63px;
-    height: 19px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-`;
-
-const StInfoBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width : 540px;
-    height: 110px;
+    line-height: 19px;
 `;
 
 const StTitle = styled.div`
@@ -115,17 +91,18 @@ const StTitle = styled.div`
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
+    line-height: 44px;
 `;
 
 const StBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width :520px;
-    height : 324px;
+    width :464px;
+    height : 201px;
     padding : 100px 80px 80px 80px;
     position : fixed;
-    top:250px;
+    top : 250px;
     background-color: white;
     z-index: 20;
 `;
@@ -142,6 +119,4 @@ const StBack = styled.div`
     background-color: rgba(0,0,0,0.4);
     z-index : 10;
 `;
-
-
-export default LeaderModal
+export default BanModal

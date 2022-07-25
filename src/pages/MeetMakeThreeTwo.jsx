@@ -60,7 +60,7 @@ const MeetMakeThreeTwo = () => {
           <StInnerBox>
             <StInputBox>
               <StInput ref={issue} placeholder='추가할 안건 내용을 입력해주세요'/>
-              <StInputBt onClick={makeFunction}> 추가 </StInputBt>
+              <div onClick={()=>{issue.current.value=''}}><StInputBt onClick={makeFunction}> 추가 </StInputBt></div>
             </StInputBox>
             <StInfoBox>
               <StInfoInner>

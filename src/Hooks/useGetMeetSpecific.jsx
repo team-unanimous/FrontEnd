@@ -6,5 +6,5 @@ export const useGetMeetSpecific = ({meetingId}) => {
         const { data } = await apis.getMeetSpecific({meetingId});
         return data;
     }
-    return useQuery("meeting", fetcher);
+    return useQuery("meeting", fetcher, {staleTime:Infinity});
 }
