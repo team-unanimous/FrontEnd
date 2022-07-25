@@ -100,24 +100,6 @@ const TeamInvited = () => {
                                 <StTeamDataWrapper>
                                     <StTeamProfileImg>
                                         {/* <img src={data?.data?.teamImage}></img> */}
-
-                                    </StTeamProfileImg>
-                                    <StTeamTitleDiv>
-                                        {/* {data?.data?.teamname} */}
-                                    </StTeamTitleDiv>
-                                </StTeamDataWrapper>
-                                <StTeamJoinButton onClick={() => navigate('/teamboard')}>
-                                    입장하기
-                                </StTeamJoinButton>
-                            </StTeamDataBox>
-                        </StTeamBox>
-                        : <></>}
-                    {teamData
-                        ? <StTeamBox>
-                            <StTeamDataBox>
-                                <StTeamDataWrapper>
-                                    <StTeamProfileImg>
-                                        {/* <img src={data?.data?.teamImage}></img> */}
                                     </StTeamProfileImg>
                                     <StTeamTitleDiv>
                                         {teamName}

@@ -13,10 +13,12 @@ const MeetingRight = (prop) => {
   return (
     <StBox>
         <StInfo>
+            <>
             <StTime>
                 <Stdate>{a}</Stdate>
                 <StLong>{prop.prop.meetingTime} - {prop.prop.meetingOverTime}</StLong>
             </StTime>
+            </>
             <StLine/>
             <StContent>
                 <StTitle>{prop.prop.meetingTitle}</StTitle>
@@ -33,6 +35,7 @@ const StOwner = styled.div`
     margin : 0.5rem 0 0 0;
     font-weight: 500;
     font-size: 12px;
+    color : #818181;
 `;
 
 const StTitle = styled.div`
@@ -55,7 +58,7 @@ const StContent = styled.div`
 const StLine = styled.div`
     height : 54px;
     width: 3px;
-    background-color: black;
+    background-color: #063250;
 `;
 
 const StLong = styled.div`
@@ -76,24 +79,26 @@ const StTime = styled.div`
     display: flex;
     flex-direction: column;
     width :103px;
+    height: 54px 
 `;
 
 
 const StInfo = styled.div`
     display: flex;
+    align-items: center;
     width : 300px;
     height:54px;
-
+    
 `;
 
 const StBox = styled.div`
     display: flex;
     align-items: center;
     padding: 24px;
-    width : 342px;
-    height : 50.4px;
-    margin : 0.7rem 0 0 0;
+    width : 468px;
+    height : 52px;
     background-color: white;
-    border-radius : 6px;
+    border-top: 1px solid #D7D7D7;
+    border-bottom: 1px solid #D7D7D7;
 `;
 export default MeetingRight

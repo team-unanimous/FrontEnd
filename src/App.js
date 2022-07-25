@@ -29,9 +29,10 @@ import MeetingRoomMain from "./pages/MeetingRoomMain";
 import Mypage from "./pages/Mypage";
 import PasswordFindOne from "./pages/PasswordFindOne"
 import PasswordFindTwo from "./pages/PasswordFindTwo"
-import MeetingRoom from "./pages/MeetingRoom"
 import MeetingEditTwoOne from "./pages/MeetingEditTwoOne";
 import MeetingEditTwoTwo from "./pages/MeetingEditTwoTwo";
+import JoinRoom from "./components/WebRTC/JoinRoom";
+import MeetingRoom from "./pages/MeetingRoom";
 
 
 const queryClient = new QueryClient();
@@ -69,7 +70,7 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/passwordfindone" element={<PasswordFindOne />} />
         <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />
-        <Route path="/meetingroom" element={<MeetingRoom/>}/>
+        <Route path="/meetingroomtest" element={<MeetingRoom/>}/>
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>

@@ -14,8 +14,9 @@ const MeetingLeft = (prop) => {
                 <StUserImg/>
                 <StUserImg/>
                 <StUserImg/>
-                 +2
+                &nbsp;00명
             </StCount>
+            
         </StInfo>
         <StButton>참여하기</StButton>
     </StBox>
@@ -30,12 +31,13 @@ const StUserImg = styled.img`
 `;
 
 const StButton = styled.button`
-    width: 72px;
-    height: 25px;
+    width: 99px;
+    height: 39px;
     margin : 0 0 0 auto ;
     border-radius: 5px;
     color : white;
-    background-color: black;
+    background-color: #063250;
+    border : none;
     cursor: pointer;
 `;
 
@@ -43,7 +45,7 @@ const StCount = styled.div`
     display: flex;
     align-items: center;
     margin : 0.5rem 0 0 0;
-    width: 90px;
+    width: 150px;
     height: 22.4px;
 `;
 
@@ -74,11 +76,10 @@ const StBox = styled.div`
     display: flex;
     align-items: center;
     padding: 24px;
-    width : 342px;
-    height : 50.4px;
-    margin : 0.7rem 0 0rem 0;
-    background-color: white;
-    border-radius : 6px;
+    width : 468px;
+    height : 52px;
+    border-top: 1px solid #D7D7D7;
+    border-bottom: 1px solid #D7D7D7;
 `;
 
 export default MeetingLeft

@@ -8,12 +8,17 @@ import useGetTeamMain from '../Hooks/useGetTeamMain'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
 import LeaderModal from './LeaderModal';
+import BanModal from './BanModal';
+import InviteMember from './InviteMember';
 
 const TeamSetting = (props) => {
 
     const [state, setState] = useState(0);
     
     const [openLeader,setOpenLeader] = useState(false);
+    const [openBan,setOpenBan] = useState(false);
+    const [openInvite,setOpenInvite] = useState(false);
+    const [userid,setUserid] = useState();
 
     const teamId = useParams().teamid;
 
@@ -148,12 +153,31 @@ const TeamSetting = (props) => {
         setOpenLeader(false);
     }
 
+    const closeBan = () =>{
+        setOpenBan(false);
+    }
+
+    const closeInvite =() =>{
+        setOpenInvite(false);
+    }
+
     return (
         <>
+            
             <LeaderModal 
             open={openLeader} 
             close={closeLeader}
             teamId={teamId}/>
+            <BanModal
+            open={openBan}
+            close={closeBan}
+            teamId={teamId}
+            userId={userid}
+            />
+            <InviteMember
+            open={openInvite}
+            close={closeInvite}
+            />
             {teamLeader !== nickname ?
                 <StRight>
                     <StTeamOutBox>
@@ -177,7 +201,7 @@ const TeamSetting = (props) => {
                                     <StBlack>
                                         팀원 관리
                                     </StBlack>
-                                    <StBt2>사용자 초대</StBt2>
+                                    <StBt2 onClick={()=>{setOpenInvite(true);}}>사용자 초대</StBt2>
                                     <StMateList>
                                         {props?.prop.map((value, index) => {
                                             return <StUserBox key={index}>
@@ -191,12 +215,6 @@ const TeamSetting = (props) => {
                                         })}
                                     </StMateList>
                                 </StListBox>
-                                <StMovePower>
-                                    <StBlack >
-                                        팀장 권한 위임
-                                    </StBlack>
-                                    <StBt3>사용자 선택</StBt3>
-                                </StMovePower>
                             </StDown>
                             <StLine />
                             <StOut onClick={leaving}>팀 탈퇴하기</StOut>
@@ -243,7 +261,7 @@ const TeamSetting = (props) => {
                                     <StBlack >
                                         팀원 관리
                                     </StBlack>
-                                    <StBt2>사용자 초대</StBt2>
+                                    <StBt2 onClick={()=>{setOpenInvite(true);}}>사용자 초대</StBt2>
                                     <StMateList>
                                         {props?.prop.map((value, index) => {
                                             return <StUserBox key={index}>
@@ -252,7 +270,7 @@ const TeamSetting = (props) => {
                                                     <StUserName>{value.nickname}</StUserName>
                                                     <StEmail>{value.username}</StEmail>
                                                 </StUserInfo>
-                                                <StXBox onClick={()=>banning(value.userId)}>
+                                                <StXBox onClick={()=>{setOpenBan(true);setUserid(value.userId);console.log(userid)}}>
                                                     <StXicon src={xicon}/>
                                                 </StXBox>
                                             </StUserBox>
