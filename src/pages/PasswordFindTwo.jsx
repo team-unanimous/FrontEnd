@@ -3,50 +3,22 @@ import styled from 'styled-components'
 import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import apis from '../api/main'
+import axis from '../api/sub'
+import { useSelector } from "react-redux"
 
 
 const PasswordFindTwo = () => {
 
   const navigate = useNavigate();
 
-
+  const userEmail = useSelector((state) => state.userReducer.usersid.email)
+  console.log(userEmail)
 
   // 패스워드 
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
 
-
-  // 패스워드 변경 전송 버튼
-  const patchPw = (data) => {
-    return apis.patchPasswordChange(data);
-  }
-
-  const { mutate } = useMutation(patchPw, {
-    onSuccess: () => {
-      alert("비밀번호 변경에 성공했습니다")
-      navigate('/');
-    },
-    onError: (error) => {
-      alert("비밀번호 변경에 실패했습니다")
-      navigate('/passwordfindtwo');
-    }
-  })
-
-  const passwordFunction = () => {
-    const data = {
-      password: password,
-      passwordCheck: passwordCheck,
-    }
-    mutate(data)
-  }
-
-  // 취소 버튼
-  const Caencelbtn = () => {
-    navigate('/login')
-  }
-
   // 비밀번호 정규식
-  // 상우님 const passwordlock = /^(?=.[a-zA-Z])(?=.\\d)(?=.[!@#$%^+=-]).{6,12}$/;
   const passwordlock = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{3,16}$/;
   const pwcheck = (pw) => {
     return passwordlock.test(pw)
@@ -60,6 +32,40 @@ const PasswordFindTwo = () => {
       return true;
     else return false;
   }
+
+
+  // 패스워드 변경 전송 버튼
+  const patchPw = (data) => {
+    console.log(data)
+    return axis.patchPasswordChan(data);
+  }
+
+  const { mutate } = useMutation(patchPw, {
+    onSuccess: () => {
+      alert("비밀번호 변경에 성공했습니다")
+      navigate('/');
+    },
+    onError: (error) => {
+      alert("이전과 동일한 비밀번호입니다")
+      navigate('/passwordfindtwo');
+    }
+  })
+
+  const passwordFunction = () => {
+    const data = {
+      username: userEmail,
+      password: password,
+      passwordCheck: passwordCheck,
+    }
+    mutate(data)
+  }
+
+  // 취소 버튼
+  const Caencelbtn = () => {
+    navigate('/login')
+  }
+
+
 
   return (
     <StBox>
