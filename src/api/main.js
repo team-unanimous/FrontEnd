@@ -5,13 +5,16 @@ import api from "./core";
 
 const apis = {
     //팀 게시판
-    postInviteTeam: (data) => api.post(`/api/teams/auth-code`, data), //초대받은 팀 찾기
-    postTeamJoin: (data) => api.post(`/api/teams/join`, data), //팀 참여하기 
-    postTeam: (data) => api.post(`/api/teams`, data), // 팀만들기
-    getTeam: () => api.get(`/api/teams`), // 팀선택페이지
 
-    //meeting room
-    postMeetingroom: (data) => api.post(`api/chat/meetings/${data.meetingId}/rooms`, data),
+    postInviteTeam : (data)=>api.post(`/api/teams/auth-code`, data), //초대받은 팀 찾기
+    postTeamJoin : (data)=>api.post(`/api/teams/join`, data), //팀 참여하기 
+    postTeam : (data)=>api.post(`/api/teams`, data), // 팀만들기
+    getTeam : ()=>api.get(`/api/teams`), // 팀선택페이지
+    postTeamMailSend : (data)=>api.post(`/api/teams/emails/${data.teamId}`, data), // 팀 참가시 UUID 보내기
+
+    //chatting room
+    postMeetingroom : (data) => api.post(`api/chat/meetings/${data.meetingId}/rooms`, data),  //채팅방 생성
+
     getTeamMain: ({ teamId }) => api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
     patchTeamImage: (data) => api.patch(`/api/teams/${data.teamId}/teamImage`, data.teamImage), //팀 이미지 수정
     patchTeamNick: (data) => api.patch(`/api/teams/${data.teamId}`, data), // 팀 닉네임 수정

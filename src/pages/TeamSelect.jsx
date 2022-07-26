@@ -4,11 +4,14 @@ import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
 import styled from "styled-components"
 import apis from "../api/main"
 import { useMutation } from "react-query"
+import teamSelectImg from "../img/teamSelect.png";
+
 
 const TeamSelect = () => {
     //key, vector img, team img box
     const navigate = useNavigate();
     // const [selectedTeam, setSelectedTeam] = useState(null);
+    
     const teamJoin = async (data) => {
         return apis.postTeamJoin(data);
     }
@@ -23,6 +26,14 @@ const TeamSelect = () => {
         }
     })
 
+
+    // const unaTeamJoinHandler = () =>{
+    //     const data = {
+    //         uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2" //unanimous UUID로 교체 필요
+    //     }
+    //     console.log(data.data)
+    //     joinMutate(data);
+    // }
     const unaTeamJoinHandler = () => {
         const data = {
             uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2"
@@ -36,7 +47,6 @@ const TeamSelect = () => {
     if (!data) {
         return <>Something wrong!</>
     }
-    // console.log(data);
     return (
         <>
             <StBox>
@@ -89,6 +99,8 @@ const StBox = styled.div`
   padding : 0;
   justify-content: center;
   align-items: center;
+  background-image: url(${teamSelectImg});
+  background-repeat: no-repeat;
   `;
 
 const StContainer = styled.div`

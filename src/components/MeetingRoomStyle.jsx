@@ -1,26 +1,75 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import inputEnterVector from "../img/InputEnterVector.png"
 import xbutton from "../img/Xbutton.png"
 import { getCookie } from "../Cookie";
-import { SocketConnect, ws } from "../api/websocket";
+import { ws } from "../api/websocket";
 import { useRef, useEffect, useState } from "react";
 import apis from "../api/main";
 import { useMutation } from "react-query";
+import { useParams } from "react-router-dom";
+import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
+
 
 
 const MeetingRoomStyle = ()=>{
-    const inputRef = useRef(null);
-    // const [roomId, setRoomId] = useState(null);
+    // let { meetingId } = useParams();
+    // useGetMeetSpecific(data);
+    // useEffect(()=>{
+    //     console.log(meetingId);
+    // })
     const token = getCookie("token");
+    const inputRef = useRef(null);
+    const [msg, setMsg] = useState([]);
+    const [date, setDate] = useState([]);
+    const [type, setType] = useState([]);
+    const [nickname, setNickname] = useState([]);
+    const [sender, setSender] = useState([]);
+    const [avatar, setAvatar] = useState([]); 
+
+    // createdAt={createdAt}
+    // type={type} 
+    // roomId={roomId}
+    // nickname={nickname}
+    // sender={sender}
+    // message={message}
+    // profileUrl={profileUrl}
 
     const data = {
         token: token,
-        roomId: "2"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+        roomId: "2" //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
+
+    const SocketConnect = async (data) => {
+        try{
+            ws.connect({
+                token: data.token
+            }, ()=> {
+                ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
+                (response) => {
+                    const newMessage = JSON.parse(response.body);
+                    // setMsg([...msg, newMessage.message]);
+                    setMsg(msg=>[...msg, newMessage.message])
+                    setDate(date=>[...date, newMessage.createdAt])
+                    setNickname(nickname=>[...nickname, newMessage.nickname])
+                    setAvatar(avatar=>[...avatar, newMessage.profileUrl])
+                    // console.log(msg)
+                    console.log(newMessage.message);
+                    console.log("보낸사람:", newMessage.sender);
+                    console.log("받은 메세지:", newMessage.message);
+                },
+                {
+                    token: token
+                });
+            });
+            console.log("구독 성공")
+        } catch (error) {
+            console.log(error.response);
+        }}
 
     useEffect(()=>{
         SocketConnect(data);
+        console.log("hi");
     })
 
     function waitForConnection(ws, callback){
@@ -35,15 +84,16 @@ const MeetingRoomStyle = ()=>{
         )
     }
 
-    const HandleSend = async (event)=>{
+    const HandleSend = useCallback( async (event)=>{
         event.preventDefault();
+        if(!inputRef.current.value) return;
         try {
             const data = {
                 type: "TALK",
                 roomId: "2",
                 nickname: "string",
                 sender: "string",
-                message: `this is a message from the client : ${inputRef.current.value}`,
+                message: `${inputRef.current.value}`,
                 createdAt: "10시"
             }
             const token = getCookie("token")
@@ -53,10 +103,18 @@ const MeetingRoomStyle = ()=>{
                 console.log("clicked anyway");
                 console.log(JSON.stringify(data))  
             })
+            inputRef.current.value = ""
         } catch (error) {
             console.log(error);
         }
+    }, [msg])
+    const HandleSendNoConnection = (event)=> {
+        event.preventDefault();
+        setMessage([...message, inputRef?.current?.value]);
+        console.log(message);
+        inputRef.current.value = ""
     }
+    
 
     return (
         <>
@@ -70,16 +128,34 @@ const MeetingRoomStyle = ()=>{
                         </StChattingTitle>
                         <StChattingXbutton>
                             <StChattingXbuttonBox type={"image"} src={xbutton}>
-
                             </StChattingXbuttonBox>
                         </StChattingXbutton>
                     </StChattingHeaderWrapper>
-
                 </StChattingHeader>
                 <StChattingBody>
+                    <StChattingMessageWrapper>
+                        {
+                            msg?.map((msg, i) =>{
+                                return (
+                                    
+                                    <StChattingMessageBox
+                                    key={i}
+                                    createdAt={date}
+                                    // type={type} 
+                                    // roomId={roomId}
+                                    nickname={nickname}
+                                    sender={sender}
+                                    // message={message}
+                                    profileUrl={avatar}
+                                    >{msg}</StChattingMessageBox>
+                                )
+                            })
+                        }
+                    </StChattingMessageWrapper>
                     <StChattingInputWrapper>
                         <StChattingInputForm onSubmit={HandleSend}>
-                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef}/>
+                        {/* <StChattingInputForm onSubmit={HandleSendNoConnection}> */}
+                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef} />
                             <StSendButton type={"image"} src={inputEnterVector}/>
                         </StChattingInputForm>
                     </StChattingInputWrapper>
@@ -114,7 +190,7 @@ const StChattingHeader = styled.div`
     bottom: 91.95%; */
     height: 100px;
 
-    background: #EAEAEA;
+    background: #063250;
 `
 const StChattingHeaderWrapper = styled.div`
     display: flex;
@@ -128,7 +204,7 @@ const StChattingHeaderWrapper = styled.div`
     border-bottom: 1px solid #D9D9D9;
 `
 const StChattingTitle = styled.div`
-    background-color: #EAEAEA;
+    background-color: #063250;
     display:flex;
     flex-direction: row;
     width: 50%;
@@ -138,6 +214,7 @@ const StChattingTitle = styled.div`
 `
 const StChattingTitleBox = styled.span`
     font-size: 1.25rem;
+    color: #FCFCFC;
 `
 
 const StChattingXbutton = styled.div`
@@ -156,20 +233,56 @@ const StChattingXbuttonBox = styled.input`
 `
 
 const StChattingBody = styled.div`
-    /* background-color: black; */
     /* Frame 150 */
     display: flex;
+    flex-direction: column;
+    /* align-items: flex-end; */
+    height: 100%;
+`
+const StChattingMessageWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: #063250;
+    /* margin-top: auto; */
+    overflow-x: hidden;
+  ::-webkit-scrollbar{
+    width:10px;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #2f3542;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-track{
+    border-radius: 1rem;
+  }
+`
+const StChattingMessageBox = styled.div`
+   /* Frame 126 */
+    display: flex;
+    display: inline-block;
     flex-direction: row;
     align-items: flex-start;
-    height: 100%;
-    /* position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 8.08%;
-    bottom: 0.03%; */
+    padding: 16px;
+    gap: 10px;
+
+    width: 273px;
+    height: fit-content;
+
+    background: linear-gradient(180deg, rgba(35, 150, 240, 0.8) 0%, rgba(73, 182, 255, 0.8) 100%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 8px 0px 8px 8px;
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    word-wrap: break-word;
 `
+
 const StChattingInputWrapper = styled.div`
-    background: #EAEAEA;
+    background: #063250;
     /* background-color: blue; */
     /* Frame 142 */
     display: flex;
@@ -188,7 +301,6 @@ const StChattingInputWrapper = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
-
 `
 const StChattingInputForm = styled.form`
     display: flex;
@@ -211,7 +323,7 @@ const StChattingInputBox = styled.input`
 
     padding-left: 1rem;
 
-    background: #FFFFFF;
+    background: #063250;
     border-radius: 8px;
 
     flex: none;

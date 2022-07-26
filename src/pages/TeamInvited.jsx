@@ -4,6 +4,8 @@ import apis from "../api/main";
 import { useRef } from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import teamSelectImg from "../img/teamSelect.png";
+
 const TeamInvited = () => {
     const uuidRef = useRef();
     const navigate = useNavigate();
@@ -117,6 +119,8 @@ const StBox = styled.div`
     justify-content: center;
     align-items: center;
     order: 1;
+    background-image: url(${teamSelectImg});
+    background-repeat: no-repeat;
 `
 const StContainer = styled.div`
     /* Frame 270 */
@@ -135,7 +139,7 @@ const StTitle = styled.div`
     /* 새로운 팀 정보를 입력해주세요 */
     width: 799px;
     height: 58px;
-    font-family: ‘Inter’;
+    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 48px;
@@ -191,7 +195,7 @@ const StWarning = styled.div`
     /* 이메일 형식에 맞게 입력해주세요 */
     width: 384px;
     height: 19px;
-    font-family: ‘Inter’;
+    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -280,7 +284,7 @@ const StTeamTitleDiv = styled.div`
     /* 팀이름 */
     width: 56px;
     height: 24px;
-    font-family: ‘Inter’;
+    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
