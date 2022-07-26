@@ -299,7 +299,7 @@ class JoinRoom extends Component {
 
                         {this.state.mainStreamManager !== undefined ? (
                             <div id="main-video" className="col-md-6">
-
+                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
                                 <input
                                     className="btn btn-large btn-success"
                                     type="button"
