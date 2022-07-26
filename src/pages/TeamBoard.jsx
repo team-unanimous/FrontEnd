@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import Header from '../components/Header';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,6 +15,7 @@ import settingselect from '../img/settingselect.png';
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
 import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
+import apis from "../api/main";
 
 
 const TeamBoard = () => {
@@ -29,8 +30,22 @@ const TeamBoard = () => {
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
 
-  const { data } = useGetTeamInfo();
-  console.log(main?.teamManager)
+
+  // const fetcher = async () => {
+  //   const { data } = await apis.getTeam();
+  //   return data;
+  // }
+
+  const [imgfile, setImgfile] = useState("");
+
+
+  useEffect(() => {
+    const imageFy = async () => {
+      const data = await apis.getTeam();
+      setImgfile(data.data[0].teamImage)
+    }
+    imageFy();
+  }, [])
 
 
   return (
@@ -40,7 +55,7 @@ const TeamBoard = () => {
         <StLeft>
           <StSmallBox>
             <StTeamInfoBox>
-              <StTeamImg src={data[0].teamImage} />
+              <StTeamImg src={imgfile} />
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
                 {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}

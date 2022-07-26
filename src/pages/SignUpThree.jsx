@@ -136,12 +136,12 @@ const StNotAgree = styled.button`
 const StAgree = styled.button`
   width : 200px;
   height : 54px;
-  background-color: black;
+  background-color: #063250;
   font-weight: 700;
   font-size: 20px;
   color : white;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #063250;
   cursor: pointer;
   &:disabled{
     background-color: gray;

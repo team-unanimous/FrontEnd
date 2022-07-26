@@ -131,12 +131,12 @@ const StNotAgree = styled.button`
 const StAgree = styled.button`
   width : 200px;
   height : 54px;
-  background-color: black;
+  background-color: #063250;
   font-weight: 700;
   font-size: 20px;
   color : white;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #063250;
   &:disabled{
     background-color: gray;
   }
@@ -154,14 +154,16 @@ const StEmailWarnning = styled.div`
   height : 19px;
   font-weight: 500;
   font-size: 15px;
+  color: #EF6A61;
 `;
 
 const StEmailButton = styled.button`
   width : 132px;
   height : 49px;
   margin : 0 0 0 9px;
-  background-color: black;
+  background-color: #063250;;
   color : white;
+  border: solid 1px #063250;
   border-radius: 6px;
   cursor: pointer;
 `;

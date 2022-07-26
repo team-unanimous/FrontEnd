@@ -78,7 +78,7 @@ const PasswordModal = ({ open, close }) => {
                         <StInput type='password'
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="비밀번호 입력" />
-                        <p>영문자 및 숫자 조합, 8~12자</p>
+                        <p style={{ color: '#EF6A61' }}>영문자 및 숫자 조합, 8~12자</p>
                         <StSubTitle>
                             비밀번호 확인
                         </StSubTitle>
@@ -121,7 +121,8 @@ justify-content: center;
 align-items: center;
 width: 132px;
 height: 54px;
-background: #000000;
+background: #063250;
+border: solid 1px #063250;
 border-radius: 6px;
 padding: 15px;
 margin-top: 60px;

@@ -144,7 +144,7 @@ justify-content: center;
 align-items: center;
 width: 132px;
 height: 54px;
-background: #000000;
+background: #063250;
 border-radius: 6px;
 padding: 15px;
 margin-top: 60px;
@@ -161,15 +161,18 @@ width: 540px;
 font-weight: 500;
 font-size: 16px;
 line-height: 19px;
+color: #EF6A61;
 `
 
 const StChangeBtn = styled.button`
                 width : 132px;
                 height : 54px;
                 margin : 0 0 0 9px;
-                background-color: black;
+                background-color: #063250;
                 color : white;
+                border: solid 1px #063250;
                 border-radius: 6px;
+                
                 `
 
 const StChangeInput = styled.input`

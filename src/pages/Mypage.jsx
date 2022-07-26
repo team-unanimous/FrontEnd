@@ -10,6 +10,7 @@ import PasswordModal from "../components/MypageModal/PasswordModal";
 import DefaultImg from "../img/DefaultImg.jpg"
 import jwt_decode from "jwt-decode";
 import Header from "../components/Header"
+import introduction from "../img/introduction.svg"
 
 const Mypage = () => {
 
@@ -279,7 +280,7 @@ const Mypage = () => {
                     <StprofileTextmini>프로필 이미지</StprofileTextmini>
                     <StProfile src={usersimg} />
                     <StImgChangeBtn onClick={ImgModalOpen}>
-                        변경
+                        이미지 변경
                     </StImgChangeBtn>
                     {/* <StProfileInput type="file" accept='img/*'
                         onChange={onLoadFile}
@@ -551,8 +552,9 @@ const StChangeDiv = styled.div`
 const StImgChangeBtn = styled.button`
                 width : 132px;
                 height : 54px;
-                background-color: black;
+                background-color: #063250;
                 color : white;
+                border: solid 1px #063250;
                 border-radius: 6px;
                 margin-top: 12px;
                 cursor: pointer;
@@ -562,8 +564,9 @@ const StChangeBtn = styled.button`
                 width : 132px;
                 height : 54px;
                 margin : 0 0 0 9px;
-                background-color: black;
+                background-color: #063250;
                 color : white;
+                border: solid 1px #063250;
                 border-radius: 6px;
                 cursor: pointer;
                 `

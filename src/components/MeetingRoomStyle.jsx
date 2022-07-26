@@ -3,13 +3,12 @@ import styled from "styled-components";
 import inputEnterVector from "../img/InputEnterVector.png"
 import xbutton from "../img/Xbutton.png"
 import { getCookie } from "../Cookie";
-import { SocketConnect, ws } from "../api/websocket";
 import { useRef, useEffect, useState } from "react";
 import apis from "../api/main";
 import { useMutation } from "react-query";
 
 
-const MeetingRoomStyle = ()=>{
+const MeetingRoomStyle = () => {
     const inputRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
     const token = getCookie("token");
@@ -19,11 +18,11 @@ const MeetingRoomStyle = ()=>{
         roomId: "2"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         SocketConnect(data);
     })
 
-    function waitForConnection(ws, callback){
+    function waitForConnection(ws, callback) {
         setTimeout(
             function () {
                 if (ws.ws.readyState === 1) {
@@ -31,11 +30,11 @@ const MeetingRoomStyle = ()=>{
                 } else {
                     waitForConnection(ws, callback);
                 }
-            },1
+            }, 1
         )
     }
 
-    const HandleSend = async (event)=>{
+    const HandleSend = async (event) => {
         event.preventDefault();
         try {
             const data = {
@@ -47,11 +46,11 @@ const MeetingRoomStyle = ()=>{
                 createdAt: "10시"
             }
             const token = getCookie("token")
-            waitForConnection(ws, function(){
-                ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
+            waitForConnection(ws, function () {
+                ws.send('/pub/api/chat/message', { token: token }, JSON.stringify(data));
                 // ws.send("/queue/test", {}, "this is a message from the client")
                 console.log("clicked anyway");
-                console.log(JSON.stringify(data))  
+                console.log(JSON.stringify(data))
             })
         } catch (error) {
             console.log(error);
@@ -79,8 +78,8 @@ const MeetingRoomStyle = ()=>{
                 <StChattingBody>
                     <StChattingInputWrapper>
                         <StChattingInputForm onSubmit={HandleSend}>
-                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef}/>
-                            <StSendButton type={"image"} src={inputEnterVector}/>
+                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef} />
+                            <StSendButton type={"image"} src={inputEnterVector} />
                         </StChattingInputForm>
                     </StChattingInputWrapper>
                 </StChattingBody>
