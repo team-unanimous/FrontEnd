@@ -5,20 +5,12 @@ import { useRef } from "react";
 import styled from "styled-components";
 import InviteTeamMember from "../components/InviteTeamMemeber";
 import { useEffect } from "react";
+import teamSelectImg from "../img/teamSelect.png"
 
 
 
 const TeamMake = () => {
-
-    useEffect(()=>{
-      console.log("mount")
-      return(()=>{
-        alert("unmount")
-        console.log("unmount")
-      })
-    })
     const navigate = useNavigate();
-    // const teamImageRef = useRef(null);
     const teamNameRef = useRef(null);
 
     const makeTeam = async (teamInfo)=> {
@@ -48,38 +40,21 @@ const TeamMake = () => {
         <>
         <StBox>
             <StContainer>
-            {/* // 이미지 업로드 기능 추가 */}
-            <StTitle>새로운 팀 정보를 입력해주세요</StTitle>
-            {/* <img src="" ref={teamImageRef}></img> */}
+            <StTitle>새롭게 만들 팀명을 입력해주세요</StTitle>
             <StInputWrapper>
             <StEmailBox>
-                <StEmailTitle>팀명</StEmailTitle>
-                <StEmailInputBox>
                 <StPwInput type='text' placeholder='팀명 입력' ref={teamNameRef} maxLength="10"/>
-                </StEmailInputBox>
                 <StEmailWarnning>
-                최대 10자
+                10자 이내
                 </StEmailWarnning>
             </StEmailBox>
-            {/* <StEmailBox>
-                <StEmailTitle>팀원 추가하기</StEmailTitle>
-                <StEmailInputBox>
-                <StPwInput type='text' placeholder='이메일 입력'/>
-                <StEmailButton>
-                추가
-              </StEmailButton>
-                </StEmailInputBox>
-                <StEmailWarnning>
-                </StEmailWarnning>
-            </StEmailBox> */}
-            {/* <InviteTeamMember></InviteTeamMember> */}
             </StInputWrapper>
             <StBtBox>
                 <StCancel onClick={()=>navigate('/teamselect')}>
                     취소
                 </StCancel>
                 <StAgree onClick={teamMakeHandler}>
-                    완료
+                    다음
                 </StAgree>
             </StBtBox>
             </StContainer>
@@ -97,21 +72,19 @@ const StBox = styled.div`
     justify-content: center;
     align-items: center;
     order: 1;
+    background-image: url(${teamSelectImg});
+    background-repeat: no-repeat;
     `
 
 const StContainer = styled.div`
     /* Frame 270 */
-    /* Auto layout */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0px;
-    /* gap: 60px; */
     
-    /* position: absolute; */
-    width: 610px;
-    height: 537px;
+    width: 654px;
+    height: 311px;
     `
 const StTitle = styled.div`
     /* 새로운 팀 정보를 입력해주세요 */
@@ -120,7 +93,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 48px;
+    font-size: 46px;
     line-height: 58px;
     /* identical to box height */
     text-align: center;
@@ -135,35 +108,19 @@ const StInputWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0px;
-    gap: 25px;
     
     width: 540px;
-    height: 302px;
     margin-top: 60px;
-    
-    /* Inside auto layout */
     
     flex: none;
     order: 0;
     flex-grow: 0;
 `
-const StTeamNameInputBox = styled.div`
-        
-`
 const StEmailWarnning = styled.div`
   height : 19px;
   font-weight: 500;
   font-size: 16px;
-`;
-
-const StEmailButton = styled.button`
-  width : 132px;
-  height : 49px;
-  margin : 0 0 0 9px;
-  background-color: black;
-  color : white;
-  border-radius: 6px;
+  color: #5C5c5c;
 `;
 
 const StPwInput = styled.input`
@@ -171,30 +128,14 @@ const StPwInput = styled.input`
   height : 44px;
   border-radius: 6px;
   border: 1px solid #000000;
-  
-`;
-
-const StEmailInput = styled.input`
-  width : 390px;
-  height : 44px;
-  border-radius: 6px;
-  border: 1px solid #000000;
 `;
 
 const StEmailInputBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width : 541px;
-  height : 49px;
-`;
-
-const StEmailTitle = styled.div`
-  width : 200px;
-  height : 19px;
-  font-weight: 700;
-  font-size: 15px;
-  
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* width : 541px;
+  height : 49px; */
 `;
 
 const StEmailBox = styled.div`
@@ -208,7 +149,7 @@ const StEmailBox = styled.div`
 const StAgree = styled.button`
   width : 200px;
   height : 54px;
-  background-color: black;
+  background-color: #063250;
   font-weight: 700;
   font-size: 20px;
   color : white;
@@ -233,7 +174,5 @@ const StBtBox = styled.div`
   height: 54px;
   margin : 3.75rem 0 0 0;
 `;
-
-
 
 export default TeamMake;

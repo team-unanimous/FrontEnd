@@ -8,8 +8,8 @@ const apis = {
     getTeam : ()=>api.get(`/api/teams`), // 팀선택페이지
     postTeamMailSend : (data)=>api.post(`/api/teams/emails/${data.teamId}`, data), // 팀 참가시 UUID 보내기
 
-    //meeting room
-    postMeetingroom : (data) => api.post(`api/chat/meetings/${data.meetingId}/rooms`, data),
+    //chatting room
+    postMeetingroom : (data) => api.post(`api/chat/meetings/${data.meetingId}/rooms`, data),  //채팅방 생성
 
     getTeamMain: ({ teamId }) => api.get(`/api/teams/${teamId}`), // 팀 메인 게시판
     patchTeamPofile: () => api.patch(`/api/teams/${teamId}`),

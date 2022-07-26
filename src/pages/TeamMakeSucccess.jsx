@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import teamMakeSuccessImg from "../img/teamMakeSuccess.png";
+
 
 const TeamMakeSuccess = () => {
     const navigate = useNavigate();
@@ -13,11 +15,8 @@ const TeamMakeSuccess = () => {
     return (
         <>
             <StBox>
-                <StContainer>
-                    <h1 style={{fontSize:"100px"}}>팀 생성 성공!</h1>
-                    3초 후에 팀 게시판으로 이동합니다.
-                    {/* <img src={hyunjatime}/> */}
-                </StContainer>
+                {/* <StContainer>
+                </StContainer> */}
             </StBox>
         </>
     )
@@ -34,6 +33,8 @@ const StBox = styled.div`
     justify-content: center;
     align-items: center;
     order: 1;
+    background-image: url(${teamMakeSuccessImg});
+    background-repeat: no-repeat;
     `
 
 const StContainer = styled.div`

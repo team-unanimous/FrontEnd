@@ -4,6 +4,8 @@ import apis from "../api/main";
 import { useRef } from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import teamSelectImg from "../img/teamSelect.png";
+
 
 const TeamInvited = () => {
     const uuidRef = useRef();
@@ -126,6 +128,8 @@ const StBox = styled.div`
     justify-content: center;
     align-items: center;
     order: 1;
+    background-image: url(${teamSelectImg});
+    background-repeat: no-repeat;
 `
 const StContainer = styled.div`
     /* Frame 270 */

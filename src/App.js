@@ -68,7 +68,7 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/passwordfindone" element={<PasswordFindOne />} />
         <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />
-        <Route path="/meetingroom" element={<MeetingRoom/>}/>
+        {/* <Route path="/meetingroom" element={<MeetingRoom/>}/> */}
       </Routes>
       <ReactQueryDevtools />
     </QueryClientProvider>

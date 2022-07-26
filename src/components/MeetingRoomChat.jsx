@@ -13,6 +13,10 @@ import { useNavigate } from "react-router-dom";
 
 const MeetingRoomChat = ()=>{
     const navigate = useNavigate()
+    const [color, setColor] = useState(null);
+    const [msg, setMsg] = useState("");
+    const [issue, setIssue] =useState({}); 
+
     useEffect(()=>{
         SocketConnect(data);
         return () => {
@@ -29,7 +33,7 @@ const MeetingRoomChat = ()=>{
     const inputRef = useRef(null);
     const EnterRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
-    const [msg, setMsg] = useState("");
+    
     const token = getCookie("token");
 
     const SocketConnect = (data) => {
@@ -41,10 +45,12 @@ const MeetingRoomChat = ()=>{
             ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
             (response) => {
                 const newMessage = JSON.parse(response.body);
-                console.log(newMessage);
+                console.log(newMessage.message);
                 setMsg(newMessage.message);
+                setIssue(newMessage.message);
                 console.log("보낸사람:", newMessage.sender);
-                console.log("받은 메세지:", newMessage.message)
+                console.log("받은 메세지:", newMessage.message);
+                // console.log(JSON.parse(issue));
             },
             {
                 token: token
@@ -54,6 +60,7 @@ const MeetingRoomChat = ()=>{
     } catch (error) {
         console.log(error.response);
     }}
+    
 
     const HandleUnsubscribe = useCallback(()=>{
         try{
@@ -142,8 +149,6 @@ const MeetingRoomChat = ()=>{
         }
     });
 
-    
-
     const chattingRoomHandler = () => {
         const data = {
             meetingId:1
@@ -172,7 +177,7 @@ const MeetingRoomChat = ()=>{
                 roomId: "1",
                 nickname: "string",
                 sender: "string",
-                message: `this is a message from the client : ${inputRef.current.value}`,
+                message: `${inputRef.current.value}`,
                 createdAt: "10시"
             }
             const token = getCookie("token")
@@ -209,6 +214,28 @@ const MeetingRoomChat = ()=>{
             console.log(error);
         }
     }
+    const IssueSendHandle = async (event)=>{
+        event.preventDefault();
+        try {
+            const data = {
+                type: "ISSUE",
+                roomId: "1",
+                nickname: "string",
+                sender: "string",
+                message: JSON.stringify({"안건1":"안건입니다", "안건2":"안건이 아닙니다"}),
+                createdAt: "10시"
+            }
+            const token = getCookie("token")
+            waitForConnection(ws, function(){
+                ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
+                // ws.send("/queue/test", {}, "this is a message from the client")
+                console.log("clicked anyway");
+                console.log(JSON.stringify(data))  
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const callbackFn = (message)=>{
         if (message.body) {
@@ -220,7 +247,6 @@ const MeetingRoomChat = ()=>{
     }
     
     // const subscription = ws.subscribe("/sub/api/chat/rooms/3", callbackFn)
-
 
     return (
         <>  
@@ -237,10 +263,19 @@ const MeetingRoomChat = ()=>{
                 <input type="text" ref={EnterRef} id="Enter"/>
                 <input type="submit" value="Send Enter" onClick={EndterSendHandle} />
             </form>
-
+            <form>
+                <input type="text" ref={EnterRef} id="Enter"/>
+                <input type="submit" value="Send Enter" onClick={IssueSendHandle} />
+            </form>
             <button onClick={HandleUnsubscribe}>연결 끊기</button>
             <button onClick={()=>navigate('/')}>나가기</button>
             </StChattingItem>
+            {
+                <>
+                <p style={{color:`${msg}`}}>{msg}</p>
+                {console.log(`${msg}`)}
+                </>
+            }
         </StChattingContainer>
 
         </>
@@ -266,5 +301,4 @@ const StChattingDisplay = styled.div`
     flex-direction: column;
 
 `
-
 export default MeetingRoomChat;
