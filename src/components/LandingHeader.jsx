@@ -8,18 +8,17 @@ const LandingHeader = () => {
     const updateScroll = () => {
         setScrollPosition(window.scrollY || document.documentElement.scrollTop);
     }
-    useEffect(()=>{
+    useEffect(() => {
         window.addEventListener('scroll', updateScroll);
     });
-    
+
     return (
-        <StHeader style={{position: "sticky", top:"0"}}>
+        <StHeader style={{ position: "sticky", top: "0" }}>
             <StLogo>
-                Unanimous
             </StLogo>
-            {scrollPosition < 700 
-            ? <><StStartButton visibility="hidden">접속하기</StStartButton></> 
-            : <><StStartButton visibility="visible" onClick={()=>navigate('/login')}>접속하기</StStartButton></>}
+            {scrollPosition < 700
+                ? <><StStartButton visibility="hidden">접속하기</StStartButton></>
+                : <><StStartButton visibility="visible" onClick={() => navigate('/login')}>접속하기</StStartButton></>}
         </StHeader>
     )
 }

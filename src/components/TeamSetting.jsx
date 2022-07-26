@@ -1,29 +1,55 @@
 import React, { useRef, useState } from 'react'
 import { useMutation } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import xicon from '../img/delete.png'
 import apis from '../api/main';
 import useGetTeamMain from '../Hooks/useGetTeamMain'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
+import ImageModal from './MypageModal/ImageModal';
+import LeaderModal from './LeaderModal';
+import BanModal from './BanModal';
+import InviteMember from './InviteMember';
+import TeamManage from '../img/Preferences-20220725T100832Z-001/Preferences/leader/btn1.svg'
+import EditTeam from '../img/Preferences-20220725T100832Z-001/Preferences/leader/btn2.svg'
+import Introduction from '../img/Preferences-20220725T100832Z-001/Preferences/leader/introduction.svg'
+import TIntroduction from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/0.team_introduction.svg'
+import copyIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/1.btn_copy.svg'
+import selectIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/3.btn_selection.svg'
+import inviteIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/2.invitation/btn_invitation.svg'
+import closeIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/modal/icon_close.svg'
+
+
+
+
 
 const TeamSetting = (props) => {
 
-    const [state,setState] =useState(0);
+    const [state, setState] = useState(0);
+    
+    const [openLeader,setOpenLeader] = useState(false);
+    const [openBan,setOpenBan] = useState(false);
+    const [openInvite,setOpenInvite] = useState(false);
+    const [userid,setUserid] = useState();
+
+
     const teamId = useParams().teamid;
 
-    console.log(props.teamLeader)
+    const navigate = useNavigate();
+
+    // console.log(props.teamLeader)
 
     const teamLeader = props.teamLeader;
 
     const decoded = jwt_decode(getCookie('token'));
     const nickname = decoded.USER_NICKNAME;
-
+    const userId = decoded.userId;
     // 팀 정보 받아오기
-    const { data } = useGetTeamMain({teamId});
-
+    const { data } = useGetTeamMain({ teamId });
+    const teamid = { data }.data.teamid
     const teamname = useRef("");
+
 
     // 복사하기 버튼
     const handleCopyClipBoard = async (text) => {
@@ -31,199 +57,342 @@ const TeamSetting = (props) => {
     };
 
     // 팀에서 나가기
-    const leave = async(data)=>{
+    const leave = async (data) => {
         const datas = await apis.deleteTeamLeave(data);
         return datas;
-      }
-    
-      const {mutate:leaves} = useMutation(leave,{
-        onSuccess:()=>{
+    }
+
+    const { mutate: leaves } = useMutation(leave, {
+        onSuccess: () => {
             alert("나가기완료");
+            navigate(`/teamselect`)
         },
-        onError:(error)=>{
+        onError: (error) => {
             alert("나가기 불가");
         }
-      });
+    });
 
-      const leaving = ()=>{
+    const leaving = () => {
         leaves({
-            teamId : teamId
+            teamId: teamId,
+            userId: userId
         })
-      }
+    }
+
+    // 팀원 추방
+    const ban = async (data) => {
+        const datas = await apis.deleteTeamMember(data);
+        return datas
+    }
+
+    const { mutate: bann } = useMutation(ban, {
+        onSuccess: () => {
+            alert("내보내기 완료");
+        },
+        onError: () => {
+            alert("내보내기 실패");
+        }
+    })
+
+    const banning = (userId) => {
+        bann({
+            teamId: teamId,
+            userId: userId
+        })
+    }
 
 
-      // 팀 프로필 수정
-      const editProfile = async(data)=>{
-        const datas = await apis.patchTeamPofile(data);
+    const [imgmodalopen, setImgmodalopen] = useState(false);
+
+    //모달 열
+    const ImgModalOpen = () => {
+        setImgmodalopen(true);
+    }
+    //모달 닫
+    const ImgModalCancel = () => {
+        setImgmodalopen(false);
+    }
+    // 실행 후 닫기
+    const exfunction = () => {
+        editingimg()
+        ImgModalCancel()
+    }
+
+
+    // 이미지 올리기
+    const [imgfiles, setImgfiles] = useState();
+
+    const onLoadFile = (e) => {
+        const file = e.target.files[0]
+        console.log(file);
+        setImgfiles(file)
+    }
+
+    const formData = new FormData();
+    formData.append('profileTeamImage', imgfiles)
+    // for (let key of formData.keys()) {
+    //     console.log(key);
+    // }
+    // for (let value of formData.values()) {
+    //     console.log(value);
+    // }
+
+
+    // 팀 프로필이미지 수정
+    const editImage = async (data) => {
+        console.log(data)
+        console.log(data.teamImage)
+        const datas = await apis.patchTeamImage(data);
+        console.log(datas)
         return datas;
-      }
+    }
 
-      const { mutate:edit } = useMutation(editProfile,{
-        onSuccess:()=>{
+    const { mutate: editimg } = useMutation(editImage, {
+        onSuccess: () => {
             alert("수정 완료");
         },
-        onError:()=>{
+        onError: () => {
             alert("수정 실패");
         }
-      });
+    });
+
+    const editingimg = () => {
+        editimg({
+            teamImage: formData,
+            teamId: teamid,
+        })
+    }
 
 
-  return (
-    <>
-    {teamLeader!==nickname?
-        <StRight>
-        <StTeamOutBox>
-            <StTeamBox>
-                    <StUpBox2>
-                        <StManage>환경설정</StManage>
-                        <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
-                    </StUpBox2>
-                    <StLine/>
-                    <StDown>
-                        <StComeOn>
-                            <StBlack>
-                                팀 초대코드
-                            </StBlack>
-                            <StInputBox>
-                                <StInput>{data.uuid}</StInput>
-                                <StBt onClick={()=>handleCopyClipBoard(`${data.uuid}`)}>복사하기</StBt>
-                            </StInputBox>
-                        </StComeOn>
-                        <StListBox>
-                            <StBlack>
-                                팀원 관리
-                            </StBlack>
-                            <StBt2>사용자 초대</StBt2>
-                            <StMateList>
-                                {props?.prop.map((value,index)=>{
-                                    return <StUserBox key={index}>
-                                        <StUserImg/>
-                                        <StUserInfo>
-                                            <StUserName>{value.nickname}</StUserName>
-                                            <StEmail>{value.username}</StEmail>
-                                        </StUserInfo>
-                                        <StXicon src={xicon}/>
-                                    </StUserBox>
-                                })}
-                            </StMateList>
-                        </StListBox>
-                        <StMovePower>
-                            <StBlack>
-                                팀장 권한 위임
-                            </StBlack>
-                            <StBt3>사용자 선택</StBt3>
-                        </StMovePower>
-                    </StDown>
-                    <StLine/>
-                    <StOut onClick={leaving}>팀 탈퇴하기</StOut>
-             </StTeamBox>
-        </StTeamOutBox></StRight>:<></>}
-        {state==0&&teamLeader==nickname?
-            <StRight>
-                <StBox>
-                    <StUpBox1>
-                        <StSetting>환경설정</StSetting>
-                        <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
-                    </StUpBox1>    
-                    <StDownBox>
-                        <StDLeft onClick={()=>{setState(1)}}>
-                            <StA>팀원 관리</StA>
-                        </StDLeft>
-                        <StDLeft onClick={()=>{setState(2)}}>
-                            <StA>기본 정보 수정</StA>
-                        </StDLeft>
-                    </StDownBox>
-                </StBox>
-            </StRight>:<></>
+
+    // 팀 프로필닉네임 수정
+    const editNick = async (data) => {
+        const datas = await apis.patchTeamNick(data);
+        return datas;
+    }
+
+    const { mutate: editnick } = useMutation(editNick, {
+        onSuccess: () => {
+            alert("수정 완료");
+        },
+        onError: () => {
+            alert("수정 실패");
         }
-        {state==1&&teamLeader==nickname?
-        <StRight>
-        <StTeamOutBox>
-            <StTeamBox>
-                    <StUpBox2>
-                        <StManage>팀원 관리</StManage>
-                        <StSmall>팀원 목록을 관리 및 수정할 수 있습니다.</StSmall>
-                    </StUpBox2>
-                    <StLine/>
-                    <StDown>
-                        <StComeOn>
+    });
+
+    const editingnick = () => {
+        editnick({
+            teamname: teamname.current.value,
+            teamId: teamid,
+        })
+    }
+
+    const closeLeader = () => {
+        setOpenLeader(false);
+    }
+
+    const closeBan = () =>{
+        setOpenBan(false);
+    }
+
+    const closeInvite =() =>{
+        setOpenInvite(false);
+    }
+
+    return (
+        <>
+            <ImageModal
+            open={imgmodalopen}
+            select={onLoadFile}
+            save={exfunction}
+            close={ImgModalCancel}
+            />    
+            <LeaderModal 
+            open={openLeader} 
+            close={closeLeader}
+            teamId={teamId}/>
+            <BanModal
+            open={openBan}
+            close={closeBan}
+            teamId={teamId}
+            userId={userid}
+            />
+            <InviteMember
+            open={openInvite}
+            close={closeInvite}
+            />
+            {teamLeader !== nickname ?
+                <StRight>
+                    <StTeamOutBox>
+                        <StTeamBox>
+                            <StIntro src={Introduction}/>
+                            
+                            <StDown>
+                                <StComeOn>
+                                    <StBlack>
+                                        팀 초대코드
+                                    </StBlack>
+                                    <StInputBox>
+                                        <StInput>{data.uuid}</StInput>
+                                        <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon}/>
+                                    </StInputBox>
+                                </StComeOn>
+                                <StListBox>
+                                    <StBlack>
+                                        팀원 관리
+                                    </StBlack>
+
+                                    <img onClick={()=>{setOpenInvite(true);}} src={inviteIcon}/>
+                                    <StMateList>
+                                        {props?.prop.map((value, index) => {
+                                            return <StUserBox key={index}>
+                                                <StUserImg />
+                                                <StUserInfo>
+                                                    <StUserName>{value.nickname}</StUserName>
+                                                    <StEmail>{value.username}</StEmail>
+                                                </StUserInfo>
+
+                                            </StUserBox>
+                                        })}
+                                    </StMateList>
+                                </StListBox>
+                            </StDown>
+                            <StLine />
+                            <StOut onClick={leaving}>팀 탈퇴하기</StOut>
+                        </StTeamBox>
+                    </StTeamOutBox></StRight> : <></>}
+            {state == 0 && teamLeader == nickname ?
+                <StRight>
+                    <StBox>
+                        <img src={Introduction}/>
+                        <StDownBox>
+                            <StTeamManage src={TeamManage} onClick={() => { setState(1) }}/>
+                            <StTeamManage src={EditTeam} onClick={() => { setState(2) }}/>
+                        </StDownBox>
+                    </StBox>
+                </StRight> : <></>
+            }
+            {state == 1 && teamLeader == nickname ?
+                <StRight>
+                    <StTeamOutBox>
+                        <StTeamBox>
+                            <StTIntro src={TIntroduction}/>
+                            <StInBox>
+                                <StDown>
+                                    <StComeOn>
+                                        <StBlack>
+                                            팀 초대코드
+                                        </StBlack>
+                                        <StInputBox>
+                                            <StInput>{data.uuid}</StInput>
+                                            <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon}/>
+                                        </StInputBox>
+                                    </StComeOn>
+                                    <StListBox>
+                                        <StBlack >
+                                            팀원 관리
+                                        </StBlack>
+                                        <StUserBt onClick={()=>{setOpenInvite(true);}} src={inviteIcon}/>
+                                        <StMateList>
+                                            {props?.prop.map((value, index) => {
+                                                return <StUserBox key={index}>
+                                                    <StUserImg />
+                                                    <StUserInfo>
+                                                        <StUserName>{value.nickname}</StUserName>
+                                                        <StEmail>{value.username}</StEmail>
+                                                    </StUserInfo>
+                                                    <StXBox onClick={()=>{setOpenBan(true);setUserid(value.userId);console.log(userid)}}>
+                                                        <StXicon src={closeIcon}/>
+                                                    </StXBox>
+                                                </StUserBox>
+                                            })}
+                                        </StMateList>
+                                    </StListBox>
+                                    <StMovePower>
+                                        <StBlack>
+                                            팀장 권한 위임
+                                        </StBlack>
+                                        <StUserBt onClick={() => { setOpenLeader(true) }} src={selectIcon}/>
+                                    </StMovePower>
+                                </StDown>
+                                <StLine />
+                                <StOut onClick={leaving}>팀 탈퇴하기</StOut>
+                                <StBtBox>
+                                    <StCancelBt onClick={() => { setState(0) }}>취소</StCancelBt>
+                                </StBtBox>
+                            </StInBox>
+                        </StTeamBox>
+                    </StTeamOutBox></StRight> : <></>
+            }
+            {state == 2 && teamLeader == nickname ?
+                <StRight>
+                    <StEdit>
+                        <StUpBox1>
+                            <StSetting>기본 정보 수정</StSetting>
+                            <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
+                        </StUpBox1>
+                        <StLine />
+                        <StProfile>
                             <StBlack>
-                                팀 초대코드
+                                팀 프로필 이미지
                             </StBlack>
-                            <StInputBox>
-                                <StInput>{data.uuid}</StInput>
-                                <StBt onClick={()=>handleCopyClipBoard(`${data.uuid}`)}>복사하기</StBt>
-                            </StInputBox>
-                        </StComeOn>
-                        <StListBox>
+                            <StImg src={{ data }.data.teamImage} />
+                            <StImgInput htmlFor='file' onClick={ImgModalOpen}>이미지 추가하기</StImgInput>
+                        </StProfile>
+                        <StNameBox>
                             <StBlack>
-                                팀원 관리
+                                팀명
                             </StBlack>
-                            <StBt2>사용자 초대</StBt2>
-                            <StMateList>
-                                {props?.prop.map((value,index)=>{
-                                    return <StUserBox key={index}>
-                                        <StUserImg/>
-                                        <StUserInfo>
-                                            <StUserName>{value.nickname}</StUserName>
-                                            <StEmail>{value.username}</StEmail>
-                                        </StUserInfo>
-                                        <StXicon src={xicon}/>
-                                    </StUserBox>
-                                })}
-                            </StMateList>
-                        </StListBox>
-                        <StMovePower>
-                            <StBlack>
-                                팀장 권한 위임
-                            </StBlack>
-                            <StBt3>사용자 선택</StBt3>
-                        </StMovePower>
-                    </StDown>
-                    <StLine/>
-                    <StOut onClick={leaving}>팀 탈퇴하기</StOut>
-                    <StBtBox>
-                        <StCancelBt onClick={()=>{setState(0)}}>취소</StCancelBt>
-                        <StConfirmBt>변경</StConfirmBt>
-                    </StBtBox>
-             </StTeamBox>
-        </StTeamOutBox></StRight>:<></>
-        }
-        {state==2&&teamLeader==nickname?
-        <StRight>
-        <StEdit>
-            <StUpBox1>
-                <StSetting>기본 정보 수정</StSetting>
-                <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
-            </StUpBox1>
-            <StLine/>
-            <StProfile>
-                <StBlack>
-                    팀 프로필 이미지
-                </StBlack>
-                <StImg/>
-                <StImgInput htmlFor='file'>이미지 추가하기</StImgInput>
-            </StProfile>  
-                <input type="file" id="file" style={{display:"none"}}/>  
-            <StNameBox>
-                <StBlack>
-                    팀명
-                </StBlack>
-                <StNameDown>
-                    <StNameInput ref={teamname}/>
-                    <StNameBt>변경</StNameBt>
-                </StNameDown>
-            </StNameBox>
-            <StBtBox>
-                <StCancelBt onClick={()=>{setState(0)}}>취소</StCancelBt>
-                <StConfirmBt>변경</StConfirmBt>
-            </StBtBox>
-        </StEdit>
-        </StRight>:<></>
-        }
-    </>
-  )
+                            <StNameDown>
+                                <StNameInput ref={teamname} />
+                                <StNameBt onClick={editingnick}>변경</StNameBt>
+                            </StNameDown>
+                        </StNameBox>
+                        <StBtBox>
+                            <StCancelBt onClick={() => { setState(0) }}>취소</StCancelBt>
+                        </StBtBox>
+                    </StEdit>
+                </StRight> : <></>
+            }
+        </>
+    )
 }
+
+const StIntro = styled.img`
+    margin : 48px 0 0 0;
+`;
+
+const StUserBt = styled.img`
+    width : 160px;
+    height : 48px;
+    margin : 12px 0 0 0;
+    cursor: pointer;
+`;
+
+const StCopyBt = styled.img`
+    width : 160px;
+    height : 48px;
+
+    cursor: pointer;
+`;
+
+
+const StInBox = styled.div`
+    width : 1088px;
+    background-color: white;
+    padding: 48px;
+    border-radius: 20px;
+`;
+
+const StTIntro = styled.img`
+    width : 1184px;
+    margin : 48px 0 0 0;
+`;
+
+const StTeamManage = styled.img`
+    width : 584px;
+    height : 517px;
+`;
 
 const StEdit = styled.div`
     width : 100%;
@@ -266,7 +435,7 @@ const StNameBox = styled.div`
 `;
 
 
-const StImgInput = styled.label`
+const StImgInput = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -284,6 +453,7 @@ const StImg = styled.img`
     border-radius: 125px;
     background-color: #E5E7EB;
     margin : 12px 0 12px 0;
+    object-fit: cover;
 `;
 
 const StProfile = styled.div`
@@ -294,23 +464,17 @@ const StProfile = styled.div`
     margin : 0 0 36px 0;
 `;
 
-const StXicon = styled.img`
+const StXBox = styled.div`
     width : 18px;
     height : 18px;
     margin : 0 10px 0 auto;
     cursor: pointer;
 `;
 
-const StConfirmBt = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width : 200px;
-    height : 54px;
-    background-color: black;
-    color : white;
-    border-radius: 6px;
-    border : 1px solid black;
+const StXicon = styled.img`
+    width : 18px;
+    height : 18px;
+    cursor: pointer;
 `;
 
 const StCancelBt = styled.div`
@@ -327,22 +491,10 @@ const StCancelBt = styled.div`
 
 const StBtBox = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width : 418px;
     height : 54px;
     margin : 0 auto 0 auto;
-`;
-
-const StBt3 = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 142px;
-    height: 49px;
-    margin : 12px 0 0 0;
-    border-radius: 6px;
-    background-color: black;
-    color : white;
 `;
 
 const StMovePower = styled.div`
@@ -390,9 +542,9 @@ const StUserBox = styled.div`
     align-items: center;
     width : 400px;
     height: 39px;
-    padding : 5px 5px 5px 5px;
-    border: 1px solid grey;
+    padding : 14px 5px 14px 16px;
     border-radius: 6px;
+    background-color: #F1F1F1;
     margin : 5px 0 5px 0;
 `;
 
@@ -428,18 +580,6 @@ const StOut = styled.div`
     cursor: pointer;
 `;
 
-const StBt2 = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 142px;
-    height: 49px;
-    margin : 12px 0 24px 0;
-    border-radius: 6px;
-    background-color: black;
-    color : white;
-`;
-
 const StListBox = styled.div`
     display: flex;
     flex-direction: column;
@@ -448,22 +588,10 @@ const StListBox = styled.div`
     margin : 36px 0 0 0;
 `;
 
-const StBt = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 142px;
-    height: 49px;
-    border-radius: 6px;
-    background-color: black;
-    color : white;
-    cursor: pointer;
-`;
-
 const StInput = styled.div`
     display: flex;
     padding: 15px;
-    width : 670px;
+    width : 710px;
     height : 17px;
     border-radius: 6px;
     border: 1px solid black;
@@ -472,7 +600,7 @@ const StInput = styled.div`
 const StInputBox = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 850px;
+    
     height: 49px;
 `;
 
@@ -509,50 +637,37 @@ const StTeamOutBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width : 890px;
+    width : 1184px;
     height : 914px;
     overflow-x: hidden;
     ::-webkit-scrollbar{
     width:10px;
     }
     ::-webkit-scrollbar-thumb{
-        background-color: #2f3542;
+        background-color: #818181;
         border-radius: 100px;
     }
     ::-webkit-scrollbar-track{
-        
         border-radius: 1rem;
     }
-
 `;
 
 const StTeamBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width : 890px;
+    width : 1184px;
     height : 814px;
 `;
 
-const StA = styled.div`
-    width : 357px;
-    height : 63px;
-    cursor: pointer;
-`;
 
-const StDLeft = styled.div`
-    width: 357px;
-    height: 304px;
-    padding: 30px;
-    background: #D9D9D9;
-    border-radius: 8px;
-`;
 
 const StDownBox = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 850px;
-    height: 364px;
+    width: 1184px;
+    height: 517px;
+    margin : 32px 0 0 0;
     cursor: pointer;
 `;
 
@@ -612,19 +727,20 @@ const StBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width : 850px;
+    width : 1184px;
     height : 510px;
+    margin : 48px 0 0 0;
 `;
 
 const StRight = styled.div`
-  width : 930px;
+  width : 1184px;
   height : 86.5vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 1rem 1rem 1rem 1rem;
-  margin : 1rem 0 0 0;
+  padding: 0 181px 36px 38px;
+  border-top-left-radius: 20px;
+  background-color: #F2F6F9;
 `;
 
 export default TeamSetting

@@ -10,31 +10,33 @@ import teamSelectImg from "../img/teamSelect.png"
 
 
 const TeamMake = () => {
-    const navigate = useNavigate();
-    const teamNameRef = useRef(null);
 
-    const makeTeam = async (teamInfo)=> {
-        return apis.postTeam(teamInfo);
-    }
+  const navigate = useNavigate();
+  // const teamImageRef = useRef(null);
+  const teamNameRef = useRef(null);
 
-    const { mutate } = useMutation(makeTeam, {
-        onSuccess: (data) => {
-            console.log(data.data);
-            navigate('/teammakesuccess')
-        },
-        onError: (error)=>{
-            console.log(error)
-        }
-    });
-    
-    const teamMakeHandler = ()=>{
-        const data = {
-            teamImage : "randomImageURL",
-            teamname : teamNameRef.current.value
-        }
-        console.log(data);
-        mutate(data)
+  const makeTeam = async (teamInfo) => {
+    return apis.postTeam(teamInfo);
+  }
+
+  const { mutate } = useMutation(makeTeam, {
+    onSuccess: (data) => {
+      console.log(data.data);
+      navigate('/teammakesuccess')
+    },
+    onError: (error) => {
+      console.log(error)
     }
+  });
+
+  const teamMakeHandler = () => {
+    const data = {
+      teamImage: "randomImageURL",
+      teamname: teamNameRef.current.value
+    }
+    console.log(data);
+    mutate(data)
+  }
 
     return (
         <>
@@ -93,7 +95,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 46px;
+    font-size: 43px;
     line-height: 58px;
     /* identical to box height */
     text-align: center;

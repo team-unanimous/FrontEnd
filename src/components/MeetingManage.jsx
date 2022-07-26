@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useGetPassed } from '../Hooks/useGetPassed';
 import { useGetOnAir } from '../Hooks/useGetOnAir'
 import { useGetReserve } from '../Hooks/useGetReserve'
+import { useMutation } from 'react-query';
 import DetailModalReserve from './DetailModalReserve';
 import DetailModalOnAir from './DetailModalOnAir';
 import DetailModalPassed from './DetailModalPassed';
 import doorIcon from '../img/outdoor.png'
-
+import apis from '../api/main';
 
 const MeetingManage = () => {
 
@@ -28,6 +29,8 @@ const MeetingManage = () => {
   const {data:onAir} = useGetOnAir({teamId});
   const {data:reserve} = useGetReserve({teamId});
 
+  const navigate = useNavigate();
+
   const closeModal1 = () => {
     setOpenOnAir(false);
   }
@@ -38,8 +41,27 @@ const MeetingManage = () => {
     setOpenReserve(false);
   }
 
+  //미팅 삭제 부분
+  const deleteMeet = async(data)=>{
+    const datas = await apis.deleteMeet(data);
+    return datas;
+  }
 
-  
+  const {mutate} = useMutation(deleteMeet,{
+      onSuccess:()=>{
+          alert("미팅삭제완료");
+      },
+      onError:()=>{
+          alert("미팅삭제실패");
+      }
+  })
+
+  const delet = (meetingId) => {
+      mutate({
+          meetingId : meetingId
+      })
+  }
+
   return (
     <>
       <DetailModalOnAir
@@ -61,6 +83,7 @@ const MeetingManage = () => {
         meetingId={meetingId} 
         close={closeModal2}/>
       <DetailModalReserve 
+        teamId = {teamId}
         meetingTitle={meetingTitle}
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
@@ -84,7 +107,7 @@ const MeetingManage = () => {
           </StListTop>
           {state==0?
           <>{onAir?.map((value,index)=>
-            <>
+            <div key={index}>
               <StInfoBox>
                 <StList onClick={
                   ()=>{
@@ -108,11 +131,11 @@ const MeetingManage = () => {
                 </StButton>
               </StInfoBox>
               <StLine2/>
-            </>)}
+            </div>)}
           </>:<></>}
           {state==1?
           <>{passed?.map((value,index)=>
-            <><StInfoBox>
+            <div key={index}><StInfoBox>
             <StList onClick={
               ()=>{
                 setMeetingId(value.meetingId); 
@@ -130,11 +153,11 @@ const MeetingManage = () => {
               <StHost>{value.meetingCreator}</StHost>
               <StTitle>{value.meetingTitle}</StTitle>
             </StList>
-            </StInfoBox><StLine2/></>)}
+            </StInfoBox><StLine2/></div>)}
           </>:<></>}
           {state==2?
           <>{reserve?.map((value,index)=>
-            <><StInfoBox>
+            <div key={index}><StInfoBox key={index}>
               <StList onClick={
                 ()=>{
                   setMeetingId(value.meetingId); 
@@ -156,10 +179,10 @@ const MeetingManage = () => {
                 <StButton>
                   <StIcon src={doorIcon}/>참여
                 </StButton>
-                <StSmallButton>수정</StSmallButton>
-                <StSmallButton>삭제</StSmallButton>
+                <StSmallButton onClick={()=>{navigate(`/teamboard/${teamId}/${value.meetingId}/meetingeditone`)}}>수정</StSmallButton>
+                <StSmallButton onClick={()=>{delet(value.meetingId)}}>삭제</StSmallButton>
               </StButtonBox>
-            </StInfoBox><StLine2/></>)}
+            </StInfoBox><StLine2/></div>)}
           </>:<></>}
             
         </StfListBox>
@@ -408,13 +431,12 @@ const StLine = styled.div`
 `;
 
 const StRight = styled.div`
-  width : 930px;
+  width : 1184px;
   height : 86.5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 1rem 1rem 1rem;
-  margin : 1rem 0 0 0;
+  padding: 0 181px 36px 38px;
   overflow-x: hidden;
   ::-webkit-scrollbar{
     width:10px;

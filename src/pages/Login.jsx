@@ -12,21 +12,20 @@ const Login = () => {
   const navigate = useNavigate();
 
 
-  // ref안에 null넣는이유 
   const email = useRef(null);
   const password = useRef(null);
 
   const login = async (data) => {
+    console.log(data)
     const datas = await apis.postLogin(data);
     const accessToken = datas.headers.authorization;
     setCookie("token", accessToken);
-    console.log(datas)
     return datas;
   }
 
   const { mutate } = useMutation(login, {
     onSuccess: () => {
-      navigate('/');
+      navigate('/teamselect');
       alert("로그인 완료")
     },
     onError: (error) => {

@@ -4,36 +4,48 @@ import { useMutation, useQueryClient } from 'react-query'
 import apis from '../api/main'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux"
+import axis from '../api/sub';
 
 const SignUpFour = () => {
 
   const navigate = useNavigate();
 
-
   const usersData = useSelector((state) => state.postReducer.users.userids)
   console.log(usersData)
 
+
   // 닉네임 
   const [nickname, setNickname] = useState("");
+  // 경고메시지 
+  const [warning, setWarning] = useState(false);
+  // 닉네임중복확인 판별
+  const [nickcheck, setNickcheck] = useState(false);
 
-  // const NickCheck = async (data) => {
-  //   const datas = await apis.postNickCheck(data);
-  //   console.log(data)
-  //   return datas;
-  // }
-
-  // 닉네임 중복 확인
-  const NickCheck = (data) => {
-    console.log(data)
-    return apis.postNickCheck(data);
+  // 닉네임비활성화 버튼 false일때 활성화
+  const DisableFunction = () => {
+    if (Boolean(nickname) === false)
+      return true;
+    else if (nickcheck === false)
+      return true;
+    else
+      return false;
   }
 
-  const { mutate: NickCk } = useMutation(NickCheck, {
-    onSuccess: () => {
+  // 닉네임 중복 확인
+  const NicknameCheck = (data) => {
+    return axis.postNickCheck(data)
+  }
+
+  const { mutate: NickCk } = useMutation(NicknameCheck, {
+    onSuccess: (response) => {
+      console.log(response.data);
+      setNickcheck(true)
+      setWarning(false)
       alert("사용 가능한 닉네임입니다")
     },
     onError: (error) => {
-      alert("사용 불가능한 닉네임입니다")
+      setWarning(error.response.data.message)
+      alert(error.response.data.message)
     }
   })
 
@@ -47,12 +59,12 @@ const SignUpFour = () => {
   // 닉네임 저장
   const NickSave = (data) => {
     console.log(data)
-    return apis.patchNickSave(data);
+    return axis.patchNickSave(data);
   }
 
   const { mutate: NickSv } = useMutation(NickSave, {
     onSuccess: () => {
-      navigate('/')
+      navigate('/login')
       alert("닉네임 생성에 성공하셨습니다")
     },
     onError: (error) => {
@@ -64,7 +76,7 @@ const SignUpFour = () => {
   const nickSaveFunction = () => {
     NickSv({
       nickname: nickname,
-      userid: usersData
+      userid: usersData,
     })
   }
 
@@ -87,15 +99,14 @@ const SignUpFour = () => {
               중복 확인
             </StEmailButton>
           </StEmailInputBox>
-          <StEmailWarnning>
-            이미 있는 닉네임 입니다. 새로운 닉네임으로 다시 입력해주세요.
-          </StEmailWarnning>
+          {<StEmailWarnning>{warning}</StEmailWarnning>}
         </StEmailBox>
         <StBtBox>
           <StNotAgree onClick={Caencelbtn}>
             취소
           </StNotAgree>
-          <StAgree onClick={nickSaveFunction}>
+          <StAgree onClick={nickSaveFunction}
+            disabled={DisableFunction()}>
             완료
           </StAgree>
         </StBtBox>
@@ -126,6 +137,9 @@ const StAgree = styled.button`
   color : white;
   border-radius: 0.375rem;
   border: 1px solid #000000;
+  &:disabled{
+    background-color: gray;
+  }
 `;
 
 const StBtBox = styled.div`

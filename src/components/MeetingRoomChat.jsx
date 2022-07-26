@@ -30,6 +30,8 @@ const MeetingRoomChat = ()=>{
     const socket = new sockJS(target);
     const ws = Stomp.over(socket);
     
+
+const MeetingRoomChatxx = () => {
     const inputRef = useRef(null);
     const EnterRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
@@ -113,12 +115,11 @@ const MeetingRoomChat = ()=>{
 //     } catch (error) {
 //         console.log(error.response);
 //     }}
-    
 
     const makeMeetingroom = (meetingInfo) => {
         return apis.postReserveMeet(meetingInfo)
     }
-    const { mutate : meetingMutate } = useMutation(makeMeetingroom, {
+    const { mutate: meetingMutate } = useMutation(makeMeetingroom, {
         onSuccess: (resp) => {
             console.log(resp)
             // setRoomId(resp.data.roomId)
@@ -126,24 +127,24 @@ const MeetingRoomChat = ()=>{
     });
 
     const meetingRoomHandler = () => {
-        const data = { 
-            meetingTitle : "string",
-            meetingDate : "string",
+        const data = {
+            meetingTitle: "string",
+            meetingDate: "string",
             meetingTime: "00:00",
             meetingSum: "string",
             meetingTheme: "string",
             meetingDuration: "0시간",
-            teamId:1            
+            teamId: 1
         };
         console.log(data);
         meetingMutate(data);
     }
-    
-    const makeChattingroom = (chattingInfo) =>{
+
+    const makeChattingroom = (chattingInfo) => {
         return apis.postMeetingroom(chattingInfo)
     }
 
-    const { mutate : chattingMutate } = useMutation(makeChattingroom, {
+    const { mutate: chattingMutate } = useMutation(makeChattingroom, {
         onSuccess: (resp) => {
             console.log(resp)
         }
@@ -151,13 +152,13 @@ const MeetingRoomChat = ()=>{
 
     const chattingRoomHandler = () => {
         const data = {
-            meetingId:1
+            meetingId: 1
         }
         console.log(data);
         chattingMutate(data);
-        }
+    }
 
-    function waitForConnection(ws, callback){
+    function waitForConnection(ws, callback) {
         setTimeout(
             function () {
                 if (ws.ws.readyState === 1) {
@@ -165,11 +166,11 @@ const MeetingRoomChat = ()=>{
                 } else {
                     waitForConnection(ws, callback);
                 }
-            },1
+            }, 1
         )
     }
- 
-    const HandleSend = async (event)=>{
+
+    const HandleSend = async (event) => {
         event.preventDefault();
         try {
             const data = {
@@ -226,18 +227,18 @@ const MeetingRoomChat = ()=>{
                 createdAt: "10시"
             }
             const token = getCookie("token")
-            waitForConnection(ws, function(){
-                ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
+            waitForConnection(ws, function () {
+                ws.send('/pub/api/chat/message', { token: token }, JSON.stringify(data));
                 // ws.send("/queue/test", {}, "this is a message from the client")
                 console.log("clicked anyway");
-                console.log(JSON.stringify(data))  
+                console.log(JSON.stringify(data))
             })
         } catch (error) {
             console.log(error);
         }
     }
 
-    const callbackFn = (message)=>{
+    const callbackFn = (message) => {
         if (message.body) {
             console.log(message)
             alert(`got message with body: ${message.body}`)
@@ -245,7 +246,7 @@ const MeetingRoomChat = ()=>{
             console.log("got nothing")
         }
     }
-    
+
     // const subscription = ws.subscribe("/sub/api/chat/rooms/3", callbackFn)
 
     return (
@@ -277,9 +278,9 @@ const MeetingRoomChat = ()=>{
                 </>
             }
         </StChattingContainer>
-
         </>
     )
+}
 }
 
 
@@ -301,4 +302,5 @@ const StChattingDisplay = styled.div`
     flex-direction: column;
 
 `
+
 export default MeetingRoomChat;

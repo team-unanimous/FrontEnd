@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { target } from "../api/websocket";
 import LandingHeader from "../components/LandingHeader";
 import img_placeholder from "../img/img_placeholder.png"
 
 const Landing = () => {
     const navigate = useNavigate();
-    
+    console.log(target)
     return (
         <>
-        <LandingHeader></LandingHeader>
+            <LandingHeader></LandingHeader>
             {/* <StHeader style={{position: "sticky", top:"0"}}>
                 <StLogo>
                     Unanimous
@@ -20,13 +21,13 @@ const Landing = () => {
                 <StTitleContainer>
                     <StTitleText>
                         Unanimous.
-                        Lorem <br/>
+                        Lorem <br />
                         Lorem ipsum
                     </StTitleText>
                     <StBodyText>
-                    Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse  
+                        Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse
                     </StBodyText>
-                    <StBodyButton onClick={()=>navigate('/login')}>
+                    <StBodyButton onClick={() => navigate('/login')}>
                         접속하기
                     </StBodyButton>
                 </StTitleContainer>
@@ -35,7 +36,7 @@ const Landing = () => {
                 <StUSPWrapper>
                     <StUSPHeader>
                         <StUSPHeaderTitle>
-                            Suspendisse vitae <br/>
+                            Suspendisse vitae <br />
                             pharetra netus
                         </StUSPHeaderTitle>
                         <StUSPHeaderText>
@@ -43,68 +44,68 @@ const Landing = () => {
                         </StUSPHeaderText>
                     </StUSPHeader>
                     <StFeatureCardWrapper>
-                            <StFeatureCardBox>
-                                <StFeatureCardImgDiv>
-                                    <StFeatureCardImg>
-                                        <img src={img_placeholder}/>
-                                    </StFeatureCardImg>
-                                </StFeatureCardImgDiv>
-                                <StFeatureCardTextDiv>
-                                    <StFeatureCardTextBox>
-                                        <StFeatureCardTextTitle>
+                        <StFeatureCardBox>
+                            <StFeatureCardImgDiv>
+                                <StFeatureCardImg>
+                                    <img src={img_placeholder} />
+                                </StFeatureCardImg>
+                            </StFeatureCardImgDiv>
+                            <StFeatureCardTextDiv>
+                                <StFeatureCardTextBox>
+                                    <StFeatureCardTextTitle>
                                         Aenean egestas libero amet vulputate.
-                                        </StFeatureCardTextTitle>
-                                        <StFeatureCardTextBody>
+                                    </StFeatureCardTextTitle>
+                                    <StFeatureCardTextBody>
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi morbi sit consectetur elit.
-                                        </StFeatureCardTextBody>
-                                    </StFeatureCardTextBox>
-                                </StFeatureCardTextDiv>
-                            </StFeatureCardBox>
-                            <StFeatureCardBox>
-                            <StFeatureCardTextDiv style={{justifyContent:"flex-start"}}>
-                                    <StFeatureCardTextBox>
-                                        <StFeatureCardTextTitle>
+                                    </StFeatureCardTextBody>
+                                </StFeatureCardTextBox>
+                            </StFeatureCardTextDiv>
+                        </StFeatureCardBox>
+                        <StFeatureCardBox>
+                            <StFeatureCardTextDiv style={{ justifyContent: "flex-start" }}>
+                                <StFeatureCardTextBox>
+                                    <StFeatureCardTextTitle>
                                         Aenean egestas libero amet vulputate.
-                                        </StFeatureCardTextTitle>
-                                        <StFeatureCardTextBody>
+                                    </StFeatureCardTextTitle>
+                                    <StFeatureCardTextBody>
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi morbi sit consectetur elit.
-                                        </StFeatureCardTextBody>
-                                    </StFeatureCardTextBox>
-                                </StFeatureCardTextDiv>
-                                <StFeatureCardImgDiv>
-                                    <StFeatureCardImg>
-                                        <img src={img_placeholder}/>
-                                    </StFeatureCardImg>
-                                </StFeatureCardImgDiv>
-                            </StFeatureCardBox>
-                            <StFeatureCardBox>
-                                <StFeatureCardImgDiv>
-                                    <StFeatureCardImg>
-                                        <img src={img_placeholder}/>
-                                    </StFeatureCardImg>
-                                </StFeatureCardImgDiv>
-                                <StFeatureCardTextDiv>
-                                    <StFeatureCardTextBox>
-                                        <StFeatureCardTextTitle>
+                                    </StFeatureCardTextBody>
+                                </StFeatureCardTextBox>
+                            </StFeatureCardTextDiv>
+                            <StFeatureCardImgDiv>
+                                <StFeatureCardImg>
+                                    <img src={img_placeholder} />
+                                </StFeatureCardImg>
+                            </StFeatureCardImgDiv>
+                        </StFeatureCardBox>
+                        <StFeatureCardBox>
+                            <StFeatureCardImgDiv>
+                                <StFeatureCardImg>
+                                    <img src={img_placeholder} />
+                                </StFeatureCardImg>
+                            </StFeatureCardImgDiv>
+                            <StFeatureCardTextDiv>
+                                <StFeatureCardTextBox>
+                                    <StFeatureCardTextTitle>
                                         Aenean egestas libero amet vulputate.
-                                        </StFeatureCardTextTitle>
-                                        <StFeatureCardTextBody>
+                                    </StFeatureCardTextTitle>
+                                    <StFeatureCardTextBody>
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi morbi sit consectetur elit.
-                                        </StFeatureCardTextBody>
-                                    </StFeatureCardTextBox>
-                                </StFeatureCardTextDiv>
-                            </StFeatureCardBox>
+                                    </StFeatureCardTextBody>
+                                </StFeatureCardTextBox>
+                            </StFeatureCardTextDiv>
+                        </StFeatureCardBox>
                     </StFeatureCardWrapper>
                 </StUSPWrapper>
             </StUSPContainer>
             <StTeamSectionContainer>
                 <StTeamSectionTitleWrapper>
-                <StUSPHeader>
+                    <StUSPHeader>
                         <StUSPHeaderTitle>
                             Lorem Lorem ipsum
                         </StUSPHeaderTitle>
                         <StUSPHeaderText>
-                        Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse 
+                            Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse
                         </StUSPHeaderText>
                     </StUSPHeader>
                 </StTeamSectionTitleWrapper>
@@ -112,7 +113,7 @@ const Landing = () => {
                     <StTeamSectionImageUpper>
                         <StTeamSectionImageItemBox>
                             <StTeamSectionImageItem>
-                                <img src={img_placeholder}/>
+                                <img src={img_placeholder} />
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
@@ -125,7 +126,7 @@ const Landing = () => {
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
                             <StTeamSectionImageItem>
-                                <img src={img_placeholder}/>
+                                <img src={img_placeholder} />
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
@@ -138,7 +139,7 @@ const Landing = () => {
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
                             <StTeamSectionImageItem>
-                                <img src={img_placeholder}/>
+                                <img src={img_placeholder} />
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
@@ -151,7 +152,7 @@ const Landing = () => {
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
                             <StTeamSectionImageItem>
-                                <img src={img_placeholder}/>
+                                <img src={img_placeholder} />
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
@@ -166,7 +167,7 @@ const Landing = () => {
                     <StTeamSectionImageLower>
                         <StTeamSectionImageItemBox>
                             <StTeamSectionImageItem>
-                                <img src={img_placeholder}/>
+                                <img src={img_placeholder} />
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
@@ -179,7 +180,7 @@ const Landing = () => {
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
                             <StTeamSectionImageItem>
-                                <img src={img_placeholder}/>
+                                <img src={img_placeholder} />
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
@@ -192,7 +193,7 @@ const Landing = () => {
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
                             <StTeamSectionImageItem>
-                                <img src={img_placeholder}/>
+                                <img src={img_placeholder} />
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
@@ -209,13 +210,13 @@ const Landing = () => {
             <StBottomBrandingContainer>
                 <StBottomBrandingWrapper>
                     <StBottomBrandingTitle>
-                    Unanimous.<br/>
-                    Lorem Lorem ipsum
+                        Unanimous.<br />
+                        Lorem Lorem ipsum
                     </StBottomBrandingTitle>
                     <StBottomBrandingBody>
-                    Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse
+                        Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse
                     </StBottomBrandingBody>
-                    <StBodyButton style={{marginTop:"0px"}} onClick={()=>navigate('/login')}>
+                    <StBodyButton style={{ marginTop: "0px" }} onClick={() => navigate('/login')}>
                         접속하기
                     </StBodyButton>
                 </StBottomBrandingWrapper>
@@ -330,7 +331,7 @@ const StBodyButton = styled.div`
 
     color: #FFFFFF;
 
-    margin-top: ${props => props.marginTop||'1.5rem'};
+    margin-top: ${props => props.marginTop || '1.5rem'};
     cursor: pointer;
 `
 
@@ -779,6 +780,6 @@ const StFooterContentLinks = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
-` 
+`
 
 export default Landing;

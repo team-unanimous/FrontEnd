@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import teamSelectImg from "../img/teamSelect.png";
 
-
 const TeamInvited = () => {
     const uuidRef = useRef();
     const navigate = useNavigate();
@@ -14,11 +13,9 @@ const TeamInvited = () => {
     const [teamData, setTeamData] = useState(null);
     const [teamName, setTeamName] = useState(null);
     const [UUID, setUUID] = useState('');
-
     const findUUID = async (UUIDInfo)=> {
         return apis.postInviteTeam(UUIDInfo);
     }
-        
     const { mutate:findMutate } = useMutation(findUUID, {
         onSuccess: (resp) => {
             // try {
@@ -29,7 +26,7 @@ const TeamInvited = () => {
             // catch {
             //     console.log(data, "error")
             //     setTeamData(false);
-            //     setWarning(true);    
+            //     setWarning(true);
             // }
             console.log(resp, "성공");
             setTeamName(resp.data.teamname);
@@ -56,9 +53,7 @@ const TeamInvited = () => {
             alert("오류가 발생했습니다");
         }
     })
-
     // const mutation = useMutation(findUUID);
-
     const teamFindHandler = ()=>{
         const data = {
             uuid : uuidRef.current.value
@@ -73,7 +68,6 @@ const TeamInvited = () => {
         console.log(data);
         joinMutate(data);
     }
-
     return (
         <>
         <StBox>
@@ -83,14 +77,13 @@ const TeamInvited = () => {
                     <StTitleWrapper>
                         <StTitleInputBox>
                             <StTitleInput placeholder="초대 코드 입력" type={"text"} ref={uuidRef}>
-
                             </StTitleInput>
                             <StTitleButton onClick={teamFindHandler}>
                                 코드 확인
                             </StTitleButton>
                         </StTitleInputBox>
-                        {warning 
-                        ?<StWarning>올바르지 않은 코드가 입력되었습니다. 다시 입력해주세요.</StWarning> 
+                        {warning
+                        ?<StWarning>올바르지 않은 코드가 입력되었습니다. 다시 입력해주세요.</StWarning>
                         : <></>}
                     </StTitleWrapper>
                 </StTitleBox>
@@ -100,7 +93,6 @@ const TeamInvited = () => {
                     <StTeamDataWrapper>
                         <StTeamProfileImg>
                             {/* <img src={data?.data?.teamImage}></img> */}
-
                         </StTeamProfileImg>
                         <StTeamTitleDiv>
                             {teamName}
@@ -112,7 +104,6 @@ const TeamInvited = () => {
                     </StTeamDataBox>
                 </StTeamBox>
                 :<></>}
-                
             </StContainer>
         </StBox>
         </>
@@ -140,7 +131,6 @@ const StContainer = styled.div`
     align-items: center;
     padding: 0px;
     /* gap: 60px; */
-    
     /* position: absolute; */
     width: 799px;
     height: 671px;
@@ -186,7 +176,6 @@ const StTitleInputBox = styled.div`
     display: flex;
     flex-direction: row;
     height: 49px;
-    
 `
 const StTitleInput = styled.input`
     width : 650px;
@@ -206,19 +195,15 @@ const StWarning = styled.div`
     /* 이메일 형식에 맞게 입력해주세요 */
     width: 384px;
     height: 19px;
-
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-
     color: #EF6A61;
-
     flex: none;
     order: 2;
     flex-grow: 0;
-
     align-self: flex-start;
     margin-top: 12px;
 `
@@ -230,18 +215,12 @@ const StTeamBox = styled.div`
     justify-content: flex-start;
     align-items: center;
     padding: 50px;
-
-
     width: 336px;
     height: 414px;
-
     border-radius: 8px;
-
     box-sizing: border-box;
     margin-top: 60px;
-
     /* Inside auto layout */
-
     flex: none;
     order: 1;
     flex-grow: 0;
@@ -253,10 +232,8 @@ const StTeamDataBox = styled.div`
     align-items: center;
     padding: 0px;
     /* gap: 32px; */
-
     width: 236px;
     height: 314px;
-
     flex: none;
     order: 0;
     flex-grow: 0;
@@ -268,10 +245,8 @@ const StTeamDataWrapper = styled.div`
     align-items: center;
     padding: 0px;
     /* align-self: flex-start; */
-
     width: 180px;
     height: 228px;
-
     flex: none;
     order: 0;
     flex-grow: 0;
@@ -284,17 +259,13 @@ const StTeamJoinButton = styled.div`
     align-items: center;
     /* padding: 15px; */
     /* gap: 10px; */
-
     width: 236px;
     height: 54px;
-
     background: #000000;
     border-radius: 6px;
     margin-top: 32px;
     color: white;
-
     /* Inside auto layout */
-
     flex: none;
     order: 0;
     flex-grow: 0;
@@ -305,7 +276,6 @@ const StTeamProfileImg = styled.div`
     /* Rectangle 151 */
     width: 180px;
     height: 180px;
-
     background: #F1F1F1;
     border-radius: 87px;
 `
@@ -314,20 +284,16 @@ const StTeamTitleDiv = styled.div`
     /* 팀이름 */
     width: 56px;
     height: 24px;
-
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
     text-align: center;
-
     color: #000000;
     margin-top: 24px;
-
     flex: none;
     order: 0;
     flex-grow: 0;
 `
-
 export default TeamInvited;

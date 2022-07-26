@@ -37,6 +37,7 @@ const MeetMakeTwoTwo = () => {
   const makeTeam = async(data)=>{
     console.log(data);
     const datas = await apis.postReserveMeet(data);
+    console.log(data)
     dispatch(teamID({
       meetid : datas.data
     }))

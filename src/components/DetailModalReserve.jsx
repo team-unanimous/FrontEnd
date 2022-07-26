@@ -1,10 +1,36 @@
 import React from 'react'
+import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import apis from '../api/main';
 import doorIcon from '../img/outdoor.png'
+import { teamID } from '../redux/modules/meetReducer';
 
-const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,meetingCreator,issues, meetingId}) => {
+const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,meetingCreator,issues, meetingId,teamId}) => {
 
-    
+    const navigate = useNavigate();
+
+    //미팅 삭제 부분
+    const deleteMeet = async(data)=>{
+        const datas = await apis.deleteMeet(data);
+        return datas;
+    }
+
+    const {mutate} = useMutation(deleteMeet,{
+        onSuccess:()=>{
+            alert("미팅삭제완료");
+        },
+        onError:()=>{
+            alert("미팅삭제실패");
+        }
+    })
+
+    const delet = () => {
+        mutate({
+            meetingId : meetingId
+        })
+    }
+
   return (
     <>
     {open?
@@ -39,8 +65,8 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
             <StLine/>
             <StDownBox>
                 <StBtBox>
-                    <StEdit>수정</StEdit>
-                    <StDelete>삭제</StDelete>
+                    <StEdit onClick={()=>{navigate(`/teamboard/${teamId}/${meetingId}/meetingeditone`)}}>수정</StEdit>
+                    <div onClick={close}><StDelete onClick={delet}>삭제</StDelete></div>
                 </StBtBox>
                 <StButton><StIconImg src={doorIcon}/>참여하기</StButton>
             </StDownBox>
