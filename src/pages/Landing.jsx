@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { target } from "../api/websocket";
 import LandingHeader from "../components/LandingHeader";
 import img_placeholder from "../img/img_placeholder.png"
 
 const Landing = () => {
     const navigate = useNavigate();
-
+    console.log(target)
     return (
         <>
             <LandingHeader></LandingHeader>

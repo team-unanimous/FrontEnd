@@ -431,13 +431,12 @@ const StLine = styled.div`
 `;
 
 const StRight = styled.div`
-  width : 930px;
+  width : 1184px;
   height : 86.5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 1rem 1rem 1rem;
-  margin : 1rem 0 0 0;
+  padding: 0 181px 36px 38px;
   overflow-x: hidden;
   ::-webkit-scrollbar{
     width:10px;

@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import Header from '../components/Header';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import TeamboardHome from '../components/TeamboardHome';
 import MeetingManage from '../components/MeetingManage';
 import TeamSetting from '../components/TeamSetting';
@@ -16,6 +17,7 @@ import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
 import { useQueryClient } from 'react-query';
 import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
+import apis from '../api/main';
 
 
 const TeamBoard = () => {
@@ -33,18 +35,25 @@ const TeamBoard = () => {
   const { data } = useGetTeamInfo();
   console.log(main?.teamManager);
 
+  const [imgfile, setImgfile] = useState("");
+
+  useEffect(() => {
+    const imageFy = async () => {
+      const data = await apis.getTeam();
+      setImgfile(data.data[0].teamImage)
+    }
+    imageFy();
+  }, [])
+
 
   return (
     <StBox>
       <Header teamname={main?.teamname} />
       <StDownBox>
-        <StLLeft>
-
-        </StLLeft>
         <StLeft>
           <StSmallBox>
             <StTeamInfoBox>
-              <StTeamImg src={data[0]?.teamImage} />
+              {imgfile?<StTeamImg src={imgfile} />:<></>}
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
                 {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
@@ -57,15 +66,11 @@ const TeamBoard = () => {
             </StBtBox>
           </StSmallBox>
         </StLeft>
-        <StLRight/>
         <>
         {page == 1 ? <TeamboardHome /> : <></>}
         {page == 2 ? <MeetingManage /> : <></>}
         {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
         </>
-        <StRRight>
-
-        </StRRight>
       </StDownBox>
       {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}>+</StMeetMake> : <></>}
     </StBox>
@@ -191,7 +196,6 @@ const StSmallBox = styled.div`
     width : 286px;
     height : 459px;
     margin : 42px 0 0 0;
-
 `;
 
 const StLeft = styled.div`
@@ -200,6 +204,7 @@ const StLeft = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding : 0 0 0 181px;
   `;
 
 const StMeetMake = styled.div`

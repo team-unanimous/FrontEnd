@@ -59,7 +59,8 @@ const StButton = styled.div`
     height: 54px;
     margin : 0 auto 0 auto;
     border-radius: 6px;
-    background-color: black;
+    background-color: #063250;
+    border : none;
     color:white;
     font-family: 'Inter';
     font-style: normal;

@@ -1,15 +1,26 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
+import { useParams, withRouter } from 'react-router';
+import jwtDecode from 'jwt-decode';
 import './JoinRoom.css';
 
 import UserVideoComponent from './UserVideoComponent';
+import { getCookie } from '../../Cookie';
 
 const OPENVIDU_SERVER_URL = 'https://' + 'dkworld93.shop' + ':8443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
+function withParams(Component) { 
+    return props => <Component {...props} nick={jwtDecode(getCookie('token')).USER_NICKNAME} params={useParams()}/>;
+}
+
+// function nickName(Component){
+//     return props => <Component {...props} nick={jwtDecode(getCookie('token'))}/>
+// }
 
 class JoinRoom extends Component {
+
     constructor(props) {
         super(props);
 
@@ -32,7 +43,16 @@ class JoinRoom extends Component {
     }
 
     componentDidMount() {
+        let id = this.props.params.sessionid;
+        let nickname = this.props.nick;
+        console.log(id);
+        console.log(nickname);
+        this.setState({
+            mySessionId:id,
+            myUserName:nickname
+        })
         window.addEventListener('beforeunload', this.onbeforeunload);
+        this.joinSession();
     }
 
     componentWillUnmount() {
@@ -231,9 +251,6 @@ class JoinRoom extends Component {
             <div className="container">
                 {this.state.session === undefined ? (
                     <div id="join">
-                        <div id="img-div">
-                            <img src="resources/images/openvidu_grey_bg_transp_cropped.png" alt="OpenVidu logo" />
-                        </div>
                         <div id="join-dialog" className="jumbotron vertical-center">
                             <h1> Join a video session </h1>
                             <form className="form-group" onSubmit={this.joinSession}>
@@ -282,7 +299,7 @@ class JoinRoom extends Component {
 
                         {this.state.mainStreamManager !== undefined ? (
                             <div id="main-video" className="col-md-6">
-                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
+
                                 <input
                                     className="btn btn-large btn-success"
                                     type="button"
@@ -387,4 +404,4 @@ class JoinRoom extends Component {
     }
 }
 
-export default JoinRoom;
+export default withParams (JoinRoom);
