@@ -206,7 +206,8 @@ const StEmailButton = styled.button`
   width : 132px;
   height : 49px;
   margin : 0 0 0 9px;
-  background-color: black;
+  background-color: #063250;
+  border: none;
   color : white;
   border-radius: 6px;
 `;
@@ -215,12 +216,12 @@ const StEmailButton = styled.button`
 const StAgree = styled.button`
   width : 132px;
   height : 54px;
-  background-color: black;
+  background-color: #063250;
   font-weight: 700;
   font-size: 20px;
   color : white;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: none;
   cursor: pointer;
 `;
 export default InviteMember;

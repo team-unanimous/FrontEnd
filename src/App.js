@@ -69,7 +69,7 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/passwordfindone" element={<PasswordFindOne />} />
         <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />
-        <Route path="/meetingroomtest" element={<MeetingRoom/>}/>
+        <Route path="/meetingroomtest/:sessionid" element={<MeetingRoom/>}/>
         <Route path="/agenda" element={<Agenda />} />
 
       </Routes>

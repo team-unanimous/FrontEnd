@@ -15,6 +15,9 @@ import intro from '../img/introduction.svg'
 import recommendone from '../img/TeamBoard/1.recommend/img1.svg'
 import recommendtwo from '../img/TeamBoard/1.recommend/img2.svg'
 import recommendthree from '../img/TeamBoard/1.recommend/img2.svg'
+import DetailModalOnAir from './DetailModalOnAir';
+import DetailModalPassed from './DetailModalPassed';
+
 
 const TeamboardHome = () => {
 
@@ -26,10 +29,14 @@ const TeamboardHome = () => {
     queryClient.invalidateQueries(["meeting","meetOnAir"]);
   },[])
 
+  const [openOnAir, setOpenOnAir] = useState(false);
   const [openReserve, setOpenReserve] = useState(false);
+  const [openPassed, setOpenPassed] = useState(false);
   const {data : passed} = useGetPassed({teamId});
   const {data : onAir} = useGetOnAir({teamId});
   const {data : reserve} = useGetReserve({teamId});
+
+  console.log(onAir);
 
   const [meetingId,setMeetingId] = useState("");
   const [meetingTitle,setMeetingTitle] = useState();
@@ -38,12 +45,31 @@ const TeamboardHome = () => {
   const [meetingCreator,setMeetingCreator] = useState();
   const [issues,setIssues] = useState();
 
-  const closeModal = () => {
+  const closeModalRe = () => {
     setOpenReserve(false);
+  }
+
+  const closeModalOn = () => {
+    setOpenOnAir(false);
+  }
+
+  const closeModalPass = () => {
+    setOpenPassed(false);
   }
 
   return (
     <>
+      <DetailModalOnAir
+        meetingTitle={meetingTitle}
+        meetingDate={meetingDate}
+        meetingTime={meetingTime} 
+        meetingCreator={meetingCreator}
+        issues={issues}
+        open={openOnAir} 
+        meetingId={meetingId} 
+        close={closeModalOn}
+        teamId={teamId}/>
+
       <DetailModalReserve
         meetingTitle={meetingTitle}
         meetingDate={meetingDate}
@@ -52,12 +78,22 @@ const TeamboardHome = () => {
         issues={issues}
         open={openReserve} 
         meetingId={meetingId} 
-        close={closeModal}
+        close={closeModalRe}
         teamId={teamId}/>
+
+      <DetailModalPassed
+        meetingTitle={meetingTitle}
+        meetingDate={meetingDate}
+        meetingTime={meetingTime} 
+        meetingCreator={meetingCreator}
+        issues={issues}
+        open={openReserve} 
+        meetingId={meetingId} 
+        close={closeModalPass}
+        teamId={teamId}/>
+
+
       <StRight>
-      {/* <StSaying>
-        Unanimous가 추천하는 오늘의 안건을 만나보세요
-      </StSaying> */}
       <img src={intro}/>
       <StTodaysMeetBox>
         오늘의 안건 추천
@@ -94,7 +130,7 @@ const TeamboardHome = () => {
                 <div onClick={
                   ()=>{
                     setMeetingId(onAir[0].meetingId);
-                    setOpenReserve(true);
+                    setOpenOnAir(true);
                     setMeetingTitle(onAir[0].meetingTitle);
                     setMeetingDate(onAir[0].meetingDate);
                     setMeetingTime(onAir[0].meetingTime);
@@ -106,7 +142,7 @@ const TeamboardHome = () => {
                 <div onClick={
                   ()=>{
                     setMeetingId(onAir[1].meetingId);
-                    setOpenReserve(true);
+                    setOpenOnAir(true);
                     setMeetingTitle(onAir[1].meetingTitle);
                     setMeetingDate(onAir[1].meetingDate);
                     setMeetingTime(onAir[1].meetingTime);
@@ -119,7 +155,7 @@ const TeamboardHome = () => {
                   ()=>{
                     console.log("hey");
                     setMeetingId(onAir[2].meetingId);
-                    setOpenReserve(true);
+                    setOpenOnAir(true);
                     setMeetingTitle(onAir[2].meetingTitle);
                     setMeetingDate(onAir[2].meetingDate);
                     setMeetingTime(onAir[2].meetingTime);
@@ -323,8 +359,8 @@ const StRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 56px 0 36px 0;
-  margin : 1rem 0 0 0;
+  padding: 0 181px 36px 38px;
+  border-top-left-radius:20px;
   background-color: #F2F6F9;
   overflow-x: hidden;
   ::-webkit-scrollbar{

@@ -5,7 +5,7 @@ import sockJS from "sockjs-client"
 const token = getCookie("token");
 
 //handshake 
-const target = "http://52.79.226.242:8080/ws-stomp" // http URL
+export const target = "https://dkworld.shop/ws-stomp" // http URL dasfsdgfadsdga
 export const socket = new sockJS(target);
 export const ws = Stomp.over(socket);
 

@@ -1,5 +1,5 @@
 html {
-	position: relative;
+	/* position: relative; */
 	min-height: 100%;
 }
 
@@ -174,7 +174,7 @@ a:hover .demo-logo {
 }
 
 #video-container video {
-	position: relative;
+	/* position: relative; */
 	float: left;
 	cursor: pointer;
 }
@@ -220,12 +220,12 @@ a:hover .demo-logo {
 }
 
 #session #video-container img {
-	position: relative;
+	/* position: relative; */
 	float: left;
-	width: 50%;
+	width: 100%;
 	cursor: pointer;
 	object-fit: cover;
-	height: 180px;
+	/* height: 180px; */
 }
 
 
