@@ -27,7 +27,7 @@ const MeetingRoomMain = ()=> {
                         </StMainThemeWrapper>
                 <StSidebarWrapper>
                     <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
-                    <MeetingRoomStyle></MeetingRoomStyle>
+                    <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
                 </StSidebarWrapper>
         </StContainer>
         </>
@@ -54,7 +54,7 @@ const StSidebarWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 360px;
-    height: 979px;
+    height: 930px;
     margin: 24px;
     box-sizing: border-box;
     gap: 18px;

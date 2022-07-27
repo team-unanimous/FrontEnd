@@ -12,45 +12,41 @@ import { useMutation } from "react-query";
 // import { useParams } from "react-router-dom";
 // import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 
-const MeetingRoomStyle = ()=>{
-    const meetingId = useParams().sessionid;
+const MeetingRoomStyle = ({meetingId})=>{
+    // const meetingId = useParams().sessionid;
     // const {data : main}= useGetMeetSpecific({meetingId})
     // const meetingId = useParams().meetid; // url 생성이후 확인 가능
     console.log(meetingId);
-    // const {data} = useGetMeetSpecific({meetingId});
+    // const makeChattingroom = (chattingInfo) => {
+    //     return apis.postMeetingroom(chattingInfo)
+    // }
 
-    const makeChattingroom = (chattingInfo) => {
-        return apis.postMeetingroom(chattingInfo)
-    }
+    // const { mutate: chattingMutate } = useMutation(makeChattingroom, {
+    //     onSuccess: (resp) => {
+    //         console.log(resp)
+    //     }
+    // });
 
-    const { mutate: chattingMutate } = useMutation(makeChattingroom, {
-        onSuccess: (resp) => {
-            console.log(resp)
-        }
-    });
-
-    const chattingRoomHandler = () => {
-        const data = {
-            meetingId: meetingId
-        }
-        console.log(data);
-        chattingMutate(data);
-    }
+    // const chattingRoomHandler = () => {
+    //     const data = {
+    //         meetingId: meetingId
+    //     }
+    //     console.log(data);
+    //     chattingMutate(data);
+    // }
 
     const token = getCookie("token");
     const decoded = jwt_decode(getCookie('token'));
     const myName = decoded.USER_NICKNAME;
-
 
     // 메시지
     const inputRef = useRef(null);
     //상태 관리
     const [msg, setMsg] = useState([]);
 
-
     const data = {
         token: token,
-        roomId: "1" //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+        roomId: meetingId // "1" //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
 
     //Socket 통신
@@ -86,6 +82,9 @@ const MeetingRoomStyle = ()=>{
 
     useEffect(()=>{
         SocketConnect(data);
+        return () => {
+            HandleUnsubscribe();
+        }
     })
 
     function waitForConnection(ws, callback){
@@ -106,7 +105,7 @@ const MeetingRoomStyle = ()=>{
         try {
             const data = {
                 type: "TALK",
-                roomId: "1",
+                roomId: meetingId,
                 nickname: "string",
                 sender: "string",
                 message: `${inputRef.current.value}`,
@@ -130,6 +129,21 @@ const MeetingRoomStyle = ()=>{
         setMsg([...msg, inputRef?.current?.value]);
         inputRef.current.value = ""
     }
+    
+    const HandleUnsubscribe = useCallback(()=>{
+        try{
+            ws.disconnect(
+                ()=>{
+                    ws.unsubscribe("sub-0");
+                    console.log("Disconnected...")
+                },
+                {token: getCookie("token")}
+            );
+            // ws.unsubscribe(`/sub/api/chat/rooms/${data.roomId}`);
+        } catch (error) {
+            console.log(error);
+        }
+    })
     
 
     return (
@@ -201,7 +215,7 @@ const StChattingContainer = styled.div`
     /* 채팅창 */
     position: relative;
     width: 360px;
-    height: 784px;
+    height: 734px;
     right: 0px;
     display: flex;
     flex-direction: column;

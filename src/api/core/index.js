@@ -3,7 +3,7 @@ import { setCookie, getCookie } from '../../Cookie';
 
 // 1. Axios instance생성
 const api = axios.create({
-    baseURL: "https://dkworld.shop"
+    baseURL: "https://sparta-ysh.shop"
 })
 
 // 상우님 api https://shayangju.shop
