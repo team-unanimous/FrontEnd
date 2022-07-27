@@ -1,25 +1,30 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useEffect, useState  } from "react";
+import { ws } from "../api/websocket";
+import { getCookie } from "../Cookie";
+import jwt_decode from "jwt-decode";
 import styled from "styled-components";
+import ChatMessageBox from "./ChatMessageBox";
 import inputEnterVector from "../img/InputEnterVector.png"
 import xbutton from "../img/Xbutton.png"
-import { getCookie } from "../Cookie";
-import { ws } from "../api/websocket";
-import { useRef, useEffect, useState } from "react";
-import apis from "../api/main";
-import { useMutation } from "react-query";
-import { useParams } from "react-router-dom";
-import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
-
-
+// import { useMutation } from "react-query";
+// import { useParams } from "react-router-dom";
+// import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 
 const MeetingRoomStyle = ()=>{
-    // let { meetingId } = useParams();
+    // let { meetingId } = useParams(); // url 생성이후 확인 가능
     // useGetMeetSpecific(data);
     // useEffect(()=>{
     //     console.log(meetingId);
     // })
     const token = getCookie("token");
+    const decoded = jwt_decode(getCookie('token'));
+    const userName = decoded.USER_NICKNAME;
+
+
+    // 메시지
     const inputRef = useRef(null);
+    //상태 관리
+    const [isMe, setIsMe] = useState(false); 
     const [msg, setMsg] = useState([]);
     const [date, setDate] = useState([]);
     const [type, setType] = useState([]);
@@ -110,8 +115,7 @@ const MeetingRoomStyle = ()=>{
     }, [msg])
     const HandleSendNoConnection = (event)=> {
         event.preventDefault();
-        setMessage([...message, inputRef?.current?.value]);
-        console.log(message);
+        setMsg([...msg, inputRef?.current?.value]);
         inputRef.current.value = ""
     }
     
@@ -137,24 +141,34 @@ const MeetingRoomStyle = ()=>{
                         {
                             msg?.map((msg, i) =>{
                                 return (
-                                    
-                                    <StChattingMessageBox
+                                    // <StChattingMessageBox
+                                    // key={i}
+                                    // createdAt={date}
+                                    // nickname={nickname}
+                                    // sender={sender}
+                                    // profileUrl={avatar}
+                                    // isMe={isMe}
+                                    // >
+                                    // {msg}
+                                    // </StChattingMessageBox>
+                                    <ChatMessageBox
                                     key={i}
                                     createdAt={date}
-                                    // type={type} 
-                                    // roomId={roomId}
                                     nickname={nickname}
                                     sender={sender}
-                                    // message={message}
                                     profileUrl={avatar}
-                                    >{msg}</StChattingMessageBox>
+                                    isMe={isMe}
+                                    msg={msg}
+                                    >
+                                    {msg}
+                                    </ChatMessageBox>
                                 )
                             })
                         }
                     </StChattingMessageWrapper>
                     <StChattingInputWrapper>
-                        <StChattingInputForm onSubmit={HandleSend}>
-                        {/* <StChattingInputForm onSubmit={HandleSendNoConnection}> */}
+                        {/* <StChattingInputForm onSubmit={HandleSend}> */}
+                        <StChattingInputForm onSubmit={HandleSendNoConnection}>
                             <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef} />
                             <StSendButton type={"image"} src={inputEnterVector}/>
                         </StChattingInputForm>
@@ -175,7 +189,6 @@ const StChattingContainer = styled.div`
     flex-direction: column;
 `
 const StChattingHeader = styled.div`
-    /* background-color: blue; */
     /* Frame 146 */
     display: flex;
     flex-direction: row;
@@ -190,7 +203,7 @@ const StChattingHeader = styled.div`
     bottom: 91.95%; */
     height: 100px;
 
-    background: #063250;
+    background: #FCFCFC;
 `
 const StChattingHeaderWrapper = styled.div`
     display: flex;
@@ -204,7 +217,7 @@ const StChattingHeaderWrapper = styled.div`
     border-bottom: 1px solid #D9D9D9;
 `
 const StChattingTitle = styled.div`
-    background-color: #063250;
+    background-color: #FCFCFC;
     display:flex;
     flex-direction: row;
     width: 50%;
@@ -219,7 +232,6 @@ const StChattingTitleBox = styled.span`
 
 const StChattingXbutton = styled.div`
     /* align-self: flex-end; */
-    /* background-color: blue; */
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -244,8 +256,7 @@ const StChattingMessageWrapper = styled.div`
     flex-direction: column;
     height: 100%;
     width: 100%;
-    background: #063250;
-    /* margin-top: auto; */
+    background: #FCFCFC;
     overflow-x: hidden;
   ::-webkit-scrollbar{
     width:10px;
@@ -258,31 +269,35 @@ const StChattingMessageWrapper = styled.div`
     border-radius: 1rem;
   }
 `
-const StChattingMessageBox = styled.div`
-   /* Frame 126 */
-    display: flex;
-    display: inline-block;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 16px;
-    gap: 10px;
 
-    width: 273px;
-    height: fit-content;
+// const StChattingMessageBox = styled.div`
+//    /* Frame 126 */
+//     display: flex;
+//     display: inline-block;
+//     flex-direction: row;
+//     justify-self: flex-end;
+//     margin-left: auto;
+//     padding: 16px;
+//     gap: 10px;
+//     margin-top: 20px;
 
-    background: linear-gradient(180deg, rgba(35, 150, 240, 0.8) 0%, rgba(73, 182, 255, 0.8) 100%);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
-    border-radius: 8px 0px 8px 8px;
+//     width: 273px;
+//     height: fit-content;
 
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-    word-wrap: break-word;
-`
+//     background: linear-gradient(180deg, rgba(35, 150, 240, 0.8) 0%, rgba(73, 182, 255, 0.8) 100%);
+//     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+//     border-radius: 8px 0px 8px 8px;
+
+//     flex: none;
+//     order: 0;
+//     align-self: stretch;
+//     flex-grow: 0;
+//     word-wrap: break-word;
+//     color: white;
+// `
 
 const StChattingInputWrapper = styled.div`
-    background: #063250;
+    background: #FCFCFC;
     /* background-color: blue; */
     /* Frame 142 */
     display: flex;
@@ -323,7 +338,7 @@ const StChattingInputBox = styled.input`
 
     padding-left: 1rem;
 
-    background: #063250;
+    background: #F1f1f1;
     border-radius: 8px;
 
     flex: none;

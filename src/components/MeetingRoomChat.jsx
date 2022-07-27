@@ -29,9 +29,6 @@ const MeetingRoomChat = ()=>{
     const target = "https://sparta-ysh.shop/ws-stomp" //"http://52.79.226.242:8080/ws-stomp" 
     const socket = new sockJS(target);
     const ws = Stomp.over(socket);
-    
-
-const MeetingRoomChatxx = () => {
     const inputRef = useRef(null);
     const EnterRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
@@ -280,7 +277,6 @@ const MeetingRoomChatxx = () => {
         </StChattingContainer>
         </>
     )
-}
 }
 
 
