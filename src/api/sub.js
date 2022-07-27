@@ -3,8 +3,9 @@ import axios from "axios";
 
 // 1. Axios instance생성
 const axi = axios.create({
-    baseURL: "https://sparta-ysh.shop"
-    // baseURL: "https://dkworld.shop"
+
+    baseURL: "https://dkworld.shop"
+
 })
 
 // 상우님 api https://shayangju.shop

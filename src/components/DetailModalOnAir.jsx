@@ -2,18 +2,14 @@ import React from 'react'
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import doorIcon from '../img/outdoor.png'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DetailModalOnAir = ({open, close,meetingTitle,meetingDate,meetingTime,meetingCreator,issues, meetingId}) => {
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const join = ()=>{
-        dispatch(({
-
-        }))
-    }
+    const teamId = useParams().teamid;
+    
 
   return (
     <>
@@ -42,11 +38,11 @@ const DetailModalOnAir = ({open, close,meetingTitle,meetingDate,meetingTime,meet
                 </StIssueBox>
                 <StDateBox>
                     <StHostLeft>미팅 URL</StHostLeft>
-                    <StIssue></StIssue>
+                    <StIssue>unanimous.co.kr/{teamId}/{meetingId}</StIssue>
                 </StDateBox>
             </StInfo>
             <StLine/>
-            <StButton onClick={()=>navigate(`/meetingroomtest/${meetingId}`)}><StIconImg src={doorIcon}/>참여하기</StButton>
+            <StButton onClick={()=>navigate(`/meetingroom/${teamId}/${meetingId}`)}><StIconImg src={doorIcon}/>참여하기</StButton>
         </StBox>
     </>:<></>}
     </>

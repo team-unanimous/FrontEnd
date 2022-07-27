@@ -71,11 +71,11 @@ function App() {
         <Route path="/teamjoin" element={<TeamJoin />} />
         <Route path="/chat" element={<MeetingRoomChat/>} />
         <Route path="/chatstyle" element={<MeetingRoomStyle />} />
-        <Route path="/meetingroom" element={<MeetingRoomMain />} />
+        <Route path="/meetingroom/:teamid/:sessionid" element={<MeetingRoomMain />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/passwordfindone" element={<PasswordFindOne />} />
         <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />
-        <Route path="/meetingroomtest/:sessionid" element={<MeetingRoom/>}/>
+        {/* <Route path="/meetingroom/:sessionid" element={<MeetingRoom/>}/> */}
         <Route path="/agenda" element={<Agenda />} />
 
       </Routes>

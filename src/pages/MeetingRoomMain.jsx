@@ -2,44 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import MeetingRoomStyle from "../components/MeetingRoomStyle";
 import MeetingRoomInfo from "../components/MeetingRoomInfo";
-
 import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 import ThemeOne from "../img/themeOne.png";
+import { useParams } from "react-router";
+import JoinRoom from "../components/WebRTC/JoinRoom";
 import ThemeTwo from "../img/themeTwo.svg";
+
 
 const MeetingRoomMain = ()=> {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
-    const meetingId = 1;  // 추후 삭제
+    const meetingId = useParams().sessionid;
+    
     const {data : main}= useGetMeetSpecific({meetingId})
 
     console.log(main);
     console.log(main?.meetingTheme);
-    console.log(main?.meetinSum);
+    console.log(main?.meetingSum);
 
-    // if (!main){
-    //     return <>Something wrong!</>
-    // }
-    if (!main){  //network error 일때
-        return (
-            <StContainer>
-                    <StMainWrapper>
-                            <StMainThemeWrapper></StMainThemeWrapper>
-                    </StMainWrapper>
-                    <StSidebarWrapper>
-                        <MeetingRoomInfo></MeetingRoomInfo>
-                        <MeetingRoomStyle></MeetingRoomStyle>
-                    </StSidebarWrapper>
-            </StContainer>
-        )
-    }
     return(
         <>
         <StContainer>
-                <StMainWrapper>
-                        <StMainThemeWrapper theme={main.meetingTheme} title={main.meetingTitle}></StMainThemeWrapper>
-                </StMainWrapper>
+                        <StMainThemeWrapper theme={main?.meetingTheme}>
+                            <JoinRoom Theme={main?.meetingTheme} />
+                        </StMainThemeWrapper>
                 <StSidebarWrapper>
-                    <MeetingRoomInfo thumbnail={main.meetingSum}></MeetingRoomInfo>
+                    <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
                     <MeetingRoomStyle></MeetingRoomStyle>
                 </StSidebarWrapper>
         </StContainer>
@@ -75,7 +62,7 @@ const StSidebarWrapper = styled.div`
 const StMainThemeWrapper = styled.div`
     display:flex;
     width: 1474px;
-    height: 980px;
+    height: 930px;
     /* left: 34px;
     top: 59px; */
     margin: 24px;
