@@ -44,12 +44,13 @@ const MeetingRoomChat = ()=>{
             ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
             (response) => {
                 const newMessage = JSON.parse(response.body);
-                console.log(newMessage.message);
-                setMsg(newMessage.message);
-                setIssue(newMessage.message);
-                console.log("보낸사람:", newMessage.sender);
-                console.log("받은 메세지:", newMessage.message);
-                // console.log(JSON.parse(issue));
+                console.log(newMessage.type);
+                if (newMessage.type == "TALK"){
+                    setMsg(newMessage.message);
+                    setIssue(newMessage.message);
+                    console.log("보낸사람:", newMessage.sender);
+                    console.log("받은 메세지:", newMessage.message);                    
+                }
             },
             {
                 token: token
@@ -175,8 +176,7 @@ const MeetingRoomChat = ()=>{
                 roomId: "1",
                 nickname: "string",
                 sender: "string",
-                message: `${inputRef.current.value}`,
-                createdAt: "10시"
+                message: `${inputRef.current.value}`
             }
             const token = getCookie("token")
             waitForConnection(ws, function(){
@@ -199,7 +199,6 @@ const MeetingRoomChat = ()=>{
                 nickname: "string",
                 sender: "string",
                 message: `this is a Enter message from the client : ${EnterRef.current.value}`,
-                createdAt: "10시"
             }
             const token = getCookie("token")
             waitForConnection(ws, function(){
@@ -221,7 +220,6 @@ const MeetingRoomChat = ()=>{
                 nickname: "string",
                 sender: "string",
                 message: JSON.stringify({"안건1":"안건입니다", "안건2":"안건이 아닙니다"}),
-                createdAt: "10시"
             }
             const token = getCookie("token")
             waitForConnection(ws, function () {
