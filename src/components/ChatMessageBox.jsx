@@ -1,29 +1,24 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-const ChatMessageBox = (props) => {
-    
-    // const { message, nickName, createdAt, sender, profileUrl } = props;
-    const {createdAt, nickname, msg, profileUrl} = props;
-    // "createdAt":null,"modifiedAt":null,"id":null,"type":"TALK","roomId":"1","nickname":"asdf",
-    // "sender":"limdg01@naver.com","message":"asdf","profileUrl":"https://s3-unanimous.s3.ap-northeast-2.amazonaws.com/defaultImage.jpeg"
-
+const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName}) => {
     return (
         <>      
             <StBox>
-                <StUserWrapper>
+                <StUserWrapper myMessage={myName == nickname}>
                     <StUserProfile>
-                        <img src={profileUrl}/>
+                        <StUserProfileImage src={profileUrl}/>
                     </StUserProfile>
                     <StUserNickname>
-                        {"Guest"||nickname}
+                        {nickname}
                     </StUserNickname>
                 </StUserWrapper>
-                <StMessageWrapper>
-                    <StMessageBody>
+                <StMessageWrapper myMessage={myName == nickname}>
+                    <StMessageBody myMessage={myName == nickname}>
                         {msg}
                     </StMessageBody>
-                    <StMessageDate>
-                        {"00:00"||createdAt}
+                    <StMessageDate myMessage={myName == nickname}>
+                        {createdAt.slice(10,)}
                     </StMessageDate>
                 </StMessageWrapper>
 
@@ -41,6 +36,7 @@ const StBox = styled.div`
     padding: 0px;
     gap: 8px;
     margin-top: 20px;
+    margin-left: 20px;
 
     width: 320px;
     height: fit-content;
@@ -52,7 +48,7 @@ const StBox = styled.div`
 `
 const StUserWrapper = styled.div`
     /* Frame 125 */
-    display: flex;
+    display: ${props => (props.myMessage ? "none": "flex")};
     flex-direction: row;
     align-items: center;
     padding: 0px;
@@ -74,6 +70,11 @@ const StUserProfile = styled.div`
     order: 0;
     flex-grow: 0;
 `
+const StUserProfileImage = styled.img`
+    width: 24px;
+    background-size: contain;
+    border-radius: 90px;
+` 
 const StUserNickname = styled.div`
     /* 아무개 */
     width: 45px;
@@ -112,11 +113,12 @@ const StMessageBody = styled.div`
     height: fit-content;
 
     background: #F1F1F1;
+    background: ${props => (props.myMessage ? "linear-gradient(180deg, rgba(35, 150, 240, 0.8) 0%, rgba(73, 182, 255, 0.8) 100%)": "#F1F1F1")};
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     border-radius: 0px 8px 8px 8px;
 
     flex: none;
-    order: 1;
+    order: ${props => (props.myMessage ? "2": "1")};
     align-self: stretch;
     flex-grow: 0;
     word-wrap: break-word;

@@ -22,7 +22,7 @@ const TeamMake = () => {
   const { mutate } = useMutation(makeTeam, {
     onSuccess: (data) => {
       console.log(data.data);
-      navigate('/teammakesuccess')
+      navigate('/invitemember')
     },
     onError: (error) => {
       console.log(error)
