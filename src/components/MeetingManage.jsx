@@ -98,8 +98,9 @@ const MeetingManage = () => {
           <StBlack1 state={state} onClick={()=>{setState(1)}}>이전 미팅</StBlack1>
           <StBlack2 state={state} onClick={()=>{setState(2)}}>예약된 미팅</StBlack2>
         </StBlackBox>
-        <StLine/>
+        
         <StfListBox>  
+          <StfInListBox>
           <StListTop>
             <StDateTop>날짜</StDateTop>
             <StHostTop>주최자</StHostTop>
@@ -130,7 +131,7 @@ const MeetingManage = () => {
                   <StIcon src={doorIcon}/>참여
                 </StButton>
               </StInfoBox>
-              <StLine2/>
+              
             </div>)}
           </>:<></>}
           {state==1?
@@ -153,7 +154,7 @@ const MeetingManage = () => {
               <StHost>{value.meetingCreator}</StHost>
               <StTitle>{value.meetingTitle}</StTitle>
             </StList>
-            </StInfoBox><StLine2/></div>)}
+            </StInfoBox></div>)}
           </>:<></>}
           {state==2?
           <>{reserve?.map((value,index)=>
@@ -182,8 +183,9 @@ const MeetingManage = () => {
                 <StSmallButton onClick={()=>{navigate(`/teamboard/${teamId}/${value.meetingId}/meetingeditone`)}}>수정</StSmallButton>
                 <StSmallButton onClick={()=>{delet(value.meetingId)}}>삭제</StSmallButton>
               </StButtonBox>
-            </StInfoBox><StLine2/></div>)}
+            </StInfoBox></div>)}
           </>:<></>}
+          </StfInListBox>
         </StfListBox>
       </StRight>
     </>
@@ -206,9 +208,10 @@ const StLine2 = styled.div`
 const StInfoBox = styled.div`
   display: flex;
   align-items: center;
-  width : 900px;
-  height : 46px;
-  margin : 24px 0 24px 0;
+  width: 1184px;
+  height: 94px;
+  background-color: white;
+  margin : 8px 0 8px 0;
 `;
 
 const StIcon = styled.img`
@@ -299,6 +302,7 @@ const StTitleTop = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
+  color: #5C5C5C;
 `;
 
 const StHostTop = styled.div`
@@ -312,7 +316,7 @@ const StHostTop = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-
+  color: #5C5C5C;
 `;
 
 const StDateTop = styled.div`
@@ -326,7 +330,7 @@ const StDateTop = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-
+  color: #5C5C5C;
 `;
 
 const StDate = styled.div`
@@ -347,17 +351,19 @@ const StDate = styled.div`
 const StListTop = styled.div`
   display: flex;
   align-items: center;
-  width : 900px;
-  height : 56px;
+  width: 1160px;
+  height: 20px;
+  padding : 18px 0 18px 24px;
   margin : 5px 0 5px 0;
   border-radius: 6px;
-  background: #EFEFEF;
+  background: rgba(153, 213, 255, 0.3);
 `;
 
 const StList = styled.div`
   display: flex;
-  width : 750px;
-  height : 46px;
+  align-items: center;
+  width: 1184px;
+  height: 94px;
   margin : 0 0 0 0;
   border-radius: 6px;
   transition: 0.1s ease-in-out;
@@ -367,12 +373,22 @@ const StList = styled.div`
   cursor: pointer;
 `;
 
+const StfInListBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width : 1184px;
+  height : 50vh;
+  margin: 36px 0 0 38px;
+`;
+
 const StfListBox = styled.div`
   display: flex;
   flex-direction: column;
-  width : 700px;
+  width : 1184px;
   height : 50vh;
-  margin: 36px auto 0 30px;
+  margin: 20px auto 0 0px;
+  background-color: #F2F6F9;
+  border-top-left-radius: 20px;
 `;
 
 const StBlackBox = styled.div`
@@ -388,7 +404,9 @@ const StBlack2 = styled.div`
     justify-content: center;
     width : 150px;
     height : 20px;
-    border-bottom: ${props=>props.state==2?"3px solid":"none"};
+    border-bottom: ${props=>props.state==2?"4px solid #2396F0;":"4px solid #D7D7D7"};
+    color : ${props=>props.state==2?" #2396F0;":"#D7D7D7;"};
+    padding : 0 0 20px 0;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -401,7 +419,9 @@ const StBlack1 = styled.div`
     justify-content: center;
     width : 150px;
     height : 20px;
-    border-bottom: ${props=>props.state==1?"3px solid":"none"};
+    border-bottom: ${props=>props.state==1?"4px solid #2396F0;":"4px solid #D7D7D7"};
+    color : ${props=>props.state==1?" #2396F0;":"#D7D7D7;"};
+    padding : 0 0 20px 0;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -414,7 +434,9 @@ const StBlack0 = styled.div`
     justify-content: center;
     width : 150px;
     height : 20px;
-    border-bottom: ${props=>props.state==0?"3px solid":"none"};
+    border-bottom: ${props=>props.state==0?"4px solid #2396F0;":"4px solid #D7D7D7"};
+    color : ${props=>props.state==0?" #2396F0;":"#D7D7D7;"};
+    padding : 0 0 20px 0;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -434,8 +456,9 @@ const StRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 181px 36px 38px;
+  padding: 0 38px 36px 38px;
   overflow-x: hidden;
+  
   ::-webkit-scrollbar{
     width:10px;
   }

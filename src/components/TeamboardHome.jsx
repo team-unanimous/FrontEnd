@@ -17,6 +17,7 @@ import recommendtwo from '../img/TeamBoard/1.recommend/img2.svg'
 import recommendthree from '../img/TeamBoard/1.recommend/img2.svg'
 import DetailModalOnAir from './DetailModalOnAir';
 import DetailModalPassed from './DetailModalPassed';
+import useGetTeamMain from '../Hooks/useGetTeamMain';
 
 
 const TeamboardHome = () => {
@@ -35,8 +36,10 @@ const TeamboardHome = () => {
   const {data : passed} = useGetPassed({teamId});
   const {data : onAir} = useGetOnAir({teamId});
   const {data : reserve} = useGetReserve({teamId});
+  const {data : team} = useGetTeamMain({teamId});
+  console.log(team);
 
-  console.log(onAir);
+
 
   const [meetingId,setMeetingId] = useState("");
   const [meetingTitle,setMeetingTitle] = useState();
@@ -359,8 +362,9 @@ const StRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 181px 36px 38px;
+  padding: 0 38px 36px 38px;
   border-top-left-radius:20px;
+  border-top-right-radius:20px;
   background-color: #F2F6F9;
   overflow-x: hidden;
   ::-webkit-scrollbar{

@@ -241,8 +241,7 @@ const TeamSetting = (props) => {
                                     <StBlack>
                                         팀원 관리
                                     </StBlack>
-
-                                    <img onClick={()=>{setOpenInvite(true);}} src={inviteIcon}/>
+                                    <StUserBt onClick={()=>{setOpenInvite(true);}} src={inviteIcon}/>
                                     <StMateList>
                                         {props?.prop.map((value, index) => {
                                             return <StUserBox key={index}>
@@ -552,7 +551,7 @@ const StMateList = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width : 850px;
+    width : 860px;
     height : 259px;
     margin : 12px 0 20px 0;
     overflow-x: hidden;
@@ -572,11 +571,12 @@ const StMateList = styled.div`
 const StOut = styled.div`
     width : 98px;
     height : 20px;
-    margin : 0 auto 50px 20px;
+    margin : 0 auto 50px 170px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
+    color : red;
     cursor: pointer;
 `;
 
@@ -738,8 +738,9 @@ const StRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 181px 36px 38px;
+  padding: 0 38px 36px 38px;
   border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   background-color: #F2F6F9;
 `;
 

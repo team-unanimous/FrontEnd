@@ -3,7 +3,9 @@ import axios from "axios";
 
 // 1. Axios instance생성
 const axi = axios.create({
+
     baseURL: "https://dkworld.shop"
+
 })
 
 // 상우님 api https://shayangju.shop
@@ -30,6 +32,7 @@ const axis = {
     postTeamJoin: (data) => axi.post(`/api/teams/join`, data), //팀 참여하기 
     postTeam: (data) => axi.post(`/api/teams`, data), // 팀만들기
     getTeam: () => axi.get(`/api/teams`), // 팀선택페이지
+    postUnaTeamJoin: (data)=>axi.post(`/api/teams/unanimous`, data), //una 팀 조인 테스트
 
     //meeting room
     postMeetingroom: (data) => axi.post(`api/chat/meetings/${data.meetingId}/rooms`, data),

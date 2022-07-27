@@ -204,7 +204,7 @@ const StLeft = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding : 0 0 0 181px;
+  padding : 0 0 0 0px;
   `;
 
 const StMeetMake = styled.div`

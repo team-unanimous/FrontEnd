@@ -25,14 +25,14 @@ api.interceptors.request.use(
 )
 
 // 3. response interceptor
-// api.interceptors.response.use(
-//     response => {
-//         return response;
-//     },
-//     error => {
-//         console.log(error);
-//     }
-// );
+api.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        console.log(error);
+    }
+);
 
 // 4. 인스턴스 내보내기
 export default api;
