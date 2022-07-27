@@ -9,7 +9,7 @@ import { useEffect } from "react"
 import { getCookie } from "../Cookie"
 
 //테스트
-import axis from '../api/sub'
+// import axis from '../api/sub'
 
 
 
@@ -31,7 +31,7 @@ const TeamSelect = () => {
         }
     })
     const unaTeamJoin = async () => {
-        return axis.postUnaTeamJoin();
+        return apis.postUnaTeamJoin();
     }
     const { mutate: unaJoinMutate } = useMutation(unaTeamJoin, {
         onSuccess: (data) => {
@@ -40,17 +40,13 @@ const TeamSelect = () => {
             () => navigate('/teamboard/1');
         },
         onError: (error) => {
-            alert(error)
+            alert(error.response.data.error)
         }
     })
 
     const unaTeamJoinHandler = () => {
-        const data = {
-            // uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2"
-            token: token
-        }
-        console.log(data.data)
-        unaJoinMutate(data);
+        console.log("성공")
+        unaJoinMutate();
     }
 
     const { data } = useGetTeamInfo();

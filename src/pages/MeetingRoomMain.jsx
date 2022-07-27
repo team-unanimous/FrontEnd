@@ -6,7 +6,8 @@ import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 import ThemeOne from "../img/themeOne.png";
 import { useParams } from "react-router";
 import JoinRoom from "../components/WebRTC/JoinRoom";
-// import ThemeTwo from "../img/themeTwo.png";
+import ThemeTwo from "../img/themeTwo.svg";
+
 
 const MeetingRoomMain = ()=> {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
@@ -56,6 +57,7 @@ const StSidebarWrapper = styled.div`
     height: 979px;
     margin: 24px;
     box-sizing: border-box;
+    gap: 18px;
 `
 const StMainThemeWrapper = styled.div`
     display:flex;

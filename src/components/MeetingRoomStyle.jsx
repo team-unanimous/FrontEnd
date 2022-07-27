@@ -6,45 +6,54 @@ import styled from "styled-components";
 import ChatMessageBox from "./ChatMessageBox";
 import inputEnterVector from "../img/InputEnterVector.png"
 import xbutton from "../img/Xbutton.png"
+import { useParams } from "react-router-dom";
+import { useMutation } from "react-query";
 // import { useMutation } from "react-query";
 // import { useParams } from "react-router-dom";
 // import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 
 const MeetingRoomStyle = ()=>{
-    // let { meetingId } = useParams(); // url 생성이후 확인 가능
-    // useGetMeetSpecific(data);
-    // useEffect(()=>{
-    //     console.log(meetingId);
-    // })
+    const meetingId = useParams().sessionid;
+    // const {data : main}= useGetMeetSpecific({meetingId})
+    // const meetingId = useParams().meetid; // url 생성이후 확인 가능
+    console.log(meetingId);
+    // const {data} = useGetMeetSpecific({meetingId});
+
+    const makeChattingroom = (chattingInfo) => {
+        return apis.postMeetingroom(chattingInfo)
+    }
+
+    const { mutate: chattingMutate } = useMutation(makeChattingroom, {
+        onSuccess: (resp) => {
+            console.log(resp)
+        }
+    });
+
+    const chattingRoomHandler = () => {
+        const data = {
+            meetingId: meetingId
+        }
+        console.log(data);
+        chattingMutate(data);
+    }
+
     const token = getCookie("token");
     const decoded = jwt_decode(getCookie('token'));
-    const userName = decoded.USER_NICKNAME;
+    const myName = decoded.USER_NICKNAME;
 
 
     // 메시지
     const inputRef = useRef(null);
     //상태 관리
-    const [isMe, setIsMe] = useState(false); 
     const [msg, setMsg] = useState([]);
-    const [date, setDate] = useState([]);
-    const [type, setType] = useState([]);
-    const [nickname, setNickname] = useState([]);
-    const [sender, setSender] = useState([]);
-    const [avatar, setAvatar] = useState([]); 
 
-    // createdAt={createdAt}
-    // type={type} 
-    // roomId={roomId}
-    // nickname={nickname}
-    // sender={sender}
-    // message={message}
-    // profileUrl={profileUrl}
 
     const data = {
         token: token,
-        roomId: "2" //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+        roomId: "1" //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
 
+    //Socket 통신
     const SocketConnect = async (data) => {
         try{
             ws.connect({
@@ -53,15 +62,18 @@ const MeetingRoomStyle = ()=>{
                 ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
                 (response) => {
                     const newMessage = JSON.parse(response.body);
+                    console.log(newMessage)
                     // setMsg([...msg, newMessage.message]);
-                    setMsg(msg=>[...msg, newMessage.message])
-                    setDate(date=>[...date, newMessage.createdAt])
-                    setNickname(nickname=>[...nickname, newMessage.nickname])
-                    setAvatar(avatar=>[...avatar, newMessage.profileUrl])
-                    // console.log(msg)
-                    console.log(newMessage.message);
-                    console.log("보낸사람:", newMessage.sender);
-                    console.log("받은 메세지:", newMessage.message);
+                    if (newMessage.type == "TALK") {
+                        setMsg(msg=>[...msg, newMessage])
+                        // setDate(date=>[...date, newMessage.createdAt])
+                        // setNickname(nickname=>[...nickname, newMessage.nickname])
+                        // setAvatar(avatar=>[...avatar, newMessage.profileUrl])
+                        // console.log(msg)
+                        console.log(newMessage.message);
+                        console.log("보낸사람:", newMessage.sender);
+                        console.log("받은 메세지:", newMessage.message);
+                    }
                 },
                 {
                     token: token
@@ -74,7 +86,6 @@ const MeetingRoomStyle = ()=>{
 
     useEffect(()=>{
         SocketConnect(data);
-        console.log("hi");
     })
 
     function waitForConnection(ws, callback){
@@ -95,11 +106,10 @@ const MeetingRoomStyle = ()=>{
         try {
             const data = {
                 type: "TALK",
-                roomId: "2",
+                roomId: "1",
                 nickname: "string",
                 sender: "string",
                 message: `${inputRef.current.value}`,
-                createdAt: "10시"
             }
             const token = getCookie("token")
             waitForConnection(ws, function(){
@@ -113,6 +123,8 @@ const MeetingRoomStyle = ()=>{
             console.log(error);
         }
     }, [msg])
+    
+    //배포시 삭제
     const HandleSendNoConnection = (event)=> {
         event.preventDefault();
         setMsg([...msg, inputRef?.current?.value]);
@@ -125,15 +137,21 @@ const MeetingRoomStyle = ()=>{
             <StChattingContainer>
                 <StChattingHeader>
                     <StChattingHeaderWrapper>
-                        <StChattingTitle>
-                            <StChattingTitleBox>
-                                채팅 (0){/* 데이터 바인딩 필요   */}
-                            </StChattingTitleBox>
-                        </StChattingTitle>
-                        <StChattingXbutton>
-                            <StChattingXbuttonBox type={"image"} src={xbutton}>
-                            </StChattingXbuttonBox>
-                        </StChattingXbutton>
+                        <StChattingTabBox>
+                            채팅
+                        </StChattingTabBox>
+                        <StNoteTabBox>
+                            회의록
+                        </StNoteTabBox>
+                        {/* <StChattingTitle> */}
+                            {/* <StChattingTitleBox> */}
+                                {/* 채팅 (0)데이터 바인딩 필요   */}
+                            {/* </StChattingTitleBox> */}
+                        {/* </StChattingTitle> */}
+                        {/* <StChattingXbutton> */}
+                            {/* <StChattingXbuttonBox type={"image"} src={xbutton}> */}
+                            {/* </StChattingXbuttonBox> */}
+                        {/* </StChattingXbutton> */}
                     </StChattingHeaderWrapper>
                 </StChattingHeader>
                 <StChattingBody>
@@ -153,23 +171,23 @@ const MeetingRoomStyle = ()=>{
                                     // </StChattingMessageBox>
                                     <ChatMessageBox
                                     key={i}
-                                    createdAt={date}
-                                    nickname={nickname}
-                                    sender={sender}
-                                    profileUrl={avatar}
-                                    isMe={isMe}
-                                    msg={msg}
+                                    createdAt={msg.createdAt}
+                                    nickname={msg.nickname}
+                                    sender={msg.sender}
+                                    profileUrl={msg.profileUrl}
+                                    myName={myName}
+                                    msg={msg.message}
                                     >
-                                    {msg}
+                                    {msg.message}
                                     </ChatMessageBox>
                                 )
                             })
                         }
                     </StChattingMessageWrapper>
                     <StChattingInputWrapper>
-                        {/* <StChattingInputForm onSubmit={HandleSend}> */}
-                        <StChattingInputForm onSubmit={HandleSendNoConnection}>
-                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef} />
+                        <StChattingInputForm onSubmit={HandleSend}>
+                        {/* <StChattingInputForm onSubmit={HandleSendNoConnection}> */}
+                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef} maxLength="100"/>
                             <StSendButton type={"image"} src={inputEnterVector}/>
                         </StChattingInputForm>
                     </StChattingInputWrapper>
@@ -183,10 +201,17 @@ const StChattingContainer = styled.div`
     /* 채팅창 */
     position: relative;
     width: 360px;
-    height: 100%;
+    height: 784px;
     right: 0px;
     display: flex;
     flex-direction: column;
+
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.15));
+    border-radius: 8px;
+
+    flex: none;
+    order: 1;
+    flex-grow: 1;
 `
 const StChattingHeader = styled.div`
     /* Frame 146 */
@@ -213,8 +238,38 @@ const StChattingHeaderWrapper = styled.div`
     
     width: 90%;
     height: 4rem;
-    /* background-color: yellow; */
     border-bottom: 1px solid #D9D9D9;
+`
+const StChattingTabBox = styled.div`
+    /* 미팅 관리/탭/default */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    width: 140px;
+    height: 68px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+`
+const StNoteTabBox = styled.div`
+    /* 미팅 관리/탭/disabled */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+
+    width: 140px;
+    height: 68px;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
 `
 const StChattingTitle = styled.div`
     background-color: #FCFCFC;
