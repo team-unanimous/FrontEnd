@@ -5,6 +5,7 @@ import { useMutation } from "react-query";
 import styled from "styled-components";
 import apis from "../api/main";
 import xbutton from "../img/Xbutton.png"
+import teamSelectImg from "../img/teamSelect.png";
 
 
 
@@ -134,6 +135,9 @@ const StBox = styled.div`
     justify-content: center;
     align-items: center;
     order: 1;
+    background-image: url(${teamSelectImg});
+    background-repeat: no-repeat;
+    background-size: cover;
     `
 
 const StContainer = styled.div`

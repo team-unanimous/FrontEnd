@@ -5,41 +5,52 @@ import styled from "styled-components"
 import apis from "../api/main"
 import { useMutation } from "react-query"
 import teamSelectImg from "../img/teamSelect.png";
+import { useEffect } from "react"
+import { getCookie } from "../Cookie"
+
+//테스트
+import axis from '../api/sub'
+
 
 
 const TeamSelect = () => {
-    //key, vector img, team img box
+    const token = getCookie('token')
     const navigate = useNavigate();
-    // const [selectedTeam, setSelectedTeam] = useState(null);
     
     const teamJoin = async (data) => {
         return apis.postTeamJoin(data);
     }
     const { mutate: joinMutate } = useMutation(teamJoin, {
         onSuccess: (data) => {
-            console.log(data)
+            console.log(data);
             console.log(data.data);
-            () => navigate('/teamboard/1')
+            () => navigate('/teamboard/1');
         },
         onError: (error) => {
             console.log(error);
         }
     })
+    const unaTeamJoin = async () => {
+        return axis.postUnaTeamJoin();
+    }
+    const { mutate: unaJoinMutate } = useMutation(unaTeamJoin, {
+        onSuccess: (data) => {
+            console.log(data);
+            alert("성공! 팀으로 이동합니다");
+            () => navigate('/teamboard/1');
+        },
+        onError: (error) => {
+            alert(error)
+        }
+    })
 
-
-    // const unaTeamJoinHandler = () =>{
-    //     const data = {
-    //         uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2" //unanimous UUID로 교체 필요
-    //     }
-    //     console.log(data.data)
-    //     joinMutate(data);
-    // }
     const unaTeamJoinHandler = () => {
         const data = {
-            uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2"
+            // uuid: "ff4ca7ab-5e9a-491b-a90d-70b200fe41d2"
+            token: token
         }
         console.log(data.data)
-        joinMutate(data);
+        unaJoinMutate(data);
     }
 
     const { data } = useGetTeamInfo();
@@ -58,11 +69,11 @@ const TeamSelect = () => {
                         >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin>
                     </StTitleWrapper>
                     <StTeamBox>
-                        {data.map((team) => (
-                            <>
-                                <StTeamItemBox >
+                        {data.map((team, index) => (
+                                <StTeamItemBox 
+                                key={index}>
                                     <StTeamItem
-                                        key={team.teamId}
+                                        key={index}
                                         className="team-title"
                                         onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
                                         src={{ data }.data[0].teamImage}
@@ -72,7 +83,6 @@ const TeamSelect = () => {
                                         {team.teamname}
                                     </StTeamName>
                                 </StTeamItemBox>
-                            </>
                         ))}
                     </StTeamBox>
                     <StButtonWrapper>
@@ -101,6 +111,7 @@ const StBox = styled.div`
   align-items: center;
   background-image: url(${teamSelectImg});
   background-repeat: no-repeat;
+  background-size: cover;
   `;
 
 const StContainer = styled.div`

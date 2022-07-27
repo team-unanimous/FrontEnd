@@ -12,6 +12,7 @@ const TeamInvited = () => {
     const [warning, setWarning] = useState(null);
     const [teamData, setTeamData] = useState(null);
     const [teamName, setTeamName] = useState(null);
+    const [teamId, setTeamId] = useState(null);
     const [UUID, setUUID] = useState('');
     const findUUID = async (UUIDInfo)=> {
         return apis.postInviteTeam(UUIDInfo);
@@ -31,6 +32,7 @@ const TeamInvited = () => {
             console.log(resp, "성공");
             setTeamName(resp.data.teamname);
             setUUID(resp.data.uuid);
+            setTeamId(resp.data.id);
             setWarning(false);
             setTeamData(true);
         },
@@ -46,7 +48,8 @@ const TeamInvited = () => {
     const { mutate : joinMutate } = useMutation(teamJoin, {
         onSuccess: (data)=>{
             console.log(data.data);
-            ()=>navigate('/teamboard/1')
+            alert("성공");
+            ()=>navigate(`/teamboard/${teamId}`);
         },
         onError: (error)=>{
             console.log(error);
@@ -121,6 +124,7 @@ const StBox = styled.div`
     order: 1;
     background-image: url(${teamSelectImg});
     background-repeat: no-repeat;
+    background-size: cover;
 `
 const StContainer = styled.div`
     /* Frame 270 */

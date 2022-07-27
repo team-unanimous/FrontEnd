@@ -25,6 +25,7 @@ import TeamJoin from "./pages/TeamJoin";
 import Landing from "./pages/Landing";
 import MeetingRoomStyle from "./components/MeetingRoomStyle";
 import MeetingRoomMain from "./pages/MeetingRoomMain";
+import MeetingRoomChat from "./components/MeetingRoomChat";
 import Mypage from "./pages/Mypage";
 import PasswordFindOne from "./pages/PasswordFindOne"
 import PasswordFindTwo from "./pages/PasswordFindTwo"
@@ -68,6 +69,7 @@ function App() {
         <Route path="/invitemember" element={<InviteTeamMember />} />        
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />
+        <Route path="/chat" element={<MeetingRoomChat/>} />
         <Route path="/chatstyle" element={<MeetingRoomStyle />} />
         <Route path="/meetingroom" element={<MeetingRoomMain />} />
         <Route path="/mypage" element={<Mypage />} />

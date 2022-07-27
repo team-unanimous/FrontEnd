@@ -76,6 +76,7 @@ const StBox = styled.div`
     order: 1;
     background-image: url(${teamSelectImg});
     background-repeat: no-repeat;
+    background-size: cover;
     `
 
 const StContainer = styled.div`
