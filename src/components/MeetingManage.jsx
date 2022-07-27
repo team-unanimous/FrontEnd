@@ -184,9 +184,7 @@ const MeetingManage = () => {
               </StButtonBox>
             </StInfoBox><StLine2/></div>)}
           </>:<></>}
-            
         </StfListBox>
-
       </StRight>
     </>
   )

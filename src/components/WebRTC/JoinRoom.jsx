@@ -209,7 +209,7 @@ class JoinRoom extends Component {
     }
 
     mute(){
-        this.session.publish.publishAudio(false);
+        this.OV.initPublisher.publish.publishAudio(false);
     }
 
     leaveSession() {
