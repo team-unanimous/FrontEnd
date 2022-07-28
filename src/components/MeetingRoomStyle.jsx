@@ -19,15 +19,13 @@ const MeetingRoomStyle = ({meetingId})=>{
     const [msg, setMsg] = useState([]);
 
     useEffect(()=>{
-        SocketConnect(data);
-        return () => {
-            alert("alert!!!!")
-            console.log("언마운트 됨");
-            HandleUnsubscribe();
-        }
+        waitForConnection(ws,SocketConnect(data));
+        // return () => {
+        //     HandleUnsubscribe();
+        // }
     }, [])
 
-    const target = "https://sparta-ysh.shop/ws-stomp” //“http://52.79.226.242:8080/ws-stomp"
+    const target = "https://sparta-ysh.shop/ws-stomp" //"http://52.79.226.242:8080/ws-stomp" 
     const socket = new sockJS(target);
     const ws = Stomp.over(socket);
 
@@ -35,9 +33,9 @@ const MeetingRoomStyle = ({meetingId})=>{
         token: token,
         roomId: meetingId //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
-
+    
     //Socket 통신
-    const SocketConnect = async (data) => {
+    const SocketConnect = (data) => {
         try{
             ws.connect({
                 token: data.token
@@ -51,7 +49,7 @@ const MeetingRoomStyle = ({meetingId})=>{
                     }
                 },
                 {
-                    token: token
+                    token: data.token
                 });
             });
             console.log("구독 성공")
@@ -101,6 +99,21 @@ const MeetingRoomStyle = ({meetingId})=>{
         setMsg([...msg, inputRef?.current?.value]);
         inputRef.current.value = ""
     }
+    
+    const HandleUnsubscribe = useCallback(()=>{
+        try{
+            ws.disconnect(
+                ()=>{
+                    ws.unsubscribe("sub-0");
+                    console.log("Disconnected...")
+                },
+                {token: getCookie("token")}
+            );
+            // ws.unsubscribe(`/sub/api/chat/rooms/${data.roomId}`);
+        } catch (error) {
+            console.log(error);
+        }
+    })
     
 
     return (

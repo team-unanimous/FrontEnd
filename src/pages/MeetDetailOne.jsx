@@ -65,7 +65,7 @@ const MeetDetailOne = () => {
                 미팅 URL
               </StInfoLeft> 
               <StInfoRight>
-
+                  unanimous.co.kr/meetingroom/{teamId}/{meetingId}
               </StInfoRight>
             </StUrlBox>
           </StInfo>

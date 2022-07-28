@@ -11,7 +11,7 @@ import Stomp from "stompjs";
 import sockJS from "sockjs-client"
 import { useNavigate } from "react-router-dom";
 
-const MeetingRoomChat = ()=>{
+const MeetingRoomChat = ({meetingId})=>{
     const navigate = useNavigate()
     const [color, setColor] = useState(null);
     const [msg, setMsg] = useState("");
@@ -47,9 +47,6 @@ const MeetingRoomChat = ()=>{
                 console.log(newMessage.type);
                 if (newMessage.type == "TALK"){
                     setMsg(newMessage.message);
-                    setIssue(newMessage.message);
-                    console.log("보낸사람:", newMessage.sender);
-                    console.log("받은 메세지:", newMessage.message);                    
                 }
             },
             {
@@ -91,7 +88,7 @@ const MeetingRoomChat = ()=>{
 
     const data = {
         token: token,
-        roomId: "1"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+        roomId: meetingId,
     }
 
 // const SocketConnect = (token) => { 
@@ -173,7 +170,7 @@ const MeetingRoomChat = ()=>{
         try {
             const data = {
                 type: "TALK",
-                roomId: "1",
+                roomId: meetingId,
                 nickname: "string",
                 sender: "string",
                 message: `${inputRef.current.value}`
@@ -195,7 +192,7 @@ const MeetingRoomChat = ()=>{
         try {
             const data = {
                 type: "ENTER",
-                roomId: "1",
+                roomId: meetingId,
                 nickname: "string",
                 sender: "string",
                 message: `this is a Enter message from the client : ${EnterRef.current.value}`,
@@ -216,7 +213,7 @@ const MeetingRoomChat = ()=>{
         try {
             const data = {
                 type: "ISSUE",
-                roomId: "1",
+                roomId: meetingId,
                 nickname: "string",
                 sender: "string",
                 message: JSON.stringify({"안건1":"안건입니다", "안건2":"안건이 아닙니다"}),
@@ -246,7 +243,7 @@ const MeetingRoomChat = ()=>{
 
     return (
         <>  
-        <StChattingContainer>
+        {/* <StChattingContainer>
             <StChattingItem>
             <button onClick={meetingRoomHandler}>create meeting room</button><br/>
             <button onClick={SocketConnect}>Connect</button><br/>
@@ -272,7 +269,7 @@ const MeetingRoomChat = ()=>{
                 {console.log(`${msg}`)}
                 </>
             }
-        </StChattingContainer>
+        </StChattingContainer> */}
         </>
     )
 }

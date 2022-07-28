@@ -26,6 +26,7 @@ import officeFive from '../../img/5.MeetingRoom/1.videochat/office/frame5.svg'
 import officeSix from '../../img/5.MeetingRoom/1.videochat/office/frame6.svg'
 import officeSeven from '../../img/5.MeetingRoom/1.videochat/office/frame7.svg'
 import officeEight from '../../img/5.MeetingRoom/1.videochat/office/frame8.svg'
+import apis from '../../api/main';
 
 
 
@@ -33,6 +34,7 @@ const OPENVIDU_SERVER_URL = 'https://' + 'dkworld93.shop' + ':8443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 function withParams(Component) { 
+    //const {data} = apis.getMeetSpecific();
     return props => <Component {...props} nick={jwtDecode(getCookie('token')).USER_NICKNAME} params={useParams()}/>;
 }
 
@@ -56,7 +58,6 @@ class JoinRoom extends Component {
 
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
-
         this.switchCamera = this.switchCamera.bind(this);
         this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
         this.handleChangeUserName = this.handleChangeUserName.bind(this);
@@ -67,18 +68,16 @@ class JoinRoom extends Component {
     componentDidMount() {
         let id = this.props.params.sessionid;
         let nickname = this.props.nick;
-        console.log(id);
-        console.log(nickname);
         this.setState({
             mySessionId:id,
             myUserName:nickname
         })
-        window.addEventListener('beforeunload', this.onbeforeunload);
+        window.addEventListener('beforeunload',this.onbeforeunload);
         this.joinSession();
     }
 
     componentWillUnmount() {
-        window.removeEventListener('beforeunload', this.onbeforeunload);
+        window.removeEventListener('beforeunload', this.onbeforeunload());
     }
 
     onbeforeunload(event) {
@@ -213,16 +212,11 @@ class JoinRoom extends Component {
     }
 
     leaveSession() {
-
-        // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-
         const mySession = this.state.session;
-
         if (mySession) {
             mySession.disconnect();
         }
-
-        // Empty all properties...
+        alert("회의에서 나갑니다.")
         this.OV = null;
         this.setState({
             session: undefined,
@@ -289,11 +283,7 @@ class JoinRoom extends Component {
                                 onClick={this.leaveSession}
                                 value="Leave session"
                             />
-                            <input
-                                type="button"
-                                onClick={this.mute}
-                                value="Button"
-                            />
+                            
                         </div>
 
                         {this.state.mainStreamManager !== undefined ? (
@@ -317,7 +307,7 @@ class JoinRoom extends Component {
                             ) : null}
                             <StTable></StTable>
                             {this.state.subscribers.map((sub, i) => (
-                                <>
+                                <div key={i}>
                                 {i==0?<StBoxDown key={i} bottom="123px" left="300px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                                     {i==0?<StImg src={casualTwo}/>:<></>}
                                     {/* {i==1?<StImg src={casualThree}/>:<></>}
@@ -358,7 +348,7 @@ class JoinRoom extends Component {
                                     {i==6?<StImg src={casualEight}/>:<></>}
                                     <UserVideoComponent streamManager={sub} />
                                 </StBoxDown>:<></>}
-                                </>
+                                </div>
                             ))}
                         </StCharacterBox>
                     </div>
@@ -442,6 +432,24 @@ class JoinRoom extends Component {
         });
     }
 }
+
+const StFinishBt = styled.div`   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 155px;
+    height: 52px;
+    cursor: pointer;
+`;
+
+const StGetOutBt = styled.div`   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 155px;
+    height: 52px;
+    cursor: pointer;
+`;
 
 const StTable = styled.div`
     position : absolute;

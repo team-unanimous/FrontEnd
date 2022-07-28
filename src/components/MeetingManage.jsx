@@ -101,6 +101,7 @@ const MeetingManage = () => {
         
         <StfListBox>  
           <StfInListBox>
+          <></>
           <StListTop>
             <StDateTop>날짜</StDateTop>
             <StHostTop>주최자</StHostTop>
@@ -212,12 +213,14 @@ const StInfoBox = styled.div`
   height: 94px;
   background-color: white;
   margin : 8px 0 8px 0;
+  box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
 `;
 
 const StIcon = styled.img`
   width : 18px;
   height : 18px;
   margin : 0 0 0 0;
+  cursor: pointer;
 `;
 
 const StSmallButton = styled.div`
@@ -230,6 +233,7 @@ const StSmallButton = styled.div`
   border-radius: 6px;
   border : 1px solid black;
   color : black;
+  cursor: pointer;
 `;
 
 const StButton = styled.div`
@@ -360,6 +364,8 @@ const StListTop = styled.div`
   margin : 5px 0 5px 0;
   border-radius: 6px;
   background: rgba(153, 213, 255, 0.3);
+  box-shadow: 0px 4px 10px rgba(153, 213, 255, 0.3),0px 4px 10px rgba(0, 0, 0, 0.05);
+
 `;
 
 const StList = styled.div`
@@ -391,6 +397,19 @@ const StfListBox = styled.div`
   background-color: #F2F6F9;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  overflow-x: hidden;
+  
+  ::-webkit-scrollbar{
+    width:10px;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #818181;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-track{
+    
+    border-radius: 1rem;
+  }
 `;
 
 const StBlackBox = styled.div`
@@ -454,7 +473,7 @@ const StLine = styled.div`
 
 const StRight = styled.div`
   width : 1184px;
-  height : 86.5vh;
+  height : 91.5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
