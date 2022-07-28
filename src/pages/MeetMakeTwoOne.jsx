@@ -47,7 +47,7 @@ const MeetMakeTwoOne = () => {
       navigate(`/teamboard/${teamId}/meetmakethreeone`);
     },
     onError: (error) => {
-      alert("미팅 만들기 실패")
+      alert("미팅룸 이름을 설정해주세요")
     }
   });
 

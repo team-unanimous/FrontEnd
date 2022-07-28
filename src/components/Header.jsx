@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
 import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
+import logo from '../img/favicon.svg'
 
 const Header = ({ teamname }) => {
 
@@ -20,10 +21,8 @@ const Header = ({ teamname }) => {
   const queryClient = useQueryClient();
 
   return (
-    <StWhole>
-      <StLogo>
-        Unanimous
-      </StLogo>
+    <StWhole>   
+       <StLogo onClick={()=>{navigate(`/teamselect`)}} src={logo}/>
       <StTimeBox>
         <StRightBox>
           <StDropBox>
@@ -90,7 +89,7 @@ const StDefault = styled.div`
   padding : 20px;
   border: none;
   border-radius: 6px;
-  background-color: white;
+  background-color: #F1F1F1;
   cursor: pointer;
 `;
 
@@ -107,6 +106,7 @@ const StDropBox = styled.div`
   position: relative;
   width : 155px;
   height : 20px;
+  margin : 0 48px 0 0;
   padding : 15px;
 `;
 
@@ -147,16 +147,16 @@ const StWhole = styled.div`
     align-items: center;
     width : 100%;
     height : 5rem;
-    background-color: #D9D9D9;
 `;
 
-const StLogo = styled.div`
-    width: 3.25rem;
-    height: 1.25rem;
-    margin : 0 0 0 3.75rem;
+const StLogo = styled.img`
+    width: 32px;
+    height: 32px;
+    margin : 0 0 0 42px;
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 20px;
+    cursor: pointer;
 `;
 
 export default Header
