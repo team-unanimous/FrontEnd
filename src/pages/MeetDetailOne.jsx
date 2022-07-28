@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useGetMeetSpecific } from '../Hooks/useGetMeetSpecific';
 import { StButton,StBarBox,StBarG,StBarC } from '../style/styled';
 import { useMutation } from 'react-query';
@@ -8,10 +8,10 @@ import apis from '../api/main';
 
 const MeetDetailOne = () => {
   
+  const navigate = useNavigate();
   const meetingId = useParams().meetid;
-  console.log(meetingId);
   const {data} = useGetMeetSpecific({meetingId});
-  console.log(data);
+  const teamId = useParams().teamid;
 
   return (
     <StPage>
@@ -70,7 +70,7 @@ const MeetDetailOne = () => {
             </StUrlBox>
           </StInfo>
         </StUp>
-        <StButton onClick={()=>{}}>완료</StButton>
+        <StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${meetingId}`)}}>완료</StButton>
         </Box>
       </StModal>
     </StPage>

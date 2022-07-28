@@ -8,6 +8,15 @@ import { useMutation } from 'react-query'
 import apis from '../api/main'
 import { teamID } from '../redux/modules/meetReducer'
 
+import sum1 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail1.svg'
+import sum2 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail2.svg'
+import sum3 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail3.svg'
+import sum4 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail4.svg'
+import sum5 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail5.svg'
+import theme1 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/theme1.svg'
+import theme2 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/theme2.svg'
+import nextbt from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/btn_next.svg'
+
 const MeetMakeTwoTwo = () => {
 
   const dispatch = useDispatch();
@@ -91,11 +100,11 @@ const MeetMakeTwoTwo = () => {
                       썸네일 이미지 선택
                     </StSumTitle>
                     <StSumnail>
-                      <StSumnailImg1 clicked={sumImg} onClick={()=>{setSumImg(1)}}/>
-                      <StSumnailImg2 clicked={sumImg} onClick={()=>{setSumImg(2)}}/>
-                      <StSumnailImg3 clicked={sumImg} onClick={()=>{setSumImg(3)}}/>
-                      <StSumnailImg4 clicked={sumImg} onClick={()=>{setSumImg(4)}}/>
-                      <StSumnailImg5 clicked={sumImg} onClick={()=>{setSumImg(5)}}/>
+                      <StSumnailImg1 src={sum1} clicked={sumImg} onClick={()=>{setSumImg(1)}}/>
+                      <StSumnailImg2 src={sum2} clicked={sumImg} onClick={()=>{setSumImg(2)}}/>
+                      <StSumnailImg3 src={sum3} clicked={sumImg} onClick={()=>{setSumImg(3)}}/>
+                      <StSumnailImg4 src={sum4} clicked={sumImg} onClick={()=>{setSumImg(4)}}/>
+                      <StSumnailImg5 src={sum5} clicked={sumImg} onClick={()=>{setSumImg(5)}}/>
                     </StSumnail>
                   </StSumnailBox>
                   <StTheme>
@@ -103,8 +112,8 @@ const MeetMakeTwoTwo = () => {
                       테마 선택
                     </StThemeTitle>
                     <StThemeSmallBox>
-                      <StThemeInnerBox1 clicked={theme} onClick={()=>{setTheme(1)}}/>
-                      <StThemeInnerBox2 clicked={theme} onClick={()=>{setTheme(2)}}/>
+                      <StThemeInnerBox1 src={theme1} clicked={theme} onClick={()=>{setTheme(1)}}/>
+                      <StThemeInnerBox2 src={theme2} clicked={theme} onClick={()=>{setTheme(2)}}/>
                     </StThemeSmallBox>
                   </StTheme>
               </StLeft>
@@ -167,7 +176,7 @@ const StThemeInnerBox2 = styled.img`
   width : 170px;
   height : 167px;
   border-radius: 8px;
-  border: ${props=>(props.clicked == 2 ? "1px solid black" :"none")};
+  border: ${props=>(props.clicked == 2 ? "2px solid #2396F0" :"none")};
   background-color: #D9D9D9;
   cursor: pointer;
 `;
@@ -176,14 +185,14 @@ const StThemeInnerBox1 = styled.img`
   width : 170px;
   height : 167px;
   border-radius: 8px;
-  border: ${props=>(props.clicked == 1 ? "1px solid black" :"none")};
+  border: ${props=>(props.clicked == 1 ? "2px solid #2396F0" :"none")};
   background-color: #D9D9D9;
   cursor: pointer;
 `;
 
 
 const StSumnailImg1 = styled.img`
-  border : ${props=>(props.clicked == 1 ? "1px solid black" :"none")};
+  border : ${props=>(props.clicked == 1 ? "2px solid #2396F0" :"none")};
   width : 62px;
   height : 62px;
   border-radius: 8px;
@@ -192,7 +201,7 @@ const StSumnailImg1 = styled.img`
 `;
 
 const StSumnailImg2 = styled.img`
-  border: ${props=>(props.clicked == 2 ? "1px solid black" :"none")};
+  border: ${props=>(props.clicked == 2 ? "2px solid #2396F0" :"none")};
   width : 62px;
   height : 62px;
   border-radius: 8px;
@@ -201,7 +210,7 @@ const StSumnailImg2 = styled.img`
 `;
 
 const StSumnailImg3 = styled.img`
-  border: ${props=>(props.clicked == 3 ? "1px solid black" :"none")};
+  border: ${props=>(props.clicked == 3 ? "2px solid #2396F0" :"none")};
   width : 62px;
   height : 62px;
   border-radius: 8px;
@@ -210,7 +219,7 @@ const StSumnailImg3 = styled.img`
 `;
 
 const StSumnailImg4 = styled.img`
-  border: ${props=>(props.clicked == 4 ? "1px solid black" :"none")};
+  border: ${props=>(props.clicked == 4 ? "2px solid #2396F0" :"none")};
   width : 62px;
   height : 62px;
   border-radius: 8px;
@@ -219,7 +228,7 @@ const StSumnailImg4 = styled.img`
 `;
 
 const StSumnailImg5 = styled.img`
-  border: ${props=>(props.clicked == 5 ? "1px solid black" :"none")};
+  border: ${props=>(props.clicked == 5 ? "2px solid #2396F0" :"none")};
   width : 62px;
   height : 62px;
   border-radius: 8px;
@@ -273,7 +282,7 @@ const StDefault = styled.div`
   width : 143px;
   height : 6px;
   padding : 20px;
-  border : 1px solid black;
+  border : 1px solid #5C5C5C;
   border-radius: 6px;
   background-color: white;
   cursor: pointer;
@@ -340,7 +349,7 @@ const StDate = styled.input`
   width : 156px;
   height : 18px;
   padding : 14px;
-  border : 1px solid black;
+  border: 1px solid #5C5C5C;
   border-radius: 6px;
 `;
 
@@ -371,6 +380,7 @@ const StTitleInput = styled.input`
   height : 19px;
   padding : 13px;
   border-radius: 6px;
+  border: 1px solid #5C5C5C;
 `;
 
 const StTitleName = styled.div`

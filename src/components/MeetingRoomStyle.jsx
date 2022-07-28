@@ -8,49 +8,32 @@ import inputEnterVector from "../img/InputEnterVector.png"
 import xbutton from "../img/Xbutton.png"
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
-// import { useMutation } from "react-query";
-// import { useParams } from "react-router-dom";
-// import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
+import Stomp from "stompjs";
+import sockJS from "sockjs-client";
 
-const MeetingRoomStyle = ()=>{
-    const meetingId = useParams().sessionid;
-    // const {data : main}= useGetMeetSpecific({meetingId})
-    // const meetingId = useParams().meetid; // url 생성이후 확인 가능
-    console.log(meetingId);
-    // const {data} = useGetMeetSpecific({meetingId});
-
-    const makeChattingroom = (chattingInfo) => {
-        return apis.postMeetingroom(chattingInfo)
-    }
-
-    const { mutate: chattingMutate } = useMutation(makeChattingroom, {
-        onSuccess: (resp) => {
-            console.log(resp)
-        }
-    });
-
-    const chattingRoomHandler = () => {
-        const data = {
-            meetingId: meetingId
-        }
-        console.log(data);
-        chattingMutate(data);
-    }
-
+const MeetingRoomStyle = ({meetingId})=>{
     const token = getCookie("token");
     const decoded = jwt_decode(getCookie('token'));
     const myName = decoded.USER_NICKNAME;
-
-
-    // 메시지
     const inputRef = useRef(null);
-    //상태 관리
     const [msg, setMsg] = useState([]);
 
+    useEffect(()=>{
+        SocketConnect(data);
+        return () => {
+            alert("alert!!!!")
+            console.log("언마운트 됨");
+            HandleUnsubscribe();
+        }
+    }, [])
+
+    const target = "https://sparta-ysh.shop/ws-stomp” //“http://52.79.226.242:8080/ws-stomp"
+    const socket = new sockJS(target);
+    const ws = Stomp.over(socket);
 
     const data = {
         token: token,
-        roomId: "1" //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+        roomId: meetingId //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
 
     //Socket 통신
@@ -63,16 +46,8 @@ const MeetingRoomStyle = ()=>{
                 (response) => {
                     const newMessage = JSON.parse(response.body);
                     console.log(newMessage)
-                    // setMsg([...msg, newMessage.message]);
                     if (newMessage.type == "TALK") {
                         setMsg(msg=>[...msg, newMessage])
-                        // setDate(date=>[...date, newMessage.createdAt])
-                        // setNickname(nickname=>[...nickname, newMessage.nickname])
-                        // setAvatar(avatar=>[...avatar, newMessage.profileUrl])
-                        // console.log(msg)
-                        console.log(newMessage.message);
-                        console.log("보낸사람:", newMessage.sender);
-                        console.log("받은 메세지:", newMessage.message);
                     }
                 },
                 {
@@ -83,10 +58,6 @@ const MeetingRoomStyle = ()=>{
         } catch (error) {
             console.log(error.response);
         }}
-
-    useEffect(()=>{
-        SocketConnect(data);
-    })
 
     function waitForConnection(ws, callback){
         setTimeout(
@@ -106,7 +77,7 @@ const MeetingRoomStyle = ()=>{
         try {
             const data = {
                 type: "TALK",
-                roomId: "1",
+                roomId: meetingId,
                 nickname: "string",
                 sender: "string",
                 message: `${inputRef.current.value}`,
@@ -201,7 +172,7 @@ const StChattingContainer = styled.div`
     /* 채팅창 */
     position: relative;
     width: 360px;
-    height: 784px;
+    height: 734px;
     right: 0px;
     display: flex;
     flex-direction: column;
@@ -304,7 +275,7 @@ const StChattingBody = styled.div`
     display: flex;
     flex-direction: column;
     /* align-items: flex-end; */
-    height: 100%;
+    height: 670px;
 `
 const StChattingMessageWrapper = styled.div`
     display: flex;

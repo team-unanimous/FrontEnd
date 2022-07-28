@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import MeetingRoomStyle from "../components/MeetingRoomStyle";
 import MeetingRoomInfo from "../components/MeetingRoomInfo";
@@ -12,7 +12,6 @@ import ThemeTwo from "../img/themeTwo.svg";
 const MeetingRoomMain = ()=> {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
     const meetingId = useParams().sessionid;
-    
     const {data : main}= useGetMeetSpecific({meetingId})
 
     console.log(main);
@@ -22,13 +21,13 @@ const MeetingRoomMain = ()=> {
     return(
         <>
         <StContainer>
-                        <StMainThemeWrapper theme={main?.meetingTheme}>
-                            <JoinRoom Theme={main?.meetingTheme} />
-                        </StMainThemeWrapper>
-                <StSidebarWrapper>
-                    <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
-                    <MeetingRoomStyle></MeetingRoomStyle>
-                </StSidebarWrapper>
+            <StMainThemeWrapper theme={main?.meetingTheme}>
+                <JoinRoom Theme={main?.meetingTheme} />
+            </StMainThemeWrapper>
+            <StSidebarWrapper>
+                <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
+                <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
+            </StSidebarWrapper>
         </StContainer>
         </>
     )
@@ -37,7 +36,7 @@ const MeetingRoomMain = ()=> {
 const StContainer = styled.div`
     display: flex;
     flex-direction: row;
-    width: 100vw;
+    width: 99vw;
     height: 100vh;
     background-color: #F2F6F9;
     justify-content: flex-start;
@@ -54,7 +53,7 @@ const StSidebarWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 360px;
-    height: 979px;
+    height:930px;
     margin: 24px;
     box-sizing: border-box;
     gap: 18px;

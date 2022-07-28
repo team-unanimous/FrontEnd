@@ -208,7 +208,7 @@ const StLine2 = styled.div`
 const StInfoBox = styled.div`
   display: flex;
   align-items: center;
-  width: 1184px;
+  width: 1104px;
   height: 94px;
   background-color: white;
   margin : 8px 0 8px 0;
@@ -242,6 +242,9 @@ const StButton = styled.div`
   margin : 0 0 0 0;
   border-radius: 6px;
   color : black;
+  &:hover{
+    background-color:#E2E2E2 ;
+  }
 `;
 
 const StDateBox = styled.div`
@@ -351,7 +354,7 @@ const StDate = styled.div`
 const StListTop = styled.div`
   display: flex;
   align-items: center;
-  width: 1160px;
+  width: 1080px;
   height: 20px;
   padding : 18px 0 18px 24px;
   margin : 5px 0 5px 0;
@@ -362,14 +365,12 @@ const StListTop = styled.div`
 const StList = styled.div`
   display: flex;
   align-items: center;
-  width: 1184px;
+  width: 984px;
   height: 94px;
-  margin : 0 0 0 0;
+
   border-radius: 6px;
   transition: 0.1s ease-in-out;
-  &:hover{
-    background-color:#E2E2E2 ;
-  }
+
   cursor: pointer;
 `;
 
@@ -385,10 +386,11 @@ const StfListBox = styled.div`
   display: flex;
   flex-direction: column;
   width : 1184px;
-  height : 50vh;
+  height : 90vh;
   margin: 20px auto 0 0px;
   background-color: #F2F6F9;
   border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 `;
 
 const StBlackBox = styled.div`
@@ -456,7 +458,7 @@ const StRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 38px 36px 38px;
+  padding: 0 38px 0px 38px;
   overflow-x: hidden;
   
   ::-webkit-scrollbar{

@@ -310,7 +310,7 @@ class JoinRoom extends Component {
                         ) : null}
                         <StCharacterBox id="video-container" className="col-md-6">
                             {this.state.publisher !== undefined ? (
-                                <StBoxUp bottom="738px" left="300px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
+                                <StBoxUp bottom="718px" left="300px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                                     <StImg src={casualOne}/>
                                     <UserVideoComponent streamManager={this.state.publisher} />
                                 </StBoxUp>
@@ -318,7 +318,7 @@ class JoinRoom extends Component {
                             <StTable></StTable>
                             {this.state.subscribers.map((sub, i) => (
                                 <>
-                                {i==0?<StBoxDown key={i} bottom="129px" left="300px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                {i==0?<StBoxDown key={i} bottom="123px" left="300px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                                     {i==0?<StImg src={casualTwo}/>:<></>}
                                     {/* {i==1?<StImg src={casualThree}/>:<></>}
                                     {i==2?<StImg src={casualFour}/>:<></>}
@@ -329,32 +329,32 @@ class JoinRoom extends Component {
                                     <UserVideoComponent streamManager={sub} />
                                 </StBoxDown>:<></>}
                                 {i==1?
-                                <StBoxUp key={i} bottom="738px" left="600px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                <StBoxUp key={i} bottom="718px" left="600px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                                     {i==1?<StImg src={casualThree}/>:<></>}
                                     <UserVideoComponent streamManager={sub} />
                                 </StBoxUp>:<></>}
                                 {i==2?
-                                <StBoxDown key={i} bottom="129px" left="600px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                <StBoxDown key={i} bottom="123px" left="600px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                                     {i==2?<StImg src={casualFour}/>:<></>}
                                     <UserVideoComponent streamManager={sub} />
                                 </StBoxDown>:<></>}
                                 {i==3?
-                                <StBoxUp key={i} bottom="738px" left="0px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                <StBoxUp key={i} bottom="718px" left="0px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                                     {i==3?<StImg src={casualFive}/>:<></>}
                                     <UserVideoComponent streamManager={sub} />
                                 </StBoxUp>:<></>}
                                 {i==4?
-                                <StBoxDown key={i} bottom="129px" left="0px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
-                                    {i==4?<StImg src={casualFive}/>:<></>}
+                                <StBoxDown key={i} bottom="123px" left="0px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    {i==4?<StImg src={casualSix}/>:<></>}
                                     <UserVideoComponent streamManager={sub} />
                                 </StBoxDown>:<></>}
                                 {i==5?
-                                <StBoxUp key={i} bottom="738px" left="900px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                <StBoxUp key={i} bottom="718px" left="900px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                                     {i==5?<StImg src={casualSeven}/>:<></>}
                                     <UserVideoComponent streamManager={sub} />
                                 </StBoxUp>:<></>}
                                 {i==6?
-                                <StBoxDown key={i} bottom="129px" left="900px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                <StBoxDown key={i} bottom="123px" left="900px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                                     {i==6?<StImg src={casualEight}/>:<></>}
                                     <UserVideoComponent streamManager={sub} />
                                 </StBoxDown>:<></>}
@@ -448,7 +448,7 @@ const StTable = styled.div`
     width: 1168px;
     height: 347px;
     left : 0px;
-    top : 303px;
+    top : 280px;
     border-radius: 36px;
     background-color: #F5E8CD;
     z-index: 20;
@@ -462,7 +462,7 @@ const StCharacterBox = styled.div`
     gap : 500px 10;
     justify-content: space-between;
     width : 950px;
-    height : 930px;
+    height : 895px;
 `;
 
 const StImg = styled.img`

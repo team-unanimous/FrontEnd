@@ -107,6 +107,7 @@ const StButton3 = styled.div`
     height : 44px;
     border-radius: 8px;
     background-color: ${props => (props.page == 3 ? "#EBF7FF;" : "none")};
+    color:  ${props => (props.page == 3 ? "#2396F0;" : "#888888")};
 `;
 
 const StButton2 = styled.div`
@@ -116,6 +117,7 @@ const StButton2 = styled.div`
     height : 44px;
     border-radius: 8px;
     background-color: ${props => (props.page == 2 ? "#EBF7FF;" : "none")};
+    color:  ${props => (props.page == 2 ? "#2396F0;" : "#888888")};
 `;
 
 const StButton1 = styled.div`
@@ -125,6 +127,7 @@ const StButton1 = styled.div`
     height : 44px;
     border-radius: 8px;
     background-color: ${props => (props.page == 1 ? "#EBF7FF;" : "none")};
+    color:  ${props => (props.page == 1 ? "#2396F0;" : "#888888")};
 `;
 
 const StBtBox = styled.div`
