@@ -37,6 +37,7 @@ const StBox = styled.div`
     gap: 8px;
     margin-top: 20px;
     margin-left: 20px;
+    margin-right: 20px;
 
     width: 320px;
     height: fit-content;
