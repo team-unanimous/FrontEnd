@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName}) => {
+const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName, scrollRef}) => {
     return (
         <>      
             <StBox>
@@ -21,7 +21,7 @@ const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName}) => {
                         {createdAt.slice(10,)}
                     </StMessageDate>
                 </StMessageWrapper>
-
+                <div ref={scrollRef}/>
             </StBox>
         </>
     )
