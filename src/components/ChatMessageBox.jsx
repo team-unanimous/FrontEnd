@@ -13,7 +13,7 @@ const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName, scrollRe
                         {nickname}
                     </StUserNickname>
                 </StUserWrapper>
-                <StMessageWrapper myMessage={myName == nickname} ref={scrollRef}>
+                <StMessageWrapper myMessage={myName == nickname}>
                     <StMessageBody myMessage={myName == nickname}>
                         {msg}
                     </StMessageBody>
@@ -21,7 +21,7 @@ const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName, scrollRe
                         {createdAt.slice(10,)}
                     </StMessageDate>
                 </StMessageWrapper>
-
+                <div ref={scrollRef}/>
             </StBox>
         </>
     )
