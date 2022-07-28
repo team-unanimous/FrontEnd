@@ -5,9 +5,6 @@ import jwt_decode from "jwt-decode";
 import styled from "styled-components";
 import ChatMessageBox from "./ChatMessageBox";
 import inputEnterVector from "../img/InputEnterVector.png"
-import xbutton from "../img/Xbutton.png"
-import { useParams } from "react-router-dom";
-import { useMutation } from "react-query";
 import Stomp from "stompjs";
 import sockJS from "sockjs-client";
 
@@ -16,13 +13,12 @@ const MeetingRoomStyle = ({meetingId})=>{
     const decoded = jwt_decode(getCookie('token'));
     const myName = decoded.USER_NICKNAME;
     const inputRef = useRef(null);
+    const scrollRef = useRef(null);
     const [msg, setMsg] = useState([]);
 
     useEffect(()=>{
         SocketConnect(data);
         return () => {
-            alert("alert!!!!")
-            console.log("언마운트 됨");
             HandleUnsubscribe();
         }
     }, [])
@@ -45,9 +41,10 @@ const MeetingRoomStyle = ({meetingId})=>{
                 ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
                 (response) => {
                     const newMessage = JSON.parse(response.body);
-                    console.log(newMessage)
+                    console.log(newMessage, "확인")
                     if (newMessage.type == "TALK") {
                         setMsg(msg=>[...msg, newMessage])
+                        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
                     }
                 },
                 {
@@ -67,7 +64,7 @@ const MeetingRoomStyle = ({meetingId})=>{
                 } else {
                     waitForConnection(ws, callback);
                 }
-            },1
+            },0.1
         )
     }
 
@@ -163,6 +160,7 @@ const MeetingRoomStyle = ({meetingId})=>{
                                     profileUrl={msg.profileUrl}
                                     myName={myName}
                                     msg={msg.message}
+                                    scrollRef={scrollRef}
                                     >
                                     {msg.message}
                                     </ChatMessageBox>

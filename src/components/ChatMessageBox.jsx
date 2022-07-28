@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName}) => {
+const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName, scrollRef}) => {
     return (
         <>      
             <StBox>
@@ -13,7 +13,7 @@ const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName}) => {
                         {nickname}
                     </StUserNickname>
                 </StUserWrapper>
-                <StMessageWrapper myMessage={myName == nickname}>
+                <StMessageWrapper myMessage={myName == nickname} ref={scrollRef}>
                     <StMessageBody myMessage={myName == nickname}>
                         {msg}
                     </StMessageBody>
