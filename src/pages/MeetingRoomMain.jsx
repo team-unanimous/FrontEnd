@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import MeetingRoomStyle from "../components/MeetingRoomStyle";
 import MeetingRoomInfo from "../components/MeetingRoomInfo";
@@ -13,11 +13,11 @@ const MeetingRoomMain = ()=> {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
     const meetingId = useParams().sessionid;
     const {data : main}= useGetMeetSpecific({meetingId})
-    
+
     console.log(main);
     console.log(main?.meetingTheme);
     console.log(main?.meetingSum);
-
+ 
     return(
         <>
         <StContainer>
@@ -36,7 +36,7 @@ const MeetingRoomMain = ()=> {
 const StContainer = styled.div`
     display: flex;
     flex-direction: row;
-    width: 100vw;
+    width: 99vw;
     height: 100vh;
     background-color: #F2F6F9;
     justify-content: flex-start;
@@ -53,7 +53,7 @@ const StSidebarWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 360px;
-    height: 930px;
+    height:930px;
     margin: 24px;
     box-sizing: border-box;
     gap: 18px;

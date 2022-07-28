@@ -101,6 +101,7 @@ const MeetingManage = () => {
         
         <StfListBox>  
           <StfInListBox>
+          <></>
           <StListTop>
             <StDateTop>날짜</StDateTop>
             <StHostTop>주최자</StHostTop>
@@ -208,16 +209,18 @@ const StLine2 = styled.div`
 const StInfoBox = styled.div`
   display: flex;
   align-items: center;
-  width: 1184px;
+  width: 1104px;
   height: 94px;
   background-color: white;
   margin : 8px 0 8px 0;
+  box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
 `;
 
 const StIcon = styled.img`
   width : 18px;
   height : 18px;
   margin : 0 0 0 0;
+  cursor: pointer;
 `;
 
 const StSmallButton = styled.div`
@@ -230,6 +233,7 @@ const StSmallButton = styled.div`
   border-radius: 6px;
   border : 1px solid black;
   color : black;
+  cursor: pointer;
 `;
 
 const StButton = styled.div`
@@ -242,6 +246,9 @@ const StButton = styled.div`
   margin : 0 0 0 0;
   border-radius: 6px;
   color : black;
+  &:hover{
+    background-color:#E2E2E2 ;
+  }
 `;
 
 const StDateBox = styled.div`
@@ -351,25 +358,25 @@ const StDate = styled.div`
 const StListTop = styled.div`
   display: flex;
   align-items: center;
-  width: 1160px;
+  width: 1080px;
   height: 20px;
   padding : 18px 0 18px 24px;
   margin : 5px 0 5px 0;
   border-radius: 6px;
   background: rgba(153, 213, 255, 0.3);
+  box-shadow: 0px 4px 10px rgba(153, 213, 255, 0.3),0px 4px 10px rgba(0, 0, 0, 0.05);
+
 `;
 
 const StList = styled.div`
   display: flex;
   align-items: center;
-  width: 1184px;
+  width: 984px;
   height: 94px;
-  margin : 0 0 0 0;
+
   border-radius: 6px;
   transition: 0.1s ease-in-out;
-  &:hover{
-    background-color:#E2E2E2 ;
-  }
+
   cursor: pointer;
 `;
 
@@ -385,10 +392,24 @@ const StfListBox = styled.div`
   display: flex;
   flex-direction: column;
   width : 1184px;
-  height : 50vh;
+  height : 90vh;
   margin: 20px auto 0 0px;
   background-color: #F2F6F9;
   border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow-x: hidden;
+  
+  ::-webkit-scrollbar{
+    width:10px;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #818181;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-track{
+    
+    border-radius: 1rem;
+  }
 `;
 
 const StBlackBox = styled.div`
@@ -452,11 +473,11 @@ const StLine = styled.div`
 
 const StRight = styled.div`
   width : 1184px;
-  height : 86.5vh;
+  height : 91.5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 38px 36px 38px;
+  padding: 0 38px 0px 38px;
   overflow-x: hidden;
   
   ::-webkit-scrollbar{

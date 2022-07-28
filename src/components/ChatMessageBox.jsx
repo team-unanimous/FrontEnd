@@ -25,7 +25,6 @@ const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName, scrollRe
             </StBox>
         </>
     )
-
 }
 
 const StBox = styled.div`
@@ -109,14 +108,14 @@ const StMessageBody = styled.div`
     padding: 16px;
     gap: 10px;
     margin-top: 7px;
-
-    width: 273px;
+    margin-right : 5px;
+    width: 253px;
     height: fit-content;
 
     background: #F1F1F1;
     background: ${props => (props.myMessage ? "linear-gradient(180deg, rgba(35, 150, 240, 0.8) 0%, rgba(73, 182, 255, 0.8) 100%)": "#F1F1F1")};
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
-    border-radius: 0px 8px 8px 8px;
+    border-radius: ${props => (props.myMessage ? "8px 0px 8px 8px":"0px 8px 8px 8px")};
 
     flex: none;
     order: ${props => (props.myMessage ? "2": "1")};

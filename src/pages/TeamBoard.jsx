@@ -18,7 +18,7 @@ import { getCookie } from '../Cookie';
 import { useQueryClient } from 'react-query';
 import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
 import apis from '../api/main';
-
+import plusIcon from '../img/TeamBoard/floatingaction_add.svg'
 
 const TeamBoard = () => {
 
@@ -31,9 +31,18 @@ const TeamBoard = () => {
   const { data: main } = useGetTeamMain({ teamId });
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
+  const [status,setStatus] = useState(true);
+
+  const show = ()=>{
+    setStatus(true);
+  }
+  const hide = ()=>{
+    setStatus(false);
+  }
+  console.log(status);
 
   const { data } = useGetTeamInfo();
-  console.log(main?.teamManager);
+
 
   const [imgfile, setImgfile] = useState("");
 
@@ -72,10 +81,12 @@ const TeamBoard = () => {
         {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
         </>
       </StDownBox>
-      {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}>+</StMeetMake> : <></>}
+      {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}><img src={plusIcon}/></StMeetMake> : <></>}
+   
     </StBox>
   );
 };
+
 
 const StLLeft = styled.div`
   width : 181px;
@@ -107,6 +118,7 @@ const StButton3 = styled.div`
     height : 44px;
     border-radius: 8px;
     background-color: ${props => (props.page == 3 ? "#EBF7FF;" : "none")};
+    color:  ${props => (props.page == 3 ? "#2396F0;" : "#888888")};
 `;
 
 const StButton2 = styled.div`
@@ -116,6 +128,7 @@ const StButton2 = styled.div`
     height : 44px;
     border-radius: 8px;
     background-color: ${props => (props.page == 2 ? "#EBF7FF;" : "none")};
+    color:  ${props => (props.page == 2 ? "#2396F0;" : "#888888")};
 `;
 
 const StButton1 = styled.div`
@@ -125,6 +138,7 @@ const StButton1 = styled.div`
     height : 44px;
     border-radius: 8px;
     background-color: ${props => (props.page == 1 ? "#EBF7FF;" : "none")};
+    color:  ${props => (props.page == 1 ? "#2396F0;" : "#888888")};
 `;
 
 const StBtBox = styled.div`
@@ -210,16 +224,17 @@ const StLeft = styled.div`
 const StMeetMake = styled.div`
   position: fixed;
   bottom :50px;
-  right : 50px;
-  display: flex;
+  right : 110px;
+  display:  flex;
   justify-content: center;
   align-items: center;
   width :56px;
   height : 56px;
   border-radius: 56px;
-  background-color: black;
+  background-color: #EFB061;
   color : white;
   font-size: 50px;
+  animation: fadein 0.4s;
   cursor: pointer;
 `;
 
@@ -227,6 +242,7 @@ const StDownBox = styled.div`
   display: flex;
   justify-content: center;
   height : 100%;
+  
 `;
 
 const StBox = styled.div`

@@ -19,6 +19,10 @@ import DetailModalOnAir from './DetailModalOnAir';
 import DetailModalPassed from './DetailModalPassed';
 import useGetTeamMain from '../Hooks/useGetTeamMain';
 
+import onAirIcon from '../img/TeamBoard/defaultmessage_nowmeeting.svg'
+import onReserveIcon from '../img/TeamBoard/defaultmessage_reservedmeeting.svg'
+import onPassedIcon from '../img/TeamBoard/defaultmessage_beforemeeting.svg'
+
 
 const TeamboardHome = () => {
 
@@ -37,8 +41,6 @@ const TeamboardHome = () => {
   const {data : onAir} = useGetOnAir({teamId});
   const {data : reserve} = useGetReserve({teamId});
   const {data : team} = useGetTeamMain({teamId});
-  console.log(team);
-
 
 
   const [meetingId,setMeetingId] = useState("");
@@ -59,7 +61,7 @@ const TeamboardHome = () => {
   const closeModalPass = () => {
     setOpenPassed(false);
   }
-
+  
   return (
     <>
       <DetailModalOnAir
@@ -129,48 +131,51 @@ const TeamboardHome = () => {
           <StMeetingLeftBox>
             <StOn>진행중인 미팅</StOn>  
             <StMeetingLeft>
-              {onAir?
-                <div onClick={
-                  ()=>{
-                    setMeetingId(onAir[0].meetingId);
-                    setOpenOnAir(true);
-                    setMeetingTitle(onAir[0].meetingTitle);
-                    setMeetingDate(onAir[0].meetingDate);
-                    setMeetingTime(onAir[0].meetingTime);
-                    setMeetingCreator(onAir[0].meetingCreator);
-                    setIssues(onAir[0].issues);
-                }}>{onAir[0]?
+              {onAir?.length==0?<StImg src={onAirIcon}/>:<></>}
+                {onAir?
+                  <div onClick={
+                    ()=>{
+                      setMeetingId(onAir[0].meetingId);
+                      setOpenOnAir(true);
+                      setMeetingTitle(onAir[0].meetingTitle);
+                      setMeetingDate(onAir[0].meetingDate);
+                      setMeetingTime(onAir[0].meetingTime);
+                      setMeetingCreator(onAir[0].meetingCreator);
+                      setIssues(onAir[0].issues);
+                  }}>{onAir[0]?
                 <MeetingLeft prop={onAir[0]}/>:<></>}</div>:<></>}
-              {onAir?
-                <div onClick={
-                  ()=>{
-                    setMeetingId(onAir[1].meetingId);
-                    setOpenOnAir(true);
-                    setMeetingTitle(onAir[1].meetingTitle);
-                    setMeetingDate(onAir[1].meetingDate);
-                    setMeetingTime(onAir[1].meetingTime);
-                    setMeetingCreator(onAir[1].meetingCreator);
-                    setIssues(onAir[1].issues);
-                }}>{onAir[1]?
+                {onAir?
+                  <div onClick={
+                    ()=>{
+                      setMeetingId(onAir[1].meetingId);
+                      setOpenOnAir(true);
+                      setMeetingTitle(onAir[1].meetingTitle);
+                      setMeetingDate(onAir[1].meetingDate);
+                      setMeetingTime(onAir[1].meetingTime);
+                      setMeetingCreator(onAir[1].meetingCreator);
+                      setIssues(onAir[1].issues);
+                  }}>{onAir[1]?
                 <MeetingLeft prop={onAir[1]}/>:<></>}</div>:<></>}
-              {onAir?
-                <div onClick={
-                  ()=>{
-                    console.log("hey");
-                    setMeetingId(onAir[2].meetingId);
-                    setOpenOnAir(true);
-                    setMeetingTitle(onAir[2].meetingTitle);
-                    setMeetingDate(onAir[2].meetingDate);
-                    setMeetingTime(onAir[2].meetingTime);
-                    setMeetingCreator(onAir[2].meetingCreator);
-                    setIssues(onAir[2].issues);
-                }}>{onAir[2]?
+                {onAir?
+                  <div onClick={
+                    ()=>{
+                      console.log("hey");
+                      setMeetingId(onAir[2].meetingId);
+                      setOpenOnAir(true);
+                      setMeetingTitle(onAir[2].meetingTitle);
+                      setMeetingDate(onAir[2].meetingDate);
+                      setMeetingTime(onAir[2].meetingTime);
+                      setMeetingCreator(onAir[2].meetingCreator);
+                      setIssues(onAir[2].issues);
+                  }}>{onAir[2]?
                 <MeetingLeft prop={onAir[2]}/>:<></>}</div>:<></>}
+              
             </StMeetingLeft>
           </StMeetingLeftBox>
           <StMeetingRightBox>
             <StOn>예정된 미팅</StOn>
             <StMeetingRight>
+              {reserve?.length==0?<StImg src={onReserveIcon}/>:<></>}
               {reserve?
                 <div onClick={
                   ()=>{
@@ -224,6 +229,12 @@ const TeamboardHome = () => {
   )
 }
 
+const StImg = styled.img`
+  width : 187px;
+  height : 91.2px;
+  margin : auto;
+`;
+
 const StOn = styled.div`
   width : 516px;
 `;
@@ -251,7 +262,7 @@ const StMeetingRightBox = styled.div`
   padding : 32px;
   background-color: white;
   border-radius: 20px;
-
+  box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
 `;
 
 const StMeetingLeftBox = styled.div`
@@ -265,12 +276,13 @@ const StMeetingLeftBox = styled.div`
   padding : 32px;
   background-color: white;
   border-radius: 20px;
+  box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
 `;
 
 const StMeetingInnerBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width : 1164px;
+  width : 1184px;
 `;
 
 const StMeetingRight = styled.div`
@@ -348,6 +360,7 @@ const StTodaysMeetBox = styled.div`
   margin : 0 0 1rem 0;
   background-color: white;
   border-radius: 20px;
+  box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
 `;
 
 const StLastMeetBox = styled.div`

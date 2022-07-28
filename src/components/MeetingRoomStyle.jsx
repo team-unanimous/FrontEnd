@@ -17,10 +17,12 @@ const MeetingRoomStyle = ({meetingId})=>{
     const [msg, setMsg] = useState([]);
 
     useEffect(()=>{
-        SocketConnect(data);
-        return () => {
-            HandleUnsubscribe();
-        }
+
+        waitForConnection(ws,SocketConnect(data));
+        // return () => {
+        //     HandleUnsubscribe();
+        // }
+
     }, [])
 
     const target = "https://sparta-ysh.shop/ws-stomp" //"http://52.79.226.242:8080/ws-stomp" 
@@ -29,9 +31,9 @@ const MeetingRoomStyle = ({meetingId})=>{
 
     const data = {
         token: token,
-        roomId: meetingId // "1" //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+        roomId: meetingId //어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
-    
+
     //Socket 통신
     const SocketConnect = (data) => {
         try{
@@ -288,7 +290,7 @@ const StChattingBody = styled.div`
     display: flex;
     flex-direction: column;
     /* align-items: flex-end; */
-    height: 100%;
+    height: 670px;
 `
 const StChattingMessageWrapper = styled.div`
     display: flex;

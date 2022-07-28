@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router'
 import { useParams } from 'react-router'
 
+import bt1 from '../img/4.CreateMeeting/0.main/btn1.svg'
+import bt2 from '../img/4.CreateMeeting/0.main/btn2.svg'
+
+
 const MeetMakeOne = () => {
     const navigate = useNavigate();
     const teamId = useParams().teamid;
@@ -21,18 +25,11 @@ const MeetMakeOne = () => {
                     </StSubTitle>
                 </StTitle>
                 <StButtonBox>
-                    <StButton onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwoone`)}}>
-                        <StText>
-                            회의 시작하기
-                        </StText>
-                    </StButton>
-                    <StButton onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwotwo`)}}>
-                        <StText>
-                            회의 예약하기
-                        </StText>
-                    </StButton>
-                </StButtonBox>
 
+                        <img src={bt1} onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwoone`)}}/>
+                        <img src={bt2} onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwotwo`)}}/>
+                    
+                </StButtonBox>
             </StInnerBox>
         </StBox>
     </StMeetMake>
@@ -103,8 +100,10 @@ const StInnerBox = styled.div`
 `;
 
 const StBox = styled.div`
-    width: 657px;
-    height : 536px;
+    display: flex;
+    justify-content: center;
+    width: 835px;
+    height : 506px;
     padding : 80px;
     border-radius: 32px;
     background-color: white;
