@@ -12,9 +12,8 @@ import ThemeTwo from "../img/themeTwo.svg";
 const MeetingRoomMain = ()=> {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
     const meetingId = useParams().sessionid;
-    
     const {data : main}= useGetMeetSpecific({meetingId})
-
+    
     console.log(main);
     console.log(main?.meetingTheme);
     console.log(main?.meetingSum);
@@ -22,13 +21,13 @@ const MeetingRoomMain = ()=> {
     return(
         <>
         <StContainer>
-                        <StMainThemeWrapper theme={main?.meetingTheme}>
-                            <JoinRoom Theme={main?.meetingTheme} />
-                        </StMainThemeWrapper>
-                <StSidebarWrapper>
-                    <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
-                    <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
-                </StSidebarWrapper>
+            <StMainThemeWrapper theme={main?.meetingTheme}>
+                <JoinRoom Theme={main?.meetingTheme} />
+            </StMainThemeWrapper>
+            <StSidebarWrapper>
+                <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
+                <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
+            </StSidebarWrapper>
         </StContainer>
         </>
     )
