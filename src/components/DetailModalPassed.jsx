@@ -85,7 +85,6 @@ const DetailModalPassed = ({open, close,meetingTitle,meetingDate,meetingTime,mee
                     </StIssue>
                 </StDateBox>
             </StInfo>
-            <StButton onClick={()=>navigate(`/meetingroom/${teamId}/${meetingId}`)}><StIconImg src={participate}/>참여하기</StButton>
         </StBox>
     </>:<></>}
     </>

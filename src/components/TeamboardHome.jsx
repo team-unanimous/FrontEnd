@@ -52,7 +52,6 @@ const TeamboardHome = () => {
   const [meetingThumbnail,setMeetingThumbnail] = useState();
   const [issues,setIssues] = useState();
 
-  console.log(reserve);
 
   const closeModalRe = () => {
     setOpenReserve(false);
