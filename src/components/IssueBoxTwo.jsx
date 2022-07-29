@@ -104,10 +104,12 @@ const StBts = styled.button`
   font-weight: 700;
   font-size: 12px;
   border: none;
-  background-color: tomato;
+  border-radius: 10px;
+  &:hover{
+    background-color: #D7D7D7;
+  }
   cursor: pointer;
 `;
-
 
 const StIssueEdit = styled.input`
   display: flex;

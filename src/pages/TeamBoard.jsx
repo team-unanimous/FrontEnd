@@ -16,7 +16,6 @@ import settingselect from '../img/TeamBoard/sidebar/settings_active.svg';
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
 import { useQueryClient } from 'react-query';
-import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
 import apis from '../api/main';
 import plusIcon from '../img/TeamBoard/floatingaction_add.svg'
 
@@ -31,18 +30,6 @@ const TeamBoard = () => {
   const { data: main } = useGetTeamMain({ teamId });
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
-  const [status,setStatus] = useState(true);
-
-  const show = ()=>{
-    setStatus(true);
-  }
-  const hide = ()=>{
-    setStatus(false);
-  }
-  console.log(status);
-
-  const { data } = useGetTeamInfo();
-
 
   const [imgfile, setImgfile] = useState("");
 
@@ -158,6 +145,7 @@ const StTeamClass = styled.div`
     height : 25px;
     margin : auto 0 0 0 ;
     border-radius: 100px;
+    color:white;
     background: #2396F0;
 `;
 
@@ -184,12 +172,14 @@ const StInfoBox = styled.div`
 `;
 
 const StTeamImg = styled.img`
-    width : 60px;
-    height : 60px;
+    width : 100px;
+    height : 100px;
     margin : 0 0 0 0;
-    border-radius: 60px;
-    background: #8C8C8C;
+    border-radius: 100px;
+    background: #D7D7D7;
     object-fit: cover;
+    border: 5px solid #FCFCFC;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 `;
 
 const StTeamInfoBox = styled.div`
@@ -198,7 +188,7 @@ const StTeamInfoBox = styled.div`
     align-items: center;
     justify-content: space-between;
     width :214px;
-    height : 120px;
+    height : 179px;
     padding : 36px 16px 36px 24px;
 `;
 
@@ -224,7 +214,7 @@ const StLeft = styled.div`
 const StMeetMake = styled.div`
   position: fixed;
   bottom :50px;
-  right : 110px;
+  right : 163px;
   display:  flex;
   justify-content: center;
   align-items: center;

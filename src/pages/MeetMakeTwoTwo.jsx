@@ -59,7 +59,7 @@ const MeetMakeTwoTwo = () => {
       alert("미팅 만들기 성공")
     },
     onError:(error)=>{
-      alert("미팅 만들기 실패");
+      alert("미팅룸 이름을 설정해주세요");
     }   
   });
 
@@ -245,7 +245,7 @@ const StButton = styled.div`
   height : 54px;
   margin : 0 auto 0 auto;
   border-radius: 6px;
-  background-color: black;
+  background-color: #063250;
   color : white;
   font-weight: 700;
   font-size: 20px;

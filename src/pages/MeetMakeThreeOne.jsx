@@ -60,8 +60,8 @@ const MeetMakeThreeOne = () => {
           </StTitle>
           <StInnerBox>
             <StInputBox>
-              <StInput ref={issue} placeholder='추가할 안건 내용을 입력해주세요'/>
-              <StInputBt onClick={makeFunction}> 추가 </StInputBt>
+              <StInput maxLength={40} ref={issue} placeholder='추가할 안건 내용을 입력해주세요'/>
+              <div onClick={()=>{issue.current.value=''}}><StInputBt onClick={makeFunction}> 추가 </StInputBt></div>
             </StInputBox>
             <StInfoBox>
               <StInfoInner>

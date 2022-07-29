@@ -4,24 +4,60 @@ import MeetingRoomStyle from "../components/MeetingRoomStyle";
 import MeetingRoomInfo from "../components/MeetingRoomInfo";
 import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 import ThemeOne from "../img/themeOne.png";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import jwt_decode from "jwt-decode";
+import { getCookie } from '../Cookie';
 import JoinRoom from "../components/WebRTC/JoinRoom";
 import ThemeTwo from "../img/themeTwo.svg";
-
+import closeIcon from "../img/5.MeetingRoom/popup_icon_close.svg"
+import apis from "../api/main";
+import { useMutation } from "react-query";
 
 const MeetingRoomMain = ()=> {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
     const meetingId = useParams().sessionid;
     const {data : main}= useGetMeetSpecific({meetingId})
+    const decoded = jwt_decode(getCookie('token'));
+    const nickname = decoded.USER_NICKNAME;
+    const navigate = useNavigate();
+    const teamId = useParams().teamid;
 
-    console.log(main);
-    console.log(main?.meetingTheme);
-    console.log(main?.meetingSum);
- 
+    const leaveSession = () =>{
+        navigate(`/teamboard/${teamId}`)
+    }
+
+    // 회의 끝내기
+    const quit = async(data)=>{
+        const datas = await apis.patchDone(data);
+        return datas;
+    }
+
+    const {mutate} = useMutation(quit,{
+        onSuccess:()=>{
+            leaveSession();
+        },
+        onError:(e)=>{
+            console.log(e);
+        }
+    });
+
+    const quiting = ()=>{
+        mutate({
+            meetingId : meetingId
+        })
+    }
+
     return(
         <>
         <StContainer>
             <StMainThemeWrapper theme={main?.meetingTheme}>
+            {main?.meetingCreator==nickname?
+            <StQuit onClick={quiting}>
+                <img src={closeIcon}/>회의 끝내기
+             </StQuit>:
+            <StLeave onClick={leaveSession}>
+                <img src={closeIcon}/>회의 나가기
+            </StLeave>}
                 <JoinRoom Theme={main?.meetingTheme} />
             </StMainThemeWrapper>
             <StSidebarWrapper>
@@ -33,7 +69,42 @@ const MeetingRoomMain = ()=> {
     )
 }
 
+const StQuit = styled.div`
+    display: flex;
+    align-items: center;
+    position : absolute;
+    left : 36px;
+    top : 30px;
+    width : 127px;
+    height : 12px;
+    padding : 14px 20px;
+    border-radius: 100px;
+    box-shadow:0px 4px 4px rgba(0, 0, 0, 0.025);
+    background-color: rgba(30,34,34,0.4);
+    color : white;
+    z-index: 10;
+    cursor: pointer;
+`;
+
+const StLeave = styled.div`
+    display: flex;
+    align-items: center;
+    position : absolute;
+    left : 36px;
+    top : 30px;
+    width : 127px;
+    height : 12px;
+    padding : 14px 20px;
+    border-radius: 100px;
+    box-shadow:0px 4px 4px rgba(0, 0, 0, 0.025);
+    background-color: #2396F0;
+    color : white;
+    z-index: 10;
+    cursor: pointer;
+`;
+
 const StContainer = styled.div`
+    position : relative;
     display: flex;
     flex-direction: row;
     width: 99vw;
@@ -66,7 +137,7 @@ const StMainThemeWrapper = styled.div`
     top: 59px; */
     margin: 24px;
     box-sizing: border-box;
-    background-image: ${props => (props.theme == 2 ? `url(${ThemeTwo})` : `url(${ThemeOne})`)};
+    background-image: ${props => (props.theme == 2 ? `url(${ThemeOne})` : `url(${ThemeTwo})`)};
 
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.05));
     border-radius: 24px;

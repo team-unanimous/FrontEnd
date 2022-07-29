@@ -61,9 +61,8 @@ const StButtonBox = styled.div`
     width : 657px;
     height : 380px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin : 48px 0 0 0;
-    
 `;
 
 const StSubTitle = styled.div`

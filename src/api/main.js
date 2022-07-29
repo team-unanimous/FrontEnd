@@ -39,6 +39,8 @@ const apis = {
     getOnAir: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/now`),
     getPassed: ({ teamId }) => api.get(`/api/teams/${teamId}/meetings/done`),
     postLeader: (data) => api.post(`/api/teams/${data.teamId}/manager`, data),
+    patchNow : (data)=> api.patch(`/api/meetings/${data.meetingId}/now`),
+    patchDone : (data)=> api.patch(`/api/meetings/${data.meetingId}/done`),
 
     // 경계
     postLogin: (data) => api.post(`/api/users/login`, data), // 로그인
