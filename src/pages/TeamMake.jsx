@@ -101,7 +101,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 43px;
+    font-size: 40px;
     line-height: 58px;
     /* identical to box height */
     text-align: center;

@@ -15,7 +15,6 @@ const SignupThree = () => {
   const dispatch = useDispatch();
 
   const userEmail = useSelector((state) => state.userReducer.usersid.email)
-  console.log(userEmail)
 
 
 
@@ -43,10 +42,10 @@ const SignupThree = () => {
 
   // 비밀번호 post
   const postPW = async (data) => {
-    console.log(data)
+
     const datas = await axis.postPassword(data);
     const userids = datas.data.userId
-    console.log(userids)
+
     dispatch(postUserId({ userids }))
     return datas;
   }
