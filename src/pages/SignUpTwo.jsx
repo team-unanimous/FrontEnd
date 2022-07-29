@@ -6,6 +6,7 @@ import apis from '../api/main'
 import { useDispatch } from 'react-redux'
 import { tossUserId } from '../redux/modules/user'
 import axis from '../api/sub'
+import frameimg from "../img/bgimg.svg"
 
 
 
@@ -93,7 +94,7 @@ const SignUpTwo = () => {
   }
 
   return (
-    <StBox>
+    <StBox style={{ backgroundImage: `url(${frameimg})` }}>
       <StContentBox>
         <StTitle>이메일을 입력해주세요</StTitle>
         <StInfo>
@@ -104,7 +105,6 @@ const SignUpTwo = () => {
               <StEmailButton onClick={EmailFunction}>
                 코드 전송
               </StEmailButton>
-
             </StEmailInputBox>
             {<StWarningTitle>{warningmsg}</StWarningTitle>}
           </StEmailBox>
@@ -146,32 +146,32 @@ const StNotAgree = styled.button`
   background-color: white;
   font-weight: 700;
   font-size: 20px;
-  color : black;
+  color : #888888;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #888888;
   cursor: pointer;
 `;
 
 const StAgree = styled.button`
   width : 200px;
   height : 54px;
-  background-color: #063250;;
+  background-color: #063250;
   font-weight: 700;
   font-size: 20px;
   color : white;
   border-radius: 0.375rem;
-  border: 1px solid #063250;;
+  border: 1px solid #063250;
   cursor: pointer;
   &:disabled{
-  background-color: #cccccc;
-  color: black;
+  background-color: #D7D7D7;
+  color: white;
+  border: solid 1px #D7D7D7;
 }
 `;
 
 const StBtBox = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
   width: 418px;
   height: 54px;
   margin : 3.75rem 0 0 0;
@@ -224,6 +224,7 @@ const StWarningTitle = styled.div`
   font-weight: 700;
   font-size: 15px;
   margin-top: 10px;
+  margin-bottom: 24px;
 `
 
 const StEmailBox = styled.div`
@@ -238,9 +239,9 @@ const StEmailBox = styled.div`
 const StInfo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   width : 541px;
-  height : 519px;
+  height : 210px;
   margin : 3.75rem 0 0 0;
 `;
 
@@ -252,11 +253,14 @@ const StTitle = styled.div`
 `;
 
 const StContentBox = styled.div`
-  width : 541px;
-  height : 480px;
+  width : 1155px;
+  height : 740px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 32px;
 `;
 
 const StBox = styled.div`

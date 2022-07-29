@@ -35,7 +35,7 @@ import TeamMakeSuccess from "./pages/TeamMakeSucccess";
 import MeetingEditTwoOne from "./pages/MeetingEditTwoOne";
 import MeetingEditTwoTwo from "./pages/MeetingEditTwoTwo";
 import JoinRoom from "./components/WebRTC/JoinRoom";
-import Agenda from "./components/Agenda";
+import Meetinglast from "./components/Meetinglast"
 
 
 const queryClient = new QueryClient();
@@ -66,18 +66,16 @@ function App() {
         <Route path="/teamselect" element={<TeamSelect />} />
         <Route path="/teammake" element={<TeamMake />} />
         <Route path="/teammakesuccess" element={<TeamMakeSuccess />} />
-        <Route path="/invitemember" element={<InviteTeamMember />} />        
+        <Route path="/invitemember" element={<InviteTeamMember />} />
         <Route path="/teaminvited" element={<TeamInvited />} />
         <Route path="/teamjoin" element={<TeamJoin />} />
-        <Route path="/chat" element={<MeetingRoomChat/>} />
+        <Route path="/chat" element={<MeetingRoomChat />} />
         <Route path="/chatstyle" element={<MeetingRoomStyle />} />
         <Route path="/meetingroom/:teamid/:sessionid" element={<MeetingRoomMain />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/passwordfindone" element={<PasswordFindOne />} />
         <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />
         {/* <Route path="/meetingroom/:sessionid" element={<MeetingRoom/>}/> */}
-        <Route path="/agenda" element={<Agenda />} />
-
       </Routes>
 
     </QueryClientProvider>

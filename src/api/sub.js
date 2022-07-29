@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "../Cookie";
 
 
 // 1. Axios instance생성
@@ -10,21 +11,21 @@ const axi = axios.create({
 
 // 상우님 api https://shayangju.shop
 // 동관님 api https://dkworld.shop
-// 승훈님 https://sparta-ysh.shop
+// 승훈님 api https://sparta-ysh.shop
 // h2 https://dkworld.shop/h2-console/login.jsp?jsessionid=c2e65e7cdcb83d6b04d83acdc20b8073
 // 합쳐진서버 api http://52.79.226.242
 
-// // 2. request interceptor
-// axi.interceptors.request.use(
-//     config => {
-//         const token = getCookie("token");
-//         config.headers.Authorization = token;
-//         return config;
-//     },
-//     error => {
-//         console.log(error);
-//     }
-// )
+// 2. request interceptor
+axi.interceptors.request.use(
+    config => {
+        const token = getCookie("token");
+        config.headers.Authorization = token;
+        return config;
+    },
+    error => {
+        console.log(error);
+    }
+)
 
 const axis = {
     //팀 게시판
@@ -60,6 +61,7 @@ const axis = {
     getOnAir: ({ teamId }) => axi.get(`/api/teams/${teamId}/meetings/now`),
     getPassed: ({ teamId }) => axi.get(`/api/teams/${teamId}/meetings/done`),
     postLeader: (data) => axi.post(`/api/teams/${data.teamId}/manager`, data),
+    patchAgenda: (data) => axi.patch(`/api/meetings/${data.meetingId}/issues/${data.issueId}/result`, data.issueResult), // 안건결과패치
 
     // 경계
     postLogin: (data) => axi.post(`/api/users/login`, data), // 로그인

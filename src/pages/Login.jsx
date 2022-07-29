@@ -6,6 +6,10 @@ import { useRef } from 'react';
 import { useMutation } from 'react-query';
 import { setCookie, removeCookie } from '../Cookie';
 import GoogleLogin from 'react-google-login';
+import frameimg from "../img/bgimg.svg"
+import logoimg from "../img/logoLogin.svg"
+import googlebtn from "../img/btn_sociallogin_google.svg"
+
 
 const Login = () => {
 
@@ -58,9 +62,9 @@ const Login = () => {
 
 
   return (
-    <StSignUp>
+    <StSignUp style={{ backgroundImage: `url(${frameimg})` }}>
       <StBox>
-        <StLogo>Logo</StLogo>
+        <img src={logoimg} />
         <StEmail ref={email} placeholder='이메일' />
         <StPassword type='password' ref={password} placeholder='비밀번호' />
         <StLoginButton onClick={loginFunction}>
@@ -75,7 +79,7 @@ const Login = () => {
             비밀번호 찾기
           </StPwFind>
         </StButtonBox>
-        <GoogleLogin
+        {/* <GoogleLogin
           clientId='661918598129-vovfo203fkp7oq8avn3ak7sj24f9bu9k.apps.googleusercontent.com'
           buttonText="Google Login"
           response_type="token"
@@ -83,30 +87,26 @@ const Login = () => {
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
-        />
+        /> */}
+        <Stgooglebtn src={googlebtn} />
       </StBox>
     </StSignUp>
   )
 }
+
+const Stgooglebtn = styled.img`
+   width: 100;
+   height: 100;
+   cursor: pointer;
+`
+
+
 
 const StSignUp = styled.div`
   height : 100vh;
   width : 100vw;
   display: flex;
   align-items: center;
-`;
-
-const StKakaoButton = styled.button`
-  display : flex;
-  justify-content: center;
-  align-items: center;
-  width : 400px;
-  height : 49px;
-  background-color: #929292;
-  color : white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
 `;
 
 const StLine = styled.div`
@@ -124,6 +124,7 @@ const StPwFind = styled.button`
   font-size: 14px;
   border: none;
   cursor: pointer;
+  background-color: white;
 `;
 
 const StSignUpButton = styled.button`
@@ -134,6 +135,7 @@ const StSignUpButton = styled.button`
   font-size: 14px;
   border: none;
   cursor: pointer;
+  background-color: white;
 `;
 
 const StButtonBox = styled.div`
@@ -149,9 +151,10 @@ const StLoginButton = styled.button`
   align-items: center;
   width : 400px;
   height : 49px;
-  background-color: black;
+  background-color: #2396F0;
   color : white;
-  border-radius: 6px;
+  border: solid 1px #2396F0;
+  border-radius: 6px ;
   cursor: pointer;
 `;
 
@@ -182,9 +185,12 @@ const StBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width : 400px;
-  height : 515px;
+  justify-content: center;
+  width : 1155px;
+  height : 740px;
   margin : auto auto auto auto;
+  background-color: white;
+  border-radius: 32px;
 `;
 
 export default Login

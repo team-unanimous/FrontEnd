@@ -12,74 +12,80 @@ import ThemeTwo from "../img/themeTwo.svg";
 import closeIcon from "../img/5.MeetingRoom/popup_icon_close.svg"
 import apis from "../api/main";
 import { useMutation } from "react-query";
+import Agenda from "../components/Agenda"
+import Meetinglast from "../components/Meetinglast"
 import ModalFinish from "../components/ModalFinish";
 
-const MeetingRoomMain = ()=> {
+
+const MeetingRoomMain = () => {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
     const meetingId = useParams().sessionid;
-    const {data : main}= useGetMeetSpecific({meetingId})
+    const { data: main } = useGetMeetSpecific({ meetingId })
     const decoded = jwt_decode(getCookie('token'));
     const nickname = decoded.USER_NICKNAME;
     const navigate = useNavigate();
     const teamId = useParams().teamid;
 
-    const leaveSession = () =>{
+    const leaveSession = () => {
         navigate(`/teamboard/${teamId}`)
     }
 
     console.log(main);
 
     // 회의 끝내기
-    const quit = async(data)=>{
+    const quit = async (data) => {
         const datas = await apis.patchDone(data);
         return datas;
     }
 
-    const {mutate} = useMutation(quit,{
-        onSuccess:()=>{
+    const { mutate } = useMutation(quit, {
+        onSuccess: () => {
             leaveSession();
         },
-        onError:(e)=>{
+        onError: (e) => {
             console.log(e);
         }
     });
 
-    const quiting = ()=>{
+    const quiting = () => {
         mutate({
-            meetingId : meetingId
+            meetingId: meetingId
         })
     }
+
 
     //모달
     const [openFinish, setOpenFinish] = useState(false);
 
     const closeModal = () => {
         setOpenFinish(false);
-      }
+    }
 
-    return(
+    return (
         <>
             <ModalFinish
                 prop={main}
                 close={closeModal}
-                open={openFinish}/>   
+                open={openFinish} />
             <StContainer>
-            <StMainThemeWrapper theme={main?.meetingTheme}>
-            {main?.meetingCreator==nickname?
-            <StQuit onClick={()=>{setOpenFinish(true)}}>
-                <img src={closeIcon}/>회의 끝내기
-             </StQuit>:
-            <StLeave onClick={()=>{setOpenFinish(true)}}>
-                <img src={closeIcon}/>회의 나가기
-            </StLeave>}
-                <JoinRoom Theme={main?.meetingTheme} />
-            </StMainThemeWrapper>
-            <StSidebarWrapper>
-                <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
-                <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
-            </StSidebarWrapper>
-        </StContainer>
+                <StMainThemeWrapper theme={main?.meetingTheme}>
+                    {main?.meetingCreator == nickname ?
+                        <StQuit onClick={() => { setOpenFinish(true) }}>
+                            <img src={closeIcon} />회의 끝내기
+                        </StQuit> :
+                        <StLeave onClick={() => { setOpenFinish(true) }}>
+                            <img src={closeIcon} />회의 나가기
+                        </StLeave>}
+                    <JoinRoom Theme={main?.meetingTheme} />
+                    <Agenda meetID={meetingId} />
+                </StMainThemeWrapper>
+                <StSidebarWrapper>
+                    <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
+                    <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
+                </StSidebarWrapper>
+            </StContainer>
         </>
+
     )
 }
 

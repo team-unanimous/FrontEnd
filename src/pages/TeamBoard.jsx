@@ -49,7 +49,7 @@ const TeamBoard = () => {
         <StLeft>
           <StSmallBox>
             <StTeamInfoBox>
-              {imgfile?<StTeamImg src={imgfile} />:<></>}
+              {imgfile ? <StTeamImg src={imgfile} /> : <></>}
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
                 {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
@@ -63,9 +63,9 @@ const TeamBoard = () => {
           </StSmallBox>
         </StLeft>
         <>
-        {page == 1 ? <TeamboardHome /> : <></>}
-        {page == 2 ? <MeetingManage /> : <></>}
-        {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
+          {page == 1 ? <TeamboardHome /> : <></>}
+          {page == 2 ? <MeetingManage /> : <></>}
+          {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
         </>
       </StDownBox>
       {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}><img src={plusIcon}/></StMeetMake> : <></>}
