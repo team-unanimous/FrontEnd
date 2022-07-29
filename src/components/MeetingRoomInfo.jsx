@@ -7,7 +7,6 @@ import thumbnail5 from "../img/thumbnail5.png"
 
 const MeetingRoomInfo = (props)=> {
     const { thumbnail, title } = props
-    console.log(thumbnail);
 
     return(
         <>

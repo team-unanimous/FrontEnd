@@ -32,6 +32,7 @@ const StHeader = styled.div`
     position: sticky;
     top: 0;
     @media screen and (max-width: 600px) {
+        position: static;
     }
 
 `

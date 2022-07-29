@@ -41,8 +41,8 @@ const Landing = () => {
                         경험해보세요
                     </StTitleText>
                     <StBodyText>
-                        안건을 등록하고 다양한 테마 속에서 팀 미팅을 열어보세요
-                        채팅과 이모티콘으로 의사를 표현하고 
+                        안건을 등록하고 다양한 테마 속에서 팀 미팅을 열어보세요<br/>
+                        채팅과 이모티콘으로 의사를 표현하고 <br/>
                         안건에 대한 회의록을 작성할 수 있습니다
                     </StBodyText>
                     <StBodyButton onClick={() => navigate('/login')}>
@@ -76,7 +76,8 @@ const Landing = () => {
                                         실시간 의사결정
                                     </StFeatureCardTextTitle>
                                     <StFeatureCardTextBody>
-                                        화상 및 음성 채팅을 통해 의견을 내고 이모티콘으로 감정을 표현해보세요
+                                        화상 및 음성 채팅을 통해 의견을 내고<br/>
+                                         이모티콘으로 감정을 표현해보세요
                                     </StFeatureCardTextBody>
                                 </StFeatureCardTextBox>
                             </StFeatureCardTextDiv>
@@ -88,7 +89,7 @@ const Landing = () => {
                                         쉽고 빠른 회의 결과 공유
                                     </StFeatureCardTextTitle>
                                     <StFeatureCardTextBody>
-                                        미팅을 진행하는 동안 회의록을 작성하고 미팅관리 창에서 이전 회의 내용을 확인할 수 있습니다
+                                        미팅을 진행하는 동안 회의록을 작성하고<br/> 미팅관리 창에서 이전 회의 내용을 확인할 수 있습니다
                                     </StFeatureCardTextBody>
                                 </StFeatureCardTextBox>
                             </StFeatureCardTextDiv>
@@ -108,7 +109,7 @@ const Landing = () => {
                                         뛰어난 User Experience
                                     </StFeatureCardTextTitle>
                                     <StFeatureCardTextBody>
-                                        팀 게시판에서 요약된 회의 내용을 확인할 수 있으며 사이드바를 통해 환경 설정과 미팅 관리에 쉽게 접속할 수 있습니다
+                                        팀 게시판에서 요약된 회의 내용을 확인할 수 있으며<br/> 사이드바를 통해 환경 설정과 미팅 관리에 <br/>쉽게 접속할 수 있습니다
                                     </StFeatureCardTextBody>
                                 </StFeatureCardTextBox>
                             </StFeatureCardTextDiv>
@@ -245,7 +246,7 @@ const Landing = () => {
 }
 
 const StFull = styled.div`
-    width: 98%;
+    width: 99.1vw;
     background-image: url(${BG_LandingFull});
     background-repeat: no-repeat;
     background-size: cover;
@@ -325,7 +326,7 @@ const StTitleText = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 3.375rem;
+    font-size: 3.075rem;
     line-height: 4.8rem;
 
     line-height: 144.02%;
@@ -362,7 +363,7 @@ const StBodyText = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14.3px;
     line-height: 200%;
 
     color: #5C5C5C;
@@ -467,7 +468,7 @@ const StUSPHeaderTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 44px;
+    font-size: 39px;
     line-height: 140%;
 
     text-align: center;
@@ -493,7 +494,7 @@ const StUSPHeaderText = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 13px;
     line-height: 150%;
     /* or 30px */
 
@@ -637,7 +638,7 @@ const StFeatureCardTextBody = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 150%;
     /* or 24px */
     text-align: center;
@@ -859,7 +860,7 @@ const StBottomBrandingTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 64px;
+    font-size: 56px;
     line-height: 77px;
     text-align: center;
 

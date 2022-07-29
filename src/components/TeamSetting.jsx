@@ -250,7 +250,6 @@ const TeamSetting = (props) => {
                                                     <StUserName>{value.nickname}</StUserName>
                                                     <StEmail>{value.username}</StEmail>
                                                 </StUserInfo>
-
                                             </StUserBox>
                                         })}
                                     </StMateList>

@@ -10,7 +10,7 @@ import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
 
 const MeetingDown = (prop) => {
 
-    console.log(prop.prop.issues)
+    
   return (
     <>
         {prop?.prop.meetingSum==1?<StBox back="rgba(251, 236, 221, 0.3);">
