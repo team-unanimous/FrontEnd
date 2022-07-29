@@ -214,7 +214,7 @@ const StLeft = styled.div`
 const StMeetMake = styled.div`
   position: fixed;
   bottom :50px;
-  right : 110px;
+  right : 163px;
   display:  flex;
   justify-content: center;
   align-items: center;

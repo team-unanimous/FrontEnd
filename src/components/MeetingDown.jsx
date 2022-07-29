@@ -10,7 +10,7 @@ import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
 
 const MeetingDown = (prop) => {
 
-    
+    console.log(prop.prop.issues)
   return (
     <>
         {prop?.prop.meetingSum==1?<StBox back="rgba(251, 236, 221, 0.3);">
@@ -20,6 +20,12 @@ const MeetingDown = (prop) => {
                 </StName>
                 <StInBox back="rgba(251, 236, 221, 0.5);">
 
+                    {prop.prop.issues.map((value,index)=>(
+                        <div key={index}>
+                            <StIssue>{value.issueContent}</StIssue>
+                            <StIssueResult>{value.issueResult}</StIssueResult>
+                        </div>
+                    ))}
                 </StInBox>
         </StBox>:<></>}
         {prop?.prop.meetingSum==2?<StBox back="rgba(251, 243, 219, 0.3);">
@@ -28,6 +34,12 @@ const MeetingDown = (prop) => {
                     {prop.prop.meetingTitle}
                 </StName>
                 <StInBox back="rgba(251, 243, 219, 0.5);">
+                {prop.prop.issues.map((value,index)=>(
+                        <div key={index}>
+                            <StIssue>{value.issueContent}</StIssue>
+                            <StIssueResult>{value.issueResult}</StIssueResult>
+                        </div>
+                    ))}
                 </StInBox>
         </StBox>:<></>}
         {prop?.prop.meetingSum==3?<StBox back="rgba(237, 243, 236, 0.3);">
@@ -36,6 +48,12 @@ const MeetingDown = (prop) => {
                     {prop.prop.meetingTitle}
                 </StName>
                 <StInBox back="rgba(237, 243, 236, 0.5);">
+                {prop.prop.issues.map((value,index)=>(
+                        <div key={index}>
+                            <StIssue>{value.issueContent}</StIssue>
+                            <StIssueResult>{value.issueResult}</StIssueResult>
+                        </div>
+                    ))}
                 </StInBox>
         </StBox>:<></>}
         {prop?.prop.meetingSum==4?<StBox back="rgba(231, 243, 248, 0.3);">
@@ -44,6 +62,12 @@ const MeetingDown = (prop) => {
                     {prop.prop.meetingTitle}
                 </StName>
                 <StInBox back="rgba(231, 243, 248, 0.5);">
+                {prop.prop.issues.map((value,index)=>(
+                        <div key={index}>
+                            <StIssue>{value.issueContent}</StIssue>
+                            <StIssueResult>{value.issueResult}</StIssueResult>
+                        </div>
+                    ))}
                 </StInBox>
         </StBox>:<></>}
         {prop?.prop.meetingSum==5?<StBox back="rgba(250, 241, 245, 0.3);">
@@ -52,15 +76,38 @@ const MeetingDown = (prop) => {
                     {prop.prop.meetingTitle}
                 </StName>
                 <StInBox back="rgba(250, 241, 245, 0.5);">
+                {prop.prop.issues.map((value,index)=>(
+                        <div key={index}>
+                            <StIssue>{value.issueContent}</StIssue>
+                            <StIssueResult>{value.issueResult}</StIssueResult>
+                        </div>
+                    ))}
                 </StInBox>
         </StBox>:<></>}
     </>
   )
 }
 
+const StIssueResult = styled.div`
+    display: flex;
+    width: 312px;
+    height: 17px;
+`;
+
+const StIssue = styled.div`
+    display: flex;
+    width: 312px;
+    height: 20px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+`;
+
 const StInBox = styled.div`
     width : 312px;
-    height : 166px;
+    min-height : 166px;
     padding : 16px 8px;
     border-radius: 8px;
     background-color:${props=>props.back};
@@ -72,14 +119,7 @@ const StName = styled.div`
     font-weight: 500;
     font-size: 20px;
     margin : 0 auto 0 0;
-`;
-
-const StInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 175px;
-    height: 50.4px;
-
+    padding : 14px 0 14px 0;
 `;
 
 const StImg = styled.img`
@@ -93,7 +133,7 @@ const StBox = styled.div`
     align-items: center;
     padding: 24px;
     width: 314.67px;
-    height: 303px;
+    min-height: 303px;
     border-radius: 8px;
     background-color:${props=>props.back};
     border: 1px solid rgba(215, 215, 215, 0.5);
