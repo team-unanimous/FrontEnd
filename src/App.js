@@ -79,7 +79,7 @@ function App() {
         <Route path="/agenda" element={<Agenda />} />
 
       </Routes>
-      <ReactQueryDevtools />
+
     </QueryClientProvider>
   );
 }

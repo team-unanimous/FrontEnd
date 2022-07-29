@@ -4,6 +4,7 @@ import TodayMeet from '../components/TodayMeet';
 import LastMeeting from '../components/LastMeeting';
 import MeetingLeft from '../components/MeetingLeft';
 import MeetingRight from '../components/MeetingRight';
+
 import { useGetPassed } from '../Hooks/useGetPassed';
 import { useGetReserve } from '../Hooks/useGetReserve';
 import { useGetOnAir } from '../Hooks/useGetOnAir';
@@ -22,6 +23,7 @@ import useGetTeamMain from '../Hooks/useGetTeamMain';
 import onAirIcon from '../img/TeamBoard/defaultmessage_nowmeeting.svg'
 import onReserveIcon from '../img/TeamBoard/defaultmessage_reservedmeeting.svg'
 import onPassedIcon from '../img/TeamBoard/defaultmessage_beforemeeting.svg'
+import MeetingDown from './MeetingDown';
 
 
 const TeamboardHome = () => {
@@ -42,13 +44,15 @@ const TeamboardHome = () => {
   const {data : reserve} = useGetReserve({teamId});
   const {data : team} = useGetTeamMain({teamId});
 
-
   const [meetingId,setMeetingId] = useState("");
   const [meetingTitle,setMeetingTitle] = useState();
   const [meetingDate,setMeetingDate] = useState();
   const [meetingTime,setMeetingTime] = useState();
   const [meetingCreator,setMeetingCreator] = useState();
+  const [meetingThumbnail,setMeetingThumbnail] = useState();
   const [issues,setIssues] = useState();
+
+  console.log(reserve);
 
   const closeModalRe = () => {
     setOpenReserve(false);
@@ -69,6 +73,7 @@ const TeamboardHome = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openOnAir} 
         meetingId={meetingId} 
@@ -80,6 +85,7 @@ const TeamboardHome = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openReserve} 
         meetingId={meetingId} 
@@ -91,6 +97,7 @@ const TeamboardHome = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openReserve} 
         meetingId={meetingId} 
@@ -142,6 +149,7 @@ const TeamboardHome = () => {
                       setMeetingTime(onAir[0].meetingTime);
                       setMeetingCreator(onAir[0].meetingCreator);
                       setIssues(onAir[0].issues);
+                      setMeetingThumbnail(onAir[0].meetingSum);
                   }}>{onAir[0]?
                 <MeetingLeft prop={onAir[0]}/>:<></>}</div>:<></>}
                 {onAir?
@@ -154,12 +162,12 @@ const TeamboardHome = () => {
                       setMeetingTime(onAir[1].meetingTime);
                       setMeetingCreator(onAir[1].meetingCreator);
                       setIssues(onAir[1].issues);
+                      setMeetingThumbnail(onAir[1].meetingSum);
                   }}>{onAir[1]?
                 <MeetingLeft prop={onAir[1]}/>:<></>}</div>:<></>}
                 {onAir?
                   <div onClick={
                     ()=>{
-                      console.log("hey");
                       setMeetingId(onAir[2].meetingId);
                       setOpenOnAir(true);
                       setMeetingTitle(onAir[2].meetingTitle);
@@ -167,6 +175,7 @@ const TeamboardHome = () => {
                       setMeetingTime(onAir[2].meetingTime);
                       setMeetingCreator(onAir[2].meetingCreator);
                       setIssues(onAir[2].issues);
+                      setMeetingThumbnail(onAir[2].meetingSum);
                   }}>{onAir[2]?
                 <MeetingLeft prop={onAir[2]}/>:<></>}</div>:<></>}
               
@@ -186,6 +195,7 @@ const TeamboardHome = () => {
                     setMeetingTime(reserve[0].meetingTime);
                     setMeetingCreator(reserve[0].meetingCreator);
                     setIssues(reserve[0].issues);
+                    setMeetingThumbnail(reserve[0].meetingSum);
                 }} >{reserve[0]?
                   <MeetingRight prop={reserve[0]}/>:<></>}</div>:<></>}
               {reserve?
@@ -198,6 +208,7 @@ const TeamboardHome = () => {
                     setMeetingTime(reserve[1].meetingTime);
                     setMeetingCreator(reserve[1].meetingCreator);
                     setIssues(reserve[1].issues);
+                    setMeetingThumbnail(reserve[1].meetingSum);
                 }} >{reserve[1]?
                   <MeetingRight prop={reserve[1]}/>:<></>}</div>:<></>}
                   {reserve?
@@ -210,24 +221,84 @@ const TeamboardHome = () => {
                     setMeetingTime(reserve[2].meetingTime);
                     setMeetingCreator(reserve[2].meetingCreator);
                     setIssues(reserve[2].issues);
+                    setMeetingThumbnail(reserve[2].meetingSum);
                 }} >{reserve[2]?
                   <MeetingRight prop={reserve[2]}/>:<></>}</div>:<></>}
             </StMeetingRight>
           </StMeetingRightBox>
         </StMeetingInnerBox>
 
-      <StLastMeetBox>
-        이전 회의
-        <StLastInnerBox>
-          <LastMeeting/>
-          <LastMeeting/>
-          <LastMeeting/>
-        </StLastInnerBox>
-      </StLastMeetBox>
+
+             
+      <StDownBox>
+        <StOn>이전 회의</StOn>
+        <StDownInnerBox>
+              {passed?.length==0?<StImg src={onPassedIcon}/>:<></>}
+              {passed?
+                <div onClick={
+                  ()=>{
+                    setMeetingId(passed[0].meetingId);
+                    setOpenReserve(true);
+                    setMeetingTitle(passed[0].meetingTitle);
+                    setMeetingDate(passed[0].meetingDate);
+                    setMeetingTime(passed[0].meetingTime);
+                    setMeetingCreator(passed[0].meetingCreator);
+                    setIssues(passed[0].issues);
+                    setMeetingThumbnail(passed[0].meetingSum);
+                }} >{passed[0]?
+                  <MeetingDown prop={passed[0]}/>:<></>}</div>:<></>}
+              {passed?
+                <div onClick={
+                  ()=>{
+                    setMeetingId(passed[1].meetingId);
+                    setOpenReserve(true);
+                    setMeetingTitle(passed[1].meetingTitle);
+                    setMeetingDate(passed[1].meetingDate);
+                    setMeetingTime(passed[1].meetingTime);
+                    setMeetingCreator(passed[1].meetingCreator);
+                    setIssues(passed[1].issues);
+                    setMeetingThumbnail(passed[1].meetingSum);
+                }} >{passed[1]?
+                  <MeetingDown prop={passed[1]}/>:<></>}</div>:<></>}
+                  {passed?
+                <div onClick={
+                  ()=>{
+                    setMeetingId(passed[2].meetingId);
+                    setOpenReserve(true);
+                    setMeetingTitle(passed[2].meetingTitle);
+                    setMeetingDate(passed[2].meetingDate);
+                    setMeetingTime(passed[2].meetingTime);
+                    setMeetingCreator(passed[2].meetingCreator);
+                    setIssues(passed[2].issues);
+                    setMeetingThumbnail(passed[2].meetingSum);
+                }} >{passed[2]?
+                  <MeetingDown prop={passed[2]}/>:<></>}</div>:<></>}
+        </StDownInnerBox>
+      </StDownBox>
     </StRight>
   </>
   )
 }
+
+const StDownInnerBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width : 1120px;
+  height : 351px;
+  
+`;
+
+const StDownBox = styled.div`
+  display: flex;
+  flex-direction:column;
+  width : 1120px;
+  height : 389px;
+  padding : 32px;
+  margin : 32px 0 0 0;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
+`;
 
 const StImg = styled.img`
   width : 187px;
@@ -237,19 +308,6 @@ const StImg = styled.img`
 
 const StOn = styled.div`
   width : 516px;
-`;
-
-const StLastInnerBox = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width : 820px;
-  height : 278px;
-  margin : 0.75rem 0 0 0;
-  padding : 1rem 1rem 1rem 1rem;
-  background-color: #D9D9D9;
-  border-radius: 1rem;
 `;
 
 const StMeetingRightBox = styled.div`

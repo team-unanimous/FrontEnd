@@ -8,7 +8,7 @@ import { useMutation } from 'react-query';
 import DetailModalReserve from './DetailModalReserve';
 import DetailModalOnAir from './DetailModalOnAir';
 import DetailModalPassed from './DetailModalPassed';
-import doorIcon from '../img/outdoor.png'
+import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
 import apis from '../api/main';
 
 const MeetingManage = () => {
@@ -22,6 +22,7 @@ const MeetingManage = () => {
   const [meetingDate,setMeetingDate] = useState();
   const [meetingTime,setMeetingTime] = useState();
   const [meetingCreator,setMeetingCreator] = useState();
+  const [meetingThumbnail,setMeetingThumbnail] = useState();
   const [issues,setIssues] = useState();
   const teamId = useParams().teamid;
 
@@ -69,6 +70,7 @@ const MeetingManage = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openOnAir} 
         meetingId={meetingId} 
@@ -78,6 +80,7 @@ const MeetingManage = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openPassed} 
         meetingId={meetingId} 
@@ -88,6 +91,7 @@ const MeetingManage = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openReserve} 
         meetingId={meetingId} 
@@ -120,6 +124,7 @@ const MeetingManage = () => {
                     setMeetingTime(value.meetingTime);
                     setMeetingCreator(value.meetingCreator);
                     setIssues(value.issues);
+                    setMeetingThumbnail(value.meetingSum);
                     }} key={index}>
                   <StDateBox>
                     <StDate>{value.meetingDate}</StDate>
@@ -129,7 +134,7 @@ const MeetingManage = () => {
                   <StTitle>{value.meetingTitle}</StTitle>
                 </StList>
                 <StButton>
-                  <StIcon src={doorIcon}/>참여
+                  <StIcon src={participate}/>참여하기
                 </StButton>
               </StInfoBox>
               
@@ -147,6 +152,7 @@ const MeetingManage = () => {
                 setMeetingTime(value.meetingTime);
                 setMeetingCreator(value.meetingCreator);
                 setIssues(value.issues);
+                setMeetingThumbnail(value.meetingSum);
                 }} key={index}>
               <StDateBox>
                 <StDate>{value.meetingDate}</StDate>
@@ -169,6 +175,7 @@ const MeetingManage = () => {
                   setMeetingTime(value.meetingTime);
                   setMeetingCreator(value.meetingCreator);
                   setIssues(value.issues);
+                  setMeetingThumbnail(value.meetingSum);
                   }} key={index}>
                 <StDateBox>
                   <StDate>{value.meetingDate}</StDate>
@@ -178,11 +185,11 @@ const MeetingManage = () => {
                 <StTitle>{value.meetingTitle}</StTitle>
               </StList>
               <StButtonBox>
-                <StButton>
-                  <StIcon src={doorIcon}/>참여
-                </StButton>
                 <StSmallButton onClick={()=>{navigate(`/teamboard/${teamId}/${value.meetingId}/meetingeditone`)}}>수정</StSmallButton>
                 <StSmallButton onClick={()=>{delet(value.meetingId)}}>삭제</StSmallButton>
+                <StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${value.meetingId}`)}}>
+                  <StIcon src={participate}/>참여하기
+                </StButton>
               </StButtonBox>
             </StInfoBox></div>)}
           </>:<></>}
@@ -196,22 +203,17 @@ const MeetingManage = () => {
 const StButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width : 290px;
+  width : 310px;
   margin : 0 3px 0 0 ;
-`;
-
-const StLine2 = styled.div`
-  width : 900px;
-  height : 2px;
-  background-color: #EAEAEA;
 `;
 
 const StInfoBox = styled.div`
   display: flex;
   align-items: center;
-  width: 1104px;
+  width: 1096px;
   height: 94px;
   background-color: white;
+  padding : 0 8px 0 0;
   margin : 8px 0 8px 0;
   box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
 `;
@@ -229,9 +231,8 @@ const StSmallButton = styled.div`
   align-items: center;
   width : 64px;
   height : 35px;
-  margin : 0 0 0 0;
   border-radius: 6px;
-  border : 1px solid black;
+  border : 1px solid #063250;
   color : black;
   cursor: pointer;
 `;
@@ -240,15 +241,15 @@ const StButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width : 58px;
+  width : 90px;
   height : 18px;
-  padding : 10px 20px 10px 20px;
+  padding : 10px 15px 10px 15px;
   margin : 0 0 0 0;
   border-radius: 6px;
-  color : black;
-  &:hover{
-    background-color:#E2E2E2 ;
-  }
+  background-color: #063250;
+  border: none;
+  color : white;
+  cursor: pointer;
 `;
 
 const StDateBox = styled.div`
@@ -274,23 +275,24 @@ const StTitle = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  width : 340px;
+  width : 480px;
   height : 46px;
+  margin : 0 0 0 10px;
   padding : 0 0px 0 20px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
+
 `;
 
 const StHost = styled.div`
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  width : 120px;
+  width : 170px;
   height : 46px;
-  padding : 0 0px 0 20px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
@@ -344,7 +346,7 @@ const StDate = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  width : 120px;
+  width : 100px;
   height : 46px;
   padding : 0 0px 0 20px;
   font-family: 'Inter';
@@ -352,7 +354,6 @@ const StDate = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-
 `;
 
 const StListTop = styled.div`
@@ -371,9 +372,8 @@ const StListTop = styled.div`
 const StList = styled.div`
   display: flex;
   align-items: center;
-  width: 984px;
+  width: 954px;
   height: 94px;
-
   border-radius: 6px;
   transition: 0.1s ease-in-out;
 
