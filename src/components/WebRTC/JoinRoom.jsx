@@ -7,11 +7,34 @@ import './JoinRoom.css';
 
 import UserVideoComponent from './UserVideoComponent';
 import { getCookie } from '../../Cookie';
+import styled from 'styled-components';
+
+import casualOne from '../../img/5.MeetingRoom/1.videochat/casual/frame1.svg'
+import casualTwo from '../../img/5.MeetingRoom/1.videochat/casual/frame2.svg'
+import casualThree from '../../img/5.MeetingRoom/1.videochat/casual/frame3.svg'
+import casualFour from '../../img/5.MeetingRoom/1.videochat/casual/frame4.svg'
+import casualFive from '../../img/5.MeetingRoom/1.videochat/casual/frame5.svg'
+import casualSix from '../../img/5.MeetingRoom/1.videochat/casual/frame6.svg'
+import casualSeven from '../../img/5.MeetingRoom/1.videochat/casual/frame7.svg'
+import casualEight from '../../img/5.MeetingRoom/1.videochat/casual/frame8.svg'
+
+import officeOne from '../../img/5.MeetingRoom/1.videochat/office/frame1.svg'
+import officeTwo from '../../img/5.MeetingRoom/1.videochat/office/frame2.svg'
+import officeThree from '../../img/5.MeetingRoom/1.videochat/office/frame3.svg'
+import officeFour from '../../img/5.MeetingRoom/1.videochat/office/frame4.svg'
+import officeFive from '../../img/5.MeetingRoom/1.videochat/office/frame5.svg'
+import officeSix from '../../img/5.MeetingRoom/1.videochat/office/frame6.svg'
+import officeSeven from '../../img/5.MeetingRoom/1.videochat/office/frame7.svg'
+import officeEight from '../../img/5.MeetingRoom/1.videochat/office/frame8.svg'
+import apis from '../../api/main';
+
+
 
 const OPENVIDU_SERVER_URL = 'https://' + 'dkworld93.shop' + ':8443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 function withParams(Component) { 
+    
     return props => <Component {...props} nick={jwtDecode(getCookie('token')).USER_NICKNAME} params={useParams()}/>;
 }
 
@@ -45,18 +68,16 @@ class JoinRoom extends Component {
     componentDidMount() {
         let id = this.props.params.sessionid;
         let nickname = this.props.nick;
-        console.log(id);
-        console.log(nickname);
         this.setState({
             mySessionId:id,
             myUserName:nickname
         })
-        window.addEventListener('beforeunload', this.onbeforeunload);
+        window.addEventListener('beforeunload',this.onbeforeunload);
         this.joinSession();
     }
 
     componentWillUnmount() {
-        window.removeEventListener('beforeunload', this.onbeforeunload);
+        window.removeEventListener('beforeunload', this.onbeforeunload());
     }
 
     onbeforeunload(event) {
@@ -186,17 +207,16 @@ class JoinRoom extends Component {
         );
     }
 
+    mute(){
+        this.OV.initPublisher.publish.publishAudio(false);
+    }
+
     leaveSession() {
-
-        // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-
         const mySession = this.state.session;
-
         if (mySession) {
             mySession.disconnect();
         }
-
-        // Empty all properties...
+        alert("회의에서 나갑니다.")
         this.OV = null;
         this.setState({
             session: undefined,
@@ -207,6 +227,8 @@ class JoinRoom extends Component {
             publisher: undefined
         });
     }
+
+
 
     async switchCamera() {
         try{
@@ -244,63 +266,29 @@ class JoinRoom extends Component {
     }
 
     render() {
-        const mySessionId = this.state.mySessionId;
-        const myUserName = this.state.myUserName;
+        const {Theme} = this.props;
 
         return (
             <div className="container">
-                {this.state.session === undefined ? (
-                    <div id="join">
-                        <div id="join-dialog" className="jumbotron vertical-center">
-                            <h1> Join a video session </h1>
-                            <form className="form-group" onSubmit={this.joinSession}>
-                                <p>
-                                    <label>Participant: </label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        id="userName"
-                                        value={myUserName}
-                                        onChange={this.handleChangeUserName}
-                                        required
-                                    />
-                                </p>
-                                <p>
-                                    <label> Session: </label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        id="sessionId"
-                                        value={mySessionId}
-                                        onChange={this.handleChangeSessionId}
-                                        required
-                                    />
-                                </p>
-                                <p className="text-center">
-                                    <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
-                                </p>
-                            </form>
-                        </div>
-                    </div>
-                ) : null}
-
+               
                 {this.state.session !== undefined ? (
                     <div id="session">
                         <div id="session-header">
-                            <h1 id="session-title">{mySessionId}</h1>
-                            <input
+                           
+                            {/* <input
                                 className="btn btn-large btn-danger"
                                 type="button"
                                 id="buttonLeaveSession"
                                 onClick={this.leaveSession}
                                 value="Leave session"
-                            />
+                            /> */}
+                            
                         </div>
 
                         {this.state.mainStreamManager !== undefined ? (
                             <div id="main-video" className="col-md-6">
-                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
-                                <input
+                                
+                                <StSwitch
                                     className="btn btn-large btn-success"
                                     type="button"
                                     id="buttonSwitchCamera"
@@ -309,19 +297,67 @@ class JoinRoom extends Component {
                                 />
                             </div>
                         ) : null}
-                        <div id="video-container" className="col-md-6">
+                        <StCharacterBox id="video-container" className="col-md-6">
                             {this.state.publisher !== undefined ? (
-                                <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
-                                    <UserVideoComponent
-                                        streamManager={this.state.publisher} />
-                                </div>
+                                <StBoxUp bottom="718px" left="300px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
+                                    {Theme==2 ?<StImg src={casualOne}/>:<></>}
+                                    {Theme==1 ?<StImg src={officeOne}/>:<></>}
+                                    <UserVideoComponent streamManager={this.state.publisher} />
+                                </StBoxUp>
                             ) : null}
+                            <StTable></StTable>
                             {this.state.subscribers.map((sub, i) => (
-                                <div key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                <div key={i}>
+                                {i==0?<StBoxDown key={i} bottom="123px" left="300px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    {Theme==2 && i==0?<StImg src={casualTwo}/>:<></>}
+                                    {Theme==1 && i==0?<StImg src={officeTwo}/>:<></>}
+                                    {/* {i==1?<StImg src={casualThree}/>:<></>}
+                                    {i==2?<StImg src={casualFour}/>:<></>}
+                                    {i==3?<StImg src={casualFive}/>:<></>}
+                                    {i==4?<StImg src={casualSix}/>:<></>}
+                                    {i==5?<StImg src={casualSeven}/>:<></>}
+                                    {i==6?<StImg src={casualEight}/>:<></>sssss}ss */}
                                     <UserVideoComponent streamManager={sub} />
+                                </StBoxDown>:<></>}
+                                {i==1?
+                                <StBoxUp key={i} bottom="718px" left="600px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    {Theme==2 && i==1?<StImg src={casualThree}/>:<></>}
+                                    {Theme==1 && i==1?<StImg src={officeThree}/>:<></>}
+                                    <UserVideoComponent streamManager={sub} />
+                                </StBoxUp>:<></>}
+                                {i==2?
+                                <StBoxDown key={i} bottom="123px" left="600px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    {Theme==2 && i==2?<StImg src={casualFour}/>:<></>}
+                                    {Theme==1 && i==2?<StImg src={officeFour}/>:<></>}
+                                    <UserVideoComponent streamManager={sub} />
+                                </StBoxDown>:<></>}
+                                {i==3?
+                                <StBoxUp key={i} bottom="718px" left="0px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    {Theme==2 && i==3?<StImg src={casualFive}/>:<></>}
+                                    {Theme==1 && i==3?<StImg src={officeFive}/>:<></>}
+                                    <UserVideoComponent streamManager={sub} />
+                                </StBoxUp>:<></>}
+                                {i==4?
+                                <StBoxDown key={i} bottom="123px" left="0px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    {Theme==2 && i==4?<StImg src={casualSix}/>:<></>}
+                                    {Theme==1 && i==4?<StImg src={officeSix}/>:<></>}
+                                    <UserVideoComponent streamManager={sub} />
+                                </StBoxDown>:<></>}
+                                {i==5?
+                                <StBoxUp key={i} bottom="718px" left="900px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    {Theme==2 && i==5?<StImg src={casualSeven}/>:<></>}
+                                    {Theme==1 && i==5?<StImg src={officeSeven}/>:<></>}
+                                    <UserVideoComponent streamManager={sub} />
+                                </StBoxUp>:<></>}
+                                {i==6?
+                                <StBoxDown key={i} bottom="123px" left="900px" className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    {Theme==2 && i==6?<StImg src={casualEight}/>:<></>}
+                                    {Theme==1 && i==6?<StImg src={officeEight}/>:<></>}
+                                    <UserVideoComponent streamManager={sub} />
+                                </StBoxDown>:<></>}
                                 </div>
                             ))}
-                        </div>
+                        </StCharacterBox>
                     </div>
                 ) : null}
             </div>
@@ -403,5 +439,56 @@ class JoinRoom extends Component {
         });
     }
 }
+
+const StSwitch = styled.div`
+    position :absolute;
+    bottom : 0;
+    width : 56px;
+    height : 56px;
+    border-radius: 56px;
+    background-color: white;
+`;
+
+const StTable = styled.div`
+    position : absolute;
+    width: 1168px;
+    height: 347px;
+    left : 0px;
+    top : 280px;
+    border-radius: 36px;
+    background-color: #F5E8CD;
+    z-index: 20;
+`;
+
+const StCharacterBox = styled.div`
+    position : relative;
+    left : 160px;
+    display: flex;
+    flex-wrap: wrap;
+    gap : 500px 10;
+    justify-content: space-between;
+    width : 950px;
+    height : 895px;
+`;
+
+const StImg = styled.img`
+    position: absolute;
+`;
+
+const StBoxUp = styled.div`
+    position : absolute;
+    bottom : ${props=>props.bottom};
+    left : ${props=>props.left};
+    display: flex;
+    z-index: 10;
+`;
+
+const StBoxDown = styled.div`
+    position : absolute;
+    bottom : ${props=>props.bottom};
+    left : ${props=>props.left};
+    display: flex;
+    z-index: 30;
+`;
 
 export default withParams (JoinRoom);

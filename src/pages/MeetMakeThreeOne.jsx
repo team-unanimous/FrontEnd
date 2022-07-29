@@ -60,8 +60,8 @@ const MeetMakeThreeOne = () => {
           </StTitle>
           <StInnerBox>
             <StInputBox>
-              <StInput ref={issue} placeholder='추가할 안건 내용을 입력해주세요'/>
-              <StInputBt onClick={makeFunction}> 추가 </StInputBt>
+              <StInput maxLength={40} ref={issue} placeholder='추가할 안건 내용을 입력해주세요'/>
+              <div onClick={()=>{issue.current.value=''}}><StInputBt onClick={makeFunction}> 추가 </StInputBt></div>
             </StInputBox>
             <StInfoBox>
               <StInfoInner>
@@ -112,10 +112,12 @@ const StInputBt = styled.button`
   width : 132px;
   height : 49px;
   border-radius: 6px;
-  background-color: black;
+  background-color: #063250;
+  border: none;
   color : white;
   font-weight: 700;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 const StInput = styled.input`
@@ -124,7 +126,7 @@ const StInput = styled.input`
   margin: 0 0 0 0;
   padding : 15px;
   border-radius: 6px;
-  border: 1px solid black;
+  border: 1px solid #5C5C5C;
 `;
 
 const StInputBox = styled.div`

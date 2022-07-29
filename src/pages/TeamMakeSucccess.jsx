@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import teamMakeSuccessImg from "../img/teamMakeSuccess.png";
@@ -7,8 +8,10 @@ import teamMakeSuccessImg from "../img/teamMakeSuccess.png";
 
 const TeamMakeSuccess = () => {
     const navigate = useNavigate();
+    const teamData = useSelector(state=>state.teamReducer);
+    console.log(teamData);
     useEffect(()=>{
-        setTimeout(()=>{navigate(`/teamboard/`)}, 3000 // teamId 받아와야함
+        setTimeout(()=>{navigate(`/teamboard/${teamData.teamId}`)}, 3000 // teamId 받아와야함
         )
     })
 
@@ -35,6 +38,7 @@ const StBox = styled.div`
     order: 1;
     background-image: url(${teamMakeSuccessImg});
     background-repeat: no-repeat;
+    background-size: cover;
     `
 
 const StContainer = styled.div`

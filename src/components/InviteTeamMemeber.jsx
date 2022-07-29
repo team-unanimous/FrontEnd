@@ -5,11 +5,18 @@ import { useMutation } from "react-query";
 import styled from "styled-components";
 import apis from "../api/main";
 import xbutton from "../img/Xbutton.png"
+import teamSelectImg from "../img/teamSelect.png";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 const InviteTeamMember = ()=> {
+    const navigate = useNavigate();
+    const teamData = useSelector(state=>state.teamReducer);
+    console.log(teamData);
     const [memberEmail, setMemberEmail] = useState("");
     const emailRef = useRef();
 
@@ -20,6 +27,7 @@ const InviteTeamMember = ()=> {
     const { mutate : mailSendMutate } = useMutation(mailSend, {
         onSuccess: (resp) => {
             console.log(resp);
+            navigate('/teammakesuccess')
         }
     })
 
@@ -27,7 +35,7 @@ const InviteTeamMember = ()=> {
         console.log(memberEmail);
         const data = {
             emailRequestDtoList: memberEmail,
-            teamId: 1, // teammake 페이지에서 상태 값으로 받아 와서 전달해야됨 
+            teamId: teamData, // teammake 페이지에서 상태 값으로 받아 와서 전달해야됨 
         }
         console.log(data);
         mailSendMutate(data);
@@ -38,10 +46,9 @@ const InviteTeamMember = ()=> {
         <>
         <StBox>
             <StContainer>
-                <StTitle>추가할 팀원 정보를 입력해주세요</StTitle>
+                <StTitle>새로운 팀원을 추가해주세요</StTitle>
                 <StInputWrapper>
                 <StEmailBox>
-                    <StEmailTitle>팀원 추가하기</StEmailTitle>
                     <StEmailInputBox>
                     <StPwInput type='text' placeholder='이메일 입력' ref={emailRef}/>
                     <StEmailButton 
@@ -55,40 +62,21 @@ const InviteTeamMember = ()=> {
                     추가
                     </StEmailButton>
                     </StEmailInputBox>
-                    {/* {
-                        !memberEmail
-                        ? <></>
-                        : <>{memberEmail.map((email, i)=>(
-                                <StUl key={i}>
-                                    <StLi>{`${email}, ${i}`}<button
-                                    onClick={()=>{
-                                        setMemberEmail(memberEmail.filter(( _, index) => index !== i))
-                                        console.log();
-                                    }}>X</button>
-                                    </StLi>
-                                </StUl>
-                        ))}</>
-                    } */}
+                    <StEmailWarningBox>
                     {
                         !memberEmail
                         ? <></>
                         : <>{memberEmail.map((email, i)=>(
-                                <StUlContainer key={i}>
-                                    <StLiItem>{`${email}`}
-                                    {/* <button
-                                    onClick={()=>{
-                                        setMemberEmail(memberEmail.filter(( _, index) => index !== i))
-                                        console.log(memberEmail);
-                                    }}>X</button> */}
+                                    <StLiItem key={i}>{`${email}`}
                                     <input style={{width:"1rem"}} type={"image"} src={xbutton} onClick={
                                         ()=>{
                                             setMemberEmail(memberEmail.filter(( _, index) => index !== i))
                                             console.log(memberEmail);
                                     }}/>
                                     </StLiItem>
-                                </StUlContainer>
                         ))}</>
                     }
+                    </StEmailWarningBox>
                     <StEmailWarnning>
                     </StEmailWarnning>
                 </StEmailBox>
@@ -106,15 +94,40 @@ const InviteTeamMember = ()=> {
         </>
     )
 }
-const StUlContainer = styled.div`
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`
+
 const StLiItem = styled.div`
     font-size: 16px;
     align-self: flex-start;
+    /* Frame 266 */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 12px;
+    gap: 24px;
+    box-sizing: border-box;
+
+    width: fit-content;
+    height: 31px;
+
+    /* Grey/background */
+
+    background: #F1F1F1;
+    border-radius: 100px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    /* unaniomus2022@gmail.com */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #5C5C5C;
 `
 // const StUl = styled.ul`
 //     line-height: 100%;
@@ -134,6 +147,9 @@ const StBox = styled.div`
     justify-content: center;
     align-items: center;
     order: 1;
+    background-image: url(${teamSelectImg});
+    background-repeat: no-repeat;
+    background-size: cover;
     `
 
 const StContainer = styled.div`
@@ -157,7 +173,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 48px;
+    font-size: 46px;
     line-height: 58px;
     /* identical to box height */
     text-align: center;
@@ -202,16 +218,27 @@ const StEmailBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width : 541px;
-  height: 100px;
+  width : 540px;
+  height: 251px;
   margin : 0 0 0 0;
 `;
-const StEmailTitle = styled.div`
-  width : 200px;
-  height : 19px;
-  font-weight: 700;
-  font-size: 15px;
-`;
+const StEmailWarningBox = styled.div`
+    /* Frame 266 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 8px;
+
+    width: 100%;
+    height: 187px;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    overflow-y: auto;
+`
+
 const StEmailInputBox = styled.div`
   display: flex;
   justify-content: center;
@@ -229,7 +256,7 @@ const StEmailButton = styled.button`
   width : 132px;
   height : 49px;
   margin : 0 0 0 9px;
-  background-color: black;
+  background-color: #063250;
   color : white;
   border-radius: 6px;
 `;
@@ -240,11 +267,14 @@ const StCancel = styled.button`
   font-size: 20px;
   border-radius: 0.375rem;
   cursor: pointer;
+  color: #888888;
+  background-color: #fff;
+  border: 1px solid #5C5C5C;
 `;
 const StAgree = styled.button`
   width : 200px;
   height : 54px;
-  background-color: black;
+  background-color: #063250;
   font-weight: 700;
   font-size: 20px;
   color : white;

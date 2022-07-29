@@ -3,60 +3,80 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { target } from "../api/websocket";
 import LandingHeader from "../components/LandingHeader";
-import img_placeholder from "../img/img_placeholder.png"
+import img_placeholder from "../img/img_placeholder.png";
+import BG_LandingPage from "../img/BG_LandingPage.svg";
+import text_logo from "../img/text_logo.svg";
+import BG_LandingFull from "../img/BG_LandingFull.png";
+import mobile_BG from "../img/mobile_BG.png";
+import mainCharacter from "../img/mainCharacter.svg";
+import img1_main from "../img/img1_main.svg";
+import function1 from "../img/function1.svg";
+import function2 from "../img/function2.png";
+import function3 from "../img/function3.svg";
+import ProfileImg1 from "../img/ProfileImg1.svg";
+import ProfileImg2 from "../img/ProfileImg2.svg";
+import ProfileImg3 from "../img/ProfileImg3.svg";
+import ProfileImg4 from "../img/ProfileImg4.svg";
+import ProfileImg5 from "../img/ProfileImg5.svg";
+import ProfileImg6 from "../img/ProfileImg6.svg";
+import ProfileImg7 from "../img/ProfileImg7.svg";
+import footer_logo from "../img/footer_logo.svg";
+
+
 
 const Landing = () => {
     const navigate = useNavigate();
     console.log(target)
     return (
         <>
-            <LandingHeader></LandingHeader>
-            {/* <StHeader style={{position: "sticky", top:"0"}}>
-                <StLogo>
-                    Unanimous
-                </StLogo>
-                <StStartButton>접속하기</StStartButton>
-            </StHeader> */}
+        <StFull>
+            <LandingHeader>
+            </LandingHeader>
             <StJumbotronContainer>
                 <StTitleContainer>
+                    <StTextLogo>
+                    </StTextLogo>
                     <StTitleText>
-                        Unanimous.
-                        Lorem <br />
-                        Lorem ipsum
+                        새로운 팀 회의를 
+                        경험해보세요
                     </StTitleText>
                     <StBodyText>
-                        Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse
+                        안건을 등록하고 다양한 테마 속에서 팀 미팅을 열어보세요
+                        채팅과 이모티콘으로 의사를 표현하고 
+                        안건에 대한 회의록을 작성할 수 있습니다
                     </StBodyText>
                     <StBodyButton onClick={() => navigate('/login')}>
                         접속하기
                     </StBodyButton>
                 </StTitleContainer>
+                <StMainCharacter>
+                </StMainCharacter>
             </StJumbotronContainer>
             <StUSPContainer>
                 <StUSPWrapper>
                     <StUSPHeader>
                         <StUSPHeaderTitle>
-                            Suspendisse vitae <br />
-                            pharetra netus
+                            Unanimous는 비대면 화상회의의
+                            최적의 환경을 제공합니다
                         </StUSPHeaderTitle>
-                        <StUSPHeaderText>
+                        {/* <StUSPHeaderText>
                             At lacus vitae nulla sagittis scelerisque nisl. Pellentesque duis cursus vestibulum, facilisi ac, sed faucibus.
-                        </StUSPHeaderText>
+                        </StUSPHeaderText> */}
                     </StUSPHeader>
                     <StFeatureCardWrapper>
                         <StFeatureCardBox>
-                            <StFeatureCardImgDiv>
+                            <StFeatureCardImgDiv imgsrc={function1}>
                                 <StFeatureCardImg>
-                                    <img src={img_placeholder} />
+                                    {/* <img src={function1} style={{backgroundColor:"red"}}/> */}
                                 </StFeatureCardImg>
                             </StFeatureCardImgDiv>
                             <StFeatureCardTextDiv>
                                 <StFeatureCardTextBox>
                                     <StFeatureCardTextTitle>
-                                        Aenean egestas libero amet vulputate.
+                                        실시간 의사결정
                                     </StFeatureCardTextTitle>
                                     <StFeatureCardTextBody>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi morbi sit consectetur elit.
+                                        화상 및 음성 채팅을 통해 의견을 내고 이모티콘으로 감정을 표현해보세요
                                     </StFeatureCardTextBody>
                                 </StFeatureCardTextBox>
                             </StFeatureCardTextDiv>
@@ -65,32 +85,30 @@ const Landing = () => {
                             <StFeatureCardTextDiv style={{ justifyContent: "flex-start" }}>
                                 <StFeatureCardTextBox>
                                     <StFeatureCardTextTitle>
-                                        Aenean egestas libero amet vulputate.
+                                        쉽고 빠른 회의 결과 공유
                                     </StFeatureCardTextTitle>
                                     <StFeatureCardTextBody>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi morbi sit consectetur elit.
+                                        미팅을 진행하는 동안 회의록을 작성하고 미팅관리 창에서 이전 회의 내용을 확인할 수 있습니다
                                     </StFeatureCardTextBody>
                                 </StFeatureCardTextBox>
                             </StFeatureCardTextDiv>
-                            <StFeatureCardImgDiv>
+                            <StFeatureCardImgDiv imgsrc={function2}>
                                 <StFeatureCardImg>
-                                    <img src={img_placeholder} />
                                 </StFeatureCardImg>
                             </StFeatureCardImgDiv>
                         </StFeatureCardBox>
                         <StFeatureCardBox>
-                            <StFeatureCardImgDiv>
+                            <StFeatureCardImgDiv imgsrc={function3}>
                                 <StFeatureCardImg>
-                                    <img src={img_placeholder} />
                                 </StFeatureCardImg>
                             </StFeatureCardImgDiv>
                             <StFeatureCardTextDiv>
                                 <StFeatureCardTextBox>
                                     <StFeatureCardTextTitle>
-                                        Aenean egestas libero amet vulputate.
+                                        뛰어난 User Experience
                                     </StFeatureCardTextTitle>
                                     <StFeatureCardTextBody>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi morbi sit consectetur elit.
+                                        팀 게시판에서 요약된 회의 내용을 확인할 수 있으며 사이드바를 통해 환경 설정과 미팅 관리에 쉽게 접속할 수 있습니다
                                     </StFeatureCardTextBody>
                                 </StFeatureCardTextBox>
                             </StFeatureCardTextDiv>
@@ -102,105 +120,98 @@ const Landing = () => {
                 <StTeamSectionTitleWrapper>
                     <StUSPHeader>
                         <StUSPHeaderTitle>
-                            Lorem Lorem ipsum
+                            Unanimous팀을 소개합니다
                         </StUSPHeaderTitle>
                         <StUSPHeaderText>
-                            Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse
+                            여섯명의 개발자와 한명의 디자이너로 구성되어있습니다
                         </StUSPHeaderText>
                     </StUSPHeader>
                 </StTeamSectionTitleWrapper>
                 <StTeamSectionImageWrapper>
                     <StTeamSectionImageUpper>
                         <StTeamSectionImageItemBox>
-                            <StTeamSectionImageItem>
-                                <img src={img_placeholder} />
+                            <StTeamSectionImageItem imgsrc={ProfileImg1}>
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
-                                    Lorem Lorem
+                                    강석우
                                 </StTeamSectionImageTitle>
                                 <StTeamSectionImageBody>
-                                    Developer
+                                    FrontEnd Developer
                                 </StTeamSectionImageBody>
                             </StTeamSectionImageTextDiv>
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
-                            <StTeamSectionImageItem>
-                                <img src={img_placeholder} />
+                            <StTeamSectionImageItem imgsrc={ProfileImg2}>
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
-                                    Lorem Lorem
+                                    곽동관
                                 </StTeamSectionImageTitle>
                                 <StTeamSectionImageBody>
-                                    Developer
+                                    BackEnd Developer
                                 </StTeamSectionImageBody>
                             </StTeamSectionImageTextDiv>
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
-                            <StTeamSectionImageItem>
-                                <img src={img_placeholder} />
+                            <StTeamSectionImageItem imgsrc={ProfileImg3}>
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
-                                    Lorem Lorem
+                                    김용우
                                 </StTeamSectionImageTitle>
                                 <StTeamSectionImageBody>
-                                    Developer
+                                    FrontEnd Developer
                                 </StTeamSectionImageBody>
                             </StTeamSectionImageTextDiv>
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
-                            <StTeamSectionImageItem>
-                                <img src={img_placeholder} />
+                            <StTeamSectionImageItem imgsrc={ProfileImg4}>
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
-                                    Lorem Lorem
+                                    신상우
                                 </StTeamSectionImageTitle>
                                 <StTeamSectionImageBody>
-                                    Developer
+                                    BackEnd Developer
                                 </StTeamSectionImageBody>
                             </StTeamSectionImageTextDiv>
                         </StTeamSectionImageItemBox>
                     </StTeamSectionImageUpper>
                     <StTeamSectionImageLower>
                         <StTeamSectionImageItemBox>
-                            <StTeamSectionImageItem>
-                                <img src={img_placeholder} />
+                            <StTeamSectionImageItem imgsrc={ProfileImg5}>
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
-                                    Lorem Lorem
+                                    양승훈
                                 </StTeamSectionImageTitle>
                                 <StTeamSectionImageBody>
-                                    Developer
+                                    BackEnd Developer
                                 </StTeamSectionImageBody>
                             </StTeamSectionImageTextDiv>
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
-                            <StTeamSectionImageItem>
-                                <img src={img_placeholder} />
+                            <StTeamSectionImageItem imgsrc={ProfileImg6}>
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
-                                    Lorem Lorem
+                                    임대균
                                 </StTeamSectionImageTitle>
                                 <StTeamSectionImageBody>
-                                    Developer
+                                    FrontEnd Developer
                                 </StTeamSectionImageBody>
                             </StTeamSectionImageTextDiv>
                         </StTeamSectionImageItemBox>
                         <StTeamSectionImageItemBox>
-                            <StTeamSectionImageItem>
-                                <img src={img_placeholder} />
+                            <StTeamSectionImageItem imgsrc={ProfileImg7}>
                             </StTeamSectionImageItem>
                             <StTeamSectionImageTextDiv>
                                 <StTeamSectionImageTitle>
-                                    Lorem Lorem
+                                    조유진
                                 </StTeamSectionImageTitle>
                                 <StTeamSectionImageBody>
-                                    Developer
+                                    UI/UX Designer
                                 </StTeamSectionImageBody>
                             </StTeamSectionImageTextDiv>
                         </StTeamSectionImageItemBox>
@@ -210,13 +221,12 @@ const Landing = () => {
             <StBottomBrandingContainer>
                 <StBottomBrandingWrapper>
                     <StBottomBrandingTitle>
-                        Unanimous.<br />
-                        Lorem Lorem ipsum
+                        Unanimous<br />
+                        지금 바로 접속해보세요
                     </StBottomBrandingTitle>
                     <StBottomBrandingBody>
-                        Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse
                     </StBottomBrandingBody>
-                    <StBodyButton style={{ marginTop: "0px" }} onClick={() => navigate('/login')}>
+                    <StBodyButton marginTop={"0px"} btnColor={"#063250"} onClick={() => navigate('/login')}>
                         접속하기
                     </StBodyButton>
                 </StBottomBrandingWrapper>
@@ -228,45 +238,22 @@ const Landing = () => {
                     </StFooterContentLinks>
                 </StFooterContentWrapper>
             </StFooterContainer>
+        </StFull>
         </>
     );
 }
 
-const StHeader = styled.div`
-    width : 100%;
-    height : 5rem;
-    display : flex;
-    align-items : center;
-    background-color : #D9D9D9
-`
-const StLogo = styled.div`
-    width: 3.25rem;
-    height: 1.25rem;
-    margin : 0 0 0 3.75rem;
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 20px;
-`
-
-const StStartButton = styled.div`
-    /* Button */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    ${'' /* padding: 10px 20px; */}
-    width: 6.688rem;
-    height: 2.5rem;
-    /* Gray/900 */
-    background: #111827;
-    border-radius: 6px;
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0; 
-    color: white;
-    font-size : 18px;
-    margin : 0 40px 0 auto; 
+const StFull = styled.div`
+    width: 100%;
+    background-image: url(${BG_LandingFull});
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* display:flex;
+    flex-direction: column;
+    justify-content: center; */
+    @media screen and (max-width: 600px) {
+        background-image: url(${mobile_BG});
+    }
 `
 const StJumbotronContainer = styled.div`
     display : flex;
@@ -274,23 +261,67 @@ const StJumbotronContainer = styled.div`
     align-items : center;
     width : 100%;
     height: 67.5rem;
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `
+
 const StTitleContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 25rem;
-    height: 23.688rem;
+    width: 24rem;
+    height: 27.688rem;
+    /* background-color: black; */
+    gap: 40px;
     margin-left: 20%;
+    @media screen and (max-width: 600px) {
+        margin-left: 41px;
+        margin-top: 43px;
+    }
+`
+const StMainCharacter = styled.div`
+    display: flex;
+    width: 1065px;
+    height: 1065px;
+    background-image: url(${mainCharacter});
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 10%;
+    @media screen and (max-width: 600px) {
+     width: 384px;
+     margin-top: 100px;
+     align-self: flex-end;
+    }
+`
+const StTextLogo = styled.div`
+    display: flex;
+    /* LP/main/logo */
+    width: 23.438rem; //375px;
+    height: 3.313rem; //53px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    background-image: url(${text_logo});
 `
 const StTitleText = styled.div`
+    /* 새로운 팀 회의를 경험해보세요 */
     width: 100%;
-    height: 14.4rem;
+    height: 9.75rem;
 
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 4rem;
+    font-size: 3.375rem;
     line-height: 4.8rem;
+
+    line-height: 144.02%;
+    color: #00316F;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
 `
 const StBodyText = styled.div`
     width: 20rem;
@@ -305,6 +336,30 @@ const StBodyText = styled.div`
 
     order: 1;
     margin-top: 1.5rem;
+    /* 안건을 등록하고 다양한 테마 속에서 팀 미팅을 열어보세요 채팅과 이모티콘으로 의사를 표현하고 안건에 대한 회의록을 작성할 수 있습니다 */
+
+
+    width: 383px;
+    height: 96px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 200%;
+    /* or 32px */
+
+
+    /* Grey/body */
+
+    color: #5C5C5C;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
 `
 
 const StBodyButton = styled.div`
@@ -316,7 +371,8 @@ const StBodyButton = styled.div`
     width: 127px;
     height: 50px;
 
-    background: #111827;
+    background: ${props => props.btnColor ||'#2396F0'};
+;
     border-radius: 6px;
 
     flex: none;
@@ -347,6 +403,10 @@ const StUSPContainer = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
+    margin-top: 300px;
+    @media screen and (max-width: 600px) {
+        margin-top: 0px;
+    }
 `
 const StUSPWrapper = styled.div`
     flex-wrap: wrap;
@@ -362,6 +422,11 @@ const StUSPWrapper = styled.div`
     flex: none;
     order: 0;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        width: 100%;
+        height: 856px;
+        flex-wrap: nowrap;
+    }
 `
 const StUSPHeader = styled.div`
     /* Frame 10 */
@@ -369,35 +434,42 @@ const StUSPHeader = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    gap: 10px;
 
     width: 36.875rem;
-    height: 13.125rem;
+    height: 6.125rem;
 
     flex: none;
     order: 0;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        width: 346px;
+        margin-top: 43px;
+    }
 `
 const StUSPHeaderTitle = styled.div`
     /* title */
-    width: 100pxm;
-    height: 134px;
+    width: 100%;
+    height: 3.625rem;
 
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 48px;
+    font-size: 44px;
     line-height: 140%;
 
     text-align: center;
-
-    color: #111827;
+    align-self: stretch;
+    color: #1E2222;
 
     flex: none;
     order: 0;
-    align-self: stretch;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        font-size: 20px;
+        line-height: 150%;
+        width:346px;
+        height: 50%;
+    }
 `
 const StUSPHeaderText = styled.div`
     /* text */
@@ -421,6 +493,11 @@ const StUSPHeaderText = styled.div`
     order: 1;
     align-self: stretch;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        font-size: 10px;
+        width: 100%;
+        height: 50%;
+    }
 `
 const StFeatureCardWrapper = styled.div`
     /* feature cards */
@@ -434,6 +511,11 @@ const StFeatureCardWrapper = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
+    /* margin-top: 100px; */
+    @media screen and (max-width: 600px) {
+        width:100%;
+        margin-top: 43px;
+    }
 `
 const StFeatureCardBox = styled.div`
     /* feature card */
@@ -441,16 +523,19 @@ const StFeatureCardBox = styled.div`
     flex-direction: row;
     align-items: center;
     padding: 0px;
-    ${'' /* gap: 125px; */}
 
     width: 997px;
-    height: 331.23px;
+    height: 430px;
 
     flex: none;
     order: 0;
     flex-grow: 0;
 
-    margin-top: 80px;
+    margin-top: 50px;
+    @media screen and (max-width: 600px) {
+        width: 80%;
+        height: 225px;
+    }
 `
 const StFeatureCardImgDiv = styled.div`
     width: 50%;
@@ -459,8 +544,9 @@ const StFeatureCardImgDiv = styled.div`
     align-items: center;
     justify-content: center;
     
-    border: solid black 2px;
-    border-radius: 4px;
+    background-image: ${props => `url(${props.imgsrc})`};
+    background-repeat: no-repeat;
+    background-size: cover;
 `
 const StFeatureCardImg = styled.div`
     width: 10%;
@@ -472,7 +558,7 @@ const StFeatureCardTextDiv = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: ${props => props.justifyContent || 'flex-end'}
+    justify-content: ${props => props.justifyContent || 'flex-end'};
     
     ${'' /* border: solid black 2px; */}
     ${'' /* border-radius: 4px; */}
@@ -494,6 +580,9 @@ const StFeatureCardTextBox = styled.div`
     order: 1;
     ${'' /* align-self: stretch; */}
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        width: 90%;
+    }
 `
 const StFeatureCardTextTitle = styled.div`
     /* text */
@@ -509,12 +598,16 @@ const StFeatureCardTextTitle = styled.div`
     display: flex;
     align-items: center;
     text-align: center;
+    justify-content: center;
 
     color: #111827;
 
     flex: none;
     order: 0;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        font-size: 16px;
+    }
 
 `
 const StFeatureCardTextBody = styled.div`
@@ -537,6 +630,9 @@ const StFeatureCardTextBody = styled.div`
     order: 1;
     ${'' /* align-self: flex-end; */}
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        font-size: 10px;
+    }
 `
 
 const StTeamSectionContainer = styled.div`
@@ -554,6 +650,11 @@ const StTeamSectionContainer = styled.div`
     flex: none;
     order: 2;
     flex-grow: 0;
+    margin-top: 465px;
+    @media screen and (max-width: 600px) {
+        margin-top: 0px;
+        gap: 10px;
+    }
 `
 
 const StTeamSectionTitleWrapper = styled.div`
@@ -586,6 +687,9 @@ const StTeamSectionImageWrapper = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        width: 80%;
+    }
 `
 const StTeamSectionImageUpper = styled.div`
     display: flex;
@@ -594,15 +698,21 @@ const StTeamSectionImageUpper = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 50%;
+    @media screen and (max-width: 600px) {
+        height: 70%;
+        justify-content: space-evenly;
+    }
 `
 const StTeamSectionImageLower = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    background-color:white;
     width: 100%;
     height: 50%;
+    @media screen and (max-width: 600px) {
+        height:30%;
+    }
 `
 const StTeamSectionImageItemBox = styled.div`
     /* Frame 10 */
@@ -617,11 +727,17 @@ const StTeamSectionImageItemBox = styled.div`
 const StTeamSectionImageItem = styled.div`
     width: 100%;
     height: 12.75rem;
-    border: solid black 2px;
     border-radius: 4px;
     align-items: center;
     justify-content: center;
     display: flex;
+    background-image: ${props=>`url(${props.imgsrc})`};
+    background-size: cover;
+    background-repeat: no-repeat;
+    @media screen and (max-width: 600px) {
+        width: 80px;
+        height: 80px;
+    }
 `
 const StTeamSectionImageTextDiv = styled.div`
     display: flex;
@@ -661,11 +777,12 @@ const StTeamSectionImageBody = styled.div`
     text-align: center;
     margin-top: 1rem;
 
-    color: #000000;
-
     flex: none;
     order: 2;
     flex-grow: 0;
+    /* Developer */
+
+    color: #5C5C5C;
 `
 const StBottomBrandingContainer = styled.div`
     display: flex;
@@ -691,7 +808,7 @@ const StBottomBrandingWrapper = styled.div`
     padding: 0px;
     gap: 25px;
 
-    width: 38rem;
+    width: 100%;
     height: 18.875rem;
 
     flex: none;
@@ -716,6 +833,10 @@ const StBottomBrandingTitle = styled.div`
     flex: none;
     order: 0;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        width: 90%;
+        font-size: 40px;
+    }
 `
 const StBottomBrandingBody = styled.div`
     /* Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse */
@@ -746,7 +867,11 @@ const StFooterContainer = styled.div`
     width: 100%;
     height: 16.8rem;
 
-    background: #EFEFEF;
+    flex: none;
+    order: 4;
+    flex-grow: 0;
+
+    background: #FDEFDB;
 
     flex: none;
     order: 4;
@@ -759,16 +884,19 @@ const StFooterContentWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-top: solid 2px #D2D5DA;
+    border-bottom: solid 2px #D2D5DA;
     width: 76rem;
     height: 7rem;
 
     flex: none;
     order: 0;
-    flex-grow: 0;  
+    flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        width: 80%;
+        height: 80px;
+    }
 `
 const StFooterContentLinks = styled.div`
-    background: red;
     /* links */
     display: flex;
     flex-direction: row;

@@ -13,13 +13,17 @@ import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific"
 import leftbtn from "../img/icon_arrow_left.svg"
 import rightbtn from "../img/Icon_arrow_right.svg"
 import stampbtn from "../img/stamp.svg"
+import useGetMeetList from "../Hooks/useGetMeetList"
 
-const Agenda = ({ meetingId }) => {
 
+const Agenda = () => {
+
+    const meetID = useParams().sessionid;
     const token = getCookie('token');
 
     const sock = new SockJS("https://sparta-ysh.shop/ws-stomp");
     const ws = Stomp.over(sock);
+
 
 
     // get으로 받은 안건 내용 저장
@@ -29,10 +33,12 @@ const Agenda = ({ meetingId }) => {
     const [numberagenda, setNumberagenda] = useState(0);
     const [stampvalue, setStampvalue] = useState(null);
     const [numagenda, setNumagenda] = useState(null);
+    const [order, setOrder] = useState(1);
 
-    const data = {
+
+    const datas = {
         token: token,
-        roomId: meetingId
+        roomId: meetID
     }
 
     // 웹소켓 연결, 구독 // 구독주소 채팅방이랑 달라야됨
@@ -75,16 +81,17 @@ const Agenda = ({ meetingId }) => {
 
     setTimeout(() => {
         HandleSend(); // 받아온안건을 전송해주는애
-    }, 500);
+    }, 100);
     clearTimeout(msg);
 
     useEffect(() => {
-        wsConnect(data); // > 소켓연결
-        useGetIssueLists()
+        wsConnect(datas); // > 소켓연결
+        useGetIssueLists({ meetID })
     }, [])
 
     // get 임시로
-    const useGetIssueLists = async (meetID) => {
+    const useGetIssueLists = async ({ meetID }) => {
+        console.log({ meetID })
         const { data } = await apis.getIssueList({ meetID });
         console.log(data)
         // 안건정보 state저장
@@ -94,13 +101,12 @@ const Agenda = ({ meetingId }) => {
     }
 
 
-
     // 안건 서버로 보내기
     const HandleSend = () => {
         try {
             const data = {
                 type: "ISSUE",
-                roomId: meetingId,
+                roomId: meetID,
                 sender: "string",
                 message: JSON.stringify(agendalist[numberagenda]),
             }
@@ -149,7 +155,7 @@ const Agenda = ({ meetingId }) => {
         try {
             const data = {
                 type: "STAMP",
-                roomId: meetingId,
+                roomId: meetID,
                 nickname: "string",
                 sender: "string",
                 message: JSON.stringify(stampobject),
@@ -164,6 +170,7 @@ const Agenda = ({ meetingId }) => {
         }
     }
 
+
     // console.log(numberagenda)
     console.log(numberagenda)
     console.log(msg)
@@ -176,12 +183,12 @@ const Agenda = ({ meetingId }) => {
         <>
             <Bigbox>
                 {1 <= numberagenda ?
-                    <StImgLeft src={leftbtn} onClick={numberminus} />
+                    <StImgLeft src={leftbtn} onClick={() => { numberminus(); setOrder(order - 1); }} />
                     : <Stnumbtn />
                 }
-                <div>의 {numagenda}번째 안건<br />{msg}</div>
-                {8 >= numberagenda ?
-                    <StImgRight src={rightbtn} onClick={numberplus} />
+                <div>회의명의 {order}번째 안건<br />{msg}</div>
+                {agendalist?.length - 2 >= numberagenda ?
+                    <StImgRight src={rightbtn} onClick={() => { numberplus(); setOrder(order + 1); }} />
                     : <Stnumbtn />
                 }
                 {stampvalue ?
@@ -240,7 +247,7 @@ top: 80px;
 const Stnumbtn = styled.div`
 width: 46px;
 height: 46px;
-border: 1px solid #E3F1F9;
+border:solid 1px #F5E8CD;
 `
 
 
@@ -248,10 +255,10 @@ const Bigbox = styled.div`
     display: flex;
     width: 1129px;
     height: 324px;
-    left: 395px;
-    top: 390px;
+    left: 184px;
+    top: 285px;
     position: absolute;
-    background-color: #E3F1F9;
+    z-index: 21;
     border-radius: 36px;
     justify-content: space-between;
     align-items: center;

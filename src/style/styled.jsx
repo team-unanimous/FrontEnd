@@ -8,7 +8,8 @@ export const StButton = styled.div`
   height : 54px;
   margin : auto auto 0 auto;
   border-radius: 6px;
-  background-color: black;
+  border: none;
+  background-color: #063250;
   color : white;
   font-weight: 700;
   font-size: 20px;
@@ -31,7 +32,7 @@ export const StBarG = styled.div`
 export const StBarC = styled.div`
   width : 56px;
   height : 4px;
-  background-color: black;
+  background-color: #2396F0;
 `;
 
 export const StOutBox = styled.div`
@@ -68,7 +69,7 @@ export const StModal = styled.div`
   height : 510px;
   padding : 150px 80px 80px 80px;
   border-radius: 32px;
-  background-color: #EAEAEA;
+  background-color:  #FFFFFF;;
 `;
 
 export const StBox = styled.div`
@@ -98,7 +99,7 @@ export const StSumnail = styled.div`
   padding : 15px;
   margin : 12px 0 0 0;
   border-radius: 6px;
-  border: 1px solid black;
+  border: 1px solid #5C5C5C;
 `;
 
 export const StSumTitle = styled.div`
@@ -132,7 +133,7 @@ export const StThemeSmallBox = styled.div`
   margin: auto 0 0 0;
   border-radius: 6px;
   padding : 15px;
-  border: 1px solid black;
+  border: 1px solid #5C5C5C;
 `;
 
 export const StThemeTitle = styled.div`

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import OpenViduVideoComponent from './OvVideo';
-import './UserVideoComponent.css';
+import './UserVideo.css';
 
 export default class UserVideoComponent extends Component {
 
@@ -15,10 +16,23 @@ export default class UserVideoComponent extends Component {
                 {this.props.streamManager !== undefined ? (
                     <div className="streamcomponent">
                         <OpenViduVideoComponent streamManager={this.props.streamManager} />
-                        <div><p>{this.getNicknameTag()}</p></div>
+                        <StName><p>{this.getNicknameTag()}</p></StName>
                     </div>
                 ) : null}
             </div>
         );
     }
 }
+
+const StName = styled.div`
+    position: absolute;
+    bottom : -88px;
+    left : 74px;
+    display: flex;
+    justify-content: center;
+    width : 96px;
+    color : white;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 100px;
+    padding: 6px 12px;
+`;

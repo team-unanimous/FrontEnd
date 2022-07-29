@@ -11,7 +11,7 @@ import Stomp from "stompjs";
 import sockJS from "sockjs-client"
 import { useNavigate } from "react-router-dom";
 
-const MeetingRoomChat = ()=>{
+const MeetingRoomChat = ({meetingId})=>{
     const navigate = useNavigate()
     const [color, setColor] = useState(null);
     const [msg, setMsg] = useState("");
@@ -29,9 +29,6 @@ const MeetingRoomChat = ()=>{
     const target = "https://sparta-ysh.shop/ws-stomp" //"http://52.79.226.242:8080/ws-stomp" 
     const socket = new sockJS(target);
     const ws = Stomp.over(socket);
-    
-
-const MeetingRoomChatxx = () => {
     const inputRef = useRef(null);
     const EnterRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
@@ -47,12 +44,10 @@ const MeetingRoomChatxx = () => {
             ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
             (response) => {
                 const newMessage = JSON.parse(response.body);
-                console.log(newMessage.message);
-                setMsg(newMessage.message);
-                setIssue(newMessage.message);
-                console.log("보낸사람:", newMessage.sender);
-                console.log("받은 메세지:", newMessage.message);
-                // console.log(JSON.parse(issue));
+                console.log(newMessage.type);
+                if (newMessage.type == "TALK"){
+                    setMsg(newMessage.message);
+                }
             },
             {
                 token: token
@@ -93,7 +88,7 @@ const MeetingRoomChatxx = () => {
 
     const data = {
         token: token,
-        roomId: "1"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
+        roomId: meetingId,
     }
 
 // const SocketConnect = (token) => { 
@@ -175,11 +170,10 @@ const MeetingRoomChatxx = () => {
         try {
             const data = {
                 type: "TALK",
-                roomId: "1",
+                roomId: meetingId,
                 nickname: "string",
                 sender: "string",
-                message: `${inputRef.current.value}`,
-                createdAt: "10시"
+                message: `${inputRef.current.value}`
             }
             const token = getCookie("token")
             waitForConnection(ws, function(){
@@ -198,11 +192,10 @@ const MeetingRoomChatxx = () => {
         try {
             const data = {
                 type: "ENTER",
-                roomId: "1",
+                roomId: meetingId,
                 nickname: "string",
                 sender: "string",
                 message: `this is a Enter message from the client : ${EnterRef.current.value}`,
-                createdAt: "10시"
             }
             const token = getCookie("token")
             waitForConnection(ws, function(){
@@ -220,11 +213,10 @@ const MeetingRoomChatxx = () => {
         try {
             const data = {
                 type: "ISSUE",
-                roomId: "1",
+                roomId: meetingId,
                 nickname: "string",
                 sender: "string",
                 message: JSON.stringify({"안건1":"안건입니다", "안건2":"안건이 아닙니다"}),
-                createdAt: "10시"
             }
             const token = getCookie("token")
             waitForConnection(ws, function () {
@@ -251,7 +243,7 @@ const MeetingRoomChatxx = () => {
 
     return (
         <>  
-        <StChattingContainer>
+        {/* <StChattingContainer>
             <StChattingItem>
             <button onClick={meetingRoomHandler}>create meeting room</button><br/>
             <button onClick={SocketConnect}>Connect</button><br/>
@@ -277,10 +269,9 @@ const MeetingRoomChatxx = () => {
                 {console.log(`${msg}`)}
                 </>
             }
-        </StChattingContainer>
+        </StChattingContainer> */}
         </>
     )
-}
 }
 
 

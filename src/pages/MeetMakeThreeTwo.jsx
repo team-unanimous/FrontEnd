@@ -91,7 +91,7 @@ const StDelBt = styled.button`
   font-weight: 700;
   font-size: 12px;
   border: none;
-  background-color: tomato;
+
 `;
 
 const StEditBt = styled.button`
@@ -100,7 +100,7 @@ const StEditBt = styled.button`
   font-weight: 700;
   font-size: 12px;
   border: none;
-  background-color: tomato;
+
   `;
 
 const StIssue = styled.div`
@@ -170,7 +170,7 @@ const StInputBt = styled.button`
   width : 132px;
   height : 49px;
   border-radius: 6px;
-  background-color: black;
+  background-color: #063250;
   color : white;
   font-weight: 700;
   font-size: 16px;

@@ -4,11 +4,28 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import apis from '../api/main';
 import doorIcon from '../img/outdoor.png'
-import { teamID } from '../redux/modules/meetReducer';
+import thumbnail1 from '../img/TeamBoard/2.nowmeeting/thumbnail1.svg'
+import thumbnail2 from '../img/TeamBoard/2.nowmeeting/thumbnail2.svg'
+import thumbnail3 from '../img/TeamBoard/2.nowmeeting/thumbnail3.svg'
+import thumbnail4 from '../img/TeamBoard/2.nowmeeting/thumbnail4.svg'
+import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
+import closeIcon from '../img/TeamBoard/popup/close.svg'
+import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
+import jwt_decode from "jwt-decode";
+import { getCookie } from '../Cookie';
+import copyIcon from '../img/TeamBoard/popup/icon_url.svg'
 
-const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,meetingCreator,issues, meetingId,teamId}) => {
+const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,meetingCreator,issues, meetingId,teamId,meetingThumbnail}) => {
+
+    const decoded = jwt_decode(getCookie('token'));
+    const nickname = decoded.USER_NICKNAME;
 
     const navigate = useNavigate();
+
+    // 복사하기 버튼
+    const handleCopyClipBoard = async (text) => {
+        await navigator.clipboard.writeText(text);
+    };       
 
     //미팅 삭제 부분
     const deleteMeet = async(data)=>{
@@ -16,7 +33,7 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
         return datas;
     }
 
-    const {mutate} = useMutation(deleteMeet,{
+    const {mutate:del} = useMutation(deleteMeet,{
         onSuccess:()=>{
             alert("미팅삭제완료");
         },
@@ -26,7 +43,29 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
     })
 
     const delet = () => {
-        mutate({
+        del({
+            meetingId : meetingId
+        })
+    }
+
+
+    // 미팅 시작하기
+    const startMeet = async(data)=>{
+        const datas = await apis.patchNow(data);
+        return datas;
+    }
+
+    const {mutate:start} = useMutation(startMeet,{
+        onSuccess:()=>{
+            alert("미팅이 시작됩니다.")
+        },
+        onError:()=>{
+            alert("미팅이 시작되지 않습니다.")
+        }
+    })
+
+    const starting = () =>{
+        start({
             meetingId : meetingId
         })
     }
@@ -37,7 +76,12 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
     <>
     <StBack onClick={close}/>
         <StBox>
-            <StImg/>
+            <StCloseIcon src={closeIcon} onClick={close}/>
+            {meetingThumbnail==1?<StImg src={thumbnail1}/>:<></>}
+            {meetingThumbnail==2?<StImg src={thumbnail2}/>:<></>}
+            {meetingThumbnail==3?<StImg src={thumbnail3}/>:<></>}
+            {meetingThumbnail==4?<StImg src={thumbnail4}/>:<></>}
+            {meetingThumbnail==5?<StImg src={thumbnail5}/>:<></>}
             <StTitle>회의명 '{meetingTitle}'</StTitle>
             <StLine/>
             <StInfo>
@@ -51,31 +95,81 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
                 </StDateBox>
                 <StIssueBox>
                     <StHostLeft>안건</StHostLeft>
-                    <StIssues>
+                    
+                    {meetingThumbnail==1?<StIssues color="#FCF3E9">
                         {issues?.map((value,index)=>{
                             return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
                         })}
-                    </StIssues>
+                    </StIssues>:<></>}
+                    {meetingThumbnail==2?<StIssues color="#FCF7E7">
+                        {issues?.map((value,index)=>{
+                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                        })}
+                    </StIssues>:<></>}
+                    {meetingThumbnail==3?<StIssues color="#F3F7F3">
+                        {issues?.map((value,index)=>{
+                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                        })}
+                    </StIssues>:<></>}
+                    {meetingThumbnail==4?<StIssues color="#EFF7FB">
+                        {issues?.map((value,index)=>{
+                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                        })}
+                    </StIssues>:<></>}
+                    {meetingThumbnail==5?<StIssues color="#FCF6F9">
+                        {issues?.map((value,index)=>{
+                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                        })}
+                    </StIssues>:<></>}
+                    
                 </StIssueBox>
                 <StDateBox>
                     <StHostLeft>미팅 URL</StHostLeft>
-                    <StIssue></StIssue>
+                    <StIssue>
+                        <StUrl>
+                            https://unanimous.co.kr/{teamId}/{meetingId} 
+                        </StUrl>
+                        <StCopy onClick={() => handleCopyClipBoard(`https://unanimous.co.kr/${teamId}/${meetingId}`)}>
+                            <img src={copyIcon}/> url 복사
+                        </StCopy>
+                    </StIssue>
                 </StDateBox>
             </StInfo>
             <StLine/>
             <StDownBox>
-                <StBtBox>
-                    <StEdit onClick={()=>{navigate(`/teamboard/${teamId}/${meetingId}/meetingeditone`)}}>수정</StEdit>
-                    <div onClick={close}><StDelete onClick={delet}>삭제</StDelete></div>
-                </StBtBox>
-                <StButton><StIconImg src={doorIcon}/>참여하기</StButton>
+                {meetingCreator==nickname?
+                <>
+                    <StBtBox>
+                        <StEdit onClick={()=>{navigate(`/teamboard/${teamId}/${meetingId}/meetingeditone`)}}>수정</StEdit>
+                        <div onClick={close}><StDelete onClick={delet}>삭제</StDelete></div>
+                    </StBtBox>
+                    <div onClick={starting}><StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${meetingId}`)}}><StIconImg src={participate}/>시작하기</StButton></div>
+                </>:<><StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${meetingId}`)}}><StIconImg src={participate}/>참여하기</StButton></>}
             </StDownBox>
         </StBox>
-        </>
-    :<></>}
+        </>:<></>}
     </>
   )
 }
+
+const StCopy = styled.div`
+    display: flex;
+    align-items: center;
+    margin : 20px 0 0 0;
+    color : #2396F0;
+    cursor: pointer;
+`;
+
+const StUrl = styled.div`
+
+`;
+
+const StCloseIcon = styled.img`
+    position: absolute;
+    top : 20px;
+    right : 20px;
+    cursor: pointer;
+`;
 
 const StDownBox = styled.div`
     display: flex;
@@ -89,10 +183,9 @@ const StDelete = styled.div`
     justify-content: center;
     align-items: center;
     width : 132px;
-    height : 54px;
+    height : 52px;
     border-radius: 6px;
-    background-color: black;
-    color : white;
+    border: 1px solid #063250;
     font-weight: 700;
     font-size: 20px;
 `;
@@ -103,7 +196,7 @@ const StEdit = styled.div`
     align-items: center;
     width : 130px;
     height : 52px;
-    border: 1px solid black;
+    border: 1px solid #063250;
     border-radius: 6px;
     font-weight: 700;
     font-size: 20px;
@@ -131,8 +224,10 @@ const StButton = styled.div`
     margin : 0 0 0 auto;
     border: 1px solid black;
     border-radius: 6px;
-    background-color: white;
-    color : black;
+    background-color: #063250;
+    border: none;
+    color : white;
+    cursor: pointer;
 `;
 
 const StLine = styled.div`
@@ -156,18 +251,12 @@ const StIssue = styled.div`
 const StIssues = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 0px;
-    width: 663px;
-    height: 92px;
-    
-`;
+    padding: 16px;
+    width: 585px;
+    height: 60px;
+    background-color: ${props=>props.color};
+    border-radius: 10px;
 
-const StIssueBox = styled.div`
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
-    height: 92px;
-    margin : 0 0 10px 0;
     overflow-x: hidden;
     ::-webkit-scrollbar{
     width:10px;
@@ -179,6 +268,14 @@ const StIssueBox = styled.div`
   ::-webkit-scrollbar-track{
     border-radius: 1rem;
   }
+`;
+
+const StIssueBox = styled.div`
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: 92px;
+    margin : 0 0 10px 0;
 `;
 
 const StDateBox = styled.div`
@@ -252,6 +349,7 @@ const StBox = styled.div`
     border-radius: 8px;
     background-color: white;
     z-index : 20;
+    box-shadow:(0px 4px 20px rgba(0, 0, 0, 0.1));
 `;
 
 const StBack = styled.div`

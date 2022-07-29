@@ -8,7 +8,7 @@ import { useMutation } from 'react-query';
 import DetailModalReserve from './DetailModalReserve';
 import DetailModalOnAir from './DetailModalOnAir';
 import DetailModalPassed from './DetailModalPassed';
-import doorIcon from '../img/outdoor.png'
+import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
 import apis from '../api/main';
 
 const MeetingManage = () => {
@@ -22,6 +22,7 @@ const MeetingManage = () => {
   const [meetingDate,setMeetingDate] = useState();
   const [meetingTime,setMeetingTime] = useState();
   const [meetingCreator,setMeetingCreator] = useState();
+  const [meetingThumbnail,setMeetingThumbnail] = useState();
   const [issues,setIssues] = useState();
   const teamId = useParams().teamid;
 
@@ -69,6 +70,7 @@ const MeetingManage = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openOnAir} 
         meetingId={meetingId} 
@@ -78,6 +80,7 @@ const MeetingManage = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openPassed} 
         meetingId={meetingId} 
@@ -88,6 +91,7 @@ const MeetingManage = () => {
         meetingDate={meetingDate}
         meetingTime={meetingTime} 
         meetingCreator={meetingCreator}
+        meetingThumbnail={meetingThumbnail}
         issues={issues}
         open={openReserve} 
         meetingId={meetingId} 
@@ -98,8 +102,10 @@ const MeetingManage = () => {
           <StBlack1 state={state} onClick={()=>{setState(1)}}>이전 미팅</StBlack1>
           <StBlack2 state={state} onClick={()=>{setState(2)}}>예약된 미팅</StBlack2>
         </StBlackBox>
-        <StLine/>
+        
         <StfListBox>  
+          <StfInListBox>
+          <></>
           <StListTop>
             <StDateTop>날짜</StDateTop>
             <StHostTop>주최자</StHostTop>
@@ -118,6 +124,7 @@ const MeetingManage = () => {
                     setMeetingTime(value.meetingTime);
                     setMeetingCreator(value.meetingCreator);
                     setIssues(value.issues);
+                    setMeetingThumbnail(value.meetingSum);
                     }} key={index}>
                   <StDateBox>
                     <StDate>{value.meetingDate}</StDate>
@@ -127,10 +134,10 @@ const MeetingManage = () => {
                   <StTitle>{value.meetingTitle}</StTitle>
                 </StList>
                 <StButton>
-                  <StIcon src={doorIcon}/>참여
+                  <StIcon src={participate}/>참여하기
                 </StButton>
               </StInfoBox>
-              <StLine2/>
+              
             </div>)}
           </>:<></>}
           {state==1?
@@ -145,6 +152,7 @@ const MeetingManage = () => {
                 setMeetingTime(value.meetingTime);
                 setMeetingCreator(value.meetingCreator);
                 setIssues(value.issues);
+                setMeetingThumbnail(value.meetingSum);
                 }} key={index}>
               <StDateBox>
                 <StDate>{value.meetingDate}</StDate>
@@ -153,7 +161,7 @@ const MeetingManage = () => {
               <StHost>{value.meetingCreator}</StHost>
               <StTitle>{value.meetingTitle}</StTitle>
             </StList>
-            </StInfoBox><StLine2/></div>)}
+            </StInfoBox></div>)}
           </>:<></>}
           {state==2?
           <>{reserve?.map((value,index)=>
@@ -167,6 +175,7 @@ const MeetingManage = () => {
                   setMeetingTime(value.meetingTime);
                   setMeetingCreator(value.meetingCreator);
                   setIssues(value.issues);
+                  setMeetingThumbnail(value.meetingSum);
                   }} key={index}>
                 <StDateBox>
                   <StDate>{value.meetingDate}</StDate>
@@ -176,17 +185,16 @@ const MeetingManage = () => {
                 <StTitle>{value.meetingTitle}</StTitle>
               </StList>
               <StButtonBox>
-                <StButton>
-                  <StIcon src={doorIcon}/>참여
-                </StButton>
                 <StSmallButton onClick={()=>{navigate(`/teamboard/${teamId}/${value.meetingId}/meetingeditone`)}}>수정</StSmallButton>
                 <StSmallButton onClick={()=>{delet(value.meetingId)}}>삭제</StSmallButton>
+                <StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${value.meetingId}`)}}>
+                  <StIcon src={participate}/>참여하기
+                </StButton>
               </StButtonBox>
-            </StInfoBox><StLine2/></div>)}
+            </StInfoBox></div>)}
           </>:<></>}
-            
+          </StfInListBox>
         </StfListBox>
-
       </StRight>
     </>
   )
@@ -195,28 +203,26 @@ const MeetingManage = () => {
 const StButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width : 290px;
+  width : 310px;
   margin : 0 3px 0 0 ;
-`;
-
-const StLine2 = styled.div`
-  width : 900px;
-  height : 2px;
-  background-color: #EAEAEA;
 `;
 
 const StInfoBox = styled.div`
   display: flex;
   align-items: center;
-  width : 900px;
-  height : 46px;
-  margin : 24px 0 24px 0;
+  width: 1096px;
+  height: 94px;
+  background-color: white;
+  padding : 0 8px 0 0;
+  margin : 8px 0 8px 0;
+  box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
 `;
 
 const StIcon = styled.img`
   width : 18px;
   height : 18px;
   margin : 0 0 0 0;
+  cursor: pointer;
 `;
 
 const StSmallButton = styled.div`
@@ -225,22 +231,25 @@ const StSmallButton = styled.div`
   align-items: center;
   width : 64px;
   height : 35px;
-  margin : 0 0 0 0;
   border-radius: 6px;
-  border : 1px solid black;
+  border : 1px solid #063250;
   color : black;
+  cursor: pointer;
 `;
 
 const StButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width : 58px;
+  width : 90px;
   height : 18px;
-  padding : 10px 20px 10px 20px;
+  padding : 10px 15px 10px 15px;
   margin : 0 0 0 0;
   border-radius: 6px;
-  color : black;
+  background-color: #063250;
+  border: none;
+  color : white;
+  cursor: pointer;
 `;
 
 const StDateBox = styled.div`
@@ -266,23 +275,24 @@ const StTitle = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  width : 340px;
+  width : 480px;
   height : 46px;
+  margin : 0 0 0 10px;
   padding : 0 0px 0 20px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
+
 `;
 
 const StHost = styled.div`
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  width : 120px;
+  width : 170px;
   height : 46px;
-  padding : 0 0px 0 20px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
@@ -301,6 +311,7 @@ const StTitleTop = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
+  color: #5C5C5C;
 `;
 
 const StHostTop = styled.div`
@@ -314,7 +325,7 @@ const StHostTop = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-
+  color: #5C5C5C;
 `;
 
 const StDateTop = styled.div`
@@ -328,14 +339,14 @@ const StDateTop = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-
+  color: #5C5C5C;
 `;
 
 const StDate = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  width : 120px;
+  width : 100px;
   height : 46px;
   padding : 0 0px 0 20px;
   font-family: 'Inter';
@@ -343,38 +354,62 @@ const StDate = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-
 `;
 
 const StListTop = styled.div`
   display: flex;
   align-items: center;
-  width : 900px;
-  height : 56px;
+  width: 1080px;
+  height: 20px;
+  padding : 18px 0 18px 24px;
   margin : 5px 0 5px 0;
   border-radius: 6px;
-  background: #EFEFEF;
+  background: rgba(153, 213, 255, 0.3);
+  box-shadow: 0px 4px 10px rgba(153, 213, 255, 0.3),0px 4px 10px rgba(0, 0, 0, 0.05);
+
 `;
 
 const StList = styled.div`
   display: flex;
-  width : 750px;
-  height : 46px;
-  margin : 0 0 0 0;
+  align-items: center;
+  width: 954px;
+  height: 94px;
   border-radius: 6px;
   transition: 0.1s ease-in-out;
-  &:hover{
-    background-color:#E2E2E2 ;
-  }
+
   cursor: pointer;
+`;
+
+const StfInListBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width : 1184px;
+  height : 50vh;
+  margin: 36px 0 0 38px;
 `;
 
 const StfListBox = styled.div`
   display: flex;
   flex-direction: column;
-  width : 700px;
-  height : 50vh;
-  margin: 36px auto 0 30px;
+  width : 1184px;
+  height : 90vh;
+  margin: 20px auto 0 0px;
+  background-color: #F2F6F9;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow-x: hidden;
+  
+  ::-webkit-scrollbar{
+    width:10px;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #818181;
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-track{
+    
+    border-radius: 1rem;
+  }
 `;
 
 const StBlackBox = styled.div`
@@ -390,7 +425,9 @@ const StBlack2 = styled.div`
     justify-content: center;
     width : 150px;
     height : 20px;
-    border-bottom: ${props=>props.state==2?"3px solid":"none"};
+    border-bottom: ${props=>props.state==2?"4px solid #2396F0;":"4px solid #D7D7D7"};
+    color : ${props=>props.state==2?" #2396F0;":"#D7D7D7;"};
+    padding : 0 0 20px 0;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -403,7 +440,9 @@ const StBlack1 = styled.div`
     justify-content: center;
     width : 150px;
     height : 20px;
-    border-bottom: ${props=>props.state==1?"3px solid":"none"};
+    border-bottom: ${props=>props.state==1?"4px solid #2396F0;":"4px solid #D7D7D7"};
+    color : ${props=>props.state==1?" #2396F0;":"#D7D7D7;"};
+    padding : 0 0 20px 0;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -416,7 +455,9 @@ const StBlack0 = styled.div`
     justify-content: center;
     width : 150px;
     height : 20px;
-    border-bottom: ${props=>props.state==0?"3px solid":"none"};
+    border-bottom: ${props=>props.state==0?"4px solid #2396F0;":"4px solid #D7D7D7"};
+    color : ${props=>props.state==0?" #2396F0;":"#D7D7D7;"};
+    padding : 0 0 20px 0;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -432,12 +473,13 @@ const StLine = styled.div`
 
 const StRight = styled.div`
   width : 1184px;
-  height : 86.5vh;
+  height : 91.5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 181px 36px 38px;
+  padding: 0 38px 0px 38px;
   overflow-x: hidden;
+  
   ::-webkit-scrollbar{
     width:10px;
   }

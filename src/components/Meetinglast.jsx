@@ -7,8 +7,9 @@ import apis from "../api/main";
 import { useQuery, useMutation } from "react-query";
 import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 
-const Meetinglast = ({ meetingId }) => {
+const Meetinglast = () => {
 
+    const meetID = useParams().sessionid;
     const token = getCookie('token');
 
     const sock = new SockJS("https://sparta-ysh.shop/ws-stomp");
@@ -18,7 +19,7 @@ const Meetinglast = ({ meetingId }) => {
     // 바뀌는값 저장
     const [resultagen, setResultagen] = useState(null);
 
-    const data = {
+    const datas = {
         token: token,
         roomId: meetingId
     }
@@ -53,19 +54,21 @@ const Meetinglast = ({ meetingId }) => {
     // clearTimeout(agendalist);
 
     useEffect(() => {
-        useGetIssueLists()  // 안건받아오는애
+        useGetIssueLists({ meetID })  // 안건받아오는애
         ResultSend() // 소켓연결
-        wsConnect(data);
+        wsConnect(datas);
     }, [])
 
-    // get 안건정보
-    const useGetIssueLists = async (meetID) => {
+    //get 안건정보
+    const useGetIssueLists = async ({ meetID }) => {
         const { data } = await apis.getIssueList({ meetID });
         console.log(data)
         // 안건정보 state저장
         setAgendalist(data)
         return data;
     }
+
+
 
     // 안건결과 서버로 보내기
     const ResultSend = () => {

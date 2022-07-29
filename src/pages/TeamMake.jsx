@@ -6,12 +6,15 @@ import styled from "styled-components";
 import InviteTeamMember from "../components/InviteTeamMemeber";
 import { useEffect } from "react";
 import teamSelectImg from "../img/teamSelect.png"
+import { useDispatch } from "react-redux";
+import { setTeamID } from "../redux/modules/teamReducer";
+import { useSelector } from "react-redux";
 
 
 
 const TeamMake = () => {
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // const teamImageRef = useRef(null);
   const teamNameRef = useRef(null);
 
@@ -22,7 +25,9 @@ const TeamMake = () => {
   const { mutate } = useMutation(makeTeam, {
     onSuccess: (data) => {
       console.log(data.data);
-      navigate('/teammakesuccess')
+      dispatch(setTeamID(data.data));
+      console.log();
+      navigate('/invitemember')
     },
     onError: (error) => {
       console.log(error)
@@ -76,6 +81,7 @@ const StBox = styled.div`
     order: 1;
     background-image: url(${teamSelectImg});
     background-repeat: no-repeat;
+    background-size: cover;
     `
 
 const StContainer = styled.div`
@@ -167,6 +173,9 @@ const StCancel = styled.button`
   font-size: 20px;
   border-radius: 0.375rem;
   cursor: pointer;
+  color: #888888;
+  background-color: #fff;
+  border: 1px solid #5C5C5C;
 `;
 
 const StBtBox = styled.div`
