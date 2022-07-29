@@ -14,7 +14,7 @@ const LandingHeader = () => {
     });
 
     return (
-        <StHeader style={{ position: "sticky", top: "0" }}>
+        <StHeader>
             <StLogo>
             </StLogo>
             {scrollPosition < 700
@@ -25,10 +25,15 @@ const LandingHeader = () => {
 }
 
 const StHeader = styled.div`
-    width : 100%;
+    width : 98%;
     height : 5rem;
     display : flex;
     align-items : center;
+    position: sticky;
+    top: 0;
+    @media screen and (max-width: 600px) {
+    }
+
 `
 const StLogo = styled.div`
     width: 32px;
@@ -40,6 +45,9 @@ const StLogo = styled.div`
     background-image: url(${HeaderLogo});
     background-repeat: no-repeat;
     background-size: cover;
+    @media screen and (max-width: 600px) {
+        margin-left: 2.4rem;
+    }
 `
 
 const StStartButton = styled.div`
