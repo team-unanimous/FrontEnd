@@ -12,27 +12,27 @@ import office from "../img/back/office.png";
 
 const MeetingLeft = (prop) => {
     console.log(prop.prop.users);
-  return (
-    <StBox>
-        {prop?.prop.meetingSum==1?<StImg src={thumbnail1}/>:<></>}
-        {prop?.prop.meetingSum==2?<StImg src={thumbnail2}/>:<></>}
-        {prop?.prop.meetingSum==3?<StImg src={thumbnail3}/>:<></>}
-        {prop?.prop.meetingSum==4?<StImg src={thumbnail4}/>:<></>}
-        {prop?.prop.meetingSum==5?<StImg src={thumbnail5}/>:<></>}
-        <StInfo>
-            <StName>
-                {prop?.prop.meetingTitle}
-            </StName>
-            <StCount>
-                {prop?.prop.users[0]?<StUserImg src={prop?.prop.users[0].profileImage}/>:<></>}
-                {prop?.prop.users[1]?<StUserImg src={prop?.prop.users[0].profileImage}/>:<></>}
-                {prop?.prop.users[2]?<StUserImg src={prop?.prop.users[0].profileImage}/>:<></>}
-                &nbsp;{prop?.prop.userCnt}명
-            </StCount>
-        </StInfo>
-        <StButton>참여하기</StButton>
-    </StBox>
-  )
+    return (
+        <StBox>
+            {prop?.prop.meetingSum == 1 ? <StImg src={thumbnail1} /> : <></>}
+            {prop?.prop.meetingSum == 2 ? <StImg src={thumbnail2} /> : <></>}
+            {prop?.prop.meetingSum == 3 ? <StImg src={thumbnail3} /> : <></>}
+            {prop?.prop.meetingSum == 4 ? <StImg src={thumbnail4} /> : <></>}
+            {prop?.prop.meetingSum == 5 ? <StImg src={thumbnail5} /> : <></>}
+            <StInfo>
+                <StName>
+                    {prop?.prop.meetingTitle}
+                </StName>
+                <StCount>
+                    {prop?.prop.users[0] ? <StUserImg src={prop?.prop.users[0].profileImage} /> : <></>}
+                    {prop?.prop.users[1] ? <StUserImg src={prop?.prop.users[0].profileImage} /> : <></>}
+                    {prop?.prop.users[2] ? <StUserImg src={prop?.prop.users[0].profileImage} /> : <></>}
+                    &nbsp;{prop?.prop.userCnt}명
+                </StCount>
+            </StInfo>
+            <StButton>참여하기</StButton>
+        </StBox>
+    )
 }
 
 

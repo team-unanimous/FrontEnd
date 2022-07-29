@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
+import { useGetTeamMain } from "../Hooks/useGetTeamMain"
 import styled from "styled-components"
 import apis from "../api/main"
 import { useMutation } from "react-query"
@@ -16,7 +17,7 @@ import { getCookie } from "../Cookie"
 const TeamSelect = () => {
     const token = getCookie('token')
     const navigate = useNavigate();
-    
+
     const teamJoin = async (data) => {
         return apis.postTeamJoin(data);
     }
@@ -50,6 +51,9 @@ const TeamSelect = () => {
     }
 
     const { data } = useGetTeamInfo();
+    console.log({ data })
+    // const teamId = useParams().teamid;
+    // const { data } = useGetTeamMain({ teamId });
 
     if (!data) {
         return <>Something wrong!</>
@@ -66,19 +70,19 @@ const TeamSelect = () => {
                     </StTitleWrapper>
                     <StTeamBox>
                         {data.map((team, index) => (
-                                <StTeamItemBox 
+                            <StTeamItemBox
                                 key={index}>
-                                    <StTeamItem
-                                        key={index}
-                                        className="team-title"
-                                        onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
-                                        src={{ data }.data[0].teamImage}
-                                    >
-                                    </StTeamItem>
-                                    <StTeamName>
-                                        {team.teamname}
-                                    </StTeamName>
-                                </StTeamItemBox>
+                                <StTeamItem
+                                    key={index}
+                                    className="team-title"
+                                    onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
+                                    src={{ data }.data[index].teamImage}
+                                >
+                                </StTeamItem>
+                                <StTeamName>
+                                    {team.teamname}
+                                </StTeamName>
+                            </StTeamItemBox>
                         ))}
                     </StTeamBox>
                     <StButtonWrapper>

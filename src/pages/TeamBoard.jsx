@@ -30,7 +30,7 @@ const TeamBoard = () => {
   const { data: main } = useGetTeamMain({ teamId });
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
-
+  console.log(main)
   const [imgfile, setImgfile] = useState("");
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const TeamBoard = () => {
         <StLeft>
           <StSmallBox>
             <StTeamInfoBox>
-              {imgfile ? <StTeamImg src={imgfile} /> : <></>}
+              {imgfile ? <StTeamImg src={main.teamImage} /> : <></>}
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
                 {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
@@ -68,8 +68,8 @@ const TeamBoard = () => {
           {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
         </>
       </StDownBox>
-      {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}><img src={plusIcon}/></StMeetMake> : <></>}
-   
+      {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}><img src={plusIcon} /></StMeetMake> : <></>}
+
     </StBox>
   );
 };

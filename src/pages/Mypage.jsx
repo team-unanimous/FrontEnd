@@ -102,7 +102,8 @@ const Mypage = () => {
 
     // formdata 안에 넣기
     const formData = new FormData();
-    formData.append('profileImage', files)
+    formData.append('profileImage', files);
+
     // 사진 값보기
     // for (let key of formData.keys()) {
     //     console.log(key);
@@ -119,10 +120,14 @@ const Mypage = () => {
     const picturePost = async (data) => {
         console.log(data)
         console.log(data.profileImage) // data.profileImage = formdata
+        for (let key of data.profileImage.keys()) {
+            console.log(key);
+        }
+        for (let value of data.profileImage.values()) {
+            console.log(value);
+        }
         const formdataimg = await apis.postPicturePost(data);
         setCookie("token", formdataimg.headers.authorization);
-        console.log(formdataimg);
-        console.log(formdataimg.headers);
         return formdataimg;
     }
 
@@ -133,6 +138,9 @@ const Mypage = () => {
         },
         onError: (error) => {
             alert("이미지 업로드에 실패하셨습니다")
+        },
+        onSettled: () => {
+
         }
     })
 
@@ -149,8 +157,17 @@ const Mypage = () => {
     // 기본 이미지 전송
 
     const defaultPost = async (data) => {
-        const fromdatadefault = await axis.postPicturePost(data);
-        return fromdatadefault;
+        console.log(data)
+        console.log(data.profileImage)
+        for (let key of data.profileImage.keys()) {
+            console.log(key);
+        }
+        for (let value of data.profileImage.values()) {
+            console.log(value);
+        }
+        const formdataimg = await axis.postPicturePost(data);
+        setCookie("token", formdataimg.headers.authorization);
+        return formdataimg;
     }
 
     const { mutate: defaultGo } = useMutation(defaultPost, {
@@ -162,9 +179,14 @@ const Mypage = () => {
         }
     })
 
+    const form = new FormData();
+
     const defaultPostFunction = () => {
+        console.log("11")
+        form.set('profileImage', "1", null);
+        // form.delete('profileImage')
         defaultGo({
-            profileImage: null,
+            profileImage: form,
             userid: usersid,
         })
     }
@@ -208,7 +230,8 @@ const Mypage = () => {
     }
 
     // 홈으로
-    const gohome = () => navigate('/');
+    const gohome = () => navigate(-1);
+
 
     return (
         <StWrap>
@@ -237,7 +260,7 @@ const Mypage = () => {
                         <StImgChangeBtn onClick={ImgModalOpen}>
                             이미지 변경
                         </StImgChangeBtn>
-                        <StImgBasicChangeBtn onClick={picturePostFunction}>
+                        <StImgBasicChangeBtn onClick={defaultPostFunction}>
                             기본 이미지
                         </StImgBasicChangeBtn>
                     </StImgBox>
@@ -402,7 +425,6 @@ const StProfile = styled.img`
                 width: 117px;
                 height: 117px;
                 border-radius: 100px;
-                background: #E5E7EB;
                 `
 
 const StBtnBox = styled.div`

@@ -16,7 +16,19 @@ import stampbtn from "../img/stamp.svg"
 import useGetMeetList from "../Hooks/useGetMeetList"
 
 
-const Agenda = () => {
+const Agenda = ({ main }) => {
+
+    const idarray = [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 },
+        { id: 5 },
+        { id: 6 },
+        { id: 7 },
+        { id: 8 },
+        { id: 9 },
+        { id: 10 }]
 
     const meetID = useParams().sessionid;
     const token = getCookie('token');
@@ -24,7 +36,7 @@ const Agenda = () => {
     const sock = new SockJS("https://sparta-ysh.shop/ws-stomp");
     const ws = Stomp.over(sock);
 
-
+    console.log(main)
 
     // get으로 받은 안건 내용 저장
     const [agendalist, setAgendalist] = useState(null);
@@ -34,6 +46,7 @@ const Agenda = () => {
     const [stampvalue, setStampvalue] = useState(null);
     const [numagenda, setNumagenda] = useState(null);
     const [order, setOrder] = useState(1);
+    const [number, setNumber] = useState(1);
 
 
     const datas = {
@@ -53,21 +66,18 @@ const Agenda = () => {
                             if (newMessage.type == "ISSUE") {
                                 console.log(newMessage);
                                 // 문자열 객체화시킴
+                                // message: JSON.stringify({ agendalist[numberagenda], number }),
                                 const getagenda = JSON.parse(newMessage.message);
                                 console.log(getagenda);
+                                console.log(getagenda.length)
                                 console.log(getagenda.issueId)
                                 setNumagenda(getagenda.issueId)
                                 setMsg(getagenda.issueContent);
                                 console.log("안건 받기 완료")
                             }
                             if (newMessage.type == "STAMP") {
-                                console.log(newMessage)
-                                const getstamp = JSON.parse(newMessage.message);
-                                console.log(getstamp);
-                                console.log(getstamp[numberagenda])
-                                setStampvalue(getstamp[numberagenda] === true)
-                                console.log(numberagenda)
-                                console.log("결론 확정 완료")
+                                const getarray = JSON.parse(newMessage.message);
+                                setNumber(getarray.id)
                             }
                         },
                         { token: token }
@@ -78,27 +88,40 @@ const Agenda = () => {
         }
     }
 
+    setTimeout(() => {
+        NumSendHandle(); // 받아온안건을 전송해주는애
+    }, 100);
+    clearTimeout(number);
 
     setTimeout(() => {
         HandleSend(); // 받아온안건을 전송해주는애
     }, 100);
     clearTimeout(msg);
 
+
+
     useEffect(() => {
         wsConnect(datas); // > 소켓연결
         useGetIssueLists({ meetID })
     }, [])
+
+    let firstissueId = 0
+
 
     // get 임시로
     const useGetIssueLists = async ({ meetID }) => {
         console.log({ meetID })
         const { data } = await apis.getIssueList({ meetID });
         console.log(data)
+        firstissueId = data[0].issueId
+        console.log(firstissueId)
         // 안건정보 state저장
         setAgendalist(data)
         console.log("안건 get으로 받음")
         return data;
     }
+    console.log(firstissueId)
+
 
 
     // 안건 서버로 보내기
@@ -115,6 +138,26 @@ const Agenda = () => {
                 ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
                 console.log(JSON.stringify(data))
                 console.log("안건 전송 완료")
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // 숫자
+    const NumSendHandle = () => {
+        try {
+            const data = {
+                type: "STAMP",
+                roomId: meetID,
+                nickname: "string",
+                sender: "string",
+                message: JSON.stringify(idarray[numberagenda]),
+            }
+            const token = getCookie("token")
+            waitForConnection(ws, function () {
+                ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
+                console.log(JSON.stringify(data))
             })
         } catch (error) {
             console.log(error);
@@ -142,33 +185,19 @@ const Agenda = () => {
     const numberminus = () => {
         setNumberagenda(numberagenda - 1)
         HandleSend();
+        NumSendHandle();
     }
 
 
     const numberplus = () => {
         setNumberagenda(numberagenda + 1)
         HandleSend();
+        NumSendHandle();
     }
 
-    // 도장찍기
-    const EndterSendHandle = () => {
-        try {
-            const data = {
-                type: "STAMP",
-                roomId: meetID,
-                nickname: "string",
-                sender: "string",
-                message: JSON.stringify(stampobject),
-            }
-            const token = getCookie("token")
-            waitForConnection(ws, function () {
-                ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-                console.log(JSON.stringify(data))
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
+
+
+
 
 
     // console.log(numberagenda)
@@ -179,30 +208,23 @@ const Agenda = () => {
     console.log(numagenda)
 
 
+
+
     return (
         <>
             <Bigbox>
-                {1 <= numberagenda ?
-                    <StImgLeft src={leftbtn} onClick={() => { numberminus(); setOrder(order - 1); }} />
+                {1 <= numberagenda && Boolean(main?.meetingCreator) === true ?
+                    <StImgLeft src={leftbtn} onClick={numberminus} />
                     : <Stnumbtn />
                 }
-                <div>회의명의 {order}번째 안건<br />{msg}</div>
-                {agendalist?.length - 2 >= numberagenda ?
-                    <StImgRight src={rightbtn} onClick={() => { numberplus(); setOrder(order + 1); }} />
+                <div>{main?.meetingTitle}의 {number}번째 안건<br />{msg}</div>
+                {agendalist?.length - 2 >= numberagenda && Boolean(main?.meetingCreator) === true ?
+                    <StImgRight src={rightbtn} onClick={numberplus} />
                     : <Stnumbtn />
                 }
                 {stampvalue ?
                     <StstampBtn src={stampbtn} /> : <></>
                 }
-                {/* {1 <= num ?
-                    <img src={leftbtn} onClick={numberminus} />
-                    : <Stnumbtn />
-                }
-                < div > {meettitle}의{msg[num].issueId}번째 안건<br />{msg[num].issueContent}</div>
-                {num <= msg.length - 2 ?
-                    <img src={rightbtn} onClick={numberplus} />
-                    : <Stnumbtn />
-                } */}
             </Bigbox>
         </>
     );
