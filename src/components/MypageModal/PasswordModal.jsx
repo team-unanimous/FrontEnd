@@ -78,7 +78,7 @@ const PasswordModal = ({ open, close }) => {
                         <StInput type='password'
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="비밀번호 입력" />
-                        <p style={{ color: '#EF6A61' }}>영문자 및 숫자 조합, 8~12자</p>
+                        <StWarning>영문자 및 숫자 조합, 8~12자</StWarning>
                         <StSubTitle>
                             비밀번호 확인
                         </StSubTitle>
@@ -96,6 +96,15 @@ const PasswordModal = ({ open, close }) => {
         </>
     );
 }
+
+const StWarning = styled.div`
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+color: #EF6A61;
+margin-top: 11px;
+margin-bottom: 25px;
+`
 
 const StXbox = styled.div`
 position: absolute;
@@ -166,7 +175,7 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 width: 540px;
-height: 214px;
+height: 225px;
 `
 
 const Stwrap = styled.div`
@@ -174,7 +183,6 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-padding: 100px 80px 80px;
 position: absolute;
 width: 700px;
 height: 592px;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import frameimg from "../img/frame.svg"
+import frameimg from "../img/bgimg.svg"
 
 
 const SignupOne = () => {
@@ -78,16 +78,14 @@ const SignupOne = () => {
   )
 }
 const StWrap = styled.div`
-  /* position: absolute; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
-width: 1155px;
-height: 740px;
-left: 378px;
-top: 170px;
+  width: 1155px;
+  height: 740px;
+  border-radius: 32px;
 `
 
 const StBtBox = styled.div`
@@ -106,7 +104,7 @@ const StDisagree = styled.button`
   font-size: 20px;
   color : white;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #D7D7D7;
   cursor: pointer;
 `;
 
@@ -128,6 +126,7 @@ const StCancel = styled.button`
   font-weight: 700;
   font-size: 20px;
   color: #888888;
+  border: solid 1px #5C5C5C;
   border-radius: 0.375rem;
   cursor: pointer;
 `;
@@ -149,8 +148,10 @@ const StContentBox = styled.div`
 const StContent = styled.button`
   width : 90px;
   height : 25px;
+  border: solid 1px #2396F0;
   border-radius: 5px;
   background-color: white;
+  color: #2396F0;
   cursor: pointer;
 `;
 

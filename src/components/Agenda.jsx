@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useParams, useNavigate } from 'react-router';
 import { useSelector } from "react-redux/es/exports";
@@ -9,51 +9,60 @@ import apis from "../api/main";
 import axis from "../api/sub"
 import { useQuery, useMutation } from "react-query";
 import useGetIssueList from "../Hooks/useGetIssueList"
+import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific"
 import leftbtn from "../img/icon_arrow_left.svg"
 import rightbtn from "../img/Icon_arrow_right.svg"
 import stampbtn from "../img/stamp.svg"
 
-const Agenda = () => {
+const Agenda = ({ meetingId }) => {
 
-
-    // useEffect(() => {
-    //     wsConnect(data); // 서버와연결 
-    //     console.log('hihihihi')
-    //     useGetIssueLists();
-    //     // setNum(msg[0].issueId - eee);
-    //     // HandleSend(); // 서버로 받은 데이터 넣기
-    //     // return () => {
-    //     //     wsDisConnect();
-    //     // }
-    // }, [])
-
-    const navigate = useNavigate();
     const token = getCookie('token');
 
-    // 소켓 통신
     const sock = new SockJS("https://sparta-ysh.shop/ws-stomp");
     const ws = Stomp.over(sock);
 
-    const [savedata, setSavedata] = useState("");
-    // 안건 내용과 순서를 저장
+
+    // get으로 받은 안건 내용 저장
+    const [agendalist, setAgendalist] = useState(null);
+    // 내가 보여줄 안건내용 저장
     const [msg, setMsg] = useState(null);
-    // 미팅룸 제목('회의명')
-    const [meettitle, setMeettitle] = useState(null);
+    const [numberagenda, setNumberagenda] = useState(0);
+    const [stampvalue, setStampvalue] = useState(null);
+    const [numagenda, setNumagenda] = useState(null);
 
-    // 웹소켓 연결, 구독 // 구독주소 달라야됨
+    const data = {
+        token: token,
+        roomId: meetingId
+    }
 
+    // 웹소켓 연결, 구독 // 구독주소 채팅방이랑 달라야됨
     const wsConnect = (data) => {
         try {
             ws.connect(
                 { token: data.token }, () => {
                     ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
                         (resp) => {
+                            console.log(resp)
                             const newMessage = JSON.parse(resp.body);
-                            console.log(newMessage);
-                            const newnew = JSON.parse(newMessage.message);
-                            console.log(newnew);
-                            setMsg(newnew);
-                            console.log(msg);
+                            if (newMessage.type == "ISSUE") {
+                                console.log(newMessage);
+                                // 문자열 객체화시킴
+                                const getagenda = JSON.parse(newMessage.message);
+                                console.log(getagenda);
+                                console.log(getagenda.issueId)
+                                setNumagenda(getagenda.issueId)
+                                setMsg(getagenda.issueContent);
+                                console.log("안건 받기 완료")
+                            }
+                            if (newMessage.type == "STAMP") {
+                                console.log(newMessage)
+                                const getstamp = JSON.parse(newMessage.message);
+                                console.log(getstamp);
+                                console.log(getstamp[numberagenda])
+                                setStampvalue(getstamp[numberagenda] === true)
+                                console.log(numberagenda)
+                                console.log("결론 확정 완료")
+                            }
                         },
                         { token: token }
                     );
@@ -64,39 +73,48 @@ const Agenda = () => {
     }
 
 
-    const data = {
-        token: token,
-        roomId: "1"
-    }
+    setTimeout(() => {
+        HandleSend(); // 받아온안건을 전송해주는애
+    }, 500);
+    clearTimeout(msg);
 
+    useEffect(() => {
+        wsConnect(data); // > 소켓연결
+        useGetIssueLists()
+    }, [])
 
-
-    const meetID = 6;
     // get 임시로
     const useGetIssueLists = async (meetID) => {
-        console.log({ meetID })
         const { data } = await apis.getIssueList({ meetID });
         console.log(data)
-        setSavedata(data)
+        // 안건정보 state저장
+        setAgendalist(data)
+        console.log("안건 get으로 받음")
         return data;
     }
 
-    const { useget } = useGetIssueList({ meetID });
 
 
-    // 연결해제, 구독해제 
-    function wsDisConnect() {
+    // 안건 서버로 보내기
+    const HandleSend = () => {
         try {
-            ws.disconnect(
-                () => {
-                    ws.unsubscribe('sub-0');
-                },
-                { token: token }
-            );
+            const data = {
+                type: "ISSUE",
+                roomId: meetingId,
+                sender: "string",
+                message: JSON.stringify(agendalist[numberagenda]),
+            }
+            const token = getCookie("token")
+            waitForConnection(ws, function () {
+                ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
+                console.log(JSON.stringify(data))
+                console.log("안건 전송 완료")
+            })
         } catch (error) {
             console.log(error);
         }
     }
+
 
     // 웹소켓이 연결될 때 까지 실행하는 함수 
     function waitForConnection(ws, callback) {
@@ -115,137 +133,60 @@ const Agenda = () => {
     }
 
 
-
-    // 미팅 생성하기 > 여기서 임시로 가져오기
-    const makeMeetingroom = (meetingInfo) => {
-        return apis.postReserveMeet(meetingInfo)
-    }
-    const { mutate: meetingMutate } = useMutation(makeMeetingroom, {
-        onSuccess: (resp) => {
-            console.log(resp)
-            // setRoomId(resp.data.roomId)
-        }
-    });
-    const meetingRoomHandler = () => {
-        const data = {
-            meetingTitle: "'회의명이 들어갈곳'",
-            meetingDate: "string",
-            meetingTime: "00:00",
-            meetingSum: "string",
-            meetingTheme: "string",
-            meetingDuration: "0시간",
-            teamId: 1
-        };
-        setMeettitle(data.meetingTitle)
-        meetingMutate(data);
+    const numberminus = () => {
+        setNumberagenda(numberagenda - 1)
+        HandleSend();
     }
 
-
-
-    // 채팅룸 생성하기 > 여기서 임시로 가져오기
-    const makeChattingroom = (chattingInfo) => {
-        return apis.postMeetingroom(chattingInfo)
-    }
-    const { mutate: chattingMutate } = useMutation(makeChattingroom, {
-        onSuccess: (resp) => {
-            console.log(resp)
-        }
-    });
-    const chattingRoomHandler = () => {
-        const data = {
-            meetingId: 1
-        }
-        console.log(data);
-        chattingMutate(data);
-    }
-
-
-
-    // 메시지보내기
-    const HandleSend = async (event) => {
-        event.preventDefault();
-        try {
-            const data = {
-                type: "TALK",
-                roomId: 1,
-                sender: "string",
-                message: JSON.stringify(savedata),
-                createdAt: "22시"
-            }
-            const token = getCookie("token")
-            waitForConnection(ws, function () {
-                ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-                // setAgendatitle(JSON.stringify(data)).message
-                console.log(JSON.stringify(data))
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    // 메시지보내기2 타입이 다름
-    const EndterSendHandle = async (event) => {
-        event.preventDefault();
-        try {
-            const data = {
-                type: "ENTER",
-                roomId: "1",
-                nickname: "string",
-                sender: "string",
-                message: "1",
-                createdAt: "10시"
-            }
-            const token = getCookie("token")
-            waitForConnection(ws, function () {
-                ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-                console.log(JSON.stringify(data))
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-
-    const [eee, setEee] = useState(1);
-    // const [num, setNum] = useState(null);
-
-    useEffect(() => {
-        useGetIssueLists();
-        console.log(111);
-        HandleSend(); // 서버로 받은 데이터 넣기
-        console.log(222);
-        wsConnect(data); // 서버와연결 
-        console.log(333);
-        // setNum(msg[0].issueId - eee);
-
-        // return () => {
-        //     wsDisConnect();
-        // }
-    }, [])
-
-    // const num = (msg[0].issueId - eee)
 
     const numberplus = () => {
-        return setEee(eee - 1)
+        setNumberagenda(numberagenda + 1)
+        HandleSend();
     }
 
-    const numberminus = () => {
-        return setEee(eee + 1)
+    // 도장찍기
+    const EndterSendHandle = () => {
+        try {
+            const data = {
+                type: "STAMP",
+                roomId: meetingId,
+                nickname: "string",
+                sender: "string",
+                message: JSON.stringify(stampobject),
+            }
+            const token = getCookie("token")
+            waitForConnection(ws, function () {
+                ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
+                console.log(JSON.stringify(data))
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    // console.log(numberagenda)
+    console.log(numberagenda)
+    console.log(msg)
+    console.log(stampvalue)
+    console.log(agendalist)
+    console.log(numagenda)
 
 
     return (
-        // 안건개수 최대 10까지
         <>
-            <button onClick={meetingRoomHandler}>미팅룸 만들기</button><br />
-            <button onClick={chattingRoomHandler}>채팅룸 만들기</button><br />
-            <button onClick={EndterSendHandle}>결론확정버튼</button><br />
-            <button onClick={useGetIssueLists}> 안건받기</button>
-            <button onClick={wsDisConnect}>연결해제</button>
-            <form>
-                <input type="submit" value="Send" onClick={HandleSend} />
-            </form>
             <Bigbox>
+                {1 <= numberagenda ?
+                    <StImgLeft src={leftbtn} onClick={numberminus} />
+                    : <Stnumbtn />
+                }
+                <div>의 {numagenda}번째 안건<br />{msg}</div>
+                {8 >= numberagenda ?
+                    <StImgRight src={rightbtn} onClick={numberplus} />
+                    : <Stnumbtn />
+                }
+                {stampvalue ?
+                    <StstampBtn src={stampbtn} /> : <></>
+                }
                 {/* {1 <= num ?
                     <img src={leftbtn} onClick={numberminus} />
                     : <Stnumbtn />
@@ -255,16 +196,37 @@ const Agenda = () => {
                     <img src={rightbtn} onClick={numberplus} />
                     : <Stnumbtn />
                 } */}
-                {false ?
-                    <StstampBtn src={stampbtn} /> : <></>
-                }
             </Bigbox>
         </>
     );
 }
 
+const StImgRight = styled.img`
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+`
+
+const StImgLeft = styled.img`
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+`
+
+const Stex = styled.div`
+    width: 182px;
+    height: 100px;
+    background-color: gray;
+`
+
+const Stchangeex = styled.div`
+    width: 182px;
+    height: 100px;
+    background-color: #F1F1F1;
+`
+
 const StstampBtn = styled.img`
-    display: flex;
+display: flex;
 justify-content: center;
 align-items: center;
 box-sizing: border-box;
@@ -293,7 +255,6 @@ const Bigbox = styled.div`
     border-radius: 36px;
     justify-content: space-between;
     align-items: center;
-    
 `
 
 export default Agenda;

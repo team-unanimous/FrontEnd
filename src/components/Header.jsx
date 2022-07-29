@@ -13,7 +13,6 @@ const Header = ({ teamname }) => {
   const navigate = useNavigate();
 
   const [clicked, setClicked] = useState(false);
-  const teamId = useParams().teamid;
   const { data: user } = useGetTeamInfo();
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;

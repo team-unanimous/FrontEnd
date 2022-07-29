@@ -7,23 +7,24 @@ import { useDispatch } from 'react-redux'
 import { useMutation } from 'react-query'
 import apis from '../api/main'
 import { teamID } from '../redux/modules/meetReducer'
+import { useGetMeetSpecific } from '../Hooks/useGetMeetSpecific'
 
 const MeetingEditTwoOne = () => {
 
-  const dispatch = useDispatch();
-
+  const teamId = useParams().teamid;
+  const meetingId = useParams().meetid
+  
+  const {data} = useGetMeetSpecific({meetingId})
+  console.log(data)
   const title = useRef("");
   const date = useRef("");
   const navigate = useNavigate();
-  const [sumImg,setSumImg] = useState(1);
-  const [theme,setTheme] = useState(1);
+  const [sumImg,setSumImg] = useState(data?.meetingSum);
+  const [theme,setTheme] = useState(data?.meetingTheme);
 
-  const teamId = useParams().teamid;
-  const meetId = useParams().meetid
-  console.log(meetId)
   // 시간 옵션
   const [clicked,setClicked] = useState(false);
-  const [time,setTime] = useState("00:00");
+  const [time,setTime] = useState(data?.meetingTime);
   
   const times = [0,1,2,3,4,5,6,7,8,9];
   const timess = [10,11,12,13,14,15,16,17,18,19,20,21,22,23];
@@ -31,22 +32,19 @@ const MeetingEditTwoOne = () => {
   const durations = [1,2,3,4,5];
 
   const [duClicked, setDuClicked] = useState(false);
-  const [duration,setDuration] = useState("0시간")
+  const [duration,setDuration] = useState(data?.meetingDuration)
 
 
   // 미팅 수정하기
   const patchMeetProfile = async(data)=>{
     const datas = await apis.patchMeetProfile(data);
     console.log(datas)
-    // dispatch(teamID({
-    //   meetid : datas.data
-    // }))
     return datas;
   }
 
   const { mutate } = useMutation(patchMeetProfile,{
     onSuccess:()=>{
-      navigate(`/teamboard/${teamId}/${meetId}/meetingedittwo`)
+      navigate(`/teamboard/${teamId}/${meetingId}/meetingedittwo`)
       alert("미팅 수정 성공")
     },
     onError:(error)=>{
@@ -62,7 +60,7 @@ const MeetingEditTwoOne = () => {
       meetingSum : sumImg,
       meetingTheme : theme,
       meetingDuration : duration,
-      meetId : meetId
+      meetId : meetingId
     })
   }
 
@@ -84,7 +82,7 @@ const MeetingEditTwoOne = () => {
               <StLeft>
                 <StTitleBox>
                   <StTitleName>미팅룸 이름</StTitleName>
-                  <StTitleInput maxLength="19" ref={title} placeholder='미팅룸 이름을 입력해주세요'/>
+                  <StTitleInput maxLength="19" ref={title} defaultValue={data?.meetingTitle} placeholder='미팅룸 이름을 입력해주세요'/>
                 </StTitleBox>
                 <StSumnailBox>
                     <StSumTitle>
@@ -114,7 +112,7 @@ const MeetingEditTwoOne = () => {
                     <StDateText>
                       날짜
                     </StDateText>
-                    <StDate ref={date} type='date'/>
+                    <StDate ref={date} defaultValue={data?.meetingDate} type='date'/>
                   </StDateBox>
                   <StTimeBox>
                     <StDateText>

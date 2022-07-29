@@ -1,8 +1,10 @@
 import React from 'react'
 import apis from '../api/main'
 import { useMutation } from 'react-query'
+import xIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/2.invitation/icon_close.svg'
 import styled from 'styled-components'
 import { useRef } from 'react'
+
 
 const LeaderModal = ({open,close,teamId}) => {
 
@@ -36,18 +38,37 @@ const LeaderModal = ({open,close,teamId}) => {
     <>
     <StBack onClick={close}/>
         <StBox>
-            <StTitle>팀장 권한 위임</StTitle>
-            <StInfoBox>
-                <StUp>받는 사람</StUp>
-                <StInput ref={nickname}/>
-                {<StDown>등록되지 않은 사용자입니다. 다시 입력해주세요.</StDown>}
-            </StInfoBox>
-            <StButton onClick={leaders}>위임하기</StButton>
+            <StInBox>
+                <StX src={xIcon} onClick={close}/>
+                <StTitle>팀장 권한 위임</StTitle>
+                <StInfoBox>
+                    <StUp>받는 사람</StUp>
+                    <StInput placeholder='닉네임 입력' ref={nickname}/>
+                    {<StDown>등록되지 않은 사용자입니다. 다시 입력해주세요.</StDown>}
+                </StInfoBox>
+                <StButton onClick={leaders}>위임하기</StButton>
+            </StInBox>
         </StBox>
     </>:<></>}
     </>
   )
 }
+
+const StInBox = styled.div`
+    position : relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height : 324px;
+    cursor: pointer;
+`;
+
+const StX = styled.img`
+    position: absolute;
+    top : -90px;
+    right : -70px;
+
+`;
 
 const StButton = styled.div`
     display: flex;
@@ -58,7 +79,7 @@ const StButton = styled.div`
     height: 54px;
     margin : 0 auto 0 auto;
     border-radius: 6px;
-    background-color: black;
+    background-color: #063250;
     color:white;
     font-family: 'Inter';
     font-style: normal;
@@ -125,6 +146,7 @@ const StBox = styled.div`
     height : 324px;
     padding : 100px 80px 80px 80px;
     position : fixed;
+    top:250px;
     background-color: white;
     z-index: 20;
 `;

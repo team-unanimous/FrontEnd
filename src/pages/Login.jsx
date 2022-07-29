@@ -6,8 +6,9 @@ import { useRef } from 'react';
 import { useMutation } from 'react-query';
 import { setCookie, removeCookie } from '../Cookie';
 import GoogleLogin from 'react-google-login';
-import frameimg from "../img/frame.svg"
+import frameimg from "../img/bgimg.svg"
 import logoimg from "../img/logoLogin.svg"
+import googlebtn from "../img/btn_sociallogin_google.svg"
 
 
 const Login = () => {
@@ -78,7 +79,7 @@ const Login = () => {
             비밀번호 찾기
           </StPwFind>
         </StButtonBox>
-        <GoogleLogin
+        {/* <GoogleLogin
           clientId='661918598129-vovfo203fkp7oq8avn3ak7sj24f9bu9k.apps.googleusercontent.com'
           buttonText="Google Login"
           response_type="token"
@@ -86,11 +87,18 @@ const Login = () => {
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
-        />
+        /> */}
+        <Stgooglebtn src={googlebtn} />
       </StBox>
     </StSignUp>
   )
 }
+
+const Stgooglebtn = styled.img`
+   width: 100;
+   height: 100;
+   cursor: pointer;
+`
 
 
 
@@ -177,9 +185,12 @@ const StBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width : 400px;
-  height : 515px;
+  justify-content: center;
+  width : 1155px;
+  height : 740px;
   margin : auto auto auto auto;
+  background-color: white;
+  border-radius: 32px;
 `;
 
 export default Login

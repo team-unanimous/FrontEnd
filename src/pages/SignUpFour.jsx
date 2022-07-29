@@ -5,6 +5,7 @@ import apis from '../api/main'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux"
 import axis from '../api/sub';
+import frameimg from "../img/bgimg.svg"
 
 const SignUpFour = () => {
 
@@ -86,7 +87,7 @@ const SignUpFour = () => {
 
 
   return (
-    <StBox>
+    <StBox style={{ backgroundImage: `url(${frameimg})` }}>
       <StContentBox>
         <StTitle>
           닉네임을 입력해주세요
@@ -122,9 +123,9 @@ const StNotAgree = styled.button`
   background-color: white;
   font-weight: 700;
   font-size: 20px;
-  color : black;
+  color : #888888;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #888888;
   cursor: pointer;
 `;
 
@@ -138,7 +139,8 @@ const StAgree = styled.button`
   border-radius: 0.375rem;
   border: 1px solid #063250;
   &:disabled{
-    background-color: gray;
+    background-color: #D7D7D7;
+    border: solid 1px #D7D7D7;
   }
 `;
 
@@ -210,11 +212,15 @@ const StTitle = styled.div`
 `;
 
 const StContentBox = styled.div`
-  width : 541px;
-  height : 363px;
+  width : 1155px;
+  height : 740px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 32px;
+  
 `;
 
 const StBox = styled.div`

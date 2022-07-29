@@ -1,45 +1,120 @@
 import { getCookie } from "../Cookie";
-import { SocketConnect, ws } from "../api/websocket";
+import { ws } from "../api/websocket";
 import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import apis from "../api/main";
 import { useMutation } from "react-query";
+import { useCallback } from "react";
+
+import Stomp from "stompjs";
+import sockJS from "sockjs-client"
+import { useNavigate } from "react-router-dom";
+
+const MeetingRoomChat = ()=>{
+    const navigate = useNavigate()
+    const [color, setColor] = useState(null);
+    const [msg, setMsg] = useState("");
+    const [issue, setIssue] =useState({}); 
+
+    useEffect(()=>{
+        SocketConnect(data);
+        return () => {
+            alert("alert!!!!")
+            console.log("언마운트 됨");
+            HandleUnsubscribe();
+        }
+    }, [])
+
+    const target = "https://sparta-ysh.shop/ws-stomp" //"http://52.79.226.242:8080/ws-stomp" 
+    const socket = new sockJS(target);
+    const ws = Stomp.over(socket);
+    
 
 const MeetingRoomChatxx = () => {
     const inputRef = useRef(null);
+    const EnterRef = useRef(null);
     // const [roomId, setRoomId] = useState(null);
+    
     const token = getCookie("token");
+
+    const SocketConnect = (data) => {
+        console.log("뿅")
+    try{
+        ws.connect({
+            token: data.token
+        }, ()=> {
+            ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
+            (response) => {
+                const newMessage = JSON.parse(response.body);
+                console.log(newMessage.message);
+                setMsg(newMessage.message);
+                setIssue(newMessage.message);
+                console.log("보낸사람:", newMessage.sender);
+                console.log("받은 메세지:", newMessage.message);
+                // console.log(JSON.parse(issue));
+            },
+            {
+                token: token
+            });
+        });
+        console.log("구독 성공")
+    } catch (error) {
+        console.log(error.response);
+    }}
+    
+
+    const HandleUnsubscribe = useCallback(()=>{
+        try{
+            ws.disconnect(
+                ()=>{
+                    ws.unsubscribe("sub-0");
+                    console.log("Disconnected...")
+                },
+                {token: getCookie("token")}
+            );
+            // ws.unsubscribe(`/sub/api/chat/rooms/${data.roomId}`);
+        } catch (error) {
+            console.log(error);
+        }
+    })
+    
+    function waitForConnection(ws, callback){
+        setTimeout(
+            function () {
+                if (ws.ws.readyState === 1) {
+                    callback();
+                } else {
+                    waitForConnection(ws, callback);
+                }
+            },1
+        )
+    }
 
     const data = {
         token: token,
         roomId: "1"//어디서 가져올수 있는지 확인 필요, string으로 줘야됨
     }
 
-    useEffect(() => {
-        SocketConnect(data);
-    })
-
-    // const SocketConnect = (token) => { 
-    //     try{
-    //         ws.connect({
-    //             token: token
-    //         }, ()=> {
-    //             ws.subscribe(`/sub/api/chat/rooms/2`,
-    //             (response) => {
-    //                 const newMessage = JSON.parse(response.body);
-    //                 console.log("보낸사람:", newMessage.sender);
-    //                 console.log("받은 메세지:", newMessage.message)
-    //             },
-    //             {
-    //                 token: token
-    //             }
-    //             );
-    //         });
-    //     } catch (error) {
-    //         console.log(error.response);
-    //     }}
-
+// const SocketConnect = (token) => { 
+//     try{
+//         ws.connect({
+//             token: token
+//         }, ()=> {
+//             ws.subscribe(`/sub/api/chat/rooms/2`,
+//             (response) => {
+//                 const newMessage = JSON.parse(response.body);
+//                 console.log("보낸사람:", newMessage.sender);
+//                 console.log("받은 메세지:", newMessage.message)
+//             },
+//             {
+//                 token: token
+//             }
+//             );
+//         });
+//     } catch (error) {
+//         console.log(error.response);
+//     }}
 
     const makeMeetingroom = (meetingInfo) => {
         return apis.postReserveMeet(meetingInfo)
@@ -75,8 +150,6 @@ const MeetingRoomChatxx = () => {
         }
     });
 
-
-
     const chattingRoomHandler = () => {
         const data = {
             meetingId: 1
@@ -105,7 +178,52 @@ const MeetingRoomChatxx = () => {
                 roomId: "1",
                 nickname: "string",
                 sender: "string",
-                message: `this is a message from the client : ${inputRef.current.value}`,
+                message: `${inputRef.current.value}`,
+                createdAt: "10시"
+            }
+            const token = getCookie("token")
+            waitForConnection(ws, function(){
+                ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
+                // ws.send("/queue/test", {}, "this is a message from the client")
+                console.log("clicked anyway");
+                console.log(JSON.stringify(data))  
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const EndterSendHandle = async (event)=>{
+        event.preventDefault();
+        try {
+            const data = {
+                type: "ENTER",
+                roomId: "1",
+                nickname: "string",
+                sender: "string",
+                message: `this is a Enter message from the client : ${EnterRef.current.value}`,
+                createdAt: "10시"
+            }
+            const token = getCookie("token")
+            waitForConnection(ws, function(){
+                ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
+                // ws.send("/queue/test", {}, "this is a message from the client")
+                console.log("clicked anyway");
+                console.log(JSON.stringify(data))  
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const IssueSendHandle = async (event)=>{
+        event.preventDefault();
+        try {
+            const data = {
+                type: "ISSUE",
+                roomId: "1",
+                nickname: "string",
+                sender: "string",
+                message: JSON.stringify({"안건1":"안건입니다", "안건2":"안건이 아닙니다"}),
                 createdAt: "10시"
             }
             const token = getCookie("token")
@@ -131,30 +249,38 @@ const MeetingRoomChatxx = () => {
 
     // const subscription = ws.subscribe("/sub/api/chat/rooms/3", callbackFn)
 
-    const HandleUnsubscribe = () => {
-        subscription.unsubscribe();
-        alert("연결 끊김");
-    }
-
-
     return (
-        <>
-            <StChattingContainer>
-                <StChattingItem>
-                    <button onClick={meetingRoomHandler}>create meeting room</button><br />
-                    <button onClick={SocketConnect}>Connect</button><br />
-                    <button onClick={chattingRoomHandler}>create chatting room</button><br />
-                    <form>
-                        <input type="text" ref={inputRef} id="input" />
-                        <input type="submit" value="Send" onClick={HandleSend} />
-                    </form>
-
-                    <button onClick={HandleUnsubscribe}>연결 끊기</button>
-                </StChattingItem>
-            </StChattingContainer>
-
+        <>  
+        <StChattingContainer>
+            <StChattingItem>
+            <button onClick={meetingRoomHandler}>create meeting room</button><br/>
+            <button onClick={SocketConnect}>Connect</button><br/>
+            <button onClick={chattingRoomHandler}>create chatting room</button><br/>
+            <form>
+                <input type="text" ref={inputRef} id="input"/>
+                <input type="submit" value="Send" onClick={HandleSend} />
+            </form>
+            <form>
+                <input type="text" ref={EnterRef} id="Enter"/>
+                <input type="submit" value="Send Enter" onClick={EndterSendHandle} />
+            </form>
+            <form>
+                <input type="text" ref={EnterRef} id="Enter"/>
+                <input type="submit" value="Send Enter" onClick={IssueSendHandle} />
+            </form>
+            <button onClick={HandleUnsubscribe}>연결 끊기</button>
+            <button onClick={()=>navigate('/')}>나가기</button>
+            </StChattingItem>
+            {
+                <>
+                <p style={{color:`${msg}`}}>{msg}</p>
+                {console.log(`${msg}`)}
+                </>
+            }
+        </StChattingContainer>
         </>
     )
+}
 }
 
 
@@ -177,4 +303,4 @@ const StChattingDisplay = styled.div`
 
 `
 
-export default MeetingRoomChatxx;
+export default MeetingRoomChat;

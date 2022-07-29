@@ -1,9 +1,19 @@
 import React from 'react'
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import doorIcon from '../img/outdoor.png'
+import { useNavigate } from 'react-router-dom';
 
 const DetailModalOnAir = ({open, close,meetingTitle,meetingDate,meetingTime,meetingCreator,issues, meetingId}) => {
     
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const join = ()=>{
+        dispatch(({
+
+        }))
+    }
 
   return (
     <>
@@ -36,7 +46,7 @@ const DetailModalOnAir = ({open, close,meetingTitle,meetingDate,meetingTime,meet
                 </StDateBox>
             </StInfo>
             <StLine/>
-            <StButton><StIconImg src={doorIcon}/>참여하기</StButton>
+            <StButton onClick={()=>navigate(`/meetingroomtest/${meetingId}`)}><StIconImg src={doorIcon}/>참여하기</StButton>
         </StBox>
     </>:<></>}
     </>
@@ -170,6 +180,7 @@ const StImg = styled.img`
 `;
 
 const StBox = styled.div`
+    position : fixed;
     display: flex;
     flex-direction: column;
     width : 784px;
@@ -177,6 +188,7 @@ const StBox = styled.div`
     padding : 120px 80px 80px 80px;
     border-radius: 8px;
     background-color: white;
+    z-index: 20;
 `;
 
 const StBack = styled.div`

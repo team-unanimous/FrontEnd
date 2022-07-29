@@ -7,6 +7,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from 'react-redux'
 import { postUserId } from '../redux/modules/post'
 import axis from '../api/sub'
+import frameimg from "../img/bgimg.svg"
 
 const SignupThree = () => {
 
@@ -76,7 +77,7 @@ const SignupThree = () => {
 
 
   return (
-    <StBox>
+    <StBox style={{ backgroundImage: `url(${frameimg})` }}>
       <StContentBox>
         <StTitle>비밀번호를 입력해주세요</StTitle>
         <StInfo>
@@ -127,9 +128,9 @@ const StNotAgree = styled.button`
   background-color: white;
   font-weight: 700;
   font-size: 20px;
-  color : black;
+  color : #888888;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #888888;
   cursor: pointer;
 `;
 
@@ -144,7 +145,8 @@ const StAgree = styled.button`
   border: 1px solid #063250;
   cursor: pointer;
   &:disabled{
-    background-color: gray;
+    background-color: #D7D7D7;
+    border: solid 1px #D7D7D7;
   }
 `;
 
@@ -191,11 +193,14 @@ const StEmailWarnning = styled.div`
 `;
 
 const StContentBox = styled.div`
-  width : 541px;
-  height : 480px;
+  width : 1155px;
+  height : 740px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 32px;
 `;
 
 const StBtBox = styled.div`

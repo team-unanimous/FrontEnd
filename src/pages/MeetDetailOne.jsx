@@ -11,7 +11,7 @@ const MeetDetailOne = () => {
   const meetingId = useParams().meetid;
   console.log(meetingId);
   const {data} = useGetMeetSpecific({meetingId});
-
+  console.log(data);
 
   return (
     <StPage>

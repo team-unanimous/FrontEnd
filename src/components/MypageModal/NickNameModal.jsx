@@ -214,7 +214,6 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-padding: 100px 80px 80px;
 position: absolute;
 width: 701px;
 height: 457px;
