@@ -1,9 +1,11 @@
 import React from 'react'
-import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import apis from '../api/main';
-import doorIcon from '../img/outdoor.png'
+import jwt_decode from "jwt-decode";
+import { getCookie } from '../Cookie';
+
 import thumbnail1 from '../img/TeamBoard/2.nowmeeting/thumbnail1.svg'
 import thumbnail2 from '../img/TeamBoard/2.nowmeeting/thumbnail2.svg'
 import thumbnail3 from '../img/TeamBoard/2.nowmeeting/thumbnail3.svg'
@@ -11,62 +13,52 @@ import thumbnail4 from '../img/TeamBoard/2.nowmeeting/thumbnail4.svg'
 import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
 import closeIcon from '../img/TeamBoard/popup/close.svg'
 import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
-import jwt_decode from "jwt-decode";
-import { getCookie } from '../Cookie';
 import copyIcon from '../img/TeamBoard/popup/icon_url.svg'
 
-const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,meetingCreator,issues, meetingId,teamId,meetingThumbnail}) => {
 
+const ModalFinish = ({open, close,prop}) => {
+
+    const navigate = useNavigate();
+    const teamId = useParams().teamid;
     const decoded = jwt_decode(getCookie('token'));
     const nickname = decoded.USER_NICKNAME;
 
-    const navigate = useNavigate();
-
+    console.log(prop);
     // 복사하기 버튼
     const handleCopyClipBoard = async (text) => {
         await navigator.clipboard.writeText(text);
-    };       
+    }; 
+    
+    const meetingId = useParams().sessionid;
+    const meetingThumbnail = prop?.meetingSum;
+    const meetingTitle = prop?.meetingTitle;
+    const meetingCreator = prop?.meetingCreator;
+    const meetingDate = prop?.meetingDate;
+    const meetingTime = prop?.meetingTime;
+    const issues = prop?.issues;
 
-    //미팅 삭제 부분
-    const deleteMeet = async(data)=>{
-        const datas = await apis.deleteMeet(data);
+    
+    const leaveSession = () =>{
+        navigate(`/teamboard/${teamId}`)
+    }
+
+     // 회의 끝내기
+     const quit = async(data)=>{
+        const datas = await apis.patchDone(data);
         return datas;
     }
 
-    const {mutate:del} = useMutation(deleteMeet,{
+    const {mutate} = useMutation(quit,{
         onSuccess:()=>{
-            alert("미팅삭제완료");
+            leaveSession();
         },
-        onError:()=>{
-            alert("미팅삭제실패");
+        onError:(e)=>{
+            console.log(e);
         }
-    })
+    });
 
-    const delet = () => {
-        del({
-            meetingId : meetingId
-        })
-    }
-
-
-    // 미팅 시작하기
-    const startMeet = async(data)=>{
-        const datas = await apis.patchNow(data);
-        return datas;
-    }
-
-    const {mutate:start} = useMutation(startMeet,{
-        onSuccess:()=>{
-            alert("미팅이 시작됩니다.")
-            navigate(`/meetingroom/${teamId}/${meetingId}`);
-        },
-        onError:()=>{
-            alert("미팅이 시작되지 않습니다.")
-        }
-    })
-
-    const starting = () =>{
-        start({
+    const quiting = ()=>{
+        mutate({
             meetingId : meetingId
         })
     }
@@ -77,14 +69,13 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
     <>
     <StBack onClick={close}/>
         <StBox>
-            <StCloseIcon src={closeIcon} onClick={close}/>
+        <StCloseIcon src={closeIcon} onClick={close}/>
             {meetingThumbnail==1?<StImg src={thumbnail1}/>:<></>}
             {meetingThumbnail==2?<StImg src={thumbnail2}/>:<></>}
             {meetingThumbnail==3?<StImg src={thumbnail3}/>:<></>}
             {meetingThumbnail==4?<StImg src={thumbnail4}/>:<></>}
             {meetingThumbnail==5?<StImg src={thumbnail5}/>:<></>}
             <StTitle>회의명 '{meetingTitle}'</StTitle>
-            <StLine/>
             <StInfo>
                 <StHostBox>
                     <StHostLeft>주최자</StHostLeft>
@@ -96,7 +87,6 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
                 </StDateBox>
                 <StIssueBox>
                     <StHostLeft>안건</StHostLeft>
-                    
                     {meetingThumbnail==1?<StIssues color="#FCF3E9">
                         {issues?.map((value,index)=>{
                             return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
@@ -122,7 +112,6 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
                             return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
                         })}
                     </StIssues>:<></>}
-                    
                 </StIssueBox>
                 <StDateBox>
                     <StHostLeft>미팅 URL</StHostLeft>
@@ -136,26 +125,20 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
                     </StIssue>
                 </StDateBox>
             </StInfo>
-            <StLine/>
-            <StDownBox>
-                {meetingCreator==nickname?
-                <>
-                    <StBtBox>
-                        <StEdit onClick={()=>{navigate(`/teamboard/${teamId}/${meetingId}/meetingeditone`)}}>수정</StEdit>
-                        <div onClick={close}><StDelete onClick={delet}>삭제</StDelete></div>
-                    </StBtBox>
-                    <StButton onClick={starting}><StIconImg src={participate}/>시작하기</StButton>
-                </>:<></>}
-            </StDownBox>
+            {meetingCreator==nickname?<StButton onClick={quiting}>회의 종료하기</StButton>:
+            <StButton onClick={leaveSession}>회의 나가기</StButton>}
         </StBox>
-        </>:<></>}
+    </>:<></>}
     </>
   )
 }
 
+
+
 const StCopy = styled.div`
     display: flex;
     align-items: center;
+    width : 100px;
     margin : 20px 0 0 0;
     color : #2396F0;
     cursor: pointer;
@@ -172,44 +155,6 @@ const StCloseIcon = styled.img`
     cursor: pointer;
 `;
 
-const StDownBox = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width : 100%;
-    height : 54px;
-`;
-
-const StDelete = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width : 132px;
-    height : 52px;
-    border-radius: 6px;
-    border: 1px solid #063250;
-    font-weight: 700;
-    font-size: 20px;
-`;
-
-const StEdit = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width : 130px;
-    height : 52px;
-    border: 1px solid #063250;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 20px;
-`;
-
-const StBtBox = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width : 280px;
-    height : 54px;
-`;
-
 const StIconImg = styled.img`
     width : 24px;
     height : 24px;
@@ -222,7 +167,7 @@ const StButton = styled.div`
     width : 108px;
     height : 24px;
     padding : 15px 64px 15px 64px;
-    margin : 0 0 0 auto;
+    margin : 0 auto 0 auto;
     border: 1px solid black;
     border-radius: 6px;
     background-color: #063250;
@@ -232,10 +177,10 @@ const StButton = styled.div`
 `;
 
 const StLine = styled.div`
-    width : 783px;
-    height : 1.5px;
-    margin : 50px 0 60px 0;
-    background-color: #D9D9D9;
+    width : 600px;
+    height : 10px;
+    margin : 40px 0 60px 0;
+    background-color: black;
 `;
 
 const StIssue = styled.div`
@@ -253,7 +198,7 @@ const StIssues = styled.div`
     display: flex;
     flex-direction: column;
     padding: 16px;
-    width: 585px;
+    width: 591px;
     height: 60px;
     background-color: ${props=>props.color};
     border-radius: 10px;
@@ -313,7 +258,7 @@ const StInfo = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0px;
+    margin : 50px 0 50px 0;
     gap: 32px;
     width: 811px;
     height: 278px; 
@@ -323,11 +268,14 @@ const StTitle = styled.div`
     width: 784px;
     height: 44px;
     margin : 32px 0 0 0;
+    padding : 0 0 32px 0;
+    border-bottom: 2px solid #D9D9D9;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
     line-height: 44px;
+
 `;
 
 const StImg = styled.img`
@@ -341,7 +289,9 @@ const StImg = styled.img`
 `;
 
 const StBox = styled.div`
-    position:fixed;
+    position : fixed;
+    top : 100px;
+    left : 460px;
     display: flex;
     flex-direction: column;
     width : 784px;
@@ -349,8 +299,7 @@ const StBox = styled.div`
     padding : 120px 80px 80px 80px;
     border-radius: 8px;
     background-color: white;
-    z-index : 20;
-    box-shadow:(0px 4px 20px rgba(0, 0, 0, 0.1));
+    z-index: 20;
 `;
 
 const StBack = styled.div`
@@ -366,4 +315,4 @@ const StBack = styled.div`
     z-index : 10;
 `;
 
-export default DetailModalReserve;
+export default ModalFinish

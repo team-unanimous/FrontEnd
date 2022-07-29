@@ -188,7 +188,7 @@ const StTeamInfoBox = styled.div`
     align-items: center;
     justify-content: space-between;
     width :214px;
-    height : 179px;
+    height : 219px;
     padding : 36px 16px 36px 24px;
 `;
 

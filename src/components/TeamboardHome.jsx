@@ -52,7 +52,6 @@ const TeamboardHome = () => {
   const [meetingThumbnail, setMeetingThumbnail] = useState();
   const [issues, setIssues] = useState();
 
-  console.log(reserve);
 
   const closeModalRe = () => {
     setOpenReserve(false);
@@ -99,7 +98,7 @@ const TeamboardHome = () => {
         meetingCreator={meetingCreator}
         meetingThumbnail={meetingThumbnail}
         issues={issues}
-        open={openReserve}
+        open={openPassed}
         meetingId={meetingId}
         close={closeModalPass}
         teamId={teamId} />
@@ -227,9 +226,6 @@ const TeamboardHome = () => {
             </StMeetingRight>
           </StMeetingRightBox>
         </StMeetingInnerBox>
-
-
-
         <StDownBox>
           <StOn>이전 회의</StOn>
           <StDownInnerBox>
@@ -238,7 +234,7 @@ const TeamboardHome = () => {
               <div onClick={
                 () => {
                   setMeetingId(passed[0].meetingId);
-                  setOpenReserve(true);
+                  setOpenPassed(true);
                   setMeetingTitle(passed[0].meetingTitle);
                   setMeetingDate(passed[0].meetingDate);
                   setMeetingTime(passed[0].meetingTime);
@@ -251,7 +247,7 @@ const TeamboardHome = () => {
               <div onClick={
                 () => {
                   setMeetingId(passed[1].meetingId);
-                  setOpenReserve(true);
+                  setOpenPassed(true);
                   setMeetingTitle(passed[1].meetingTitle);
                   setMeetingDate(passed[1].meetingDate);
                   setMeetingTime(passed[1].meetingTime);
@@ -264,7 +260,7 @@ const TeamboardHome = () => {
               <div onClick={
                 () => {
                   setMeetingId(passed[2].meetingId);
-                  setOpenReserve(true);
+                  setOpenPassed(true);
                   setMeetingTitle(passed[2].meetingTitle);
                   setMeetingDate(passed[2].meetingDate);
                   setMeetingTime(passed[2].meetingTime);

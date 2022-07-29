@@ -26,7 +26,6 @@ import officeFive from '../../img/5.MeetingRoom/1.videochat/office/frame5.svg'
 import officeSix from '../../img/5.MeetingRoom/1.videochat/office/frame6.svg'
 import officeSeven from '../../img/5.MeetingRoom/1.videochat/office/frame7.svg'
 import officeEight from '../../img/5.MeetingRoom/1.videochat/office/frame8.svg'
-import apis from '../../api/main';
 
 
 

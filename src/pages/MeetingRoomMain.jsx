@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MeetingRoomStyle from "../components/MeetingRoomStyle";
 import MeetingRoomInfo from "../components/MeetingRoomInfo";
@@ -14,6 +14,8 @@ import apis from "../api/main";
 import { useMutation } from "react-query";
 import Agenda from "../components/Agenda"
 import Meetinglast from "../components/Meetinglast"
+import ModalFinish from "../components/ModalFinish";
+
 
 const MeetingRoomMain = () => {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
@@ -27,6 +29,8 @@ const MeetingRoomMain = () => {
     const leaveSession = () => {
         navigate(`/teamboard/${teamId}`)
     }
+
+    console.log(main);
 
     // 회의 끝내기
     const quit = async (data) => {
@@ -49,15 +53,27 @@ const MeetingRoomMain = () => {
         })
     }
 
+
+    //모달
+    const [openFinish, setOpenFinish] = useState(false);
+
+    const closeModal = () => {
+        setOpenFinish(false);
+    }
+
     return (
         <>
+            <ModalFinish
+                prop={main}
+                close={closeModal}
+                open={openFinish} />
             <StContainer>
                 <StMainThemeWrapper theme={main?.meetingTheme}>
                     {main?.meetingCreator == nickname ?
-                        <StQuit onClick={quiting}>
+                        <StQuit onClick={() => { setOpenFinish(true) }}>
                             <img src={closeIcon} />회의 끝내기
                         </StQuit> :
-                        <StLeave onClick={leaveSession}>
+                        <StLeave onClick={() => { setOpenFinish(true) }}>
                             <img src={closeIcon} />회의 나가기
                         </StLeave>}
                     <JoinRoom Theme={main?.meetingTheme} />
@@ -66,7 +82,6 @@ const MeetingRoomMain = () => {
                 <StSidebarWrapper>
                     <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
                     <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
-                    {/* <Meetinglast meetingId={meetingId} /> */}
                 </StSidebarWrapper>
             </StContainer>
         </>
