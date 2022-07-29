@@ -423,7 +423,7 @@ const StUSPWrapper = styled.div`
     order: 0;
     flex-grow: 0;
     @media screen and (max-width: 600px) {
-        width: 600px;
+        width: 100%;
         height: 856px;
         flex-wrap: nowrap;
     }
@@ -513,7 +513,7 @@ const StFeatureCardWrapper = styled.div`
     flex-grow: 0;
     /* margin-top: 100px; */
     @media screen and (max-width: 600px) {
-        width:600px;
+        width:100%;
         margin-top: 43px;
     }
 `
@@ -808,7 +808,7 @@ const StBottomBrandingWrapper = styled.div`
     padding: 0px;
     gap: 25px;
 
-    width: 38rem;
+    width: 100%;
     height: 18.875rem;
 
     flex: none;
@@ -833,6 +833,10 @@ const StBottomBrandingTitle = styled.div`
     flex: none;
     order: 0;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        width: 90%;
+        font-size: 40px;
+    }
 `
 const StBottomBrandingBody = styled.div`
     /* Lorem ipsum dolor sit amet, consectetur adipis Arcu, leo consectetur non sagittis, suspendisse */
@@ -886,7 +890,11 @@ const StFooterContentWrapper = styled.div`
 
     flex: none;
     order: 0;
-    flex-grow: 0;  
+    flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        width: 80%;
+        height: 80px;
+    }
 `
 const StFooterContentLinks = styled.div`
     /* links */
