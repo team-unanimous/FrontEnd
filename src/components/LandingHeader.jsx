@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import HeaderLogo from "../img/logo.svg";
 
 const LandingHeader = () => {
     const navigate = useNavigate();
@@ -28,15 +29,17 @@ const StHeader = styled.div`
     height : 5rem;
     display : flex;
     align-items : center;
-    background-color : #D9D9D9
 `
 const StLogo = styled.div`
-    width: 3.25rem;
-    height: 1.25rem;
+    width: 32px;
+    height: 32px;
     margin : 0 0 0 3.75rem;
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 20px;
+    background-image: url(${HeaderLogo});
+    background-repeat: no-repeat;
+    background-size: cover;
 `
 
 const StStartButton = styled.div`
@@ -51,7 +54,7 @@ const StStartButton = styled.div`
     width: 6.688rem;
     height: 2.5rem;
     /* Gray/900 */
-    background: #111827;
+    background: #063250;
     border-radius: 6px;
     /* Inside auto layout */
     flex: none;
