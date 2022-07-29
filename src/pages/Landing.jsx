@@ -234,7 +234,8 @@ const Landing = () => {
             <StFooterContainer>
                 <StFooterContentWrapper>
                     <StFooterContentLinks>
-
+                        team-unanimous@naver.com <br/>
+                        © 2022 unanimous. All Rights Reserved.
                     </StFooterContentLinks>
                 </StFooterContentWrapper>
             </StFooterContainer>
@@ -244,7 +245,7 @@ const Landing = () => {
 }
 
 const StFull = styled.div`
-    width: 100%;
+    width: 98%;
     background-image: url(${BG_LandingFull});
     background-repeat: no-repeat;
     background-size: cover;
@@ -259,9 +260,10 @@ const StJumbotronContainer = styled.div`
     display : flex;
     flex-direction : row;
     align-items : center;
-    width : 100%;
+    width : 98%;
     height: 67.5rem;
     @media screen and (max-width: 600px) {
+        height: 38rem;
         flex-direction: column;
         align-items: flex-start;
     }
@@ -272,10 +274,11 @@ const StTitleContainer = styled.div`
     flex-direction: column;
     width: 24rem;
     height: 27.688rem;
-    /* background-color: black; */
-    gap: 40px;
+    gap: 10px;
     margin-left: 20%;
     @media screen and (max-width: 600px) {
+        width: 20rem;
+        height: 20rem;
         margin-left: 41px;
         margin-top: 43px;
     }
@@ -289,9 +292,11 @@ const StMainCharacter = styled.div`
     background-size: cover;
     margin-left: 10%;
     @media screen and (max-width: 600px) {
-     width: 384px;
-     margin-top: 100px;
+     width: 250px;
+     height: 250px;
+     margin-top: 10px;
      align-self: flex-end;
+     background-size: contain;
     }
 `
 const StTextLogo = styled.div`
@@ -304,6 +309,13 @@ const StTextLogo = styled.div`
     order: 0;
     flex-grow: 0;
     background-image: url(${text_logo});
+    @media screen and (max-width: 600px) {
+    width: 195px;
+    align-self: flex-start;
+    background-size: contain;
+    background-repeat: no-repeat;
+    }
+
 `
 const StTitleText = styled.div`
     /* 새로운 팀 회의를 경험해보세요 */
@@ -322,6 +334,12 @@ const StTitleText = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+    width: 60%;
+    height: 6rem;
+    align-self: flex-start;
+    font-size: 30px;
+    }
 `
 const StBodyText = styled.div`
     width: 20rem;
@@ -338,7 +356,6 @@ const StBodyText = styled.div`
     margin-top: 1.5rem;
     /* 안건을 등록하고 다양한 테마 속에서 팀 미팅을 열어보세요 채팅과 이모티콘으로 의사를 표현하고 안건에 대한 회의록을 작성할 수 있습니다 */
 
-
     width: 383px;
     height: 96px;
 
@@ -347,19 +364,14 @@ const StBodyText = styled.div`
     font-weight: 500;
     font-size: 16px;
     line-height: 200%;
-    /* or 32px */
-
-
-    /* Grey/body */
 
     color: #5C5C5C;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 1;
-    flex-grow: 0;
+    @media screen and (max-width: 600px) {
+    width: 60%;
+    align-self: flex-start;
+    font-size: 13px;
+    margin-top: 0;
+    }
 `
 
 const StBodyButton = styled.div`
@@ -397,7 +409,7 @@ const StUSPContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    width: 100%;
+    width: 98%;
     height: 100rem;
 
     flex: none;
@@ -406,6 +418,7 @@ const StUSPContainer = styled.div`
     margin-top: 300px;
     @media screen and (max-width: 600px) {
         margin-top: 0px;
+        height: 60rem;
     }
 `
 const StUSPWrapper = styled.div`
@@ -423,7 +436,7 @@ const StUSPWrapper = styled.div`
     order: 0;
     flex-grow: 0;
     @media screen and (max-width: 600px) {
-        width: 100%;
+        width: 98%;
         height: 856px;
         flex-wrap: nowrap;
     }
@@ -465,10 +478,11 @@ const StUSPHeaderTitle = styled.div`
     order: 0;
     flex-grow: 0;
     @media screen and (max-width: 600px) {
-        font-size: 20px;
+        font-size: 19px;
         line-height: 150%;
-        width:346px;
+        width:220px;
         height: 50%;
+        align-self: center;
     }
 `
 const StUSPHeaderText = styled.div`
@@ -513,7 +527,7 @@ const StFeatureCardWrapper = styled.div`
     flex-grow: 0;
     /* margin-top: 100px; */
     @media screen and (max-width: 600px) {
-        width:100%;
+        width:90%;
         margin-top: 43px;
     }
 `
@@ -533,7 +547,7 @@ const StFeatureCardBox = styled.div`
 
     margin-top: 50px;
     @media screen and (max-width: 600px) {
-        width: 80%;
+        width: 100%;
         height: 225px;
     }
 `
@@ -547,6 +561,11 @@ const StFeatureCardImgDiv = styled.div`
     background-image: ${props => `url(${props.imgsrc})`};
     background-repeat: no-repeat;
     background-size: cover;
+    @media screen and (max-width: 600px) {
+        width: 185px;
+        height: 185px;
+        background-size: contain;
+    }
 `
 const StFeatureCardImg = styled.div`
     width: 10%;
@@ -644,7 +663,7 @@ const StTeamSectionContainer = styled.div`
     padding: 0px;
     gap: 80px;
 
-    width: 100%;
+    width: 98%;
     height: 67.5rem;
 
     flex: none;
@@ -654,6 +673,7 @@ const StTeamSectionContainer = styled.div`
     @media screen and (max-width: 600px) {
         margin-top: 0px;
         gap: 10px;
+        height: 65rem;
     }
 `
 
@@ -689,6 +709,7 @@ const StTeamSectionImageWrapper = styled.div`
     flex-grow: 0;
     @media screen and (max-width: 600px) {
         width: 80%;
+        height: 500px;
     }
 `
 const StTeamSectionImageUpper = styled.div`
@@ -696,10 +717,10 @@ const StTeamSectionImageUpper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 98%;
     height: 50%;
     @media screen and (max-width: 600px) {
-        height: 70%;
+        height: 50%;
         justify-content: space-evenly;
     }
 `
@@ -708,7 +729,7 @@ const StTeamSectionImageLower = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    width: 100%;
+    width: 98%;
     height: 50%;
     @media screen and (max-width: 600px) {
         height:30%;
@@ -723,6 +744,11 @@ const StTeamSectionImageItemBox = styled.div`
 
     width: 12.2rem;
     height: 18rem;
+    @media screen and (max-width: 600px) {
+        width: 5rem;
+        height: 12rem;
+    }
+
 `
 const StTeamSectionImageItem = styled.div`
     width: 100%;
@@ -763,6 +789,9 @@ const StTeamSectionImageTitle = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        font-size: 15px;
+    }
 `
 const StTeamSectionImageBody = styled.div`
     /* Developer */
@@ -783,6 +812,9 @@ const StTeamSectionImageBody = styled.div`
     /* Developer */
 
     color: #5C5C5C;
+    @media screen and (max-width: 600px) {
+        font-size: 13px;
+    }
 `
 const StBottomBrandingContainer = styled.div`
     display: flex;
@@ -792,12 +824,15 @@ const StBottomBrandingContainer = styled.div`
     padding: 10px;
     gap: 10px;
 
-    width: 100%;
+    width: 98%;
     height: 67.5rem;
 
     flex: none;
     order: 3;
     flex-grow: 0;
+    @media screen and (max-width: 600px) {
+        height: 40rem;
+    }
 `
 const StBottomBrandingWrapper = styled.div`
     /* Frame 8 */
@@ -808,7 +843,7 @@ const StBottomBrandingWrapper = styled.div`
     padding: 0px;
     gap: 25px;
 
-    width: 100%;
+    width: 98%;
     height: 18.875rem;
 
     flex: none;
@@ -902,7 +937,7 @@ const StFooterContentLinks = styled.div`
     flex-direction: row;
     align-items: center;
 
-    width: 100%;
+    width: 98%;
     height: 2.75rem;
 
     flex: none;
