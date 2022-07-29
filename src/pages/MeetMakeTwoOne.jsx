@@ -3,10 +3,10 @@ import { useMutation } from 'react-query'
 import styled from 'styled-components';
 import apis from '../api/main'
 import {useNavigate} from "react-router"
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 import { useParams } from 'react-router';
 import { teamID } from '../redux/modules/meetReducer';
-import { StBox,StSumnailBox,StSumTitle,StSumnail,StModal,StInnerBox,StButton,StBarBox,StBarG,StBarC,StOutBox,StInfo, } from '../style/styled';
+import { StSumnailBox,StSumTitle,StSumnail,StModal,StInnerBox,StButton,StBarBox,StBarG,StBarC,StOutBox,StInfo, } from '../style/styled';
 import sum1 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail1.svg'
 import sum2 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail2.svg'
 import sum3 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail3.svg'
@@ -15,6 +15,9 @@ import sum5 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail5.svg'
 import theme1 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/theme1.svg'
 import theme2 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/theme2.svg'
 import nextbt from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/btn_next.svg'
+import casual from "../img/back/casual.png";
+import office from "../img/back/office.png";
+import { themem } from '../redux/modules/meetReducer';
 
 const MeetMakeTwoOne = () => {
 
@@ -32,7 +35,6 @@ const MeetMakeTwoOne = () => {
 
   const date = today.getFullYear()+"/" + today.getMonth()+"/" + today.getDate();
   const time = today.getHours()+":"+today.getMinutes();
-
   
   const meetMake = async(data)=>{
     const datas = await apis.postStartMeet(data);
@@ -44,7 +46,7 @@ const MeetMakeTwoOne = () => {
 
   const { mutate } = useMutation(meetMake,{
     onSuccess: () => {
-      navigate(`/teamboard/${teamId}/meetmakethreeone`);
+      navigate(`/teamboard/${teamId}/${theme}/meetmakethreeone`);
     },
     onError: (error) => {
       alert("미팅룸 이름을 설정해주세요")
@@ -64,7 +66,7 @@ const MeetMakeTwoOne = () => {
 
   
   return (
-    <StBox>
+    <StBox state={theme}>
       <StModal>
         <StOutBox>
           <StBarBox>
@@ -108,17 +110,49 @@ const MeetMakeTwoOne = () => {
               </StTheme>
             </StInfo>
           </StInnerBox>
-          <StBt onClick={makeFunction} src={nextbt}/>
+          <StBtBox>
+            <StCancelBt onClick={()=>{navigate(`/teamboard/${teamId}`)}}>취소</StCancelBt>
+            <StBt onClick={makeFunction}>다음</StBt>
+          </StBtBox>
         </StOutBox>
       </StModal>
     </StBox>
   )
 }
+const StBtBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width : 500px;
+  margin : 80px auto 0 auto;
+`;
 
-const StBt = styled.img`
+const StCancelBt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 236px;
   height: 54px;
-  margin : 80px auto 0 auto;
+  border: 1px solid #5C5C5C;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #888888;;
+  cursor: pointer;
+`;
+
+const StBt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 236px;
+  height: 54px;
+  background-color: #063250;
+  border-radius: 6px;
+  color : white;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
   cursor: pointer;
 `;
 
@@ -247,6 +281,16 @@ const StTitle = styled.div`
   height : 44px;
   font-weight: 600;
   font-size: 36px;
+`;
+
+const StBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width : 100vw;
+  height : 100vh;
+  background-image:  ${props => (props.state == 1 ? `url(${office})` : `url(${casual})`)};
+  background-size:cover;
 `;
 
 export default MeetMakeTwoOne

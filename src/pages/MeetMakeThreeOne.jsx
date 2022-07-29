@@ -5,9 +5,12 @@ import { useSelector } from 'react-redux';
 import apis from '../api/main'
 import { useNavigate } from 'react-router'
 import { useParams } from 'react-router';
-import { StBox,StButton,StBarBox,StBarG,StBarC } from '../style/styled';
+import { StButton,StBarBox,StBarG,StBarC } from '../style/styled';
 import IssueBox from '../components/IssueBoxOne';
 import useGetIssueList from '../Hooks/useGetIssueList';
+import casual from "../img/back/casual.png";
+import office from "../img/back/office.png";
+
 
 const MeetMakeThreeOne = () => {
 
@@ -16,9 +19,9 @@ const MeetMakeThreeOne = () => {
   const teamID = useParams().teamid;
   const meetID = useSelector(state=>state.meetReducer.meetID).meetid
   const issue = useRef("");
-  console.log(meetID)
   const { data } = useGetIssueList({meetID});
-  console.log(data);
+
+  const theme = useParams().theme;
 
 
   if(meetID==null){
@@ -47,7 +50,7 @@ const MeetMakeThreeOne = () => {
   }
 
   return (
-    <StBox>
+    <StBox state={theme}>
       <StModal>
         <StOutBox>
           <StBarBox>
@@ -71,12 +74,52 @@ const MeetMakeThreeOne = () => {
               </StInfoInner>
             </StInfoBox>
           </StInnerBox>
-          <StButton onClick={()=>{navigate(`/teamboard/${teamID}/${meetID}/meetdetailone`)}}>다음</StButton>
+          <StBtBox>
+            <StCancelBt onClick={()=>{navigate(`/teamboard/${teamID}`)}}>취소</StCancelBt>
+            <StBt onClick={()=>{navigate(`/teamboard/${teamID}/${meetID}/${theme}/meetdetailone`)}}>다음</StBt>
+          </StBtBox>
         </StOutBox>
       </StModal>
     </StBox>
   )
 }
+
+const StBtBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width : 500px;
+  margin : 0px auto 0 auto;
+`;
+
+const StCancelBt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 236px;
+  height: 54px;
+  border: 1px solid #5C5C5C;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #888888;;
+  cursor: pointer;
+`;
+
+const StBt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 236px;
+  height: 54px;
+  background-color: #063250;
+  border-radius: 6px;
+  color : white;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
+`;
 
 const StInfoInner = styled.div`
   width : 850px;
@@ -158,4 +201,13 @@ const StModal = styled.div`
   background-color: #FFFFFF;
 `;
 
+const StBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width : 100vw;
+  height : 100vh;
+  background-image:  ${props => (props.state == 1 ? `url(${office})` : `url(${casual})`)};
+  background-size:cover;
+`;
 export default MeetMakeThreeOne

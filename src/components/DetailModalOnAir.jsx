@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import doorIcon from '../img/outdoor.png'
 import { useNavigate, useParams } from 'react-router-dom';
-import thumbnail1 from '../img/TeamBoard/2.nowmeeting/thumbnail1.svg'
-import thumbnail2 from '../img/TeamBoard/2.nowmeeting/thumbnail2.svg'
-import thumbnail3 from '../img/TeamBoard/2.nowmeeting/thumbnail3.svg'
-import thumbnail4 from '../img/TeamBoard/2.nowmeeting/thumbnail4.svg'
-import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
+import thumbnail1 from '../img/TeamBoard/3.beforemeeting/thumbnail1.svg'
+import thumbnail2 from '../img/TeamBoard/3.beforemeeting/thumbnail2.svg'
+import thumbnail3 from '../img/TeamBoard/3.beforemeeting/thumbnail3.svg'
+import thumbnail4 from '../img/TeamBoard/3.beforemeeting/thumbnail4.svg'
+import thumbnail5 from '../img/TeamBoard/3.beforemeeting/thumbnail5.svg'
 import closeIcon from '../img/TeamBoard/popup/close.svg'
 import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
 import copyIcon from '../img/TeamBoard/popup/icon_url.svg'
@@ -120,12 +120,14 @@ const StIconImg = styled.img`
 
 const StButton = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width : 108px;
+    width : 114px;
     height : 24px;
-    padding : 15px 64px 15px 64px;
+    padding : 15px 61px 15px 61px;
     margin : 0 0 0 auto;
+    font-size : 20px;
+    font-weight: 700;
     border: 1px solid black;
     border-radius: 6px;
     background-color: #063250;
@@ -157,7 +159,7 @@ const StIssues = styled.div`
     flex-direction: column;
     padding: 16px;
     width: 591px;
-    height: 60px;
+    height: 124px;
     background-color: ${props=>props.color};
     border-radius: 10px;
 
@@ -178,7 +180,7 @@ const StIssueBox = styled.div`
     display: flex;
     align-items: flex-start;
     width: 100%;
-    height: 92px;
+    height: 130px;
     margin : 0 0 10px 0;
 `;
 
@@ -240,10 +242,9 @@ const StImg = styled.img`
     display: flex;
     justify-content: center;
     align-items: center;
-    width : 48px;
-    height : 48px;
+    width : 80px;
+    height : 80px;
     border-radius: 48px;
-    background-color:#D9D9D9;
 `;
 
 const StBox = styled.div`

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { useNavigate, useParams } from 'react-router';
 import { useGetMeetSpecific } from '../Hooks/useGetMeetSpecific';
 import { StButton,StBarBox,StBarG,StBarC } from '../style/styled';
-import { useMutation } from 'react-query';
-import apis from '../api/main';
+import casual from "../img/back/casual.png";
+import office from "../img/back/office.png";
 
 const MeetDetailOne = () => {
   
@@ -12,9 +12,10 @@ const MeetDetailOne = () => {
   const meetingId = useParams().meetid;
   const {data} = useGetMeetSpecific({meetingId});
   const teamId = useParams().teamid;
+  const theme = useParams().theme;
 
   return (
-    <StPage>
+    <StBox state={theme}>
       <StModal>
         <Box>
         <StUp>
@@ -73,7 +74,7 @@ const MeetDetailOne = () => {
         <StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${meetingId}`)}}>완료</StButton>
         </Box>
       </StModal>
-    </StPage>
+    </StBox>
   )
 }
 
@@ -172,13 +173,14 @@ const StModal = styled.div`
   border-radius: 32px;
 `;
 
-const StPage = styled.div`
+const StBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width : 100vw;
   height : 100vh;
-  background-color: #818181;;
+  background-image:  ${props => (props.state == 1 ? `url(${office})` : `url(${casual})`)};
+  background-size:cover;
 `;
 
 export default MeetDetailOne

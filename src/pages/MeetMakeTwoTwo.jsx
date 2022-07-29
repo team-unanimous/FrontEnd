@@ -15,7 +15,8 @@ import sum4 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail4.svg'
 import sum5 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/thumbnail5.svg'
 import theme1 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/theme1.svg'
 import theme2 from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/theme2.svg'
-import nextbt from '../img/4.CreateMeeting/1-1.nowstart/basicinfo/btn_next.svg'
+import casual from "../img/back/casual.png";
+import office from "../img/back/office.png";
 
 const MeetMakeTwoTwo = () => {
 
@@ -55,7 +56,7 @@ const MeetMakeTwoTwo = () => {
 
   const { mutate } = useMutation(makeTeam,{
     onSuccess:()=>{
-      navigate(`/teamboard/${teamId}/meetmakethreetwo`)
+      navigate(`/teamboard/${teamId}/${theme}/meetmakethreetwo`)
       alert("미팅 만들기 성공")
     },
     onError:(error)=>{
@@ -77,7 +78,7 @@ const MeetMakeTwoTwo = () => {
 
 
   return (
-    <StBox>
+    <StBox state={theme}>
       <StModal>
         <StInBox>
           <StBarBox>
@@ -164,12 +165,52 @@ const MeetMakeTwoTwo = () => {
               </StRight>
             </StInfoBox>
           </StInnerBox>
-          <StButton onClick={makeFunction}>다음</StButton>
+          <StBtBox>
+            <StCancelBt onClick={()=>{navigate(`/teamboard/${teamId}`)}}>취소</StCancelBt>
+            <StBt onClick={makeFunction}>다음</StBt>
+          </StBtBox>
         </StInBox>
       </StModal>
     </StBox>
   )
 }
+
+const StBtBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width : 500px;
+  margin : 0px auto 0 auto;
+`;
+
+const StCancelBt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 236px;
+  height: 54px;
+  border: 1px solid #5C5C5C;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #888888;;
+  cursor: pointer;
+`;
+
+const StBt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 236px;
+  height: 54px;
+  background-color: #063250;
+  border-radius: 6px;
+  color : white;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
+`;
 
 
 const StThemeInnerBox2 = styled.img`
@@ -435,7 +476,7 @@ const StModal = styled.div`
   margin : 20px 0 0 0;
   padding : 120px 80px 110px 80px;
   border-radius: 32px;
-  background-color: #EAEAEA;
+  background-color: white;
 `;
 
 const StBox = styled.div`
@@ -444,7 +485,8 @@ const StBox = styled.div`
   align-items: center;
   width : 100vw;
   height : 100vh;
-  background-color: #818181;
+  background-image:  ${props => (props.state == 1 ? `url(${office})` : `url(${casual})`)};
+  background-size:cover;
 `;
 
 export default MeetMakeTwoTwo

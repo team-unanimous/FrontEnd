@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import apis from '../api/main';
 import doorIcon from '../img/outdoor.png'
-import thumbnail1 from '../img/TeamBoard/2.nowmeeting/thumbnail1.svg'
-import thumbnail2 from '../img/TeamBoard/2.nowmeeting/thumbnail2.svg'
-import thumbnail3 from '../img/TeamBoard/2.nowmeeting/thumbnail3.svg'
-import thumbnail4 from '../img/TeamBoard/2.nowmeeting/thumbnail4.svg'
-import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
+import thumbnail1 from '../img/TeamBoard/3.beforemeeting/thumbnail1.svg'
+import thumbnail2 from '../img/TeamBoard/3.beforemeeting/thumbnail2.svg'
+import thumbnail3 from '../img/TeamBoard/3.beforemeeting/thumbnail3.svg'
+import thumbnail4 from '../img/TeamBoard/3.beforemeeting/thumbnail4.svg'
+import thumbnail5 from '../img/TeamBoard/3.beforemeeting/thumbnail5.svg'
 import closeIcon from '../img/TeamBoard/popup/close.svg'
 import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
 import jwt_decode from "jwt-decode";
@@ -334,10 +334,9 @@ const StImg = styled.img`
     display: flex;
     justify-content: center;
     align-items: center;
-    width : 48px;
-    height : 48px;
+    width : 80px;
+    height : 80px;
     border-radius: 48px;
-    background-color:#D9D9D9;
 `;
 
 const StBox = styled.div`

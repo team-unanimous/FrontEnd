@@ -25,44 +25,44 @@ const MeetMakeOne = () => {
                     </StSubTitle>
                 </StTitle>
                 <StButtonBox>
-
-                        <img src={bt1} onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwoone`)}}/>
-                        <img src={bt2} onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwotwo`)}}/>
-                    
+                        <StImg src={bt1} onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwoone`)}}/>
+                        <StImg src={bt2} onClick={()=>{navigate(`/teamboard/${teamId}/meetmaketwotwo`)}}/>
                 </StButtonBox>
+                <StCancelBt onClick={()=>{navigate(`/teamboard/${teamId}`)}}>취소</StCancelBt>
             </StInnerBox>
         </StBox>
     </StMeetMake>
   )
 }
 
-const StText = styled.div`
-    width : 170px;
-    height : 29px;
-    margin : 0 0 35px 0;
-    color : white;
-    font-size: 24px;
-    font-weight: 700;
+const StImg = styled.img`
+    width: 320px;
+    height: 350px;
+    object-fit: cover;
 `;
 
-const StButton = styled.button`
-    width : 320px;
-    height : 380px;
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    border: none;
-    border-radius: 8px;
-    background-color: black;
-    cursor: pointer;
+const StCancelBt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 236px;
+  height: 54px;
+  margin : 10px auto 0 auto;
+  border: 1px solid #5C5C5C;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #888888;;
+  cursor: pointer;
 `;
 
 const StButtonBox = styled.div`
-    width : 657px;
-    height : 380px;
+    width: 656px;
+    height: 350px;  
     display: flex;
     justify-content: center;
-    margin : 48px 0 0 0;
+    margin : 20px 0 0 0;
 `;
 
 const StSubTitle = styled.div`
@@ -102,7 +102,7 @@ const StBox = styled.div`
     display: flex;
     justify-content: center;
     width: 835px;
-    height : 506px;
+    height : 516px;
     padding : 80px;
     border-radius: 32px;
     background-color: white;
