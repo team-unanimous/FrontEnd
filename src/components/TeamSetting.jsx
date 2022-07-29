@@ -27,11 +27,11 @@ import closeIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leade
 const TeamSetting = (props) => {
 
     const [state, setState] = useState(0);
-    
-    const [openLeader,setOpenLeader] = useState(false);
-    const [openBan,setOpenBan] = useState(false);
-    const [openInvite,setOpenInvite] = useState(false);
-    const [userid,setUserid] = useState();
+
+    const [openLeader, setOpenLeader] = useState(false);
+    const [openBan, setOpenBan] = useState(false);
+    const [openInvite, setOpenInvite] = useState(false);
+    const [userid, setUserid] = useState();
 
 
     const teamId = useParams().teamid;
@@ -191,42 +191,42 @@ const TeamSetting = (props) => {
         setOpenLeader(false);
     }
 
-    const closeBan = () =>{
+    const closeBan = () => {
         setOpenBan(false);
     }
 
-    const closeInvite =() =>{
+    const closeInvite = () => {
         setOpenInvite(false);
     }
 
     return (
         <>
             <ImageModal
-            open={imgmodalopen}
-            select={onLoadFile}
-            save={exfunction}
-            close={ImgModalCancel}
-            />    
-            <LeaderModal 
-            open={openLeader} 
-            close={closeLeader}
-            teamId={teamId}/>
+                open={imgmodalopen}
+                select={onLoadFile}
+                save={exfunction}
+                close={ImgModalCancel}
+            />
+            <LeaderModal
+                open={openLeader}
+                close={closeLeader}
+                teamId={teamId} />
             <BanModal
-            open={openBan}
-            close={closeBan}
-            teamId={teamId}
-            userId={userid}
+                open={openBan}
+                close={closeBan}
+                teamId={teamId}
+                userId={userid}
             />
             <InviteMember
-            open={openInvite}
-            close={closeInvite}
+                open={openInvite}
+                close={closeInvite}
             />
             {teamLeader !== nickname ?
                 <StRight>
                     <StTeamOutBox>
                         <StTeamBox>
-                            <StIntro src={Introduction}/>
-                            
+                            <StIntro src={Introduction} />
+
                             <StDown>
                                 <StComeOn>
                                     <StBlack>
@@ -234,14 +234,14 @@ const TeamSetting = (props) => {
                                     </StBlack>
                                     <StInputBox>
                                         <StInput>{data.uuid}</StInput>
-                                        <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon}/>
+                                        <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon} />
                                     </StInputBox>
                                 </StComeOn>
                                 <StListBox>
                                     <StBlack>
                                         팀원 관리
                                     </StBlack>
-                                    <StUserBt onClick={()=>{setOpenInvite(true);}} src={inviteIcon}/>
+                                    <StUserBt onClick={() => { setOpenInvite(true); }} src={inviteIcon} />
                                     <StMateList>
                                         {props?.prop.map((value, index) => {
                                             return <StUserBox key={index}>
@@ -262,10 +262,10 @@ const TeamSetting = (props) => {
             {state == 0 && teamLeader == nickname ?
                 <StRight>
                     <StBox>
-                        <img src={Introduction}/>
+                        <img src={Introduction} />
                         <StDownBox>
-                            <StTeamManage src={TeamManage} onClick={() => { setState(1) }}/>
-                            <StTeamManage src={EditTeam} onClick={() => { setState(2) }}/>
+                            <StTeamManage src={TeamManage} onClick={() => { setState(1) }} />
+                            <StTeamManage src={EditTeam} onClick={() => { setState(2) }} />
                         </StDownBox>
                     </StBox>
                 </StRight> : <></>
@@ -274,7 +274,7 @@ const TeamSetting = (props) => {
                 <StRight>
                     <StTeamOutBox>
                         <StTeamBox>
-                            <StTIntro src={TIntroduction}/>
+                            <StTIntro src={TIntroduction} />
                             <StInBox>
                                 <StDown>
                                     <StComeOn>
@@ -283,14 +283,14 @@ const TeamSetting = (props) => {
                                         </StBlack>
                                         <StInputBox>
                                             <StInput>{data.uuid}</StInput>
-                                            <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon}/>
+                                            <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon} />
                                         </StInputBox>
                                     </StComeOn>
                                     <StListBox>
                                         <StBlack >
                                             팀원 관리
                                         </StBlack>
-                                        <StUserBt onClick={()=>{setOpenInvite(true);}} src={inviteIcon}/>
+                                        <StUserBt onClick={() => { setOpenInvite(true); }} src={inviteIcon} />
                                         <StMateList>
                                             {props?.prop.map((value, index) => {
                                                 return <StUserBox key={index}>
@@ -299,8 +299,8 @@ const TeamSetting = (props) => {
                                                         <StUserName>{value.nickname}</StUserName>
                                                         <StEmail>{value.username}</StEmail>
                                                     </StUserInfo>
-                                                    <StXBox onClick={()=>{setOpenBan(true);setUserid(value.userId);console.log(userid)}}>
-                                                        <StXicon src={closeIcon}/>
+                                                    <StXBox onClick={() => { setOpenBan(true); setUserid(value.userId); console.log(userid) }}>
+                                                        <StXicon src={closeIcon} />
                                                     </StXBox>
                                                 </StUserBox>
                                             })}
@@ -310,7 +310,7 @@ const TeamSetting = (props) => {
                                         <StBlack>
                                             팀장 권한 위임
                                         </StBlack>
-                                        <StUserBt onClick={() => { setOpenLeader(true) }} src={selectIcon}/>
+                                        <StUserBt onClick={() => { setOpenLeader(true) }} src={selectIcon} />
                                     </StMovePower>
                                 </StDown>
                                 <StLine />
@@ -718,7 +718,7 @@ const StUpBox1 = styled.div`
     width : 825px;
     height : 124px;
     padding : 0 0 0 30px;
-    background-color: #EAEAEA;
+    background-color: linear-gradient(180deg, rgba(35, 150, 240, 0.8) 0%, rgba(73, 182, 255, 0.8) 100%);
     border-radius: 8px;
 `;
 

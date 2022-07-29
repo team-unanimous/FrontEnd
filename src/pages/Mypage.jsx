@@ -102,14 +102,16 @@ const Mypage = () => {
 
     // formdata 안에 넣기
     const formData = new FormData();
-    formData.append('profileImage', files)
+    const defalutformData = new FormData();
+    formData.append('profileImage', files);
+    defalutformData.append('', files);
     // 사진 값보기
-    // for (let key of formData.keys()) {
-    //     console.log(key);
-    // }
-    // for (let value of formData.values()) {
-    //     console.log(value);
-    // }
+    for (let key of formData.keys()) {
+        console.log(key);
+    }
+    for (let value of formData.values()) {
+        console.log(value);
+    }
 
     // 이미지 전송
     // FormData() 새로운 FormData 객체를 생성
@@ -163,12 +165,19 @@ const Mypage = () => {
     })
 
     const defaultPostFunction = () => {
+        formData.delete('profileImage');
         defaultGo({
-            profileImage: null,
+            profileImage: defalutformData,
             userid: usersid,
         })
     }
 
+    for (let key of formData.keys()) {
+        console.log(key);
+    }
+    for (let value of formData.values()) {
+        console.log(value);
+    }
 
 
     // 비밀번호 변경모달로 이동
@@ -208,7 +217,7 @@ const Mypage = () => {
     }
 
     // 홈으로
-    const gohome = () => navigate('/');
+    const gohome = () => navigate(-1);
 
     return (
         <StWrap>
@@ -237,7 +246,7 @@ const Mypage = () => {
                         <StImgChangeBtn onClick={ImgModalOpen}>
                             이미지 변경
                         </StImgChangeBtn>
-                        <StImgBasicChangeBtn onClick={picturePostFunction}>
+                        <StImgBasicChangeBtn onClick={defaultPostFunction}>
                             기본 이미지
                         </StImgBasicChangeBtn>
                     </StImgBox>
@@ -402,7 +411,6 @@ const StProfile = styled.img`
                 width: 117px;
                 height: 117px;
                 border-radius: 100px;
-                background: #E5E7EB;
                 `
 
 const StBtnBox = styled.div`
