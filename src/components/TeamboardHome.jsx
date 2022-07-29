@@ -227,7 +227,7 @@ const TeamboardHome = () => {
           </StMeetingRightBox>
         </StMeetingInnerBox>
         <StDownBox>
-          <StOn>이전 회의</StOn>
+          <StOn>이전 미팅</StOn>
           <StDownInnerBox>
             {passed?.length == 0 ? <StImg src={onPassedIcon} /> : <></>}
             {passed ?
@@ -278,10 +278,10 @@ const TeamboardHome = () => {
 
 const StDownInnerBox = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   width : 1120px;
   height : 351px;
-  
+  margin : 10px 0 0 0;
 `;
 
 const StDownBox = styled.div`
@@ -310,7 +310,7 @@ const StMeetingRightBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width : 508px;
+  width : 516px;
   height : 351px;
   margin : 1rem 0 0 0; 
   padding : 32px;
@@ -324,7 +324,7 @@ const StMeetingLeftBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width : 508px;
+  width : 516px;
   height : 351px;
   margin : 1rem 0 0 0; 
   padding : 32px;
@@ -429,7 +429,7 @@ const StRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 38px 36px 38px;
+  padding: 0 30px 36px 36px;
   border-top-left-radius:20px;
   border-top-right-radius:20px;
   background-color: #F2F6F9;

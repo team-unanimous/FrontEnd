@@ -1,11 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 import styled from 'styled-components'
-import thumbnail1 from '../img/TeamBoard/2.nowmeeting/thumbnail1.svg'
-import thumbnail2 from '../img/TeamBoard/2.nowmeeting/thumbnail2.svg'
-import thumbnail3 from '../img/TeamBoard/2.nowmeeting/thumbnail3.svg'
-import thumbnail4 from '../img/TeamBoard/2.nowmeeting/thumbnail4.svg'
-import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
+import thumbnail1 from '../img/TeamBoard/3.beforemeeting/thumbnail1.svg'
+import thumbnail2 from '../img/TeamBoard/3.beforemeeting/thumbnail2.svg'
+import thumbnail3 from '../img/TeamBoard/3.beforemeeting/thumbnail3.svg'
+import thumbnail4 from '../img/TeamBoard/3.beforemeeting/thumbnail4.svg'
+import thumbnail5 from '../img/TeamBoard/3.beforemeeting/thumbnail5.svg'
 
 
 const MeetingDown = (prop) => {
@@ -106,15 +106,15 @@ const StIssue = styled.div`
 `;
 
 const StInBox = styled.div`
-    width : 312px;
-    min-height : 166px;
-    padding : 16px 8px;
+    width: 296px;
+    height: 166px;
+    padding : 16px;
     border-radius: 8px;
     background-color:${props=>props.back};
 `;
 
 const StName = styled.div`
-    width: 175px;
+    width: 100%;
     height: 20px;
     font-weight: 500;
     font-size: 20px;
@@ -135,6 +135,7 @@ const StBox = styled.div`
     width: 314.67px;
     min-height: 303px;
     border-radius: 8px;
+    margin : 0 16px 0 0;
     background-color:${props=>props.back};
     border: 1px solid rgba(215, 215, 215, 0.5);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);

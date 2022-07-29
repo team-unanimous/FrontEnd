@@ -156,7 +156,7 @@ const StTeamName = styled.div`
     height : 24px;
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 700;
+  
     font-size: 20px;
     line-height: 24px;
     text-align: center;
@@ -214,7 +214,7 @@ const StLeft = styled.div`
 const StMeetMake = styled.div`
   position: fixed;
   bottom :50px;
-  right : 163px;
+  right : 168px;
   display:  flex;
   justify-content: center;
   align-items: center;

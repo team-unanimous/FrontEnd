@@ -58,10 +58,10 @@ function App() {
         <Route path="/teamboard/:teamid/meetmakeone" element={<MeetMakeOne />} />
         <Route path="/teamboard/:teamid/meetmaketwoone" element={<MeetMakeTwoOne />} />
         <Route path="/teamboard/:teamid/meetmaketwotwo" element={<MeetMakeTwoTwo />} />
-        <Route path="/teamboard/:teamid/meetmakethreeone" element={<MeetMakeThreeOne />} />
-        <Route path="/teamboard/:teamid/meetmakethreetwo" element={<MeetMakeThreeTwo />} />
-        <Route path="/teamboard/:teamid/:meetid/meetdetailone" element={<MeetDetailOne />} />
-        <Route path="/teamboard/:teamid/:meetid/meetdetailtwo" element={<MeetDetailTwo />} />
+        <Route path="/teamboard/:teamid/:theme/meetmakethreeone" element={<MeetMakeThreeOne />} />
+        <Route path="/teamboard/:teamid/:theme/meetmakethreetwo" element={<MeetMakeThreeTwo />} />
+        <Route path="/teamboard/:teamid/:meetid/:theme/meetdetailone" element={<MeetDetailOne />} />
+        <Route path="/teamboard/:teamid/:meetid/:theme/meetdetailtwo" element={<MeetDetailTwo />} />
         <Route path="/teamboard/:teamid" element={<TeamBoard />} />
         <Route path="/teamselect" element={<TeamSelect />} />
         <Route path="/teammake" element={<TeamMake />} />
