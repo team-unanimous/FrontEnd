@@ -12,7 +12,7 @@ const SignUpFour = () => {
   const navigate = useNavigate();
 
   const usersData = useSelector((state) => state.postReducer.users.userids)
-  console.log(usersData)
+
 
 
   // 닉네임 
@@ -39,7 +39,6 @@ const SignUpFour = () => {
 
   const { mutate: NickCk } = useMutation(NicknameCheck, {
     onSuccess: (response) => {
-      console.log(response.data);
       setNickcheck(true)
       setWarning(false)
       alert("사용 가능한 닉네임입니다")
@@ -59,7 +58,6 @@ const SignUpFour = () => {
 
   // 닉네임 저장
   const NickSave = (data) => {
-    console.log(data)
     return axis.patchNickSave(data);
   }
 

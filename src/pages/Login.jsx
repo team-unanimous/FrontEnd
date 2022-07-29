@@ -88,7 +88,7 @@ const Login = () => {
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
         /> */}
-        <Stgooglebtn src={googlebtn} />
+        {/* <Stgooglebtn src={googlebtn} /> */}
       </StBox>
     </StSignUp>
   )

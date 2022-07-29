@@ -253,7 +253,7 @@ const StInvitedButton = styled.div`
     width: 353px;
     height: 53px;
 
-    background: #F5F5F5;
+    background: #EBF7FF;
     border-radius: 100px;
 
     /* Inside auto layout */
@@ -277,7 +277,7 @@ const StTeamMakeButton = styled.div`
     width: 309px;
     height: 53px;
 
-    background: #F5F5F5;
+    background: #EBF7FF;
     border-radius: 100px;
     font-size: 14px;
 

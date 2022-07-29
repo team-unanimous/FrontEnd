@@ -36,7 +36,7 @@ const DetailModalPassed = ({open, close,meetingTitle,meetingDate,meetingTime,mee
             {meetingThumbnail==4?<StImg src={thumbnail4}/>:<></>}
             {meetingThumbnail==5?<StImg src={thumbnail5}/>:<></>}
             <StTitle>회의명 '{meetingTitle}'</StTitle>
-            <StLine/>
+            
             <StInfo>
                 <StHostBox>
                     <StHostLeft>주최자</StHostLeft>

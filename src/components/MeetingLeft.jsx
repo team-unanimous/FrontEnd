@@ -1,20 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
+import thumbnail1 from '../img/TeamBoard/2.nowmeeting/thumbnail1.svg'
+import thumbnail2 from '../img/TeamBoard/2.nowmeeting/thumbnail2.svg'
+import thumbnail3 from '../img/TeamBoard/2.nowmeeting/thumbnail3.svg'
+import thumbnail4 from '../img/TeamBoard/2.nowmeeting/thumbnail4.svg'
+import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
+import closeIcon from '../img/TeamBoard/popup/close.svg'
+
 
 const MeetingLeft = (prop) => {
+    console.log(prop.prop.meetingSum);
     
   return (
     <StBox>
-        <StImg/>
+        {prop?.prop.meetingSum==1?<StImg src={thumbnail1}/>:<></>}
+        {prop?.prop.meetingSum==2?<StImg src={thumbnail2}/>:<></>}
+        {prop?.prop.meetingSum==3?<StImg src={thumbnail3}/>:<></>}
+        {prop?.prop.meetingSum==4?<StImg src={thumbnail4}/>:<></>}
+        {prop?.prop.meetingSum==5?<StImg src={thumbnail5}/>:<></>}
         <StInfo>
             <StName>
-                {prop.prop.meetingTitle}
+                {prop?.prop.meetingTitle}
             </StName>
             <StCount>
                 <StUserImg/>
                 <StUserImg/>
                 <StUserImg/>
-                &nbsp;00명
+                &nbsp;{}명
             </StCount>
             
         </StInfo>

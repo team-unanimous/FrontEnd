@@ -12,10 +12,10 @@ import { useParams } from 'react-router-dom';
 import DetailModalReserve from './DetailModalReserve';
 import { useQueryClient } from 'react-query';
 import { useEffect } from 'react';
-import intro from '../img/introduction.svg'
+import intro from '../img/introduction.png'
 import recommendone from '../img/TeamBoard/1.recommend/img1.svg'
 import recommendtwo from '../img/TeamBoard/1.recommend/img2.svg'
-import recommendthree from '../img/TeamBoard/1.recommend/img2.svg'
+import recommendthree from '../img/TeamBoard/1.recommend/img3.svg'
 import DetailModalOnAir from './DetailModalOnAir';
 import DetailModalPassed from './DetailModalPassed';
 import useGetTeamMain from '../Hooks/useGetTeamMain';
@@ -23,7 +23,7 @@ import useGetTeamMain from '../Hooks/useGetTeamMain';
 import onAirIcon from '../img/TeamBoard/defaultmessage_nowmeeting.svg'
 import onReserveIcon from '../img/TeamBoard/defaultmessage_reservedmeeting.svg'
 import onPassedIcon from '../img/TeamBoard/defaultmessage_beforemeeting.svg'
-import MeetingDown from './MeetingDown';
+import MeetingDown from './MeetingDown'; 
 
 
 const TeamboardHome = () => {
