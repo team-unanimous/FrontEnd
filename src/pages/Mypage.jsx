@@ -102,16 +102,15 @@ const Mypage = () => {
 
     // formdata 안에 넣기
     const formData = new FormData();
-    const defalutformData = new FormData();
     formData.append('profileImage', files);
-    defalutformData.append('', files);
+
     // 사진 값보기
-    for (let key of formData.keys()) {
-        console.log(key);
-    }
-    for (let value of formData.values()) {
-        console.log(value);
-    }
+    // for (let key of formData.keys()) {
+    //     console.log(key);
+    // }
+    // for (let value of formData.values()) {
+    //     console.log(value);
+    // }
 
     // 이미지 전송
     // FormData() 새로운 FormData 객체를 생성
@@ -121,10 +120,14 @@ const Mypage = () => {
     const picturePost = async (data) => {
         console.log(data)
         console.log(data.profileImage) // data.profileImage = formdata
+        for (let key of data.profileImage.keys()) {
+            console.log(key);
+        }
+        for (let value of data.profileImage.values()) {
+            console.log(value);
+        }
         const formdataimg = await apis.postPicturePost(data);
         setCookie("token", formdataimg.headers.authorization);
-        console.log(formdataimg);
-        console.log(formdataimg.headers);
         return formdataimg;
     }
 
@@ -135,6 +138,9 @@ const Mypage = () => {
         },
         onError: (error) => {
             alert("이미지 업로드에 실패하셨습니다")
+        },
+        onSettled: () => {
+
         }
     })
 
@@ -151,8 +157,17 @@ const Mypage = () => {
     // 기본 이미지 전송
 
     const defaultPost = async (data) => {
-        const fromdatadefault = await axis.postPicturePost(data);
-        return fromdatadefault;
+        console.log(data)
+        console.log(data.profileImage)
+        for (let key of data.profileImage.keys()) {
+            console.log(key);
+        }
+        for (let value of data.profileImage.values()) {
+            console.log(value);
+        }
+        const formdataimg = await axis.postPicturePost(data);
+        setCookie("token", formdataimg.headers.authorization);
+        return formdataimg;
     }
 
     const { mutate: defaultGo } = useMutation(defaultPost, {
@@ -164,20 +179,18 @@ const Mypage = () => {
         }
     })
 
+    const form = new FormData();
+
     const defaultPostFunction = () => {
-        formData.delete('profileImage');
+        console.log("11")
+        form.set('profileImage', "1", null);
+        // form.delete('profileImage')
         defaultGo({
-            profileImage: defalutformData,
+            profileImage: form,
             userid: usersid,
         })
     }
 
-    for (let key of formData.keys()) {
-        console.log(key);
-    }
-    for (let value of formData.values()) {
-        console.log(value);
-    }
 
 
     // 비밀번호 변경모달로 이동
@@ -218,6 +231,7 @@ const Mypage = () => {
 
     // 홈으로
     const gohome = () => navigate(-1);
+
 
     return (
         <StWrap>

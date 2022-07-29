@@ -124,7 +124,7 @@ const TeamSetting = (props) => {
     const onLoadFile = (e) => {
         const file = e.target.files[0]
         console.log(file);
-        setImgfiles(file)
+        setImgfiles(file);
     }
 
     const formData = new FormData();
@@ -323,8 +323,8 @@ const TeamSetting = (props) => {
             }
             {state == 2 && teamLeader == nickname ?
                 <StRight>
-                    <StEdit>    
-                        <StHead src={basic}/>
+                    <StEdit>
+                        <StHead src={basic} />
                         <StBody>
                             <StProfile>
                                 <StBlack>

@@ -10,29 +10,29 @@ import closeIcon from '../img/TeamBoard/popup/close.svg'
 
 const MeetingLeft = (prop) => {
     console.log(prop.prop.meetingSum);
-    
-  return (
-    <StBox>
-        {prop?.prop.meetingSum==1?<StImg src={thumbnail1}/>:<></>}
-        {prop?.prop.meetingSum==2?<StImg src={thumbnail2}/>:<></>}
-        {prop?.prop.meetingSum==3?<StImg src={thumbnail3}/>:<></>}
-        {prop?.prop.meetingSum==4?<StImg src={thumbnail4}/>:<></>}
-        {prop?.prop.meetingSum==5?<StImg src={thumbnail5}/>:<></>}
-        <StInfo>
-            <StName>
-                {prop?.prop.meetingTitle}
-            </StName>
-            <StCount>
-                <StUserImg/>
-                <StUserImg/>
-                <StUserImg/>
-                &nbsp;{}명
-            </StCount>
-            
-        </StInfo>
-        <StButton>참여하기</StButton>
-    </StBox>
-  )
+
+    return (
+        <StBox>
+            {prop?.prop.meetingSum == 1 ? <StImg src={thumbnail1} /> : <></>}
+            {prop?.prop.meetingSum == 2 ? <StImg src={thumbnail2} /> : <></>}
+            {prop?.prop.meetingSum == 3 ? <StImg src={thumbnail3} /> : <></>}
+            {prop?.prop.meetingSum == 4 ? <StImg src={thumbnail4} /> : <></>}
+            {prop?.prop.meetingSum == 5 ? <StImg src={thumbnail5} /> : <></>}
+            <StInfo>
+                <StName>
+                    {prop?.prop.meetingTitle}
+                </StName>
+                <StCount>
+                    <StUserImg />
+                    <StUserImg />
+                    <StUserImg />
+                    &nbsp;{ }명
+                </StCount>
+
+            </StInfo>
+            <StButton>참여하기</StButton>
+        </StBox>
+    )
 }
 
 const StUserImg = styled.img`
