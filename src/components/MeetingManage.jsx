@@ -139,7 +139,7 @@ const MeetingManage = () => {
                   <StHost>{value.meetingCreator}</StHost>
                   <StTitle>{value.meetingTitle}</StTitle>
                 </StList>
-                <StButton>
+                <StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${value.meetingId}`)}}>
                   <StIcon src={participate}/>참여하기
                 </StButton>
               </StInfoBox>

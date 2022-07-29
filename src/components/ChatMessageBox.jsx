@@ -77,9 +77,9 @@ const StUserProfileImage = styled.img`
 ` 
 const StUserNickname = styled.div`
     /* 아무개 */
-    width: 45px;
+    width: 100%;
     height: 20px;
-
+    overflow-x: hidden;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
