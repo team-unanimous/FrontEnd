@@ -45,9 +45,7 @@ const MeetMakeTwoTwo = () => {
 
   // 팀 만들기
   const makeTeam = async(data)=>{
-    console.log(data);
     const datas = await apis.postReserveMeet(data);
-    console.log(data)
     dispatch(teamID({
       meetid : datas.data
     }))

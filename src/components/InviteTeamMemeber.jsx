@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 const InviteTeamMember = ()=> {
     const navigate = useNavigate();
     const teamData = useSelector(state=>state.teamReducer);
-    console.log(teamData);
     const [memberEmail, setMemberEmail] = useState("");
     const emailRef = useRef();
 
@@ -26,18 +25,15 @@ const InviteTeamMember = ()=> {
 
     const { mutate : mailSendMutate } = useMutation(mailSend, {
         onSuccess: (resp) => {
-            console.log(resp);
             navigate('/teammakesuccess')
         }
     })
 
     const SendMemberListHandler = () => {
-        console.log(memberEmail);
         const data = {
             emailRequestDtoList: memberEmail,
             teamId: teamData, // teammake 페이지에서 상태 값으로 받아 와서 전달해야됨 
         }
-        console.log(data);
         mailSendMutate(data);
     } 
 
@@ -72,7 +68,6 @@ const InviteTeamMember = ()=> {
                                     <input style={{width:"1rem"}} type={"image"} src={xbutton} onClick={
                                         ()=>{
                                             setMemberEmail(memberEmail.filter(( _, index) => index !== i))
-                                            console.log(memberEmail);
                                     }}/>
                                     </StLiItem>
                         ))}</>

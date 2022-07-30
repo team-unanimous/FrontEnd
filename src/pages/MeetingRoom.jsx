@@ -7,7 +7,6 @@ const MeetingRoom = () => {
     const navigate = useNavigate();
 
         if (navigator.mediaDevices.getUserMedia) {
-            console.log(navigator.mediaDevices.getUserMedia);
             navigator.mediaDevices.getUserMedia({ video: true })
             //   .then(function (stream) {
             //     videoRef.current.srcObject = stream;

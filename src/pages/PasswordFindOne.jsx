@@ -43,13 +43,11 @@ const PasswordFindOne = () => {
 
   const { mutate: emailGo } = useMutation(emailCodePost, {
     onSuccess: (response) => {
-      console.log(response)
       dispatch(tossUserId({ email }))
       alert("이메일 생성에 성공했습니다")
       setCodein(true)
     },
     onError: (error) => {
-      console.log(error)
       setWarning(error.response.data)
       alert(error.response.data)
     }

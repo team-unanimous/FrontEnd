@@ -41,6 +41,7 @@ const apis = {
     postLeader: (data) => api.post(`/api/teams/${data.teamId}/manager`, data),
     patchNow: (data) => api.patch(`/api/meetings/${data.meetingId}/now`),
     patchDone: (data) => api.patch(`/api/meetings/${data.meetingId}/done`),
+    postChatFinish : ({meetingId})=>api.post(`/api/chat/meetings/${meetingId}/rooms/exit`),
 
     // 경계
     postLogin: (data) => api.post(`/api/users/login`, data), // 로그인

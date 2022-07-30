@@ -39,8 +39,6 @@ const Agenda = ({ main }) => {
     const sock = new SockJS("https://sparta-ysh.shop/ws-stomp");
     const ws = Stomp.over(sock);
 
-    console.log(main)
-
     // get으로 받은 안건 내용 저장
     const [agendalist, setAgendalist] = useState(null);
     // 내가 보여줄 안건내용 저장
@@ -61,19 +59,15 @@ const Agenda = ({ main }) => {
                 { token: data.token }, () => {
                     ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
                         (resp) => {
-                            console.log(resp)
                             const newMessage = JSON.parse(resp.body);
                             if (newMessage.type == "ISSUE") {
-                                console.log(newMessage);
                                 // 문자열 해제
                                 const getagenda = JSON.parse(newMessage.message);
-                                console.log(getagenda)
-                                console.log(getagenda[0].issueContent)
-                                console.log(getagenda[1].id)
                                 setMsg(getagenda[0].issueContent)
                                 setNumber(getagenda[1].id)
                                 console.log("안건 받기 완료")
                                 console.log(numberagenda)
+
                             }
                             if (newMessage.type == "STAMP") {
                                 const getarray = JSON.parse(newMessage.message);
@@ -84,10 +78,10 @@ const Agenda = ({ main }) => {
                     );
                 });
         } catch (error) {
-            console.log(error);
         }
     }
-    console.log(numberagenda)
+
+
 
     useEffect(() => {
         wsConnect(datas); // 소켓연결
@@ -97,12 +91,11 @@ const Agenda = ({ main }) => {
 
     // get 임시로
     const useGetIssueLists = async ({ meetID }) => {
-        console.log({ meetID })
         const { data } = await apis.getIssueList({ meetID });
-        console.log(data)
+
+
         // 안건정보 state저장
         setAgendalist(data)
-        console.log("안건 get으로 받음")
         return data;
     }
 
@@ -119,14 +112,11 @@ const Agenda = ({ main }) => {
             const token = getCookie("token")
             waitForConnection(ws, function () {
                 ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-                console.log(JSON.stringify(data))
-                console.log("안건 전송 완료")
             })
         } catch (error) {
-            console.log(error);
+
         }
     }
-
 
     // 웹소켓이 연결될 때 까지 실행하는 함수 
     function waitForConnection(ws, callback) {
@@ -144,7 +134,6 @@ const Agenda = ({ main }) => {
         );
     }
 
-
     const numberminus = () => {
         setNumberagenda(numberagenda => numberagenda - 1)
         HandleSend();
@@ -155,14 +144,13 @@ const Agenda = ({ main }) => {
         HandleSend();
     }
 
-    console.log(numberagenda)
-    console.log(msg)
-    console.log(agendalist)
+    // console.log(numberagenda)
+    // console.log(msg)
+    // console.log(agendalist)
 
-    // 방장아닌유저 버튼사라짐 확실하게 고침
-    console.log(main)
-    console.log(main?.meetingCreator)
-    console.log(decoded?.USER_NICKNAME)
+    // // 방장아닌유저 버튼사라짐 확실하게 고침
+    // console.log(main)
+    // console.log(main?.meetingCreator)
     return (
         <>
             <Bigbox>
