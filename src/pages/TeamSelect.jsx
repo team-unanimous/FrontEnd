@@ -60,9 +60,9 @@ const TeamSelect = () => {
                 <StContainer>
                     <StTitleWrapper>
                         <StTitle>접속할 팀 페이지를 선택해주세요</StTitle>
-                        <StUnanimousTeamJoin
+                        {/* <StUnanimousTeamJoin
                             onClick={unaTeamJoinHandler}
-                        >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin>
+                        >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin> */}
                     </StTitleWrapper>
                     <StTeamBox>
                         {data.map((team, index) => (
@@ -75,18 +75,37 @@ const TeamSelect = () => {
                                         src={{ data }.data[0].teamImage}
                                     >
                                     </StTeamItem>
-                                    <StTeamName>
+                                    <StTeamName
+                                    onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
+                                    >
                                         {team.teamname}
                                     </StTeamName>
                                 </StTeamItemBox>
                         ))}
+                        {
+                            data.length > 4
+                            ? <></>
+                            : <StTeamItemBox>
+                            <StTeamItem
+                            onClick={() => { navigate(`/teammake`) }}
+                            >
+                            </StTeamItem>
+                            <StTeamName 
+                            style={{color:"grey"}}
+                            onClick={() => { navigate(`/teammake`) }}
+                            >
+                                새로 만들기
+                            </StTeamName>
+                        </StTeamItemBox>
+                        }
+
                     </StTeamBox>
                     <StButtonWrapper>
                         <StInvitedButton onClick={() => navigate("/teaminvited")}>
                             이미 초대된 팀 페이지에 접속하고 싶으신가요?
                         </StInvitedButton>
-                        <StTeamMakeButton onClick={() => navigate("/teammake")}>
-                            새로운 팀 페이지를 만들고 싶으신가요?
+                        <StTeamMakeButton onClick={unaTeamJoinHandler}>
+                            Unanimous 둘러보기 (체험용)
                         </StTeamMakeButton>
                     </StButtonWrapper>
                 </StContainer>
@@ -183,12 +202,15 @@ const StTeamBox = styled.div`
     width: 100%;
     justify-content: space-around;
     margin-top: 60px;
+    background-color: rebeccapurple;
     `
 
 const StTeamItemBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
+    background-color: red;
     `
 const StTeamItem = styled.img`
     width: 180px;
@@ -197,6 +219,7 @@ const StTeamItem = styled.img`
     background-color: #D9D9d9;
     border-radius: 87px;
     object-fit: cover;
+    cursor: pointer;
     `
 const StTeamName = styled.div`
     /* 팀이름 */

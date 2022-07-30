@@ -260,7 +260,7 @@ const StJumbotronContainer = styled.div`
     display : flex;
     flex-direction : row;
     align-items : center;
-    width : 98%;
+    width : 100%;
     height: 67.5rem;
     @media screen and (max-width: 600px) {
         height: 38rem;

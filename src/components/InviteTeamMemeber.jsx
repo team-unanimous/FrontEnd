@@ -52,7 +52,8 @@ const InviteTeamMember = ()=> {
                     <StEmailInputBox>
                     <StPwInput type='text' placeholder='이메일 입력' ref={emailRef}/>
                     <StEmailButton 
-                    onClick={()=>{
+                    onClick={()=>{ 
+                        if (emailRef.current.value == "" ) return 
                         setMemberEmail([
                             ...memberEmail,
                             emailRef?.current?.value])

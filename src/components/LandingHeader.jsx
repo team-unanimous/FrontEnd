@@ -32,6 +32,7 @@ const StHeader = styled.div`
     position: sticky;
     top: 0;
     @media screen and (max-width: 600px) {
+        position: static;
     }
 
 `
@@ -72,6 +73,9 @@ const StStartButton = styled.div`
     font-size : 18px;
     margin : 0 40px 0 auto;
     cursor: pointer;
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
 `
 
 export default LandingHeader;
