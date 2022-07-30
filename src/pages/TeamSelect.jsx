@@ -12,12 +12,6 @@ import icon_participate from "../img/icon_participate.svg"
 import icon_add from "../img/icon_add.svg"
 import teamAddProfile from "../img/TeamAddProfile.png"
 
-
-//테스트
-// import axis from '../api/sub'
-
-
-
 const TeamSelect = () => {
     const token = getCookie('token')
     const navigate = useNavigate();
