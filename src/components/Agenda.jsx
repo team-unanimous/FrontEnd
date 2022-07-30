@@ -14,6 +14,7 @@ import leftbtn from "../img/icon_arrow_left.svg"
 import rightbtn from "../img/Icon_arrow_right.svg"
 import stampbtn from "../img/stamp.svg"
 import useGetMeetList from "../Hooks/useGetMeetList"
+import jwt_decode from "jwt-decode";
 
 
 const Agenda = ({ main }) => {
@@ -28,10 +29,12 @@ const Agenda = ({ main }) => {
         { id: 7 },
         { id: 8 },
         { id: 9 },
-        { id: 10 }]
+        { id: 10 }
+    ]
 
     const meetID = useParams().sessionid;
     const token = getCookie('token');
+    const decoded = jwt_decode(getCookie('token'));
 
     const sock = new SockJS("https://sparta-ysh.shop/ws-stomp");
     const ws = Stomp.over(sock);
@@ -44,10 +47,7 @@ const Agenda = ({ main }) => {
     const [msg, setMsg] = useState(null);
     const [numberagenda, setNumberagenda] = useState(0);
     const [stampvalue, setStampvalue] = useState(null);
-    const [numagenda, setNumagenda] = useState(null);
-    const [order, setOrder] = useState(1);
     const [number, setNumber] = useState(1);
-
 
     const datas = {
         token: token,
@@ -65,15 +65,15 @@ const Agenda = ({ main }) => {
                             const newMessage = JSON.parse(resp.body);
                             if (newMessage.type == "ISSUE") {
                                 console.log(newMessage);
-                                // 문자열 객체화시킴
-                                // message: JSON.stringify({ agendalist[numberagenda], number }),
+                                // 문자열 해제
                                 const getagenda = JSON.parse(newMessage.message);
-                                console.log(getagenda);
-                                console.log(getagenda.length)
-                                console.log(getagenda.issueId)
-                                setNumagenda(getagenda.issueId)
-                                setMsg(getagenda.issueContent);
+                                console.log(getagenda)
+                                console.log(getagenda[0].issueContent)
+                                console.log(getagenda[1].id)
+                                setMsg(getagenda[0].issueContent)
+                                setNumber(getagenda[1].id)
                                 console.log("안건 받기 완료")
+                                console.log(numberagenda)
                             }
                             if (newMessage.type == "STAMP") {
                                 const getarray = JSON.parse(newMessage.message);
@@ -87,25 +87,12 @@ const Agenda = ({ main }) => {
             console.log(error);
         }
     }
-
-    setTimeout(() => {
-        NumSendHandle(); // 받아온안건을 전송해주는애
-    }, 100);
-    clearTimeout(number);
-
-    setTimeout(() => {
-        HandleSend(); // 받아온안건을 전송해주는애
-    }, 100);
-    clearTimeout(msg);
-
-
+    console.log(numberagenda)
 
     useEffect(() => {
-        wsConnect(datas); // > 소켓연결
+        wsConnect(datas); // 소켓연결
         useGetIssueLists({ meetID })
     }, [])
-
-    let firstissueId = 0
 
 
     // get 임시로
@@ -113,15 +100,11 @@ const Agenda = ({ main }) => {
         console.log({ meetID })
         const { data } = await apis.getIssueList({ meetID });
         console.log(data)
-        firstissueId = data[0].issueId
-        console.log(firstissueId)
         // 안건정보 state저장
         setAgendalist(data)
         console.log("안건 get으로 받음")
         return data;
     }
-    console.log(firstissueId)
-
 
 
     // 안건 서버로 보내기
@@ -131,33 +114,13 @@ const Agenda = ({ main }) => {
                 type: "ISSUE",
                 roomId: meetID,
                 sender: "string",
-                message: JSON.stringify(agendalist[numberagenda]),
+                message: JSON.stringify([agendalist[numberagenda], idarray[numberagenda]]),
             }
             const token = getCookie("token")
             waitForConnection(ws, function () {
                 ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
                 console.log(JSON.stringify(data))
                 console.log("안건 전송 완료")
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    // 숫자
-    const NumSendHandle = () => {
-        try {
-            const data = {
-                type: "STAMP",
-                roomId: meetID,
-                nickname: "string",
-                sender: "string",
-                message: JSON.stringify(idarray[numberagenda]),
-            }
-            const token = getCookie("token")
-            waitForConnection(ws, function () {
-                ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-                console.log(JSON.stringify(data))
             })
         } catch (error) {
             console.log(error);
@@ -183,42 +146,33 @@ const Agenda = ({ main }) => {
 
 
     const numberminus = () => {
-        setNumberagenda(numberagenda - 1)
+        setNumberagenda(numberagenda => numberagenda - 1)
         HandleSend();
-        NumSendHandle();
     }
-
 
     const numberplus = () => {
-        setNumberagenda(numberagenda + 1)
+        setNumberagenda(numberagenda => numberagenda + 1)
         HandleSend();
-        NumSendHandle();
     }
 
-
-
-
-
-
-    // console.log(numberagenda)
     console.log(numberagenda)
     console.log(msg)
-    console.log(stampvalue)
     console.log(agendalist)
-    console.log(numagenda)
 
-
-
-
+    // 방장아닌유저 버튼사라짐 확실하게 고침
+    console.log(main)
+    console.log(main?.meetingCreator)
+    console.log(decoded?.USER_NICKNAME)
     return (
         <>
             <Bigbox>
-                {1 <= numberagenda && Boolean(main?.meetingCreator) === true ?
+                <button onClick={HandleSend}>send</button>
+                {1 <= numberagenda && main?.meetingCreator === decoded?.USER_NICKNAME ?
                     <StImgLeft src={leftbtn} onClick={numberminus} />
                     : <Stnumbtn />
                 }
                 <div>{main?.meetingTitle}의 {number}번째 안건<br />{msg}</div>
-                {agendalist?.length - 2 >= numberagenda && Boolean(main?.meetingCreator) === true ?
+                {agendalist?.length - 2 >= numberagenda && main?.meetingCreator === decoded?.USER_NICKNAME ?
                     <StImgRight src={rightbtn} onClick={numberplus} />
                     : <Stnumbtn />
                 }
