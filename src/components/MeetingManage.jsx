@@ -401,7 +401,7 @@ const StfListBox = styled.div`
   width : 1184px;
   height : 90vh;
   margin: 20px auto 0 0px;
-  background-color: #F2F6F9;
+  background-color: #EBF7FF;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   overflow-x: hidden;
