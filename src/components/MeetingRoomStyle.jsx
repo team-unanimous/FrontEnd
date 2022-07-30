@@ -43,7 +43,6 @@ const MeetingRoomStyle = ({ meetingId }) => {
                 ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
                     (response) => {
                         const newMessage = JSON.parse(response.body);
-                        console.log(newMessage, "확인")
                         if (newMessage.type == "TALK") {
                             setMsg(msg => [...msg, newMessage])
                             scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,9 +52,9 @@ const MeetingRoomStyle = ({ meetingId }) => {
                         token: data.token
                     });
             });
-            console.log("구독 성공")
+
         } catch (error) {
-            console.log(error.response);
+
         }
     }
 
@@ -86,12 +85,11 @@ const MeetingRoomStyle = ({ meetingId }) => {
             waitForConnection(ws, function () {
                 ws.send('/pub/api/chat/message', { token: token }, JSON.stringify(data));
                 // ws.send("/queue/test", {}, "this is a message from the client")
-                console.log("clicked anyway");
-                console.log(JSON.stringify(data))
+
             })
             inputRef.current.value = ""
         } catch (error) {
-            console.log(error);
+
         }
     }, [msg])
 
@@ -107,13 +105,12 @@ const MeetingRoomStyle = ({ meetingId }) => {
             ws.disconnect(
                 () => {
                     ws.unsubscribe("sub-0");
-                    console.log("Disconnected...")
                 },
                 { token: getCookie("token") }
             );
             // ws.unsubscribe(`/sub/api/chat/rooms/${data.roomId}`);
         } catch (error) {
-            console.log(error);
+
         }
     })
 

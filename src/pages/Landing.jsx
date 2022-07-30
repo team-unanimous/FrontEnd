@@ -26,7 +26,6 @@ import footer_logo from "../img/footer_logo.svg";
 
 const Landing = () => {
     const navigate = useNavigate();
-    console.log(target)
     return (
         <>
         <StFull>

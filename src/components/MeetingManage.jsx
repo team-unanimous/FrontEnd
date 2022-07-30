@@ -34,7 +34,7 @@ const MeetingManage = () => {
   const {data:passed} = useGetPassed({teamId});
   const {data:onAir} = useGetOnAir({teamId});
   const {data:reserve} = useGetReserve({teamId});
-  console.log(passed);
+
 
   const navigate = useNavigate();
 

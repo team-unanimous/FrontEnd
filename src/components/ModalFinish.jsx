@@ -23,7 +23,6 @@ const ModalFinish = ({open, close,prop}) => {
     const decoded = jwt_decode(getCookie('token'));
     const nickname = decoded.USER_NICKNAME;
 
-    console.log(prop);
     // 복사하기 버튼
     const handleCopyClipBoard = async (text) => {
         await navigator.clipboard.writeText(text);

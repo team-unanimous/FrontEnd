@@ -9,7 +9,6 @@ import teamMakeSuccessImg from "../img/teamMakeSuccess.png";
 const TeamMakeSuccess = () => {
     const navigate = useNavigate();
     const teamData = useSelector(state=>state.teamReducer);
-    console.log(teamData);
     useEffect(()=>{
         setTimeout(()=>{navigate(`/teamboard/${teamData.teamId}`)}, 3000 // teamId 받아와야함
         )

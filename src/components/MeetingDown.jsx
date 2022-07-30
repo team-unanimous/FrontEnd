@@ -107,7 +107,7 @@ const StIssue = styled.div`
 
 const StInBox = styled.div`
     width: 296px;
-    height: 166px;
+    min-height: 166px;
     padding : 16px;
     border-radius: 8px;
     background-color:${props=>props.back};

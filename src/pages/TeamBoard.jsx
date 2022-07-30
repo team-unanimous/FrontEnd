@@ -30,7 +30,6 @@ const TeamBoard = () => {
   const { data: main } = useGetTeamMain({ teamId });
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
-  console.log(main)
   const [imgfile, setImgfile] = useState("");
 
   useEffect(() => {
@@ -41,6 +40,19 @@ const TeamBoard = () => {
     imageFy();
   }, [])
 
+  if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true,audio:true })
+    //   .then(function (stream) {
+    //     videoRef.current.srcObject = stream;
+    //   })
+    //   .catch(function (error) {
+    //     alert("카메라가 인식되지않습니다. 카메라를 확인해주세요.");
+    //     console.log(error);
+    // return navigate('/');
+    //   });
+}
+
+
 
   return (
     <StBox>
@@ -49,7 +61,7 @@ const TeamBoard = () => {
         <StLeft>
           <StSmallBox>
             <StTeamInfoBox>
-              {imgfile ? <StTeamImg src={main.teamImage} /> : <></>}
+              {imgfile ? <StTeamImg src={main?.teamImage} /> : <></>}
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
                 {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}

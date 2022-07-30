@@ -13,7 +13,6 @@ import BG_LandingPage_4 from "../img/BG_LandingPage_4.svg";
 
 const Landing = () => {
     const navigate = useNavigate();
-    console.log(target)
     return (
         <>
         <StFull>

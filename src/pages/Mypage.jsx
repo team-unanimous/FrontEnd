@@ -17,7 +17,6 @@ const Mypage = () => {
 
     // 토큰에서 가져와서 해석하고 userid 가져오기
     const ontoken = jwt_decode(getCookie('token'));
-    // console.log(ontoken)
     const usersid = ontoken.userId
     const useremail = ontoken.USER_NAME
     const usernn = ontoken.USER_NICKNAME
@@ -84,7 +83,6 @@ const Mypage = () => {
     // 이미지넣기  onchange={(e)=>setfiles(e.target.files)}와 같지만 콘솔찍기위해 
     const onLoadFile = (e) => {
         const file = e.target.files[0]
-        console.log(file);
         setFiles(file)
         // 미리보기 부분 > 파일이미지를 url변경후 state에 저장
         const fileReader = new FileReader();
@@ -118,13 +116,9 @@ const Mypage = () => {
     // 키값이 있으면 해당 키값으로 데이터만 넣어줌
     // formdata는 key랑 value 값을 확인할 수가 없다 > formdata넣는값은 확인가능
     const picturePost = async (data) => {
-        console.log(data)
-        console.log(data.profileImage) // data.profileImage = formdata
         for (let key of data.profileImage.keys()) {
-            console.log(key);
         }
         for (let value of data.profileImage.values()) {
-            console.log(value);
         }
         const formdataimg = await apis.postPicturePost(data);
         setCookie("token", formdataimg.headers.authorization);
@@ -157,13 +151,9 @@ const Mypage = () => {
     // 기본 이미지 전송
 
     const defaultPost = async (data) => {
-        console.log(data)
-        console.log(data.profileImage)
         for (let key of data.profileImage.keys()) {
-            console.log(key);
         }
         for (let value of data.profileImage.values()) {
-            console.log(value);
         }
         const formdataimg = await axis.postPicturePost(data);
         setCookie("token", formdataimg.headers.authorization);
@@ -182,7 +172,6 @@ const Mypage = () => {
     const form = new FormData();
 
     const defaultPostFunction = () => {
-        console.log("11")
         form.set('profileImage', "1", null);
         // form.delete('profileImage')
         defaultGo({
@@ -195,16 +184,13 @@ const Mypage = () => {
 
     // 비밀번호 변경모달로 이동
     const passwordPost = (data) => {
-        console.log(data)
         return apis.postPasswordChange(data)
             .then((response) => {
                 // response.data
-                console.log(response.data);
                 alert("비밀번호가 일치합니다")
                 PasswordModalOpen();
             })
             .catch(error => {
-                console.log(error)
                 alert("비밀번호를 틀리셨습니다")
             })
     }

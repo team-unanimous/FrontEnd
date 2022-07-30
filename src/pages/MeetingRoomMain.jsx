@@ -13,7 +13,6 @@ import closeIcon from "../img/5.MeetingRoom/popup_icon_close.svg"
 import apis from "../api/main";
 import { useMutation } from "react-query";
 import Agenda from "../components/Agenda"
-import Meetinglast from "../components/Meetinglast"
 import ModalFinish from "../components/ModalFinish";
 
 
@@ -26,11 +25,10 @@ const MeetingRoomMain = () => {
     const navigate = useNavigate();
     const teamId = useParams().teamid;
 
+
     const leaveSession = () => {
         navigate(`/teamboard/${teamId}`)
     }
-
-    console.log(main);
 
     // 회의 끝내기
     const quit = async (data) => {
@@ -43,7 +41,6 @@ const MeetingRoomMain = () => {
             leaveSession();
         },
         onError: (e) => {
-            console.log(e);
         }
     });
 
@@ -52,6 +49,26 @@ const MeetingRoomMain = () => {
             meetingId: meetingId
         })
     }
+
+    // 채팅 끝내기
+    const chat = async (data)=>{
+        const datas = await apis.postChatFinish(data);
+        return datas;
+    }
+
+    const {mutate:chatting} = useMutation(chat,{
+        onSuccess:()=>{
+        },
+        onError:()=>{
+        }
+    });
+
+    const chatt=()=>{
+        chatting({
+            meetingId:meetingId,
+        })
+    }
+
 
 
     //모달
@@ -70,12 +87,15 @@ const MeetingRoomMain = () => {
             <StContainer>
                 <StMainThemeWrapper theme={main?.meetingTheme}>
                     {main?.meetingCreator == nickname ?
-                        <StQuit onClick={() => { setOpenFinish(true) }}>
+                        <div onClick={chatt}>
+                            <StQuit onClick={() => { setOpenFinish(true) }}>
                             <img src={closeIcon} />회의 끝내기
-                        </StQuit> :
+                            </StQuit>
+                        </div> :
+                        <div onClick={chatt}>
                         <StLeave onClick={() => { setOpenFinish(true) }}>
                             <img src={closeIcon} />회의 나가기
-                        </StLeave>}
+                        </StLeave></div>}
                     <JoinRoom Theme={main?.meetingTheme} />
                     <Agenda meetID={meetingId} main={main} />
                 </StMainThemeWrapper>

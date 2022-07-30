@@ -21,7 +21,6 @@ const MeetingEditTwoTwo = () => {
 
 
   const { data } = useGetIssueList({meetID});
-  console.log(data);
 
 
   //안건 등록

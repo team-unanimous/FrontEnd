@@ -21,7 +21,6 @@ const MeetingRoomChat = ({meetingId})=>{
         SocketConnect(data);
         return () => {
             alert("alert!!!!")
-            console.log("언마운트 됨");
             HandleUnsubscribe();
         }
     }, [])
@@ -36,7 +35,6 @@ const MeetingRoomChat = ({meetingId})=>{
     const token = getCookie("token");
 
     const SocketConnect = (data) => {
-        console.log("뿅")
     try{
         ws.connect({
             token: data.token
@@ -44,7 +42,6 @@ const MeetingRoomChat = ({meetingId})=>{
             ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
             (response) => {
                 const newMessage = JSON.parse(response.body);
-                console.log(newMessage.type);
                 if (newMessage.type == "TALK"){
                     setMsg(newMessage.message);
                 }
@@ -53,9 +50,7 @@ const MeetingRoomChat = ({meetingId})=>{
                 token: token
             });
         });
-        console.log("구독 성공")
     } catch (error) {
-        console.log(error.response);
     }}
     
 
@@ -64,13 +59,11 @@ const MeetingRoomChat = ({meetingId})=>{
             ws.disconnect(
                 ()=>{
                     ws.unsubscribe("sub-0");
-                    console.log("Disconnected...")
                 },
                 {token: getCookie("token")}
             );
             // ws.unsubscribe(`/sub/api/chat/rooms/${data.roomId}`);
         } catch (error) {
-            console.log(error);
         }
     })
     
@@ -116,7 +109,6 @@ const MeetingRoomChat = ({meetingId})=>{
     }
     const { mutate: meetingMutate } = useMutation(makeMeetingroom, {
         onSuccess: (resp) => {
-            console.log(resp)
             // setRoomId(resp.data.roomId)
         }
     });
@@ -131,7 +123,6 @@ const MeetingRoomChat = ({meetingId})=>{
             meetingDuration: "0시간",
             teamId: 1
         };
-        console.log(data);
         meetingMutate(data);
     }
 
@@ -141,7 +132,6 @@ const MeetingRoomChat = ({meetingId})=>{
 
     const { mutate: chattingMutate } = useMutation(makeChattingroom, {
         onSuccess: (resp) => {
-            console.log(resp)
         }
     });
 
@@ -149,7 +139,6 @@ const MeetingRoomChat = ({meetingId})=>{
         const data = {
             meetingId: 1
         }
-        console.log(data);
         chattingMutate(data);
     }
 
@@ -179,11 +168,8 @@ const MeetingRoomChat = ({meetingId})=>{
             waitForConnection(ws, function(){
                 ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
                 // ws.send("/queue/test", {}, "this is a message from the client")
-                console.log("clicked anyway");
-                console.log(JSON.stringify(data))  
             })
         } catch (error) {
-            console.log(error);
         }
     }
 
@@ -201,11 +187,10 @@ const MeetingRoomChat = ({meetingId})=>{
             waitForConnection(ws, function(){
                 ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
                 // ws.send("/queue/test", {}, "this is a message from the client")
-                console.log("clicked anyway");
-                console.log(JSON.stringify(data))  
+
             })
         } catch (error) {
-            console.log(error);
+
         }
     }
     const IssueSendHandle = async (event)=>{
@@ -222,20 +207,19 @@ const MeetingRoomChat = ({meetingId})=>{
             waitForConnection(ws, function () {
                 ws.send('/pub/api/chat/message', { token: token }, JSON.stringify(data));
                 // ws.send("/queue/test", {}, "this is a message from the client")
-                console.log("clicked anyway");
-                console.log(JSON.stringify(data))
+
             })
         } catch (error) {
-            console.log(error);
+
         }
     }
 
     const callbackFn = (message) => {
         if (message.body) {
-            console.log(message)
+
             alert(`got message with body: ${message.body}`)
         } else {
-            console.log("got nothing")
+
         }
     }
 
