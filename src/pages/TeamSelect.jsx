@@ -74,7 +74,7 @@ const TeamSelect = () => {
                                         key={index}
                                         className="team-title"
                                         onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
-                                        src={{ data }.data[0].teamImage}
+                                        src={{ data }.data[index].teamImage}
                                     >
                                     </StTeamItem>
                                     <StTeamName
