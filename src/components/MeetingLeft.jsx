@@ -11,7 +11,6 @@ import office from "../img/back/office.png";
 
 
 const MeetingLeft = (prop) => {
-    console.log(prop.prop.users);
     return (
         <StBox>
             {prop?.prop.meetingSum == 1 ? <StImg src={thumbnail1} /> : <></>}
@@ -25,8 +24,8 @@ const MeetingLeft = (prop) => {
                 </StName>
                 <StCount>
                     {prop?.prop.users[0] ? <StUserImg src={prop?.prop.users[0].profileImage} /> : <></>}
-                    {prop?.prop.users[1] ? <StUserImg src={prop?.prop.users[0].profileImage} /> : <></>}
-                    {prop?.prop.users[2] ? <StUserImg src={prop?.prop.users[0].profileImage} /> : <></>}
+                    {prop?.prop.users[1] ? <StUserImg src={prop?.prop.users[1].profileImage} /> : <></>}
+                    {prop?.prop.users[2] ? <StUserImg src={prop?.prop.users[2].profileImage} /> : <></>}
                     &nbsp;{prop?.prop.userCnt}명
                 </StCount>
             </StInfo>

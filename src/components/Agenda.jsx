@@ -36,8 +36,6 @@ const Agenda = ({ main }) => {
     const sock = new SockJS("https://sparta-ysh.shop/ws-stomp");
     const ws = Stomp.over(sock);
 
-    console.log(main)
-
     // get으로 받은 안건 내용 저장
     const [agendalist, setAgendalist] = useState(null);
     // 내가 보여줄 안건내용 저장
@@ -61,19 +59,13 @@ const Agenda = ({ main }) => {
                 { token: data.token }, () => {
                     ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
                         (resp) => {
-                            console.log(resp)
                             const newMessage = JSON.parse(resp.body);
                             if (newMessage.type == "ISSUE") {
-                                console.log(newMessage);
                                 // 문자열 객체화시킴
                                 // message: JSON.stringify({ agendalist[numberagenda], number }),
                                 const getagenda = JSON.parse(newMessage.message);
-                                console.log(getagenda);
-                                console.log(getagenda.length)
-                                console.log(getagenda.issueId)
                                 setNumagenda(getagenda.issueId)
                                 setMsg(getagenda.issueContent);
-                                console.log("안건 받기 완료")
                             }
                             if (newMessage.type == "STAMP") {
                                 const getarray = JSON.parse(newMessage.message);
@@ -84,19 +76,18 @@ const Agenda = ({ main }) => {
                     );
                 });
         } catch (error) {
-            console.log(error);
         }
     }
 
-    setTimeout(() => {
-        NumSendHandle(); // 받아온안건을 전송해주는애
-    }, 100);
-    clearTimeout(number);
+    // setTimeout(() => {
+    //     NumSendHandle(); // 받아온안건을 전송해주는애
+    // }, 100);
+    // clearTimeout(number);
 
-    setTimeout(() => {
-        HandleSend(); // 받아온안건을 전송해주는애
-    }, 100);
-    clearTimeout(msg);
+    // setTimeout(() => {
+    //     HandleSend(); // 받아온안건을 전송해주는애
+    // }, 100);
+    // clearTimeout(msg);
 
 
 
@@ -110,17 +101,12 @@ const Agenda = ({ main }) => {
 
     // get 임시로
     const useGetIssueLists = async ({ meetID }) => {
-        console.log({ meetID })
         const { data } = await apis.getIssueList({ meetID });
-        console.log(data)
         firstissueId = data[0].issueId
-        console.log(firstissueId)
         // 안건정보 state저장
         setAgendalist(data)
-        console.log("안건 get으로 받음")
         return data;
     }
-    console.log(firstissueId)
 
 
 
@@ -136,12 +122,10 @@ const Agenda = ({ main }) => {
             const token = getCookie("token")
             waitForConnection(ws, function () {
                 ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-                console.log(JSON.stringify(data))
-                console.log("안건 전송 완료")
             })
         } catch (error) {
-            console.log(error);
-        }
+
+       }
     }
 
     // 숫자
@@ -157,10 +141,8 @@ const Agenda = ({ main }) => {
             const token = getCookie("token")
             waitForConnection(ws, function () {
                 ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-                console.log(JSON.stringify(data))
             })
         } catch (error) {
-            console.log(error);
         }
     }
 
@@ -181,13 +163,11 @@ const Agenda = ({ main }) => {
         );
     }
 
-
     const numberminus = () => {
         setNumberagenda(numberagenda - 1)
         HandleSend();
         NumSendHandle();
     }
-
 
     const numberplus = () => {
         setNumberagenda(numberagenda + 1)
@@ -195,20 +175,7 @@ const Agenda = ({ main }) => {
         NumSendHandle();
     }
 
-
-
-
-
-
     // console.log(numberagenda)
-    console.log(numberagenda)
-    console.log(msg)
-    console.log(stampvalue)
-    console.log(agendalist)
-    console.log(numagenda)
-
-
-
 
     return (
         <>

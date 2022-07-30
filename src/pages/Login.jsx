@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react';
 import { useMutation } from 'react-query';
 import { setCookie, removeCookie } from '../Cookie';
-import GoogleLogin from 'react-google-login';
 import frameimg from "../img/bgimg.svg"
 import logoimg from "../img/logoLogin.svg"
-import googlebtn from "../img/btn_sociallogin_google.svg"
+import axios from 'axios';
 
 
 const Login = () => {
+
 
   const navigate = useNavigate();
 
@@ -20,7 +20,6 @@ const Login = () => {
   const password = useRef(null);
 
   const login = async (data) => {
-    console.log(data)
     const datas = await apis.postLogin(data);
     const accessToken = datas.headers.authorization;
     setCookie("token", accessToken);
@@ -39,7 +38,6 @@ const Login = () => {
   })
 
   const loginFunction = () => {
-    console.log(email.current.value);
     mutate({
       username: email.current.value,
       password: password.current.value,
@@ -52,12 +50,6 @@ const Login = () => {
 
   const movepwfind = () => {
     navigate('/PasswordFindOne')
-  }
-
-  //로그인 성공했을 떄 처리 함수 
-
-  const responseGoogle = (response) => {
-    setCookie("user_id", response.googleId);
   }
 
 
@@ -79,26 +71,19 @@ const Login = () => {
             비밀번호 찾기
           </StPwFind>
         </StButtonBox>
-        {/* <GoogleLogin
-          clientId='661918598129-vovfo203fkp7oq8avn3ak7sj24f9bu9k.apps.googleusercontent.com'
-          buttonText="Google Login"
-          response_type="token"
-          redirectUri='http://localhost:3000'
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-        /> */}
-        {/* <Stgooglebtn src={googlebtn} /> */}
+       {/* <StGoogle onClick={oAuthHandler}>구글</StGoogle> */}
       </StBox>
     </StSignUp>
   )
 }
 
-const Stgooglebtn = styled.img`
-   width: 100;
-   height: 100;
-   cursor: pointer;
-`
+const StGoogle = styled.div`
+  width : 100px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid black;
+`;
+
 
 
 

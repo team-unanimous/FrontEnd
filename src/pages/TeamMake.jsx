@@ -24,13 +24,10 @@ const TeamMake = () => {
 
   const { mutate } = useMutation(makeTeam, {
     onSuccess: (data) => {
-      console.log(data.data);
       dispatch(setTeamID(data.data));
-      console.log();
       navigate('/invitemember')
     },
     onError: (error) => {
-      console.log(error)
     }
   });
 
@@ -39,7 +36,6 @@ const TeamMake = () => {
       teamImage: "randomImageURL",
       teamname: teamNameRef.current.value
     }
-    console.log(data);
     mutate(data)
   }
 

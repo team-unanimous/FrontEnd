@@ -23,12 +23,9 @@ const TeamSelect = () => {
     }
     const { mutate: joinMutate } = useMutation(teamJoin, {
         onSuccess: (data) => {
-            console.log(data);
-            console.log(data.data);
             () => navigate('/teamboard/1');
         },
         onError: (error) => {
-            console.log(error);
         }
     })
     const unaTeamJoin = async () => {
@@ -36,7 +33,6 @@ const TeamSelect = () => {
     }
     const { mutate: unaJoinMutate } = useMutation(unaTeamJoin, {
         onSuccess: (data) => {
-            console.log(data);
             alert("성공! 팀으로 이동합니다");
             () => navigate('/teamboard/1');
         },
@@ -46,12 +42,10 @@ const TeamSelect = () => {
     })
 
     const unaTeamJoinHandler = () => {
-        console.log("성공")
         unaJoinMutate();
     }
 
     const { data } = useGetTeamInfo();
-    console.log({ data })
     // const teamId = useParams().teamid;
     // const { data } = useGetTeamMain({ teamId });
 

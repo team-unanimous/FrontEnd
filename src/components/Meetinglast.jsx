@@ -31,10 +31,8 @@ const Meetinglast = () => {
                 { token: data.token }, () => {
                     ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
                         (resp) => {
-                            console.log(resp)
                             const newMessage = JSON.parse(resp.body);
                             if (newMessage.type == "RESULT") {
-                                console.log(newMessage.message);
                                 const answer = JSON.parse(newMessage.message);
                                 setAgendalist(answer);
                             }
@@ -43,7 +41,6 @@ const Meetinglast = () => {
                     );
                 });
         } catch (error) {
-            console.log(error);
         }
     }
 
@@ -62,7 +59,6 @@ const Meetinglast = () => {
     //get 안건정보
     const useGetIssueLists = async ({ meetID }) => {
         const { data } = await apis.getIssueList({ meetID });
-        console.log(data)
         // 안건정보 state저장
         setAgendalist(data)
         return data;
@@ -82,11 +78,8 @@ const Meetinglast = () => {
             const token = getCookie("token")
             waitForConnection(ws, function () {
                 ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-                console.log(JSON.stringify(data))
-                console.log("안건 결과 전송")
             })
         } catch (error) {
-            console.log(error);
         }
     }
 
@@ -108,13 +101,11 @@ const Meetinglast = () => {
 
     // 안걸 patch
     const patchAg = async (data) => {
-        console.log(data)
         return apis.patchAgenda(data);
     }
 
     const { mutate } = useMutation(patchAg, {
         onSuccess: (res) => {
-            console.log(res)
             setAgendalist(res.data)
             alert("변경에 성공했습니다")
         },

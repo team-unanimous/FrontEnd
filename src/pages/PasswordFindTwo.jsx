@@ -13,7 +13,6 @@ const PasswordFindTwo = () => {
   const navigate = useNavigate();
 
   const userEmail = useSelector((state) => state.userReducer.usersid.email)
-  console.log(userEmail)
 
   // 패스워드 
   const [password, setPassword] = useState("");
@@ -37,7 +36,6 @@ const PasswordFindTwo = () => {
 
   // 패스워드 변경 전송 버튼
   const patchPw = (data) => {
-    console.log(data)
     return axis.patchPasswordChan(data);
   }
 

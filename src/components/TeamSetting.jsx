@@ -123,7 +123,7 @@ const TeamSetting = (props) => {
 
     const onLoadFile = (e) => {
         const file = e.target.files[0]
-        console.log(file);
+
         setImgfiles(file);
     }
 
@@ -139,10 +139,10 @@ const TeamSetting = (props) => {
 
     // 팀 프로필이미지 수정
     const editImage = async (data) => {
-        console.log(data)
-        console.log(data.teamImage)
+
+
         const datas = await apis.patchTeamImage(data);
-        console.log(datas)
+
         return datas;
     }
 
@@ -298,7 +298,7 @@ const TeamSetting = (props) => {
                                                         <StUserName>{value.nickname}</StUserName>
                                                         <StEmail>{value.username}</StEmail>
                                                     </StUserInfo>
-                                                    <StXBox onClick={() => { setOpenBan(true); setUserid(value.userId); console.log(userid) }}>
+                                                    <StXBox onClick={() => { setOpenBan(true); setUserid(value.userId); }}>
                                                         <StXicon src={closeIcon} />
                                                     </StXBox>
                                                 </StUserBox>

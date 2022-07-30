@@ -276,11 +276,13 @@ const TeamboardHome = () => {
   )
 }
 
+
+
 const StDownInnerBox = styled.div`
   display: flex;
   justify-content: start;
   width : 1120px;
-  height : 351px;
+  min-height : 351px;
   margin : 10px 0 0 0;
 `;
 
@@ -288,7 +290,7 @@ const StDownBox = styled.div`
   display: flex;
   flex-direction:column;
   width : 1120px;
-  height : 389px;
+
   padding : 32px;
   margin : 32px 0 0 0;
   background-color: white;

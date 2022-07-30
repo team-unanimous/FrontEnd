@@ -29,7 +29,6 @@ const TeamInvited = () => {
             //     setTeamData(false);
             //     setWarning(true);
             // }
-            console.log(resp, "성공");
             setTeamName(resp.data.teamname);
             setUUID(resp.data.uuid);
             setTeamId(resp.data.id);
@@ -37,7 +36,6 @@ const TeamInvited = () => {
             setTeamData(true);
         },
         onError: (data) => {
-            console.log(data, "error")
             setTeamData(false);
             setWarning(true);
         }
@@ -47,12 +45,10 @@ const TeamInvited = () => {
     }
     const { mutate : joinMutate } = useMutation(teamJoin, {
         onSuccess: (data)=>{
-            console.log(data.data);
             alert("성공");
             ()=>navigate(`/teamboard/${teamId}`);
         },
         onError: (error)=>{
-            console.log(error);
             alert("오류가 발생했습니다");
         }
     })
@@ -61,14 +57,12 @@ const TeamInvited = () => {
         const data = {
             uuid : uuidRef.current.value
         }
-        console.log(data);
         findMutate(data);
     }
     const teamJoinHandler = ()=>{
         const data = {
             uuid : UUID
         }
-        console.log(data);
         joinMutate(data);
     }
     return (
