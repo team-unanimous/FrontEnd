@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 const InviteTeamMember = ()=> {
     const navigate = useNavigate();
     const teamData = useSelector(state=>state.teamReducer);
-    console.log(teamData);
     const [memberEmail, setMemberEmail] = useState("");
     const emailRef = useRef();
 
@@ -26,18 +25,15 @@ const InviteTeamMember = ()=> {
 
     const { mutate : mailSendMutate } = useMutation(mailSend, {
         onSuccess: (resp) => {
-            console.log(resp);
             navigate('/teammakesuccess')
         }
     })
 
     const SendMemberListHandler = () => {
-        console.log(memberEmail);
         const data = {
             emailRequestDtoList: memberEmail,
             teamId: teamData, // teammake 페이지에서 상태 값으로 받아 와서 전달해야됨 
         }
-        console.log(data);
         mailSendMutate(data);
     } 
 
@@ -54,6 +50,7 @@ const InviteTeamMember = ()=> {
                     <StEmailButton 
                     onClick={()=>{ 
                         if (emailRef.current.value == "" ) return 
+
                         setMemberEmail([
                             ...memberEmail,
                             emailRef?.current?.value])
@@ -69,10 +66,9 @@ const InviteTeamMember = ()=> {
                         ? <></>
                         : <>{memberEmail.map((email, i)=>(
                                     <StLiItem key={i}>{`${email}`}
-                                    <input style={{width:"1rem"}} type={"image"} src={xbutton} onClick={
+                                    <input style={{width:"10.5px"}} type={"image"} src={xbutton} onClick={
                                         ()=>{
                                             setMemberEmail(memberEmail.filter(( _, index) => index !== i))
-                                            console.log(memberEmail);
                                     }}/>
                                     </StLiItem>
                         ))}</>
@@ -252,6 +248,7 @@ const StPwInput = styled.input`
   height : 44px;
   border-radius: 6px;
   border: 1px solid #000000;
+  padding-left: 10px;
 `;
 const StEmailButton = styled.button`
   width : 132px;
@@ -260,6 +257,8 @@ const StEmailButton = styled.button`
   background-color: #063250;
   color : white;
   border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
 `;
 const StCancel = styled.button`
   width : 200px;

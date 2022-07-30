@@ -30,7 +30,6 @@ const TeamBoard = () => {
   const { data: main } = useGetTeamMain({ teamId });
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
-
   const [imgfile, setImgfile] = useState("");
 
   useEffect(() => {
@@ -41,6 +40,19 @@ const TeamBoard = () => {
     imageFy();
   }, [])
 
+  if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true,audio:true })
+    //   .then(function (stream) {
+    //     videoRef.current.srcObject = stream;
+    //   })
+    //   .catch(function (error) {
+    //     alert("카메라가 인식되지않습니다. 카메라를 확인해주세요.");
+    //     console.log(error);
+    // return navigate('/');
+    //   });
+}
+
+
 
   return (
     <StBox>
@@ -49,7 +61,7 @@ const TeamBoard = () => {
         <StLeft>
           <StSmallBox>
             <StTeamInfoBox>
-              {imgfile?<StTeamImg src={imgfile} />:<></>}
+              {imgfile ? <StTeamImg src={main?.teamImage} /> : <></>}
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
                 {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
@@ -63,13 +75,13 @@ const TeamBoard = () => {
           </StSmallBox>
         </StLeft>
         <>
-        {page == 1 ? <TeamboardHome /> : <></>}
-        {page == 2 ? <MeetingManage /> : <></>}
-        {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
+          {page == 1 ? <TeamboardHome /> : <></>}
+          {page == 2 ? <MeetingManage /> : <></>}
+          {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
         </>
       </StDownBox>
-      {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}><img src={plusIcon}/></StMeetMake> : <></>}
-   
+      {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}><img src={plusIcon} /></StMeetMake> : <></>}
+
     </StBox>
   );
 };
@@ -156,7 +168,7 @@ const StTeamName = styled.div`
     height : 24px;
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 700;
+  
     font-size: 20px;
     line-height: 24px;
     text-align: center;
@@ -188,7 +200,7 @@ const StTeamInfoBox = styled.div`
     align-items: center;
     justify-content: space-between;
     width :214px;
-    height : 179px;
+    height : 219px;
     padding : 36px 16px 36px 24px;
 `;
 
@@ -214,7 +226,7 @@ const StLeft = styled.div`
 const StMeetMake = styled.div`
   position: fixed;
   bottom :50px;
-  right : 163px;
+  right : 168px;
   display:  flex;
   justify-content: center;
   align-items: center;

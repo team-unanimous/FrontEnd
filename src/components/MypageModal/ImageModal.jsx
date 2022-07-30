@@ -99,7 +99,8 @@ height: 54px;
 background: black;
 border-radius: 6px;
 margin-top: 40px;
-border: 1px solid #000000;
+border: 1px solid #063250;
+background-color: #063250;
 `
 
 const StImageTitle = styled.div`
@@ -123,7 +124,6 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-padding: 100px 80px 80px;
 position: absolute;
 width: 594px;
 height: 318px;

@@ -5,13 +5,14 @@ import apis from '../api/main'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux"
 import axis from '../api/sub';
+import frameimg from "../img/bgimg.svg"
 
 const SignUpFour = () => {
 
   const navigate = useNavigate();
 
   const usersData = useSelector((state) => state.postReducer.users.userids)
-  console.log(usersData)
+
 
 
   // 닉네임 
@@ -38,7 +39,6 @@ const SignUpFour = () => {
 
   const { mutate: NickCk } = useMutation(NicknameCheck, {
     onSuccess: (response) => {
-      console.log(response.data);
       setNickcheck(true)
       setWarning(false)
       alert("사용 가능한 닉네임입니다")
@@ -58,7 +58,6 @@ const SignUpFour = () => {
 
   // 닉네임 저장
   const NickSave = (data) => {
-    console.log(data)
     return axis.patchNickSave(data);
   }
 
@@ -86,7 +85,7 @@ const SignUpFour = () => {
 
 
   return (
-    <StBox>
+    <StBox style={{ backgroundImage: `url(${frameimg})` }}>
       <StContentBox>
         <StTitle>
           닉네임을 입력해주세요
@@ -122,23 +121,24 @@ const StNotAgree = styled.button`
   background-color: white;
   font-weight: 700;
   font-size: 20px;
-  color : black;
+  color : #888888;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #888888;
   cursor: pointer;
 `;
 
 const StAgree = styled.button`
   width : 200px;
   height : 54px;
-  background-color: black;
+  background-color: #063250;
   font-weight: 700;
   font-size: 20px;
   color : white;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #063250;
   &:disabled{
-    background-color: gray;
+    background-color: #D7D7D7;
+    border: solid 1px #D7D7D7;
   }
 `;
 
@@ -154,14 +154,16 @@ const StEmailWarnning = styled.div`
   height : 19px;
   font-weight: 500;
   font-size: 15px;
+  color: #EF6A61;
 `;
 
 const StEmailButton = styled.button`
   width : 132px;
   height : 49px;
   margin : 0 0 0 9px;
-  background-color: black;
+  background-color: #063250;;
   color : white;
+  border: solid 1px #063250;
   border-radius: 6px;
   cursor: pointer;
 `;
@@ -208,11 +210,15 @@ const StTitle = styled.div`
 `;
 
 const StContentBox = styled.div`
-  width : 541px;
-  height : 363px;
+  width : 1155px;
+  height : 740px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 32px;
+  
 `;
 
 const StBox = styled.div`

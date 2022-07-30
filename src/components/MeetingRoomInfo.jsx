@@ -7,7 +7,6 @@ import thumbnail5 from "../img/thumbnail5.png"
 
 const MeetingRoomInfo = (props)=> {
     const { thumbnail, title } = props
-    console.log(thumbnail);
 
     return(
         <>
@@ -80,7 +79,7 @@ const StWrapLower = styled.div`
     align-items: flex-start;
     gap: 24px;
 
-    width: 221px;
+    width: 90%;
     height: 48px;
 
     flex: none;

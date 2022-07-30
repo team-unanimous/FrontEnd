@@ -6,6 +6,7 @@ import apis from '../api/main'
 import axis from '../api/sub'
 import { useDispatch } from 'react-redux'
 import { tossUserId } from '../redux/modules/user'
+import frameimg from "../img/bgimg.svg"
 
 
 const PasswordFindOne = () => {
@@ -42,13 +43,11 @@ const PasswordFindOne = () => {
 
   const { mutate: emailGo } = useMutation(emailCodePost, {
     onSuccess: (response) => {
-      console.log(response)
       dispatch(tossUserId({ email }))
       alert("이메일 생성에 성공했습니다")
       setCodein(true)
     },
     onError: (error) => {
-      console.log(error)
       setWarning(error.response.data)
       alert(error.response.data)
     }
@@ -92,7 +91,7 @@ const PasswordFindOne = () => {
 
 
   return (
-    <StBox>
+    <StBox style={{ backgroundImage: `url(${frameimg})` }}>
       <StContentBox>
         <StTitle>비밀번호 찾기</StTitle>
         <StInfo>
@@ -121,8 +120,7 @@ const PasswordFindOne = () => {
           </StNotAgree>
           <StAgree
             onClick={passwordFucntion}
-            disabled={disableFunction()}
-          >
+            disabled={disableFunction()}>
             다음
           </StAgree>
         </StBtBox>
@@ -148,34 +146,34 @@ const StNotAgree = styled.button`
   background-color: white;
   font-weight: 700;
   font-size: 20px;
-  color : black;
+  color : #888888;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #888888;
   cursor: pointer;
 `;
 
 const StAgree = styled.button`
   width : 200px;
   height : 54px;
-  background-color: black;
+  background-color: #063250;
   font-weight: 700;
   font-size: 20px;
   color : white;
   border-radius: 0.375rem;
-  border: 1px solid #000000;
+  border: 1px solid #063250;
   cursor: pointer;
   &:disabled{
-  background-color: gray;
+  background-color: #D7D7D7;
+  border: solid 1px #D7D7D7;
 }
 `;
 
 const StBtBox = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
   width: 418px;
   height: 54px;
-  margin : 2.3rem 0 0 0;
+  margin : 3.75rem 0 0 0;
 `;
 
 const StEmailWarnning = styled.div`
@@ -188,8 +186,9 @@ const StEmailButton = styled.button`
   width : 132px;
   height : 49px;
   margin : 0 0 0 9px;
-  background-color: black;
+  background-color: #063250;
   color : white;
+  border: solid 1px #063250;
   border-radius: 6px;
   cursor: pointer;
 `;
@@ -225,6 +224,8 @@ const StWarningTitle = styled.div`
   font-weight: 700;
   font-size: 16px;
   margin-top: 10px;
+  margin-bottom: 24px;
+  color:#EF6A61;
 `
 
 const StEmailBox = styled.div`
@@ -239,9 +240,9 @@ const StEmailBox = styled.div`
 const StInfo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   width : 541px;
-  height : 519px;
+  height : 210px;
   margin : 3.75rem 0 0 0;
 `;
 
@@ -253,11 +254,14 @@ const StTitle = styled.div`
 `;
 
 const StContentBox = styled.div`
-  width : 541px;
-  height : 480px;
+  width : 1155px;
+  height : 740px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 32px;
 `;
 
 const StBox = styled.div`

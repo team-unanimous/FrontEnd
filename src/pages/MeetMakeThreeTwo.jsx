@@ -5,22 +5,24 @@ import apis from '../api/main'
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router'
-import { StBox,StButton,StBarBox,StBarG,StBarC } from '../style/styled';
+import { StBarBox,StBarG,StBarC } from '../style/styled';
 import IssueBox from '../components/IssueBoxTwo';
 import useGetIssueList from '../Hooks/useGetIssueList';
-
+import casual from "../img/back/casual.png";
+import office from "../img/back/office.png";
 
 const MeetMakeThreeTwo = () => {
 
   const navigate = useNavigate();
 
   const teamID = useParams().teamid;
+  const theme = useParams().theme;
   const meetID = useSelector(state=>state.meetReducer.meetID).meetid
   const issue = useRef("");
 
 
   const { data } = useGetIssueList({meetID});
-  console.log(data);
+  
 
 
   //안건 등록
@@ -46,7 +48,7 @@ const MeetMakeThreeTwo = () => {
   }
 
   return (
-    <StBox>
+    <StBox state={theme}>
       <StModal>
         <StOutBox>
           <StBarBox>
@@ -59,7 +61,7 @@ const MeetMakeThreeTwo = () => {
           </StTitle>
           <StInnerBox>
             <StInputBox>
-              <StInput ref={issue} placeholder='추가할 안건 내용을 입력해주세요'/>
+              <StInput maxLength={40} ref={issue} placeholder='추가할 안건 내용을 입력해주세요'/>
               <div onClick={()=>{issue.current.value=''}}><StInputBt onClick={makeFunction}> 추가 </StInputBt></div>
             </StInputBox>
             <StInfoBox>
@@ -70,59 +72,51 @@ const MeetMakeThreeTwo = () => {
               </StInfoInner>
             </StInfoBox>
           </StInnerBox>
-          <StButton onClick={()=>{navigate(`/teamboard/${teamID}/${meetID}/meetdetailtwo`)}}>다음</StButton>
+          <StBtBox>
+            <StCancelBt onClick={()=>{navigate(`/teamboard/${teamID}`)}}>취소</StCancelBt>
+            <StBt onClick={()=>{navigate(`/teamboard/${teamID}/${meetID}/${theme}/meetdetailtwo`)}}>다음</StBt>
+          </StBtBox>
         </StOutBox>
       </StModal>
     </StBox>
   )
 }
 
-
 const StBtBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width : 90px;
-  height : 20px;
+  width : 500px;
+  margin : 0px auto 0 auto;
 `;
 
-const StDelBt = styled.button`
-  width: 40px;
-  height: 20px;
-  font-weight: 700;
-  font-size: 12px;
-  border: none;
-
-`;
-
-const StEditBt = styled.button`
-  width: 40px;
-  height: 20px;
-  font-weight: 700;
-  font-size: 12px;
-  border: none;
-
-  `;
-
-const StIssue = styled.div`
+const StCancelBt = styled.div`
   display: flex;
-  width : 600px;
-  height : 20px;
-  margin : 0 0 0 10px;
-`;
-
-const StIssueTitle = styled.div`
-  width : 60px;
-  height : 20px;
+  justify-content: center;
+  align-items: center;
+  width: 236px;
+  height: 54px;
+  border: 1px solid #5C5C5C;
+  border-radius: 6px;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 24px;
+  color: #888888;;
+  cursor: pointer;
 `;
 
-const StInfo = styled.div`
+const StBt = styled.div`
   display: flex;
-  flex-direction: column;
-  width : 700px;
-  height : 45px;
-  margin : 0 20px 0 0;
+  justify-content: center;
+  align-items: center;
+  width: 236px;
+  height: 54px;
+  background-color: #063250;
+  border-radius: 6px;
+  color : white;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
 `;
 
 const StInfoInner = styled.div`
@@ -171,6 +165,7 @@ const StInputBt = styled.button`
   height : 49px;
   border-radius: 6px;
   background-color: #063250;
+  border: none;
   color : white;
   font-weight: 700;
   font-size: 16px;
@@ -211,7 +206,18 @@ const StModal = styled.div`
   width : 835px;
   height : 581px;
   padding : 150px 80px 80px 80px;
+  border-radius: 32px;
   background-color: #FFFFFF;
+`;
+
+const StBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width : 100vw;
+  height : 100vh;
+  background-image:  ${props => (props.state == 1 ? `url(${office})` : `url(${casual})`)};
+  background-size:cover;
 `;
 
 export default MeetMakeThreeTwo

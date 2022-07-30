@@ -8,8 +8,10 @@ import { useMutation } from 'react-query';
 import DetailModalReserve from './DetailModalReserve';
 import DetailModalOnAir from './DetailModalOnAir';
 import DetailModalPassed from './DetailModalPassed';
-import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
 import apis from '../api/main';
+import jwt_decode from "jwt-decode";
+import { getCookie } from '../Cookie';
+import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
 
 const MeetingManage = () => {
 
@@ -26,9 +28,13 @@ const MeetingManage = () => {
   const [issues,setIssues] = useState();
   const teamId = useParams().teamid;
 
+  const decoded = jwt_decode(getCookie('token'));
+  const nickname = decoded.USER_NICKNAME;
+
   const {data:passed} = useGetPassed({teamId});
   const {data:onAir} = useGetOnAir({teamId});
   const {data:reserve} = useGetReserve({teamId});
+
 
   const navigate = useNavigate();
 
@@ -133,7 +139,7 @@ const MeetingManage = () => {
                   <StHost>{value.meetingCreator}</StHost>
                   <StTitle>{value.meetingTitle}</StTitle>
                 </StList>
-                <StButton>
+                <StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${value.meetingId}`)}}>
                   <StIcon src={participate}/>참여하기
                 </StButton>
               </StInfoBox>
@@ -156,11 +162,12 @@ const MeetingManage = () => {
                 }} key={index}>
               <StDateBox>
                 <StDate>{value.meetingDate}</StDate>
-                <StTime>{value.meetingTime}~</StTime>
+                <StTime>{value.meetingTime}~{value.meetingOverTime}</StTime>
               </StDateBox>
               <StHost>{value.meetingCreator}</StHost>
               <StTitle>{value.meetingTitle}</StTitle>
             </StList>
+            {nickname==value.meetingCreator?<StSmallButton onClick={()=>{delet(value.meetingId)}}>삭제</StSmallButton>:<></>}
             </StInfoBox></div>)}
           </>:<></>}
           {state==2?
@@ -184,13 +191,13 @@ const MeetingManage = () => {
                 <StHost>{value.meetingCreator}</StHost>
                 <StTitle>{value.meetingTitle}</StTitle>
               </StList>
-              <StButtonBox>
+              {nickname==value.meetingCreator?<StButtonBox>
                 <StSmallButton onClick={()=>{navigate(`/teamboard/${teamId}/${value.meetingId}/meetingeditone`)}}>수정</StSmallButton>
                 <StSmallButton onClick={()=>{delet(value.meetingId)}}>삭제</StSmallButton>
                 <StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${value.meetingId}`)}}>
                   <StIcon src={participate}/>참여하기
                 </StButton>
-              </StButtonBox>
+              </StButtonBox>:<></>}
             </StInfoBox></div>)}
           </>:<></>}
           </StfInListBox>

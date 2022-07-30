@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect, useState  } from "react";
+import React, { useCallback, useRef, useEffect, useState } from "react";
 import { ws } from "../api/websocket";
 import { getCookie } from "../Cookie";
 import jwt_decode from "jwt-decode";
@@ -8,7 +8,7 @@ import inputEnterVector from "../img/InputEnterVector.png"
 import Stomp from "stompjs";
 import sockJS from "sockjs-client";
 
-const MeetingRoomStyle = ({meetingId})=>{
+const MeetingRoomStyle = ({ meetingId }) => {
     const token = getCookie("token");
     const decoded = jwt_decode(getCookie('token'));
     const myName = decoded.USER_NICKNAME;
@@ -16,9 +16,9 @@ const MeetingRoomStyle = ({meetingId})=>{
     const scrollRef = useRef(null);
     const [msg, setMsg] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        waitForConnection(ws,SocketConnect(data));
+        waitForConnection(ws, SocketConnect(data));
         // return () => {
         //     HandleUnsubscribe();
         // }
@@ -36,29 +36,29 @@ const MeetingRoomStyle = ({meetingId})=>{
 
     //Socket 통신
     const SocketConnect = (data) => {
-        try{
+        try {
             ws.connect({
                 token: data.token
-            }, ()=> {
+            }, () => {
                 ws.subscribe(`/sub/api/chat/rooms/${data.roomId}`,
-                (response) => {
-                    const newMessage = JSON.parse(response.body);
-                    console.log(newMessage, "확인")
-                    if (newMessage.type == "TALK") {
-                        setMsg(msg=>[...msg, newMessage])
-                        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-                    }
-                },
-                {
-                    token: data.token
-                });
+                    (response) => {
+                        const newMessage = JSON.parse(response.body);
+                        if (newMessage.type == "TALK") {
+                            setMsg(msg => [...msg, newMessage])
+                            scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+                        }
+                    },
+                    {
+                        token: data.token
+                    });
             });
-            console.log("구독 성공")
-        } catch (error) {
-            console.log(error.response);
-        }}
 
-    function waitForConnection(ws, callback){
+        } catch (error) {
+
+        }
+    }
+
+    function waitForConnection(ws, callback) {
         setTimeout(
             function () {
                 if (ws.ws.readyState === 1) {
@@ -66,13 +66,13 @@ const MeetingRoomStyle = ({meetingId})=>{
                 } else {
                     waitForConnection(ws, callback);
                 }
-            },0.1
+            }, 0.1
         )
     }
 
-    const HandleSend = useCallback( async (event)=>{
+    const HandleSend = useCallback(async (event) => {
         event.preventDefault();
-        if(!inputRef.current.value) return;
+        if (!inputRef.current.value) return;
         try {
             const data = {
                 type: "TALK",
@@ -82,40 +82,38 @@ const MeetingRoomStyle = ({meetingId})=>{
                 message: `${inputRef.current.value}`,
             }
             const token = getCookie("token")
-            waitForConnection(ws, function(){
-                ws.send('/pub/api/chat/message', {token: token}, JSON.stringify(data));
+            waitForConnection(ws, function () {
+                ws.send('/pub/api/chat/message', { token: token }, JSON.stringify(data));
                 // ws.send("/queue/test", {}, "this is a message from the client")
-                console.log("clicked anyway");
-                console.log(JSON.stringify(data))  
+
             })
             inputRef.current.value = ""
         } catch (error) {
-            console.log(error);
+
         }
     }, [msg])
-    
+
     //배포시 삭제
-    const HandleSendNoConnection = (event)=> {
+    const HandleSendNoConnection = (event) => {
         event.preventDefault();
         setMsg([...msg, inputRef?.current?.value]);
         inputRef.current.value = ""
     }
-    
-    const HandleUnsubscribe = useCallback(()=>{
-        try{
+
+    const HandleUnsubscribe = useCallback(() => {
+        try {
             ws.disconnect(
-                ()=>{
+                () => {
                     ws.unsubscribe("sub-0");
-                    console.log("Disconnected...")
                 },
-                {token: getCookie("token")}
+                { token: getCookie("token") }
             );
             // ws.unsubscribe(`/sub/api/chat/rooms/${data.roomId}`);
         } catch (error) {
-            console.log(error);
+
         }
     })
-    
+
 
     return (
         <>
@@ -129,20 +127,20 @@ const MeetingRoomStyle = ({meetingId})=>{
                             회의록
                         </StNoteTabBox>
                         {/* <StChattingTitle> */}
-                            {/* <StChattingTitleBox> */}
-                                {/* 채팅 (0)데이터 바인딩 필요   */}
-                            {/* </StChattingTitleBox> */}
+                        {/* <StChattingTitleBox> */}
+                        {/* 채팅 (0)데이터 바인딩 필요   */}
+                        {/* </StChattingTitleBox> */}
                         {/* </StChattingTitle> */}
                         {/* <StChattingXbutton> */}
-                            {/* <StChattingXbuttonBox type={"image"} src={xbutton}> */}
-                            {/* </StChattingXbuttonBox> */}
+                        {/* <StChattingXbuttonBox type={"image"} src={xbutton}> */}
+                        {/* </StChattingXbuttonBox> */}
                         {/* </StChattingXbutton> */}
                     </StChattingHeaderWrapper>
                 </StChattingHeader>
                 <StChattingBody>
                     <StChattingMessageWrapper>
                         {
-                            msg?.map((msg, i) =>{
+                            msg?.map((msg, i) => {
                                 return (
                                     // <StChattingMessageBox
                                     // key={i}
@@ -155,16 +153,16 @@ const MeetingRoomStyle = ({meetingId})=>{
                                     // {msg}
                                     // </StChattingMessageBox>
                                     <ChatMessageBox
-                                    key={i}
-                                    createdAt={msg.createdAt}
-                                    nickname={msg.nickname}
-                                    sender={msg.sender}
-                                    profileUrl={msg.profileUrl}
-                                    myName={myName}
-                                    msg={msg.message}
-                                    scrollRef={scrollRef}
+                                        key={i}
+                                        createdAt={msg.createdAt}
+                                        nickname={msg.nickname}
+                                        sender={msg.sender}
+                                        profileUrl={msg.profileUrl}
+                                        myName={myName}
+                                        msg={msg.message}
+                                        scrollRef={scrollRef}
                                     >
-                                    {msg.message}
+                                        {msg.message}
                                     </ChatMessageBox>
                                 )
                             })
@@ -172,9 +170,9 @@ const MeetingRoomStyle = ({meetingId})=>{
                     </StChattingMessageWrapper>
                     <StChattingInputWrapper>
                         <StChattingInputForm onSubmit={HandleSend}>
-                        {/* <StChattingInputForm onSubmit={HandleSendNoConnection}> */}
-                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef} maxLength="100"/>
-                            <StSendButton type={"image"} src={inputEnterVector}/>
+                            {/* <StChattingInputForm onSubmit={HandleSendNoConnection}> */}
+                            <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef} maxLength="100" />
+                            <StSendButton type={"image"} src={inputEnterVector} />
                         </StChattingInputForm>
                     </StChattingInputWrapper>
                 </StChattingBody>

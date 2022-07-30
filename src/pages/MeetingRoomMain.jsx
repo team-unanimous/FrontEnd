@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MeetingRoomStyle from "../components/MeetingRoomStyle";
 import MeetingRoomInfo from "../components/MeetingRoomInfo";
@@ -12,60 +12,100 @@ import ThemeTwo from "../img/themeTwo.svg";
 import closeIcon from "../img/5.MeetingRoom/popup_icon_close.svg"
 import apis from "../api/main";
 import { useMutation } from "react-query";
+import Agenda from "../components/Agenda"
+import ModalFinish from "../components/ModalFinish";
 
-const MeetingRoomMain = ()=> {
+
+const MeetingRoomMain = () => {
     // const meetingId = useParams().meetingId; // meetingId URL에서 받아옴
     const meetingId = useParams().sessionid;
-    const {data : main}= useGetMeetSpecific({meetingId})
+    const { data: main } = useGetMeetSpecific({ meetingId })
     const decoded = jwt_decode(getCookie('token'));
     const nickname = decoded.USER_NICKNAME;
     const navigate = useNavigate();
     const teamId = useParams().teamid;
 
-    const leaveSession = () =>{
+
+    const leaveSession = () => {
         navigate(`/teamboard/${teamId}`)
     }
 
     // 회의 끝내기
-    const quit = async(data)=>{
+    const quit = async (data) => {
         const datas = await apis.patchDone(data);
         return datas;
     }
 
-    const {mutate} = useMutation(quit,{
-        onSuccess:()=>{
+    const { mutate } = useMutation(quit, {
+        onSuccess: () => {
             leaveSession();
         },
-        onError:(e)=>{
-            console.log(e);
+        onError: (e) => {
         }
     });
 
-    const quiting = ()=>{
+    const quiting = () => {
         mutate({
-            meetingId : meetingId
+            meetingId: meetingId
         })
     }
 
-    return(
+    // 채팅 끝내기
+    const chat = async (data)=>{
+        const datas = await apis.postChatFinish(data);
+        return datas;
+    }
+
+    const {mutate:chatting} = useMutation(chat,{
+        onSuccess:()=>{
+        },
+        onError:()=>{
+        }
+    });
+
+    const chatt=()=>{
+        chatting({
+            meetingId:meetingId,
+        })
+    }
+
+
+
+    //모달
+    const [openFinish, setOpenFinish] = useState(false);
+
+    const closeModal = () => {
+        setOpenFinish(false);
+    }
+
+    return (
         <>
-        <StContainer>
-            <StMainThemeWrapper theme={main?.meetingTheme}>
-            {main?.meetingCreator==nickname?
-            <StQuit onClick={quiting}>
-                <img src={closeIcon}/>회의 끝내기
-             </StQuit>:
-            <StLeave onClick={leaveSession}>
-                <img src={closeIcon}/>회의 나가기
-            </StLeave>}
-                <JoinRoom Theme={main?.meetingTheme} />
-            </StMainThemeWrapper>
-            <StSidebarWrapper>
-                <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
-                <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
-            </StSidebarWrapper>
-        </StContainer>
+            <ModalFinish
+                prop={main}
+                close={closeModal}
+                open={openFinish} />
+            <StContainer>
+                <StMainThemeWrapper theme={main?.meetingTheme}>
+                    {main?.meetingCreator == nickname ?
+                        <div onClick={chatt}>
+                            <StQuit onClick={() => { setOpenFinish(true) }}>
+                            <img src={closeIcon} />회의 끝내기
+                            </StQuit>
+                        </div> :
+                        <div onClick={chatt}>
+                        <StLeave onClick={() => { setOpenFinish(true) }}>
+                            <img src={closeIcon} />회의 나가기
+                        </StLeave></div>}
+                    <JoinRoom Theme={main?.meetingTheme} />
+                    <Agenda meetID={meetingId} main={main} />
+                </StMainThemeWrapper>
+                <StSidebarWrapper>
+                    <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
+                    <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
+                </StSidebarWrapper>
+            </StContainer>
         </>
+
     )
 }
 

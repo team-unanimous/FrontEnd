@@ -15,7 +15,6 @@ const MeetingEditTwoOne = () => {
   const meetingId = useParams().meetid
   
   const {data} = useGetMeetSpecific({meetingId})
-  console.log(data)
   const title = useRef("");
   const date = useRef("");
   const navigate = useNavigate();
@@ -38,7 +37,6 @@ const MeetingEditTwoOne = () => {
   // 미팅 수정하기
   const patchMeetProfile = async(data)=>{
     const datas = await apis.patchMeetProfile(data);
-    console.log(datas)
     return datas;
   }
 

@@ -19,19 +19,18 @@ import copyIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader
 import selectIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/3.btn_selection.svg'
 import inviteIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/2.invitation/btn_invitation.svg'
 import closeIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/modal/icon_close.svg'
-
-
+import basic from '../img/basicinfo_introduction.svg'
 
 
 
 const TeamSetting = (props) => {
 
     const [state, setState] = useState(0);
-    
-    const [openLeader,setOpenLeader] = useState(false);
-    const [openBan,setOpenBan] = useState(false);
-    const [openInvite,setOpenInvite] = useState(false);
-    const [userid,setUserid] = useState();
+
+    const [openLeader, setOpenLeader] = useState(false);
+    const [openBan, setOpenBan] = useState(false);
+    const [openInvite, setOpenInvite] = useState(false);
+    const [userid, setUserid] = useState();
 
 
     const teamId = useParams().teamid;
@@ -124,8 +123,8 @@ const TeamSetting = (props) => {
 
     const onLoadFile = (e) => {
         const file = e.target.files[0]
-        console.log(file);
-        setImgfiles(file)
+
+        setImgfiles(file);
     }
 
     const formData = new FormData();
@@ -140,10 +139,10 @@ const TeamSetting = (props) => {
 
     // 팀 프로필이미지 수정
     const editImage = async (data) => {
-        console.log(data)
-        console.log(data.teamImage)
+
+
         const datas = await apis.patchTeamImage(data);
-        console.log(datas)
+
         return datas;
     }
 
@@ -191,42 +190,42 @@ const TeamSetting = (props) => {
         setOpenLeader(false);
     }
 
-    const closeBan = () =>{
+    const closeBan = () => {
         setOpenBan(false);
     }
 
-    const closeInvite =() =>{
+    const closeInvite = () => {
         setOpenInvite(false);
     }
 
     return (
         <>
             <ImageModal
-            open={imgmodalopen}
-            select={onLoadFile}
-            save={exfunction}
-            close={ImgModalCancel}
-            />    
-            <LeaderModal 
-            open={openLeader} 
-            close={closeLeader}
-            teamId={teamId}/>
+                open={imgmodalopen}
+                select={onLoadFile}
+                save={exfunction}
+                close={ImgModalCancel}
+            />
+            <LeaderModal
+                open={openLeader}
+                close={closeLeader}
+                teamId={teamId} />
             <BanModal
-            open={openBan}
-            close={closeBan}
-            teamId={teamId}
-            userId={userid}
+                open={openBan}
+                close={closeBan}
+                teamId={teamId}
+                userId={userid}
             />
             <InviteMember
-            open={openInvite}
-            close={closeInvite}
+                open={openInvite}
+                close={closeInvite}
             />
             {teamLeader !== nickname ?
                 <StRight>
                     <StTeamOutBox>
                         <StTeamBox>
-                            <StIntro src={Introduction}/>
-                            
+                            <StIntro src={Introduction} />
+
                             <StDown>
                                 <StComeOn>
                                     <StBlack>
@@ -234,14 +233,14 @@ const TeamSetting = (props) => {
                                     </StBlack>
                                     <StInputBox>
                                         <StInput>{data.uuid}</StInput>
-                                        <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon}/>
+                                        <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon} />
                                     </StInputBox>
                                 </StComeOn>
                                 <StListBox>
                                     <StBlack>
                                         팀원 관리
                                     </StBlack>
-                                    <StUserBt onClick={()=>{setOpenInvite(true);}} src={inviteIcon}/>
+                                    <StUserBt onClick={() => { setOpenInvite(true); }} src={inviteIcon} />
                                     <StMateList>
                                         {props?.prop.map((value, index) => {
                                             return <StUserBox key={index}>
@@ -250,7 +249,6 @@ const TeamSetting = (props) => {
                                                     <StUserName>{value.nickname}</StUserName>
                                                     <StEmail>{value.username}</StEmail>
                                                 </StUserInfo>
-
                                             </StUserBox>
                                         })}
                                     </StMateList>
@@ -263,10 +261,10 @@ const TeamSetting = (props) => {
             {state == 0 && teamLeader == nickname ?
                 <StRight>
                     <StBox>
-                        <img src={Introduction}/>
+                        <img src={Introduction} />
                         <StDownBox>
-                            <StTeamManage src={TeamManage} onClick={() => { setState(1) }}/>
-                            <StTeamManage src={EditTeam} onClick={() => { setState(2) }}/>
+                            <StTeamManage src={TeamManage} onClick={() => { setState(1) }} />
+                            <StTeamManage src={EditTeam} onClick={() => { setState(2) }} />
                         </StDownBox>
                     </StBox>
                 </StRight> : <></>
@@ -275,7 +273,7 @@ const TeamSetting = (props) => {
                 <StRight>
                     <StTeamOutBox>
                         <StTeamBox>
-                            <StTIntro src={TIntroduction}/>
+                            <StTIntro src={TIntroduction} />
                             <StInBox>
                                 <StDown>
                                     <StComeOn>
@@ -284,14 +282,14 @@ const TeamSetting = (props) => {
                                         </StBlack>
                                         <StInputBox>
                                             <StInput>{data.uuid}</StInput>
-                                            <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon}/>
+                                            <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon} />
                                         </StInputBox>
                                     </StComeOn>
                                     <StListBox>
                                         <StBlack >
                                             팀원 관리
                                         </StBlack>
-                                        <StUserBt onClick={()=>{setOpenInvite(true);}} src={inviteIcon}/>
+                                        <StUserBt onClick={() => { setOpenInvite(true); }} src={inviteIcon} />
                                         <StMateList>
                                             {props?.prop.map((value, index) => {
                                                 return <StUserBox key={index}>
@@ -300,8 +298,8 @@ const TeamSetting = (props) => {
                                                         <StUserName>{value.nickname}</StUserName>
                                                         <StEmail>{value.username}</StEmail>
                                                     </StUserInfo>
-                                                    <StXBox onClick={()=>{setOpenBan(true);setUserid(value.userId);console.log(userid)}}>
-                                                        <StXicon src={closeIcon}/>
+                                                    <StXBox onClick={() => { setOpenBan(true); setUserid(value.userId); }}>
+                                                        <StXicon src={closeIcon} />
                                                     </StXBox>
                                                 </StUserBox>
                                             })}
@@ -311,7 +309,7 @@ const TeamSetting = (props) => {
                                         <StBlack>
                                             팀장 권한 위임
                                         </StBlack>
-                                        <StUserBt onClick={() => { setOpenLeader(true) }} src={selectIcon}/>
+                                        <StUserBt onClick={() => { setOpenLeader(true) }} src={selectIcon} />
                                     </StMovePower>
                                 </StDown>
                                 <StLine />
@@ -326,36 +324,60 @@ const TeamSetting = (props) => {
             {state == 2 && teamLeader == nickname ?
                 <StRight>
                     <StEdit>
-                        <StUpBox1>
-                            <StSetting>기본 정보 수정</StSetting>
-                            <StSmall>팀 정보를 확인하고 쉽게 변경할 수 있습니다.</StSmall>
-                        </StUpBox1>
-                        <StLine />
-                        <StProfile>
-                            <StBlack>
-                                팀 프로필 이미지
-                            </StBlack>
-                            <StImg src={{ data }.data.teamImage} />
-                            <StImgInput htmlFor='file' onClick={ImgModalOpen}>이미지 추가하기</StImgInput>
-                        </StProfile>
-                        <StNameBox>
-                            <StBlack>
-                                팀명
-                            </StBlack>
-                            <StNameDown>
-                                <StNameInput ref={teamname} />
-                                <StNameBt onClick={editingnick}>변경</StNameBt>
-                            </StNameDown>
-                        </StNameBox>
-                        <StBtBox>
-                            <StCancelBt onClick={() => { setState(0) }}>취소</StCancelBt>
-                        </StBtBox>
+                        <StHead src={basic} />
+                        <StBody>
+                            <StProfile>
+                                <StBlack>
+                                    팀 프로필 이미지
+                                </StBlack>
+                                <StImg src={{ data }.data.teamImage} />
+                                <StBtBoxTwo>
+                                    <StImgInput htmlFor='file' onClick={ImgModalOpen}>이미지 변경</StImgInput>
+                                    <StImgInputTwo htmlFor='file' onClick={ImgModalOpen}>기본 이미지</StImgInputTwo>
+                                </StBtBoxTwo>
+                            </StProfile>
+                            <StNameBox>
+                                <StBlack>
+                                    팀명
+                                </StBlack>
+                                <StNameDown>
+                                    <StNameInput ref={teamname} />
+                                    <StNameBt onClick={editingnick}>변경</StNameBt>
+                                </StNameDown>
+                            </StNameBox>
+                            <StBtBox>
+                                <StCancelBt onClick={() => { setState(0) }}>취소</StCancelBt>
+                            </StBtBox>
+                        </StBody>
                     </StEdit>
                 </StRight> : <></>
             }
         </>
     )
 }
+
+const StBtBoxTwo = styled.div`
+    display: flex;
+    width : 273px;
+    justify-content: space-between;
+    margin : 0 auto 0 0;
+`;
+
+const StBody = styled.div`
+    display:flex;
+    flex-direction: column;
+    width : 1088px;
+    height : 555px;
+    padding : 48px;
+    background-color: white;
+    margin : 0 0 0 10px;
+    box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+`;
+
+const StHead = styled.img`
+    margin : 30px 0 0 0;
+`;
 
 const StIntro = styled.img`
     margin : 48px 0 0 0;
@@ -396,54 +418,80 @@ const StTeamManage = styled.img`
 const StEdit = styled.div`
     width : 100%;
     height: 800px;
-    padding : 0 0 0 80px;
+
+    padding : 0 0 0 0;
 `;
 
 const StNameBt = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width : 132px;
-    height : 49px;
-    background-color: black;
+    width: 132px;
+    height: 48px;
+    background: #063250;
     color:white;
     border-radius: 6px;
 `;
 
 const StNameInput = styled.input`
-    width : 400px;
-    height : 45px;
-    border: 1px solid black;
+    width: 710px;
+    height: 44px;
+    border: 1px solid #5C5C5C;
     border-radius: 6px;
 `;
 
 const StNameDown = styled.div`
     display: flex;
     justify-content: space-between;
-    width : 541px;
+    width : 860;
     height : 49px;
+
 `;
 
 const StNameBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width : 541px;
+    width : 850px;
     height : 80px;
-    margin : 0 0 80px 0;
+    margin : 36px 0 80px 20px;
 `;
-
+const StImgInputTwo = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 132px;
+    height: 49px;
+    padding : 15px;
+    border-radius: 5px;
+    border: 1px solid #063250;
+    background-color: white;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color : black;
+`;
 
 const StImgInput = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    width : 125px;
-    height : 25px;
+    width: 132px;
+    height: 49px;
+    padding : 15px;
     border-radius: 5px;
     border: 1px solid black;
-    font-weight: 400;  
-    font-size: 14px;
+    background-color: #063250;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color : white;
 `;
 
 const StImg = styled.img`
@@ -460,7 +508,7 @@ const StProfile = styled.div`
     flex-direction: column;
     width : 125px;
     height : 195px;
-    margin : 0 0 36px 0;
+    margin : 0 0 36px 20px;
 `;
 
 const StXBox = styled.div`
@@ -483,9 +531,9 @@ const StCancelBt = styled.div`
     width : 200px;
     height : 54px;
     background-color: white;
-    color : black;
+    color : #5C5C5C;
     border-radius: 6px;
-    border : 1px solid black;
+    border: 1px solid #5C5C5C;
 `;
 
 const StBtBox = styled.div`
@@ -719,7 +767,7 @@ const StUpBox1 = styled.div`
     width : 825px;
     height : 124px;
     padding : 0 0 0 30px;
-    background-color: #EAEAEA;
+    background-color: linear-gradient(180deg, rgba(35, 150, 240, 0.8) 0%, rgba(73, 182, 255, 0.8) 100%);
     border-radius: 8px;
 `;
 

@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import apis from '../api/main';
 import doorIcon from '../img/outdoor.png'
-import thumbnail1 from '../img/TeamBoard/2.nowmeeting/thumbnail1.svg'
-import thumbnail2 from '../img/TeamBoard/2.nowmeeting/thumbnail2.svg'
-import thumbnail3 from '../img/TeamBoard/2.nowmeeting/thumbnail3.svg'
-import thumbnail4 from '../img/TeamBoard/2.nowmeeting/thumbnail4.svg'
-import thumbnail5 from '../img/TeamBoard/2.nowmeeting/thumbnail5.svg'
+import thumbnail1 from '../img/TeamBoard/3.beforemeeting/thumbnail1.svg'
+import thumbnail2 from '../img/TeamBoard/3.beforemeeting/thumbnail2.svg'
+import thumbnail3 from '../img/TeamBoard/3.beforemeeting/thumbnail3.svg'
+import thumbnail4 from '../img/TeamBoard/3.beforemeeting/thumbnail4.svg'
+import thumbnail5 from '../img/TeamBoard/3.beforemeeting/thumbnail5.svg'
 import closeIcon from '../img/TeamBoard/popup/close.svg'
 import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
 import jwt_decode from "jwt-decode";
@@ -58,6 +58,7 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
     const {mutate:start} = useMutation(startMeet,{
         onSuccess:()=>{
             alert("미팅이 시작됩니다.")
+            navigate(`/meetingroom/${teamId}/${meetingId}`);
         },
         onError:()=>{
             alert("미팅이 시작되지 않습니다.")
@@ -143,8 +144,8 @@ const DetailModalReserve = ({open, close,meetingTitle,meetingDate,meetingTime,me
                         <StEdit onClick={()=>{navigate(`/teamboard/${teamId}/${meetingId}/meetingeditone`)}}>수정</StEdit>
                         <div onClick={close}><StDelete onClick={delet}>삭제</StDelete></div>
                     </StBtBox>
-                    <div onClick={starting}><StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${meetingId}`)}}><StIconImg src={participate}/>시작하기</StButton></div>
-                </>:<><StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${meetingId}`)}}><StIconImg src={participate}/>참여하기</StButton></>}
+                    <StButton onClick={starting}><StIconImg src={participate}/>시작하기</StButton>
+                </>:<></>}
             </StDownBox>
         </StBox>
         </>:<></>}
@@ -231,9 +232,9 @@ const StButton = styled.div`
 `;
 
 const StLine = styled.div`
-    width : 663px;
+    width : 783px;
     height : 1.5px;
-    margin : 40px 0 60px 0;
+    margin : 50px 0 60px 0;
     background-color: #D9D9D9;
 `;
 
@@ -333,10 +334,9 @@ const StImg = styled.img`
     display: flex;
     justify-content: center;
     align-items: center;
-    width : 48px;
-    height : 48px;
+    width : 80px;
+    height : 80px;
     border-radius: 48px;
-    background-color:#D9D9D9;
 `;
 
 const StBox = styled.div`

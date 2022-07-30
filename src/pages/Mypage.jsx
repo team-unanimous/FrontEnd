@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useReducer } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useMutation } from "react-query";
 import apis from "../api/main";
@@ -10,12 +10,13 @@ import PasswordModal from "../components/MypageModal/PasswordModal";
 import DefaultImg from "../img/DefaultImg.jpg"
 import jwt_decode from "jwt-decode";
 import Header from "../components/Header"
+import boximg from "../img/mypageIntro.svg"
+import axis from "../api/sub";
 
 const Mypage = () => {
 
     // 토큰에서 가져와서 해석하고 userid 가져오기
     const ontoken = jwt_decode(getCookie('token'));
-    // console.log(ontoken)
     const usersid = ontoken.userId
     const useremail = ontoken.USER_NAME
     const usernn = ontoken.USER_NICKNAME
@@ -82,20 +83,16 @@ const Mypage = () => {
     // 이미지넣기  onchange={(e)=>setfiles(e.target.files)}와 같지만 콘솔찍기위해 
     const onLoadFile = (e) => {
         const file = e.target.files[0]
-        console.log(file);
-        setFiles(file) // state가 렌더링되지않기때문에 이함수중간에서 렌더링된다면 고칠수있는데 사실상 불가능해보인다
+        setFiles(file)
         // 미리보기 부분 > 파일이미지를 url변경후 state에 저장
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file)
         fileReader.onload = (e) => setLoadimg(e.target.result)
-        // 이미지 업로드 비동기 문제발생
     }
 
 
     const exfunction = () => {
         picturePostFunction()
-        // deletetoken()
-        // tokenreceive()
         ImgModalCancel()
     }
 
@@ -103,7 +100,8 @@ const Mypage = () => {
 
     // formdata 안에 넣기
     const formData = new FormData();
-    formData.append('profileImage', files)
+    formData.append('profileImage', files);
+
     // 사진 값보기
     // for (let key of formData.keys()) {
     //     console.log(key);
@@ -118,25 +116,13 @@ const Mypage = () => {
     // 키값이 있으면 해당 키값으로 데이터만 넣어줌
     // formdata는 key랑 value 값을 확인할 수가 없다 > formdata넣는값은 확인가능
     const picturePost = async (data) => {
-        console.log(data)
-        console.log(data.profileImage) // data.profileImage = formdata
+        for (let key of data.profileImage.keys()) {
+        }
+        for (let value of data.profileImage.values()) {
+        }
         const formdataimg = await apis.postPicturePost(data);
         setCookie("token", formdataimg.headers.authorization);
-        console.log(formdataimg);
-        console.log(formdataimg.headers);
         return formdataimg;
-    }
-
-    const deletetoken = () => {
-        removeCookie('token')
-    }
-
-    // 토큰 재생성 받기
-    const tokenreceive = async (data) => {
-        const datas = await apis.postNickCheck(data);
-        setCookie("token", datas.headers.authorization);
-        console.log(datas);
-        console.log(datas.headers);
     }
 
     // 이미지 업로드
@@ -146,6 +132,9 @@ const Mypage = () => {
         },
         onError: (error) => {
             alert("이미지 업로드에 실패하셨습니다")
+        },
+        onSettled: () => {
+
         }
     })
 
@@ -160,29 +149,17 @@ const Mypage = () => {
 
 
     // 기본 이미지 전송
-    const [nomalimg, setNomaling] = useState(null);
 
-    const defaultFile = () => {
-        setNomaling(DefaultImg);
-        // 이미지 업로드
-        defaultPostFunction()
-        ImgModalCancel()
-    }
-
-    // 기본 이미지 전송
     const defaultPost = async (data) => {
-        // const formData = new FormData();
-        // formData.append('profileImage', data.profileImage)
-        // console.log(data)
-        // console.log(data.profileImage)
-        // for (var value of formData.values()) {
-        //     console.log(value);
-        // }
-        const fromdatadefault = await apis.postPicturePost(data);
-        return fromdatadefault;
+        for (let key of data.profileImage.keys()) {
+        }
+        for (let value of data.profileImage.values()) {
+        }
+        const formdataimg = await axis.postPicturePost(data);
+        setCookie("token", formdataimg.headers.authorization);
+        return formdataimg;
     }
 
-    // 기본 이미지 업로드
     const { mutate: defaultGo } = useMutation(defaultPost, {
         onSuccess: () => {
             alert("이미지 업로드에 성공하셨니다")
@@ -192,10 +169,14 @@ const Mypage = () => {
         }
     })
 
-    // 기본 이미지 버튼
+    const form = new FormData();
+
     const defaultPostFunction = () => {
+        form.set('profileImage', "1", null);
+        // form.delete('profileImage')
         defaultGo({
-            profileImage: DefaultImg,
+            profileImage: form,
+            userid: usersid,
         })
     }
 
@@ -203,16 +184,13 @@ const Mypage = () => {
 
     // 비밀번호 변경모달로 이동
     const passwordPost = (data) => {
-        console.log(data)
         return apis.postPasswordChange(data)
             .then((response) => {
                 // response.data
-                console.log(response.data);
                 alert("비밀번호가 일치합니다")
                 PasswordModalOpen();
             })
             .catch(error => {
-                console.log(error)
                 alert("비밀번호를 틀리셨습니다")
             })
     }
@@ -231,12 +209,6 @@ const Mypage = () => {
         })
     }
 
-    // useEffect(() => {
-    //     if (Boolean(files) === true)
-    //         picturePostFunction()
-    //     ImgModalCancel()
-    // });
-
     // 로그아웃
     const UserLogout = () => {
         removeCookie('token')
@@ -244,7 +216,8 @@ const Mypage = () => {
     }
 
     // 홈으로
-    const gohome = () => navigate('/');
+    const gohome = () => navigate(-1);
+
 
     return (
         <StWrap>
@@ -263,31 +236,20 @@ const Mypage = () => {
                 open={passwordmodalopen}
                 close={PasswordModalCancel}
             />
+            <StUpBox src={boximg} />
             <StBigBox>
-                <Stmybox>
-                    <StTextBox>
-                        <StMyTitle>
-                            마이페이지
-                        </StMyTitle>
-                        <Sttext>
-                            팀 관련 정보를 관리 및 수정할 수 있습니다.
-                        </Sttext>
-                    </StTextBox>
-                </Stmybox>
                 <StProfileBox>
                     <StprofileText>프로필</StprofileText>
                     <StprofileTextmini>프로필 이미지</StprofileTextmini>
                     <StProfile src={usersimg} />
-                    <StImgChangeBtn onClick={ImgModalOpen}>
-                        변경
-                    </StImgChangeBtn>
-                    {/* <StProfileInput type="file" accept='img/*'
-                        onChange={onLoadFile}
-                    >
-                    </StProfileInput>
-                    <StProfileBtn onClick={picturePostFunction}>
-                        이미지 저장하기
-                    </StProfileBtn> */}
+                    <StImgBox>
+                        <StImgChangeBtn onClick={ImgModalOpen}>
+                            이미지 변경
+                        </StImgChangeBtn>
+                        <StImgBasicChangeBtn onClick={defaultPostFunction}>
+                            기본 이미지
+                        </StImgBasicChangeBtn>
+                    </StImgBox>
                     <StprofileTextmini>
                         닉네임
                     </StprofileTextmini>
@@ -329,18 +291,42 @@ const Mypage = () => {
                         로그아웃
                     </StLogoutTitle>
                 </StProfileBox>
+                <StBtnBox>
+                    <StCancelBtn onClick={gohome}>
+                        취소
+                    </StCancelBtn>
+                </StBtnBox>
             </StBigBox>
-            <StBtnBox>
-                <StCancelBtn onClick={gohome}>
-                    취소
-                </StCancelBtn>
-                {/* <StConfirmBtn>
-                        <p style={{ color: 'white' }}>변경</p>
-                    </StConfirmBtn> */}
-            </StBtnBox>
         </StWrap >
     );
 }
+
+const StImgBasicChangeBtn = styled.button`
+                width : 132px;
+                height : 54px;
+                background-color: white;
+                color : black;
+                border: solid 1px #063250;
+                border-radius: 6px;
+                margin-top: 12px;
+                cursor: pointer;
+                `
+
+const StImgBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width : 273px;
+    height : 54px;
+`
+
+const StUpBox = styled.img`
+width: 870px;
+height: 114px;
+border-radius: 8px;
+margin-top: 48px;
+margin-bottom: 32px;
+object-fit: cover;
+`
 
 const StStraightLine = styled.div`
   background-color: #D9D9D9;
@@ -350,9 +336,10 @@ const StStraightLine = styled.div`
 `;
 
 const StLogoutTitle = styled.div`
-                font-weight: 400;
-                font-size: 16px;
-                cursor: pointer;
+    font-weight: 400;
+    font-size: 16px;
+    color: #EF6A61;
+    cursor: pointer;
 `
 const StEmailletter = styled.div`
 display: flex;
@@ -378,38 +365,20 @@ const StWrap = styled.div`
                 justify-content: center;
                 flex-direction: column;
                 align-items: center;
-                width : 100vw;
+                width : 100%;
                 height : 100%;
+                background: #F2F6F9;
                 `
 
 const StBigBox = styled.div`
                 display: flex;
                 flex-direction: column;
-                align-items: flex-start;
-                width: 850px;
-                height: 1000px;
-                `
-
-const Stmybox = styled.div`
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 30px 0px 30px 30px;
-                width : 820px;
-                height : 84px;
-                background: #EAEAEA;
-                border-radius: 16px;
-                margin-top: 48px;
-                `
-
-const StTextBox = styled.div`
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 0px;
-                gap: 30px;
-                width: 284px;
-                height: 84px;
+                /* align-items: center; */
+                padding: 48px;
+                width: 754px;
+                height: 755px;
+                background-color: white;
+                border-radius: 8px;
                 `
 
 const StMyTitle = styled.div`
@@ -436,48 +405,21 @@ const StProfileBox = styled.div`
                 align-items: flex-start;
                 width: 573px;
                 height: 769px;
-                margin-top: 60px;
                 `
 
 const StProfile = styled.img`
                 width: 117px;
                 height: 117px;
                 border-radius: 100px;
-                background: #E5E7EB;
-                `
-const StProfileInput = styled.input`
-                display: flex;
-                justify-content: center;
-                width: 120px;
-                height: 25px;
-                background: #FFFFFF;
-                border: 1px solid #000000;
-                border-radius: 5px;
-                margin-top: 5px;
-                cursor: pointer;
-                `
-
-
-const StProfileBtn = styled.button`
-                display: flex;
-                justify-content: center;
-                width: 120px;
-                height: 25px;
-                background: #FFFFFF;
-                border: 1px solid #000000;
-                border-radius: 5px;
-                margin-top: 5px;
-                cursor: pointer;
                 `
 
 const StBtnBox = styled.div`
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
-                align-items: flex-start;
-                width: 418px;
+                align-items: center;
+                width: 754px;
                 height: 54px;
-                margin-top: 0px;
                 `
 
 const StCancelBtn = styled.button`
@@ -500,26 +442,6 @@ const StCanceltitle = styled.div`
                 line-height: 24px;
                 text-align: center;
                 color: #000000;
-                `
-
-const StConfirmBtn = styled.button`
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 200px;
-                height: 54px;
-                border: 1px solid #000000;
-                border-radius: 6px;
-                background-color: black;
-                cursor: pointer;
-                `
-
-const StConfrimtitle = styled.div`
-                width: 37px;
-                height: 24px;
-                font-weight: 700;
-                font-size: 20px;
-                color: #ffffff;
                 `
 
 const StChangeBox = styled.div`
@@ -551,8 +473,9 @@ const StChangeDiv = styled.div`
 const StImgChangeBtn = styled.button`
                 width : 132px;
                 height : 54px;
-                background-color: black;
+                background-color: #063250;
                 color : white;
+                border: solid 1px #063250;
                 border-radius: 6px;
                 margin-top: 12px;
                 cursor: pointer;
@@ -560,10 +483,11 @@ const StImgChangeBtn = styled.button`
 
 const StChangeBtn = styled.button`
                 width : 132px;
-                height : 54px;
+                height : 52px;
                 margin : 0 0 0 9px;
-                background-color: black;
+                background-color: #063250;
                 color : white;
+                border: solid 1px #063250;
                 border-radius: 6px;
                 cursor: pointer;
                 `

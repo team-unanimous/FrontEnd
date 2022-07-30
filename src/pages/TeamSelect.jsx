@@ -1,12 +1,17 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useGetTeamInfo } from "../Hooks/useGetTeamInfo"
+import { useGetTeamMain } from "../Hooks/useGetTeamMain"
 import styled from "styled-components"
 import apis from "../api/main"
 import { useMutation } from "react-query"
 import teamSelectImg from "../img/teamSelect.png";
 import { useEffect } from "react"
 import { getCookie } from "../Cookie"
+import icon_participate from "../img/icon_participate.svg"
+import icon_add from "../img/icon_add.svg"
+import teamAddProfile from "../img/TeamAddProfile.png"
+
 
 //테스트
 // import axis from '../api/sub'
@@ -16,18 +21,15 @@ import { getCookie } from "../Cookie"
 const TeamSelect = () => {
     const token = getCookie('token')
     const navigate = useNavigate();
-    
+
     const teamJoin = async (data) => {
         return apis.postTeamJoin(data);
     }
     const { mutate: joinMutate } = useMutation(teamJoin, {
         onSuccess: (data) => {
-            console.log(data);
-            console.log(data.data);
             () => navigate('/teamboard/1');
         },
         onError: (error) => {
-            console.log(error);
         }
     })
     const unaTeamJoin = async () => {
@@ -35,7 +37,6 @@ const TeamSelect = () => {
     }
     const { mutate: unaJoinMutate } = useMutation(unaTeamJoin, {
         onSuccess: (data) => {
-            console.log(data);
             alert("성공! 팀으로 이동합니다");
             () => navigate('/teamboard/1');
         },
@@ -45,11 +46,12 @@ const TeamSelect = () => {
     })
 
     const unaTeamJoinHandler = () => {
-        console.log("성공")
         unaJoinMutate();
     }
 
     const { data } = useGetTeamInfo();
+    // const teamId = useParams().teamid;
+    // const { data } = useGetTeamMain({ teamId });
 
     if (!data) {
         return <>Something wrong!</>
@@ -66,7 +68,7 @@ const TeamSelect = () => {
                     </StTitleWrapper>
                     <StTeamBox>
                         {data.map((team, index) => (
-                                <StTeamItemBox 
+                            <StTeamItemBox
                                 key={index}>
                                     <StTeamItem
                                         key={index}
@@ -86,15 +88,16 @@ const TeamSelect = () => {
                             data.length > 4
                             ? <></>
                             : <StTeamItemBox>
-                            <StTeamItem
-                            onClick={() => { navigate(`/teammake`) }}
-                            >
-                            </StTeamItem>
+                            <StTeamItemDiv>
+                            <StNewTeamItem
+                            onClick={() => { navigate(`/teammake`) }}>
+                            </StNewTeamItem>
+                            </StTeamItemDiv>    
                             <StTeamName 
-                            style={{color:"grey"}}
+                            style={{color:"#888888"}}
                             onClick={() => { navigate(`/teammake`) }}
                             >
-                                새로 만들기
+                                팀 추가하기
                             </StTeamName>
                         </StTeamItemBox>
                         }
@@ -102,9 +105,13 @@ const TeamSelect = () => {
                     </StTeamBox>
                     <StButtonWrapper>
                         <StInvitedButton onClick={() => navigate("/teaminvited")}>
-                            이미 초대된 팀 페이지에 접속하고 싶으신가요?
+                            <StImage imgsrc={icon_participate}>
+                            </StImage>
+                            이미 초대코드를 받으셨습니까?
                         </StInvitedButton>
                         <StTeamMakeButton onClick={unaTeamJoinHandler}>
+                            <StImage imgsrc={icon_add}>
+                            </StImage>
                             Unanimous 둘러보기 (체험용)
                         </StTeamMakeButton>
                     </StButtonWrapper>
@@ -202,7 +209,6 @@ const StTeamBox = styled.div`
     width: 100%;
     justify-content: space-around;
     margin-top: 60px;
-    background-color: rebeccapurple;
     `
 
 const StTeamItemBox = styled.div`
@@ -210,23 +216,38 @@ const StTeamItemBox = styled.div`
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    background-color: red;
+    /* background-color: red; */
+    width: 180px;
+    height: 228px;
     `
 const StTeamItem = styled.img`
     width: 180px;
     height: 180px;
     
-    background-color: #D9D9d9;
     border-radius: 87px;
     object-fit: cover;
     cursor: pointer;
     `
+
+const StTeamItemDiv = styled.div`
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const StNewTeamItem = styled.img`
+    width: 107px;
+    height: 107px;
+    border-radius: 100px;
+    background-image: url(${teamAddProfile});
+    cursor: pointer;
+`
 const StTeamName = styled.div`
     /* 팀이름 */
     
     width: 100px;
     height: 24px;
-    
     margin-top: 24px;
     
     font-family: 'Inter';
@@ -266,17 +287,17 @@ const StButtonWrapper = styled.div`
 const StInvitedButton = styled.div`
     /* Frame 281 */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     padding: 18px 25px;
     /* gap: 10px; */
     box-sizing: border-box;
 
-    width: 353px;
+    width: 250px;
     height: 53px;
 
-    background: #F5F5F5;
+    background: #EBF7FF;
     border-radius: 100px;
 
     /* Inside auto layout */
@@ -290,17 +311,17 @@ const StInvitedButton = styled.div`
 const StTeamMakeButton = styled.div`
     /* Frame 282 */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: flex-end;
     padding: 18px 25px;
     gap: 10px;
     box-sizing: border-box;
 
-    width: 309px;
+    width: 260px;
     height: 53px;
 
-    background: #F5F5F5;
+    background: #EBF7FF;
     border-radius: 100px;
     font-size: 14px;
 
@@ -310,6 +331,17 @@ const StTeamMakeButton = styled.div`
     order: 1;
     flex-grow: 0;
     cursor: pointer;
+`
+const StImage = styled.div`
+    width: 14px;
+    height: 14px;
+    background-image: ${props=>`url(${props.imgsrc})`};
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: black; */
+    z-index: 100;
+    margin-right: 10px;
 `
 
 

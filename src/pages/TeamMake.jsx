@@ -24,13 +24,10 @@ const TeamMake = () => {
 
   const { mutate } = useMutation(makeTeam, {
     onSuccess: (data) => {
-      console.log(data.data);
       dispatch(setTeamID(data.data));
-      console.log();
       navigate('/invitemember')
     },
     onError: (error) => {
-      console.log(error)
     }
   });
 
@@ -39,7 +36,6 @@ const TeamMake = () => {
       teamImage: "randomImageURL",
       teamname: teamNameRef.current.value
     }
-    console.log(data);
     mutate(data)
   }
 
@@ -101,7 +97,7 @@ const StTitle = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 43px;
+    font-size: 40px;
     line-height: 58px;
     /* identical to box height */
     text-align: center;
@@ -136,6 +132,7 @@ const StPwInput = styled.input`
   height : 44px;
   border-radius: 6px;
   border: 1px solid #000000;
+  padding-left: 10px;
 `;
 
 const StEmailInputBox = styled.div`
@@ -151,7 +148,7 @@ const StEmailBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width : 541px;
-  height: 100px;
+  height: 80px;
   margin : 0 0 0 0;
 `;
 const StAgree = styled.button`

@@ -2,6 +2,7 @@ import React from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { useMutation } from "react-query";
+import { useParams } from 'react-router';
 import styled from "styled-components";
 import apis from "../api/main";
 import xbutton from "../img/Xbutton.png"
@@ -10,7 +11,7 @@ import xbutton from "../img/Xbutton.png"
 const InviteMember = ({open,close})=> {
 
     const reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,8}$/i;
-
+    const teamId = useParams().teamid
     const [memberEmail, setMemberEmail] = useState("");
     const emailRef = useRef();
     const mailSend = (emailInfo) =>{
@@ -19,16 +20,14 @@ const InviteMember = ({open,close})=> {
 
     const { mutate : mailSendMutate } = useMutation(mailSend, {
         onSuccess: (resp) => {
-            console.log(resp);
         }
     })
 
     const SendMemberListHandler = () => {
         const data = {
             emailRequestDtoList: memberEmail,
-            teamId: '', // teammake 페이지에서 상태 값으로 받아 와서 전달해야됨
+            teamId: teamId, // teammake 페이지에서 상태 값으로 받아 와서 전달해야됨
         }
-        console.log(data);
         mailSendMutate(data);
     }
 
@@ -44,6 +43,7 @@ const InviteMember = ({open,close})=> {
                     <StPwInput type='text' placeholder='이메일 입력' ref={emailRef}/>
                     <StEmailButton
                     onClick={()=>{
+                        if (emailRef.current.value == "" ) return
                         setMemberEmail([
                             ...memberEmail,
                             emailRef?.current?.value])
@@ -62,7 +62,7 @@ const InviteMember = ({open,close})=> {
                                     <input style={{width:'1rem'}} type={'image'} src={xbutton} onClick={
                                         ()=>{
                                             setMemberEmail(memberEmail.filter(( _, index) => index !== i))
-                                            console.log(memberEmail);
+
                                     }}/>
                                     </StLiItem>
                                 </StUlContainer>
@@ -71,9 +71,11 @@ const InviteMember = ({open,close})=> {
                     <StEmailWarnning>
                     </StEmailWarnning>
                 </StEmailBox>
-                <StAgree onClick={SendMemberListHandler}>
-                    보내기
-                </StAgree>
+                <div onClick={close}>
+                    <StAgree onClick={SendMemberListHandler}>
+                        보내기
+                    </StAgree>
+                </div>
         </StBox>
         </>:<></>
         }

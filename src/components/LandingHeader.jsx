@@ -5,21 +5,12 @@ import HeaderLogo from "../img/logo.svg";
 
 const LandingHeader = () => {
     const navigate = useNavigate();
-    const [scrollPosition, setScrollPosition] = useState(0);
-    const updateScroll = () => {
-        setScrollPosition(window.scrollY || document.documentElement.scrollTop);
-    }
-    useEffect(() => {
-        window.addEventListener('scroll', updateScroll);
-    });
 
     return (
         <StHeader>
             <StLogo>
             </StLogo>
-            {scrollPosition < 700
-                ? <><StStartButton visibility="hidden">접속하기</StStartButton></>
-                : <><StStartButton visibility="visible" onClick={() => navigate('/login')}>접속하기</StStartButton></>}
+            <StStartButton visibility="visible" onClick={() => navigate('/login')}>접속하기</StStartButton>
         </StHeader>
     )
 }
@@ -60,8 +51,8 @@ const StStartButton = styled.div`
     justify-content: center;
     align-items: center;
     ${'' /* padding: 10px 20px; */}
-    width: 6.688rem;
-    height: 2.5rem;
+    width: 101px;
+    height: 40px;
     /* Gray/900 */
     background: #063250;
     border-radius: 6px;
@@ -70,7 +61,7 @@ const StStartButton = styled.div`
     order: 1;
     flex-grow: 0; 
     color: white;
-    font-size : 18px;
+    font-size : 14px;
     margin : 0 40px 0 auto;
     cursor: pointer;
     @media screen and (max-width: 600px) {

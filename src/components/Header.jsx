@@ -27,13 +27,13 @@ const Header = ({ teamname }) => {
         <StRightBox>
           <StDropBox>
             <StDefault onClick={() => { setClicked(!clicked) }}>{teamname}</StDefault>
-            <StOption clicked={clicked}>
+            {/* <StOption clicked={clicked}>
               <StHidden>
                 {user?.map((value, index) => {
                   return <StTime key={index} onClick={() => { setClicked(!clicked); queryClient.invalidateQueries("meeting"); navigate(`/teamboard/${value.teamId}`) }}>{value.teamname}</StTime>
                 })}
               </StHidden>
-            </StOption>
+            </StOption> */}
           </StDropBox>
           <StMyPage onClick={() => { navigate(`/mypage`) }} src={img} />
           <StNick>{nickname}</StNick>
@@ -64,20 +64,6 @@ const StRightBox = styled.div`
     height : 48px;
 `;
 
-const StTime = styled.div`
-  width : 135px;
-  height : 15px;
-  padding : 10px 0 10px 0;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 16px;
-  z-index: 4;
-  &:hover{
-    background-color: #EAEAEA;
-  }
-  cursor: pointer;
-`;
-
 const StDefault = styled.div`
   position: absolute;
   display: flex;
@@ -90,7 +76,6 @@ const StDefault = styled.div`
   border: none;
   border-radius: 6px;
   background-color: #F1F1F1;
-  cursor: pointer;
 `;
 
 const StHidden = styled.div`

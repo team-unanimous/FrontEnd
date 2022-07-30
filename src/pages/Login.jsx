@@ -5,9 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react';
 import { useMutation } from 'react-query';
 import { setCookie, removeCookie } from '../Cookie';
-import GoogleLogin from 'react-google-login';
+import frameimg from "../img/bgimg.svg"
+import logoimg from "../img/logoLogin.svg"
+import axios from 'axios';
+
 
 const Login = () => {
+
 
   const navigate = useNavigate();
 
@@ -16,7 +20,6 @@ const Login = () => {
   const password = useRef(null);
 
   const login = async (data) => {
-    console.log(data)
     const datas = await apis.postLogin(data);
     const accessToken = datas.headers.authorization;
     setCookie("token", accessToken);
@@ -35,7 +38,6 @@ const Login = () => {
   })
 
   const loginFunction = () => {
-    console.log(email.current.value);
     mutate({
       username: email.current.value,
       password: password.current.value,
@@ -50,17 +52,11 @@ const Login = () => {
     navigate('/PasswordFindOne')
   }
 
-  //로그인 성공했을 떄 처리 함수 
-
-  const responseGoogle = (response) => {
-    setCookie("user_id", response.googleId);
-  }
-
 
   return (
-    <StSignUp>
+    <StSignUp style={{ backgroundImage: `url(${frameimg})` }}>
       <StBox>
-        <StLogo>Logo</StLogo>
+        <img src={logoimg} />
         <StEmail ref={email} placeholder='이메일' />
         <StPassword type='password' ref={password} placeholder='비밀번호' />
         <StLoginButton onClick={loginFunction}>
@@ -75,38 +71,27 @@ const Login = () => {
             비밀번호 찾기
           </StPwFind>
         </StButtonBox>
-        <GoogleLogin
-          clientId='661918598129-vovfo203fkp7oq8avn3ak7sj24f9bu9k.apps.googleusercontent.com'
-          buttonText="Google Login"
-          response_type="token"
-          redirectUri='http://localhost:3000'
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-        />
+       {/* <StGoogle onClick={oAuthHandler}>구글</StGoogle> */}
       </StBox>
     </StSignUp>
   )
 }
+
+const StGoogle = styled.div`
+  width : 100px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid black;
+`;
+
+
+
 
 const StSignUp = styled.div`
   height : 100vh;
   width : 100vw;
   display: flex;
   align-items: center;
-`;
-
-const StKakaoButton = styled.button`
-  display : flex;
-  justify-content: center;
-  align-items: center;
-  width : 400px;
-  height : 49px;
-  background-color: #929292;
-  color : white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
 `;
 
 const StLine = styled.div`
@@ -124,6 +109,7 @@ const StPwFind = styled.button`
   font-size: 14px;
   border: none;
   cursor: pointer;
+  background-color: white;
 `;
 
 const StSignUpButton = styled.button`
@@ -134,6 +120,7 @@ const StSignUpButton = styled.button`
   font-size: 14px;
   border: none;
   cursor: pointer;
+  background-color: white;
 `;
 
 const StButtonBox = styled.div`
@@ -149,9 +136,10 @@ const StLoginButton = styled.button`
   align-items: center;
   width : 400px;
   height : 49px;
-  background-color: black;
+  background-color: #2396F0;
   color : white;
-  border-radius: 6px;
+  border: solid 1px #2396F0;
+  border-radius: 6px ;
   cursor: pointer;
 `;
 
@@ -182,9 +170,12 @@ const StBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width : 400px;
-  height : 515px;
+  justify-content: center;
+  width : 1155px;
+  height : 740px;
   margin : auto auto auto auto;
+  background-color: white;
+  border-radius: 32px;
 `;
 
 export default Login

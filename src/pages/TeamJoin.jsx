@@ -20,15 +20,12 @@ const TeamJoin = () => {
     // const { mutate, data } = useMutation(findUUID)
     const findUUIDMutate = useMutation(findUUID, {
         onSuccess: (data) =>{
-            console.log(data.data)
             setTeamUid(data.data.uuid)
-            console.log(teamUid);
         }
     })
 
     const joinMutate = useMutation(joinbyUUID, {
         onSuccess: (data) =>{
-            console.log(data.data)
 
         }
     })
@@ -37,7 +34,6 @@ const TeamJoin = () => {
         const uuid = {
             uuid : uuidRef.current.value
         }
-        console.log(uuid);
         findUUIDMutate.mutate(uuid);
         // console.log(data);
     }
