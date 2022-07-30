@@ -61,7 +61,7 @@ const TeamBoard = () => {
         <StLeft>
           <StSmallBox>
             <StTeamInfoBox>
-              {imgfile ? <StTeamImg src={main?.teamImage} /> : <></>}
+              {imgfile ? <StTeamImg onClick={()=>{setPage(1);}} src={main?.teamImage} /> : <></>}
               <StInfoBox>
                 <StTeamName>{main?.teamname}</StTeamName>
                 {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
@@ -86,24 +86,6 @@ const TeamBoard = () => {
   );
 };
 
-
-const StLLeft = styled.div`
-  width : 181px;
-`;
-
-const StLRight = styled.div`
-  width : 38px;
-  margin-top : 16px;
-  background-color: #F2F6F9;
-  border-top-left-radius: 10px;
-`;
-
-const StRRight = styled.div`
-  width : 181px;
-  background-color: #F2F6F9;
-  margin : 16px 0 0 0;
-`;
-
 const StImg = styled.img`
   width : 24px;
   height : 24px;
@@ -118,6 +100,7 @@ const StButton3 = styled.div`
     border-radius: 8px;
     background-color: ${props => (props.page == 3 ? "#EBF7FF;" : "none")};
     color:  ${props => (props.page == 3 ? "#2396F0;" : "#888888")};
+    cursor: pointer;
 `;
 
 const StButton2 = styled.div`
@@ -128,6 +111,7 @@ const StButton2 = styled.div`
     border-radius: 8px;
     background-color: ${props => (props.page == 2 ? "#EBF7FF;" : "none")};
     color:  ${props => (props.page == 2 ? "#2396F0;" : "#888888")};
+    cursor: pointer;
 `;
 
 const StButton1 = styled.div`
@@ -138,6 +122,7 @@ const StButton1 = styled.div`
     border-radius: 8px;
     background-color: ${props => (props.page == 1 ? "#EBF7FF;" : "none")};
     color:  ${props => (props.page == 1 ? "#2396F0;" : "#888888")};
+    cursor: pointer;
 `;
 
 const StBtBox = styled.div`
@@ -155,7 +140,7 @@ const StTeamClass = styled.div`
     align-items: center;
     width : 88px;
     height : 25px;
-    margin : auto 0 0 0 ;
+    margin : 10px 0 0 0 ;
     border-radius: 100px;
     color:white;
     background: #2396F0;
@@ -165,7 +150,7 @@ const StTeamName = styled.div`
     display: flex;
     justify-content: center;
     width : 154px;
-    height : 24px;
+    min-height : 24px;
     font-family: 'Inter';
     font-style: normal;
   
@@ -179,8 +164,8 @@ const StInfoBox = styled.div`
     flex-direction: column;
     align-items: center;
     width : 134px;
-    height: 61px;
-    margin : 0 0 0 0;
+    min-height: 61px;
+    margin : 20px 0 0 0;
 `;
 
 const StTeamImg = styled.img`
@@ -192,6 +177,7 @@ const StTeamImg = styled.img`
     object-fit: cover;
     border: 5px solid #FCFCFC;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
 `;
 
 const StTeamInfoBox = styled.div`
@@ -200,7 +186,7 @@ const StTeamInfoBox = styled.div`
     align-items: center;
     justify-content: space-between;
     width :214px;
-    height : 219px;
+    height : 229px;
     padding : 36px 16px 36px 24px;
 `;
 
@@ -221,6 +207,7 @@ const StLeft = styled.div`
   flex-direction: column;
   align-items: center;
   padding : 0 0 0 0px;
+  /* background-color: #F2F6F9; */
   `;
 
 const StMeetMake = styled.div`
