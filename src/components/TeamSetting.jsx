@@ -48,7 +48,7 @@ const TeamSetting = (props) => {
     const { data } = useGetTeamMain({ teamId });
     const teamid = { data }.data.teamid
     const teamname = useRef("");
-
+    console.log(props);
 
     // 복사하기 버튼
     const handleCopyClipBoard = async (text) => {
@@ -225,7 +225,7 @@ const TeamSetting = (props) => {
                     <StTeamOutBox>
                         <StTeamBox>
                             <StIntro src={Introduction} />
-
+                        <StInInBox>
                             <StDown>
                                 <StComeOn>
                                     <StBlack>
@@ -244,7 +244,7 @@ const TeamSetting = (props) => {
                                     <StMateList>
                                         {props?.prop.map((value, index) => {
                                             return <StUserBox key={index}>
-                                                <StUserImg />
+                                                <StUserImg src={value.profileImage}/>
                                                 <StUserInfo>
                                                     <StUserName>{value.nickname}</StUserName>
                                                     <StEmail>{value.username}</StEmail>
@@ -256,6 +256,7 @@ const TeamSetting = (props) => {
                             </StDown>
                             <StLine />
                             <StOut onClick={leaving}>팀 탈퇴하기</StOut>
+                        </StInInBox>
                         </StTeamBox>
                     </StTeamOutBox></StRight> : <></>}
             {state == 0 && teamLeader == nickname ?
@@ -293,7 +294,7 @@ const TeamSetting = (props) => {
                                         <StMateList>
                                             {props?.prop.map((value, index) => {
                                                 return <StUserBox key={index}>
-                                                    <StUserImg />
+                                                    <StUserImg src={value.profileImage}/>
                                                     <StUserInfo>
                                                         <StUserName>{value.nickname}</StUserName>
                                                         <StEmail>{value.username}</StEmail>
@@ -313,7 +314,7 @@ const TeamSetting = (props) => {
                                     </StMovePower>
                                 </StDown>
                                 <StLine />
-                                <StOut onClick={leaving}>팀 탈퇴하기</StOut>
+                                {/* <StOut onClick={leaving}>팀 탈퇴하기</StOut> */}
                                 <StBtBox>
                                     <StCancelBt onClick={() => { setState(0) }}>취소</StCancelBt>
                                 </StBtBox>
@@ -355,6 +356,14 @@ const TeamSetting = (props) => {
         </>
     )
 }
+
+const StInInBox = styled.div`
+    width : 1088px;
+    height : 550px;
+    background-color: white;
+    padding : 48px;
+    border-radius: 8px;
+`;
 
 const StBtBoxTwo = styled.div`
     display: flex;
@@ -539,7 +548,7 @@ const StCancelBt = styled.div`
 const StBtBox = styled.div`
     display: flex;
     justify-content: center;
-    width : 418px;
+    width : 100%;
     height : 54px;
     margin : 0 auto 0 auto;
 `;
@@ -561,6 +570,7 @@ const StEmail = styled.div`
 `;
 
 const StUserName = styled.div`
+    width : 150px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -577,7 +587,7 @@ const StUserInfo = styled.div`
     margin : 0 0 0 14px;
 `;
 
-const StUserImg = styled.div`
+const StUserImg = styled.img`
     width : 39px;
     height : 39px;
     border-radius: 39px;
@@ -619,7 +629,7 @@ const StMateList = styled.div`
 const StOut = styled.div`
     width : 98px;
     height : 20px;
-    margin : 0 auto 50px 170px;
+    margin : 0 auto 0px 0px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
@@ -671,7 +681,7 @@ const StComeOn = styled.div`
 
 const StDown = styled.div`
     width : 850px;
-    height : 598px;
+    height : 468px;
 `;
 
 const StLine = styled.div`
@@ -789,7 +799,7 @@ const StRight = styled.div`
   padding: 0 38px 36px 38px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background-color: #F2F6F9;
+  background-color: #EBF7FF;
 `;
 
 export default TeamSetting

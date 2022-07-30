@@ -100,5 +100,6 @@ const StBox = styled.div`
     background-color: white;
     border-top: 1px solid #D7D7D7;
     border-bottom: 1px solid #D7D7D7;
+    cursor: pointer;
 `;
 export default MeetingRight
