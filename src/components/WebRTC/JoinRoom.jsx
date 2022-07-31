@@ -26,7 +26,7 @@ import officeFive from '../../img/5.MeetingRoom/1.videochat/office/frame5.svg'
 import officeSix from '../../img/5.MeetingRoom/1.videochat/office/frame6.svg'
 import officeSeven from '../../img/5.MeetingRoom/1.videochat/office/frame7.svg'
 import officeEight from '../../img/5.MeetingRoom/1.videochat/office/frame8.svg'
-
+import cameraIcon from "../../img/btn_changecam.svg"
 
 
 const OPENVIDU_SERVER_URL = 'https://' + 'dkworld93.shop' + ':8443';
@@ -293,6 +293,7 @@ class JoinRoom extends Component {
                                     id="buttonSwitchCamera"
                                     onClick={this.switchCamera}
                                     value="Switch Camera"
+                                    src={cameraIcon}
                                 />
                             </div>
                         ) : null}
@@ -439,13 +440,13 @@ class JoinRoom extends Component {
     }
 }
 
-const StSwitch = styled.div`
+const StSwitch = styled.img`
     position :absolute;
-    bottom : 0;
+    left : 35px;
+    bottom : 20px;
     width : 56px;
     height : 56px;
     border-radius: 56px;
-    background-color: white;
 `;
 
 const StTable = styled.div`

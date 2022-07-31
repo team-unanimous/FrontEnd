@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react'
 import { useMutation } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import xicon from '../img/delete.png'
 import apis from '../api/main';
 import useGetTeamMain from '../Hooks/useGetTeamMain'
 import jwt_decode from "jwt-decode";
@@ -17,11 +16,9 @@ import Introduction from '../img/Preferences-20220725T100832Z-001/Preferences/le
 import TIntroduction from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/0.team_introduction.svg'
 import copyIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/1.btn_copy.svg'
 import selectIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/3.btn_selection.svg'
-import inviteIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/2.invitation/btn_invitation.svg'
 import closeIcon from '../img/Preferences-20220725T100832Z-001/Preferences/leader/team/modal/icon_close.svg'
 import basic from '../img/basicinfo_introduction.svg'
-
-
+import inviteIcon from '../img/invite.png'
 
 const TeamSetting = (props) => {
 
@@ -48,7 +45,7 @@ const TeamSetting = (props) => {
     const { data } = useGetTeamMain({ teamId });
     const teamid = { data }.data.teamid
     const teamname = useRef("");
-    console.log(props);
+
 
     // 복사하기 버튼
     const handleCopyClipBoard = async (text) => {
@@ -233,14 +230,14 @@ const TeamSetting = (props) => {
                                     </StBlack>
                                     <StInputBox>
                                         <StInput>{data.uuid}</StInput>
-                                        <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon} />
+                                        <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)}>복사하기</StCopyBt>
                                     </StInputBox>
                                 </StComeOn>
                                 <StListBox>
                                     <StBlack>
                                         팀원 관리
                                     </StBlack>
-                                    <StUserBt onClick={() => { setOpenInvite(true); }} src={inviteIcon} />
+                                    <StUserBt onClick={() => { setOpenInvite(true); }} src={inviteIcon}><img src={inviteIcon}/>팀원 초대하기</StUserBt>
                                     <StMateList>
                                         {props?.prop.map((value, index) => {
                                             return <StUserBox key={index}>
@@ -283,14 +280,14 @@ const TeamSetting = (props) => {
                                         </StBlack>
                                         <StInputBox>
                                             <StInput>{data.uuid}</StInput>
-                                            <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)} src={copyIcon} />
+                                            <StCopyBt onClick={() => handleCopyClipBoard(`${data.uuid}`)}>복사하기</StCopyBt>
                                         </StInputBox>
                                     </StComeOn>
                                     <StListBox>
                                         <StBlack >
                                             팀원 관리
                                         </StBlack>
-                                        <StUserBt onClick={() => { setOpenInvite(true); }} src={inviteIcon} />
+                                        <StUserBt onClick={() => { setOpenInvite(true); }} src={inviteIcon}><img src={inviteIcon}/>팀원 초대하기</StUserBt>
                                         <StMateList>
                                             {props?.prop.map((value, index) => {
                                                 return <StUserBox key={index}>
@@ -310,7 +307,7 @@ const TeamSetting = (props) => {
                                         <StBlack>
                                             팀장 권한 위임
                                         </StBlack>
-                                        <StUserBt onClick={() => { setOpenLeader(true) }} src={selectIcon} />
+                                        <StBt onClick={() => { setOpenLeader(true) }}>사용자 선택</StBt>
                                     </StMovePower>
                                 </StDown>
                                 <StLine />
@@ -357,6 +354,21 @@ const TeamSetting = (props) => {
     )
 }
 
+const StBt = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding : 0 15px 0 15px;
+    width : 130px;
+    height : 48px;
+    margin : 12px 0 0 0;
+    font-weight: 700;
+    border-radius: 6px;
+    background-color : #063250;
+    color: white;
+    cursor: pointer;
+`;
+
 const StInInBox = styled.div`
     width : 1088px;
     height : 550px;
@@ -389,20 +401,35 @@ const StHead = styled.img`
 `;
 
 const StIntro = styled.img`
-    margin : 48px 0 0 0;
+    margin : 37px 0 0 0;
 `;
 
-const StUserBt = styled.img`
-    width : 160px;
+const StUserBt = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding : 0 15px 0 15px;
+    width : 130px;
     height : 48px;
     margin : 12px 0 0 0;
+    font-weight: 700;
+    border-radius: 6px;
+    background-color : #063250;
+    color: white;
     cursor: pointer;
 `;
 
-const StCopyBt = styled.img`
-    width : 160px;
+const StCopyBt = styled.div`
+    display:flex;
+    justify-content :center;
+    align-items : center;
+    width : 150px;
     height : 48px;
-
+    background-color : #063250;
+    border-radius : 4px;
+    margin : 0 0 0 10px;
+    font-weight : 700;
+    color : white;
     cursor: pointer;
 `;
 
@@ -475,7 +502,6 @@ const StImgInputTwo = styled.button`
     border-radius: 5px;
     border: 1px solid #063250;
     background-color: white;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -494,7 +520,6 @@ const StImgInput = styled.button`
     border-radius: 5px;
     border: 1px solid black;
     background-color: #063250;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -561,7 +586,6 @@ const StMovePower = styled.div`
 `;
 
 const StEmail = styled.div`
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -571,7 +595,6 @@ const StEmail = styled.div`
 
 const StUserName = styled.div`
     width : 150px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -630,11 +653,9 @@ const StOut = styled.div`
     width : 98px;
     height : 20px;
     margin : 0 auto 0px 0px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
-    color : red;
     cursor: pointer;
 `;
 
@@ -665,7 +686,6 @@ const StInputBox = styled.div`
 const StBlack = styled.div`
     width : 150px;
     height : 20px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -727,58 +747,6 @@ const StDownBox = styled.div`
     height: 517px;
     margin : 32px 0 0 0;
     cursor: pointer;
-`;
-
-const StSmall = styled.div`
-    width: 300px;
-    height: 17px;
-    margin : 0 0 0 0;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-`;
-
-const StManage = styled.div`
-    width: 120px;
-    height: 29px;
-    margin : 0 0 8px 0;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-`;
-
-const StSetting = styled.div`
-    width: 200px;
-    height: 29px;
-    margin : 0 0 8px 0px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-`;
-
-const StUpBox2 = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width : 825px;
-    height : 124px;
-    padding : 30px 0 30px 30px;
-    background-color: #EAEAEA;
-    border-radius: 8px;
-`;
-
-const StUpBox1 = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width : 825px;
-    height : 124px;
-    padding : 0 0 0 30px;
-    background-color: linear-gradient(180deg, rgba(35, 150, 240, 0.8) 0%, rgba(73, 182, 255, 0.8) 100%);
-    border-radius: 8px;
 `;
 
 const StBox = styled.div`

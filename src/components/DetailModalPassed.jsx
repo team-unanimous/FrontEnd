@@ -135,7 +135,6 @@ const StIssue = styled.div`
     width: 600px;
     height: 20px;
     margin : 0 0 7px 0;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -189,7 +188,6 @@ const StHostLeft = styled.div`
     width: 80px;
     height: 20px;
     margin : 0 83px 0 0;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -218,7 +216,6 @@ const StTitle = styled.div`
     margin : 32px 0 0 0;
     padding : 0 0 32px 0;
     border-bottom: 2px solid #D9D9D9;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
