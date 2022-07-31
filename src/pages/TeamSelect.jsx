@@ -8,11 +8,9 @@ import { useMutation } from "react-query"
 import teamSelectImg from "../img/teamSelect.png";
 import { useEffect } from "react"
 import { getCookie } from "../Cookie"
-
-//테스트
-// import axis from '../api/sub'
-
-
+import icon_participate from "../img/icon_participate.svg"
+import icon_add from "../img/icon_add.svg"
+import teamAddProfile from "../img/TeamAddProfile.png"
 
 const TeamSelect = () => {
     const token = getCookie('token')
@@ -58,33 +56,57 @@ const TeamSelect = () => {
                 <StContainer>
                     <StTitleWrapper>
                         <StTitle>접속할 팀 페이지를 선택해주세요</StTitle>
-                        <StUnanimousTeamJoin
+                        {/* <StUnanimousTeamJoin
                             onClick={unaTeamJoinHandler}
-                        >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin>
+                        >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin> */}
                     </StTitleWrapper>
                     <StTeamBox>
                         {data.map((team, index) => (
                             <StTeamItemBox
                                 key={index}>
-                                <StTeamItem
-                                    key={index}
-                                    className="team-title"
+                                    <StTeamItem
+                                        key={index}
+                                        className="team-title"
+                                        onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
+                                        src={{ data }.data[index].teamImage}
+                                    >
+                                    </StTeamItem>
+                                    <StTeamName
                                     onClick={() => { navigate(`/teamboard/${team.teamId}`) }}
-                                    src={{ data }.data[index].teamImage}
-                                >
-                                </StTeamItem>
-                                <StTeamName>
-                                    {team.teamname}
-                                </StTeamName>
-                            </StTeamItemBox>
+                                    >
+                                        {team.teamname}
+                                    </StTeamName>
+                                </StTeamItemBox>
                         ))}
+                        {
+                            data.length > 4
+                            ? <></>
+                            : <StTeamItemBox>
+                            <StTeamItemDiv>
+                            <StNewTeamItem
+                            onClick={() => { navigate(`/teammake`) }}>
+                            </StNewTeamItem>
+                            </StTeamItemDiv>    
+                            <StTeamName 
+                            style={{color:"#888888"}}
+                            onClick={() => { navigate(`/teammake`) }}
+                            >
+                                팀 추가하기
+                            </StTeamName>
+                        </StTeamItemBox>
+                        }
+
                     </StTeamBox>
                     <StButtonWrapper>
                         <StInvitedButton onClick={() => navigate("/teaminvited")}>
-                            이미 초대된 팀 페이지에 접속하고 싶으신가요?
+                            <StImage imgsrc={icon_participate}>
+                            </StImage>
+                            이미 초대코드를 받으셨습니까?
                         </StInvitedButton>
-                        <StTeamMakeButton onClick={() => navigate("/teammake")}>
-                            새로운 팀 페이지를 만들고 싶으신가요?
+                        <StTeamMakeButton onClick={unaTeamJoinHandler}>
+                            <StImage imgsrc={icon_add}>
+                            </StImage>
+                            Unanimous 둘러보기 (체험용)
                         </StTeamMakeButton>
                     </StButtonWrapper>
                 </StContainer>
@@ -187,21 +209,39 @@ const StTeamItemBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
+    /* background-color: red; */
+    width: 180px;
+    height: 228px;
     `
 const StTeamItem = styled.img`
     width: 180px;
     height: 180px;
     
-    background-color: #D9D9d9;
     border-radius: 87px;
     object-fit: cover;
+    cursor: pointer;
     `
+
+const StTeamItemDiv = styled.div`
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const StNewTeamItem = styled.img`
+    width: 107px;
+    height: 107px;
+    border-radius: 100px;
+    background-image: url(${teamAddProfile});
+    cursor: pointer;
+`
 const StTeamName = styled.div`
     /* 팀이름 */
     
     width: 100px;
     height: 24px;
-    
     margin-top: 24px;
     
     font-family: 'Inter';
@@ -241,14 +281,14 @@ const StButtonWrapper = styled.div`
 const StInvitedButton = styled.div`
     /* Frame 281 */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     padding: 18px 25px;
     /* gap: 10px; */
     box-sizing: border-box;
 
-    width: 353px;
+    width: 250px;
     height: 53px;
 
     background: #EBF7FF;
@@ -265,14 +305,14 @@ const StInvitedButton = styled.div`
 const StTeamMakeButton = styled.div`
     /* Frame 282 */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: flex-end;
     padding: 18px 25px;
     gap: 10px;
     box-sizing: border-box;
 
-    width: 309px;
+    width: 260px;
     height: 53px;
 
     background: #EBF7FF;
@@ -285,6 +325,17 @@ const StTeamMakeButton = styled.div`
     order: 1;
     flex-grow: 0;
     cursor: pointer;
+`
+const StImage = styled.div`
+    width: 14px;
+    height: 14px;
+    background-image: ${props=>`url(${props.imgsrc})`};
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: black; */
+    z-index: 100;
+    margin-right: 10px;
 `
 
 

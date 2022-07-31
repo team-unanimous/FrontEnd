@@ -224,8 +224,6 @@ const Landing = () => {
                         Unanimous<br />
                         지금 바로 접속해보세요
                     </StBottomBrandingTitle>
-                    <StBottomBrandingBody>
-                    </StBottomBrandingBody>
                     <StBodyButton marginTop={"0px"} btnColor={"#063250"} onClick={() => navigate('/login')}>
                         접속하기
                     </StBodyButton>
@@ -260,7 +258,7 @@ const StJumbotronContainer = styled.div`
     display : flex;
     flex-direction : row;
     align-items : center;
-    width : 98%;
+    width : 100%;
     height: 67.5rem;
     @media screen and (max-width: 600px) {
         height: 38rem;
@@ -382,6 +380,7 @@ const StBodyButton = styled.div`
 
     width: 127px;
     height: 50px;
+    padding: 5px 9px;
 
     background: ${props => props.btnColor ||'#2396F0'};
 ;
@@ -499,6 +498,7 @@ const StUSPHeaderText = styled.div`
 
     text-align: center;
     letter-spacing: 0.2px;
+    margin-top: 16px;
 
     /* Gray/500 */
     color: #6D7280;
@@ -606,7 +606,7 @@ const StFeatureCardTextBox = styled.div`
 const StFeatureCardTextTitle = styled.div`
     /* text */
     width: 100%;
-    height: 50%;
+    height: 36px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -699,7 +699,7 @@ const StTeamSectionImageWrapper = styled.div`
     align-items: center;
     padding: 0px;
     gap: 60px;
-    margin-top: 80px;
+    margin-top: 30px;
 
     width: 1005px;
     height: 638px;
@@ -752,7 +752,7 @@ const StTeamSectionImageItemBox = styled.div`
 `
 const StTeamSectionImageItem = styled.div`
     width: 100%;
-    height: 12.75rem;
+    height: 11.5rem;
     border-radius: 4px;
     align-items: center;
     justify-content: center;
@@ -800,7 +800,7 @@ const StTeamSectionImageBody = styled.div`
 
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 20px;
     line-height: 24px;
     text-align: center;
@@ -891,6 +891,7 @@ const StBottomBrandingBody = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
+    background-color: black;
 `
 const StFooterContainer = styled.div`
     /* footer */

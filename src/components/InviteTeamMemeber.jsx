@@ -48,8 +48,9 @@ const InviteTeamMember = ()=> {
                     <StEmailInputBox>
                     <StPwInput type='text' placeholder='이메일 입력' ref={emailRef}/>
                     <StEmailButton 
-                    onClick={()=>{
-                        if (emailRef.current.value == "" ) return
+                    onClick={()=>{ 
+                        if (emailRef.current.value == "" ) return 
+
                         setMemberEmail([
                             ...memberEmail,
                             emailRef?.current?.value])
@@ -65,7 +66,7 @@ const InviteTeamMember = ()=> {
                         ? <></>
                         : <>{memberEmail.map((email, i)=>(
                                     <StLiItem key={i}>{`${email}`}
-                                    <input style={{width:"1rem"}} type={"image"} src={xbutton} onClick={
+                                    <input style={{width:"10.5px"}} type={"image"} src={xbutton} onClick={
                                         ()=>{
                                             setMemberEmail(memberEmail.filter(( _, index) => index !== i))
                                     }}/>
@@ -247,6 +248,7 @@ const StPwInput = styled.input`
   height : 44px;
   border-radius: 6px;
   border: 1px solid #000000;
+  padding-left: 10px;
 `;
 const StEmailButton = styled.button`
   width : 132px;
@@ -255,6 +257,8 @@ const StEmailButton = styled.button`
   background-color: #063250;
   color : white;
   border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
 `;
 const StCancel = styled.button`
   width : 200px;
