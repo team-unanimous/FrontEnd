@@ -2,11 +2,8 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components'
-import { useGetTeamInfo } from '../Hooks/useGetTeamInfo'
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
-import { useEffect } from 'react';
-import { useQueryClient } from 'react-query';
 import logo from '../img/favicon.svg'
 
 const Header = ({ teamname }) => {
@@ -14,21 +11,21 @@ const Header = ({ teamname }) => {
   const navigate = useNavigate();
 
   const [clicked, setClicked] = useState(false);
-  const { data: user } = useGetTeamInfo();
   const decoded = jwt_decode(getCookie('token'));
   const nickname = decoded.USER_NICKNAME;
   const img = decoded.USER_IMAGE;
-  const queryClient = useQueryClient();
   const teamId = useParams().teamid;
 
   return (
     <StWhole>   
        <StLogo onClick={()=>{navigate(`/teamselect`)}} src={logo}/>
-      
         <StRightBox>
-          <StMeet onClick={()=>{navigate(`/teamboard/${teamId}/meetmakeone`)}}>
-            미팅룸 만들기
-          </StMeet>
+
+            <StMeet onClick={()=>{navigate(`/teamboard/${teamId}/meetmakeone`)}}>
+              <StPlus>+</StPlus>
+              미팅룸 만들기
+            </StMeet>
+
           {/* <StDropBox>
             <StDefault onClick={() => { setClicked(!clicked) }}>{teamname}</StDefault>
           </StDropBox> */}
@@ -41,6 +38,15 @@ const Header = ({ teamname }) => {
   )
 }
 
+
+const StPlus = styled.div`
+  display: flex;
+  justify-content: center;
+  margin : 0 0 0 0;
+  font-size: 25px;
+  font-weight: 400;
+`;
+
 const StMyPaged = styled.div`
   display: flex;
   align-items: center;
@@ -49,14 +55,14 @@ const StMyPaged = styled.div`
 
 const StMeet = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  padding : 3px 19px 3px 19px;
   align-items: center;
-  width : 149px;
+  width : 125px;
   height : 40px;
-  margin : 0 20px 0 0;
-  font-family: 'BBTreeG_B';
+  margin : 0 0px 0 0;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 16px;
   line-height: 20px;
   background: rgba(241, 211, 148, 0.3);
@@ -73,11 +79,9 @@ const StNick = styled.div`
     display: flex;
     justify-content: start;
     height : 20px;
-    font-family: 'Inter';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 16px;
-
 `;
 
 const StRightBox = styled.div`
@@ -86,12 +90,11 @@ const StRightBox = styled.div`
     margin : auto 50px auto auto;
     max-width : 450px;
     height : 48px;
-
 `;
 
 const StMyPage = styled.img`
-    width : 3rem;
-    height : 3rem;
+    width : 40px;
+    height : 40px;
     background-color: skyblue;
     margin : 0 16px 0 32px;
     border-radius: 10rem;

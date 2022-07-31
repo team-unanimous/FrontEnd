@@ -3,7 +3,8 @@ import "./font.css"
 
 const GlobalStyle=createGlobalStyle`
     body{
-        font-family: "base";
+        font-family: "test1";
+        font-size: 16px;
     }
 `;
 

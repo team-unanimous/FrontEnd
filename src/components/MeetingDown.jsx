@@ -97,7 +97,6 @@ const StIssue = styled.div`
     display: flex;
     width: 312px;
     height: 20px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;

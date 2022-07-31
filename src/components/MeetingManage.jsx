@@ -192,7 +192,7 @@ const MeetingManage = () => {
                 <StTitle>{value.meetingTitle}</StTitle>
               </StList>
               {nickname==value.meetingCreator?<StButtonBox>
-                <StSmallButton onClick={()=>{navigate(`/teamboard/${teamId}/${value.meetingId}/meetingeditone`)}}>수정</StSmallButton>
+                {/* <StSmallButton onClick={()=>{navigate(`/teamboard/${teamId}/${value.meetingId}/meetingeditone`)}}>수정</StSmallButton> */}
                 <StSmallButton onClick={()=>{delet(value.meetingId)}}>삭제</StSmallButton>
                 <StButton onClick={()=>{navigate(`/meetingroom/${teamId}/${value.meetingId}`)}}>
                   <StIcon src={participate}/>참여하기
@@ -270,7 +270,6 @@ const StTime = styled.div`
   justify-content: center;
   width : 120px;
   height : 20px;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -286,7 +285,6 @@ const StTitle = styled.div`
   height : 46px;
   margin : 0 0 0 10px;
   padding : 0 0px 0 20px;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -300,7 +298,6 @@ const StHost = styled.div`
   align-items: center;
   width : 170px;
   height : 46px;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -313,7 +310,6 @@ const StTitleTop = styled.div`
   width : 320px;
   height : 20px;
   padding : 0 0 0 20px;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -327,7 +323,6 @@ const StHostTop = styled.div`
   width : 120px;
   height : 20px;
   padding : 0 0 0 20px;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -341,7 +336,6 @@ const StDateTop = styled.div`
   width : 120px;
   height : 20px;
   padding : 0 0 0 20px;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -356,7 +350,6 @@ const StDate = styled.div`
   width : 100px;
   height : 46px;
   padding : 0 0px 0 20px;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -398,7 +391,7 @@ const StfInListBox = styled.div`
 const StfListBox = styled.div`
   display: flex;
   flex-direction: column;
-  width : 1184px;
+  width : 1261px;
   height : 90vh;
   margin: 20px auto 0 0px;
   background-color: #EBF7FF;
@@ -421,7 +414,7 @@ const StfListBox = styled.div`
 
 const StBlackBox = styled.div`
   display: flex;
-  width : 320px;
+  width : 570px;
   height : 20px;
   margin : 80px auto 0 40px;
   z-index: 1; 
@@ -430,12 +423,11 @@ const StBlackBox = styled.div`
 const StBlack2 = styled.div`
     display: flex;
     justify-content: center;
-    width : 150px;
+    width : 140px;
     height : 20px;
     border-bottom: ${props=>props.state==2?"4px solid #2396F0;":"4px solid #D7D7D7"};
     color : ${props=>props.state==2?" #2396F0;":"#D7D7D7;"};
     padding : 0 0 20px 0;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -445,12 +437,11 @@ const StBlack2 = styled.div`
 const StBlack1 = styled.div`
     display: flex;
     justify-content: center;
-    width : 150px;
+    width : 140px;
     height : 20px;
     border-bottom: ${props=>props.state==1?"4px solid #2396F0;":"4px solid #D7D7D7"};
     color : ${props=>props.state==1?" #2396F0;":"#D7D7D7;"};
     padding : 0 0 20px 0;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -460,12 +451,11 @@ const StBlack1 = styled.div`
 const StBlack0 = styled.div`
     display: flex;
     justify-content: center;
-    width : 150px;
+    width : 140px;
     height : 20px;
     border-bottom: ${props=>props.state==0?"4px solid #2396F0;":"4px solid #D7D7D7"};
     color : ${props=>props.state==0?" #2396F0;":"#D7D7D7;"};
     padding : 0 0 20px 0;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -479,14 +469,13 @@ const StLine = styled.div`
 `;
 
 const StRight = styled.div`
-  width : 1184px;
+  width : 1261px;
   height : 91.5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 38px 0px 38px;
+  padding: 0 0px 0px 0px;
   overflow-x: hidden;
-  
   ::-webkit-scrollbar{
     width:10px;
   }

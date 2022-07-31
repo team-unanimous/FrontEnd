@@ -138,7 +138,7 @@ const StCopy = styled.div`
     display: flex;
     align-items: center;
     width : 100px;
-    margin : 20px 0 0 0;
+    margin : 10px 0 0 0;
     color : #2396F0;
     cursor: pointer;
 `;
@@ -163,10 +163,10 @@ const StButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width : 108px;
+    width : 126px;
     height : 24px;
-    padding : 15px 64px 15px 64px;
-    margin : 0 auto 0 auto;
+    padding : 15px 55px 15px 55px;
+    margin : 80px auto 0 auto;
     border: 1px solid black;
     border-radius: 6px;
     background-color: #063250;
@@ -188,7 +188,6 @@ const StIssue = styled.div`
     width: 600px;
     height: 20px;
     margin : 0 0 7px 0;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -200,7 +199,7 @@ const StIssues = styled.div`
     flex-direction: column;
     padding: 16px;
     width: 591px;
-    height: 60px;
+    height: 150px;
     background-color: ${props=>props.color};
     border-radius: 10px;
 
@@ -221,8 +220,8 @@ const StIssueBox = styled.div`
     display: flex;
     align-items: flex-start;
     width: 100%;
-    height: 92px;
-    margin : 0 0 10px 0;
+    height: 152px;
+    margin : 0 0 25px 0;
 `;
 
 const StDateBox = styled.div`
@@ -230,6 +229,7 @@ const StDateBox = styled.div`
     align-items: flex-start;
     width: 100%;
     height: 20px;
+    margin : 0 0 0 0;
 `;
 
 const StRight = styled.div`
@@ -242,7 +242,6 @@ const StHostLeft = styled.div`
     width: 80px;
     height: 20px;
     margin : 0 83px 0 0;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -271,7 +270,6 @@ const StTitle = styled.div`
     margin : 32px 0 0 0;
     padding : 0 0 32px 0;
     border-bottom: 2px solid #D9D9D9;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
@@ -290,13 +288,13 @@ const StImg = styled.img`
 
 const StBox = styled.div`
     position : fixed;
-    top : 100px;
+    top : 40px;
     left : 460px;
     display: flex;
     flex-direction: column;
     width : 784px;
-    height : 628px;
-    padding : 120px 80px 80px 80px;
+    height : 708px;
+    padding : 80px 80px 80px 80px;
     border-radius: 8px;
     background-color: white;
     z-index: 20;

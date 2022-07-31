@@ -11,8 +11,8 @@ import GlobalStyle from "./GlobalStyle";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
+     <GlobalStyle/>
     <Provider store={store}>
-      <GlobalStyle/>
       <App />
     </Provider>
   </BrowserRouter>

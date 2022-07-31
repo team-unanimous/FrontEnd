@@ -67,7 +67,6 @@ const TeamboardHome = () => {
     setOpenPassed(false);
   }
 
-  console.log(count);
 
   return (
     <>
@@ -299,7 +298,7 @@ const StDownBox = styled.div`
   flex-direction:column;
   width : 1120px;
 
-  padding : 32px;
+  padding : 18px 32px 18px 32px;
   margin : 32px 0 0 0;
   background-color: white;
   border-radius: 20px;
@@ -412,7 +411,7 @@ const StTodaysInnerBox = styled.div`
   justify-content : space-between;
   width : 100%;
   height : 266px;
-  margin : 0.7rem 0 0 0;
+  margin : 0.9rem 0 0 0;
   border-radius: 20px;
 `;
 

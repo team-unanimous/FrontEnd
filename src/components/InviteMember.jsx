@@ -37,6 +37,7 @@ const InviteMember = ({open,close})=> {
         <>
         <StBack onClick={close}/>
         <StBox>
+                <StClose src={xbutton} onClick={close}/>
                 <StTitle>사용자 초대</StTitle>
                 <StEmailBox>
                     <StEmailInputBox>
@@ -52,24 +53,23 @@ const InviteMember = ({open,close})=> {
                     추가
                     </StEmailButton>
                     </StEmailInputBox>
+                    <StDiv>
                     {
                         !memberEmail
                         ? <></>
                         : <>{memberEmail.map((email, i)=>(
                                 <StUlContainer key={i}>
                                     <StLiItem>{`${email}`}
-                                
-                                    <input style={{width:'1rem'}} type={'image'} src={xbutton} onClick={
+                                    <StInput src={xbutton} onClick={
                                         ()=>{
                                             setMemberEmail(memberEmail.filter(( _, index) => index !== i))
-
                                     }}/>
                                     </StLiItem>
                                 </StUlContainer>
                         ))}</>
                     }
-                    <StEmailWarnning>
-                    </StEmailWarnning>
+                    </StDiv>
+                  
                 </StEmailBox>
                 <div onClick={close}>
                     <StAgree onClick={SendMemberListHandler}>
@@ -83,16 +83,46 @@ const InviteMember = ({open,close})=> {
     )
 }
 
+const StClose = styled.img`
+    position : absolute;
+    top : 30px;
+    right : 30px;
+    width : 16px;
+    height : 16px
+`;
+
+const StDiv = styled.div`
+    width : 541px;
+    height : 120px;
+    overflow-x: hidden;
+    ::-webkit-scrollbar{
+    width:10px;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: #EAEAEA;
+        border-radius: 100px;
+    }
+    ::-webkit-scrollbar-track{
+        border-radius: 1rem;
+    }
+`;
+
+const StInput = styled.img`
+    width : 10.5px;
+    height : 10.5px;
+    margin : 0 0 0 24px;
+`;
+
 const StBox = styled.div`
     position: fixed;
-    top: 250px;
+    top: 200px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
     width : 540px;
-    height : 335px;
+    height : 393px;
     padding: 100px 80px 80px 80px;
+    border-radius: 8px;
     order: 1;
     background-color: white;
     z-index : 20;
@@ -117,80 +147,49 @@ const StUlContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 `
 const StLiItem = styled.div`
     font-size: 16px;
+    display: flex;
     align-self: flex-start;
+    align-items: center;
+    justify-content: center;
+    padding : 6px 10px 6px 10px;
+    background-color: #F1F1F1;
+    border-radius: 100px;
+    margin : 0 0 8px 0;
 `
 
-const StContainer = styled.div`
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 100px 80px 80px 80px;
-    width: 520px;
-    height: 355px;
-    `
 const StTitle = styled.div`
     /* 새로운 팀 정보를 입력해주세요 */
     width: 610px;
     height: 58px;
-    font-family: ‘Inter’;
+    margin : 0 0 48px 0;
     font-style: normal;
-    font-weight: 600;
-    font-size: 48px;
+    font-weight: 700;
+    font-size: 36px;
     line-height: 58px;
     /* identical to box height */
     text-align: center;
-    color: #000000;
     /* Inside auto layout */
     flex: none;
     order: 0;
     flex-grow: 0;
     `
-const StInputWrapper = styled.div`
-    /* Frame 268 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px;
-    gap: 25px;
-    width: 540px;
-    height: 302px;
-    margin-top: 60px;
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-`
-const StEmailWarnning = styled.div`
-  height : 19px;
-  font-weight: 500;
-  font-size: 16px;
-`;
-const StBtBox = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 418px;
-  height: 54px;
-  margin : 3.75rem 0 0 0;
-`;
+
+
+
+
 const StEmailBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width : 541px;
-  height: 100px;
-  margin : 0 0 0 0;
+  height: 220px;
+
 `;
-const StEmailTitle = styled.div`
-  width : 200px;
-  height : 19px;
-  font-weight: 700;
-  font-size: 15px;
-`;
+
 const StEmailInputBox = styled.div`
   display: flex;
   justify-content: center;
@@ -201,6 +200,7 @@ const StEmailInputBox = styled.div`
 const StPwInput = styled.input`
   width : 541px;
   height : 44px;
+  padding : 0 0 0 10px;
   border-radius: 6px;
   border: 1px solid #000000;
 `;
@@ -209,6 +209,8 @@ const StEmailButton = styled.button`
   height : 49px;
   margin : 0 0 0 9px;
   background-color: #063250;
+  font-size: 16px;
+  font-weight : 700;
   border: none;
   color : white;
   border-radius: 6px;
@@ -219,6 +221,7 @@ const StAgree = styled.button`
   width : 132px;
   height : 54px;
   background-color: #063250;
+  margin : 48px 0 0 0;
   font-weight: 700;
   font-size: 20px;
   color : white;
