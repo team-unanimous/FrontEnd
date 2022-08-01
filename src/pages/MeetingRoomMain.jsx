@@ -14,7 +14,7 @@ import apis from "../api/main";
 import { useMutation } from "react-query";
 import Agenda from "../components/Agenda"
 import ModalFinish from "../components/ModalFinish";
-import { setSourceMapRange } from "typescript";
+import Meetinglast from "../components/Meetinglast"
 
 
 const MeetingRoomMain = () => {
@@ -53,21 +53,21 @@ const MeetingRoomMain = () => {
     }
 
     // 채팅 끝내기
-    const chat = async (data)=>{
+    const chat = async (data) => {
         const datas = await apis.postChatFinish(data);
         return datas;
     }
 
-    const {mutate:chatting} = useMutation(chat,{
-        onSuccess:()=>{
+    const { mutate: chatting } = useMutation(chat, {
+        onSuccess: () => {
         },
-        onError:()=>{
+        onError: () => {
         }
     });
 
-    const chatt=()=>{
+    const chatt = () => {
         chatting({
-            meetingId:meetingId,
+            meetingId: meetingId,
         })
     }
 
@@ -91,15 +91,15 @@ const MeetingRoomMain = () => {
                     {main?.meetingCreator == nickname ?
                         <div onClick={chatt}>
                             <StQuit onClick={() => { setOpenFinish(true) }}>
-                            <img src={closeIcon} />회의 끝내기
+                                <img src={closeIcon} />회의 끝내기
                             </StQuit>
                         </div> :
                         <div onClick={chatt}>
-                        <StLeave onClick={() => { setOpenFinish(true) }}>
-                            <img src={closeIcon} />회의 나가기
-                        </StLeave></div>}
+                            <StLeave onClick={() => { setOpenFinish(true) }}>
+                                <img src={closeIcon} />회의 나가기
+                            </StLeave></div>}
                     <JoinRoom Theme={main?.meetingTheme} />
-                    <Agenda meetID={meetingId} main={main} />
+                    {/* <Agenda meetID={meetingId} main={main} /> */}
                 </StMainThemeWrapper>
                 <StSidebarWrapper>
                     <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
@@ -120,8 +120,8 @@ const MeetingRoomMain = () => {
                     {
                         page == "chat"
                         ? <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
-                        : <></> //용우님 
-                    }  
+                        : <Meetinglast meetID={meetingId} main={main} /> //용우님
+                    }
                 </StSidebarWrapper>
             </StContainer>
         </>

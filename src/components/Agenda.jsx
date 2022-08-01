@@ -44,7 +44,6 @@ const Agenda = ({ main }) => {
     // 내가 보여줄 안건내용 저장
     const [msg, setMsg] = useState(null);
     const [numberagenda, setNumberagenda] = useState(0);
-    const [stampvalue, setStampvalue] = useState(null);
     const [number, setNumber] = useState(1);
 
     const datas = {
@@ -62,6 +61,7 @@ const Agenda = ({ main }) => {
                             const newMessage = JSON.parse(resp.body);
                             if (newMessage.type == "ISSUE") {
                                 // 문자열 해제
+                                console.log(newMessage.message)
                                 const getagenda = JSON.parse(newMessage.message);
                                 setMsg(getagenda[0].issueContent)
                                 setNumber(getagenda[1].id)
@@ -89,11 +89,9 @@ const Agenda = ({ main }) => {
     }, [])
 
 
-    // get 임시로
+    // get 하는곳
     const useGetIssueLists = async ({ meetID }) => {
         const { data } = await apis.getIssueList({ meetID });
-
-
         // 안건정보 state저장
         setAgendalist(data)
         return data;
@@ -114,7 +112,6 @@ const Agenda = ({ main }) => {
                 ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
             })
         } catch (error) {
-
         }
     }
 
@@ -135,12 +132,12 @@ const Agenda = ({ main }) => {
     }
 
     const numberminus = () => {
-        setNumberagenda(numberagenda => numberagenda - 1)
+        setNumberagenda(numberagenda - 1)
         HandleSend();
     }
 
     const numberplus = () => {
-        setNumberagenda(numberagenda => numberagenda + 1)
+        setNumberagenda(numberagenda + 1)
         HandleSend();
     }
 
@@ -148,13 +145,13 @@ const Agenda = ({ main }) => {
     // console.log(msg)
     // console.log(agendalist)
 
-    // // 방장아닌유저 버튼사라짐 확실하게 고침
-    // console.log(main)
-    // console.log(main?.meetingCreator)
+    // 방장아닌유저 버튼사라짐 확실하게 고침
+    console.log(main)
+    console.log(main?.meetingCreator)
+    console.log(decoded?.USER_NICKNAME)
     return (
         <>
             <Bigbox>
-                <button onClick={HandleSend}>send</button>
                 {1 <= numberagenda && main?.meetingCreator === decoded?.USER_NICKNAME ?
                     <StImgLeft src={leftbtn} onClick={numberminus} />
                     : <Stnumbtn />
@@ -164,9 +161,9 @@ const Agenda = ({ main }) => {
                     <StImgRight src={rightbtn} onClick={numberplus} />
                     : <Stnumbtn />
                 }
-                {stampvalue ?
+                {/* {stampvalue ?
                     <StstampBtn src={stampbtn} /> : <></>
-                }
+                } */}
             </Bigbox>
         </>
     );

@@ -41,7 +41,8 @@ const apis = {
     postLeader: (data) => api.post(`/api/teams/${data.teamId}/manager`, data),
     patchNow: (data) => api.patch(`/api/meetings/${data.meetingId}/now`),
     patchDone: (data) => api.patch(`/api/meetings/${data.meetingId}/done`),
-    postChatFinish : ({meetingId})=>api.post(`/api/chat/meetings/${meetingId}/rooms/exit`),
+    postChatFinish: ({ meetingId }) => api.post(`/api/chat/meetings/${meetingId}/rooms/exit`),
+    patchAgenda: (data) => api.patch(`/api/meetings/${data.meetingId}/issues/${data.issueId}/result`, data), // 안건결과패치
 
     // 경계
     postLogin: (data) => api.post(`/api/users/login`, data), // 로그인
