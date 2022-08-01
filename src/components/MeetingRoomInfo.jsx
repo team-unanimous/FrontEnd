@@ -79,7 +79,7 @@ const StWrapLower = styled.div`
     align-items: flex-start;
     gap: 24px;
 
-    width: 221px;
+    width: 90%;
     height: 48px;
 
     flex: none;

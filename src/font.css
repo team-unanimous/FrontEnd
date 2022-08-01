@@ -1,0 +1,12 @@
+@font-face{
+    font-family: "Hallym Gothic";
+    src:url("./font/Binggrae-Bold.ttf")
+}
+@font-face{
+    font-family: "test1";
+    src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2') format('woff2');
+}
+@font-face{
+    font-family: "test2";
+    src:url('./font/Binggrae-Bold.ttf')
+}

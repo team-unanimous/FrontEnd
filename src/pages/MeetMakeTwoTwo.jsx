@@ -249,7 +249,7 @@ const StSumnailImg2 = styled.img`
 `;
 
 const StSumnailImg3 = styled.img`
-  border: ${props=>(props.clicked == 3 ? "2px solid #52606b" :"none")};
+  border: ${props=>(props.clicked == 3 ? "2px solid #2396F0" :"none")};
   width : 62px;
   height : 62px;
   border-radius: 8px;

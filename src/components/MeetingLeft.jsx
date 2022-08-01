@@ -34,7 +34,6 @@ const MeetingLeft = (prop) => {
     )
 }
 
-
 const StUserImg = styled.img`
     width : 22.4px;
     height: 22.4px;
@@ -48,6 +47,8 @@ const StButton = styled.button`
     border-radius: 5px;
     color : white;
     background-color: #063250;
+    font-weight: 700;
+    font-size : 16px;
     border : none;
     cursor: pointer;
 `;
@@ -90,6 +91,7 @@ const StBox = styled.div`
     height : 52px;
     border-top: 1px solid #D7D7D7;
     border-bottom: 1px solid #D7D7D7;
+    cursor: pointer;
 `;
 
 export default MeetingLeft

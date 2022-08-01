@@ -9,7 +9,6 @@ import thumbnail5 from '../img/TeamBoard/3.beforemeeting/thumbnail5.svg'
 
 
 const MeetingDown = (prop) => {
-
     
   return (
     <>
@@ -98,7 +97,6 @@ const StIssue = styled.div`
     display: flex;
     width: 312px;
     height: 20px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -139,6 +137,7 @@ const StBox = styled.div`
     background-color:${props=>props.back};
     border: 1px solid rgba(215, 215, 215, 0.5);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
 `;
 
 export default MeetingDown

@@ -113,32 +113,35 @@ const MeetingRoomMain = () => {
 
 const StQuit = styled.div`
     display: flex;
+    justify-content: space-between;
     align-items: center;
     position : absolute;
     left : 36px;
     top : 30px;
-    width : 127px;
+    width : 117px;
     height : 12px;
-    padding : 14px 20px;
+    padding : 20px 25px;
     border-radius: 100px;
-    box-shadow:0px 4px 4px rgba(0, 0, 0, 0.025);
+    box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
     background-color: rgba(30,34,34,0.4);
     color : white;
+    font-size: 16px;
     z-index: 10;
     cursor: pointer;
 `;
 
 const StLeave = styled.div`
     display: flex;
+    justify-content: space-between;
     align-items: center;
     position : absolute;
     left : 36px;
     top : 30px;
-    width : 127px;
+    width : 117px;
     height : 12px;
-    padding : 14px 20px;
+    padding : 20px 25px;
     border-radius: 100px;
-    box-shadow:0px 4px 4px rgba(0, 0, 0, 0.025);
+    box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
     background-color: #2396F0;
     color : white;
     z-index: 10;

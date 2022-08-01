@@ -62,7 +62,6 @@ const StButton = styled.div`
     background-color: #063250;
     border : none;
     color:white;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -75,7 +74,6 @@ const StUp = styled.div`
     width: 302px;
     height: 19px;
     margin : 0 auto 0 auto;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -88,7 +86,6 @@ const StTitle = styled.div`
     width : 484px;
     height: 44px;
     margin : 0 auto 0 auto;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 36px;

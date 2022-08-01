@@ -24,6 +24,7 @@ import onAirIcon from '../img/TeamBoard/defaultmessage_nowmeeting.svg'
 import onReserveIcon from '../img/TeamBoard/defaultmessage_reservedmeeting.svg'
 import onPassedIcon from '../img/TeamBoard/defaultmessage_beforemeeting.svg'
 import MeetingDown from './MeetingDown'; 
+import seokwoo from '../img/hyunjatime.png'
 
 
 const TeamboardHome = () => {
@@ -50,6 +51,7 @@ const TeamboardHome = () => {
   const [meetingTime, setMeetingTime] = useState();
   const [meetingCreator, setMeetingCreator] = useState();
   const [meetingThumbnail, setMeetingThumbnail] = useState();
+  const [count, setCount] = useState(0);
   const [issues, setIssues] = useState();
 
 
@@ -64,6 +66,7 @@ const TeamboardHome = () => {
   const closeModalPass = () => {
     setOpenPassed(false);
   }
+
 
   return (
     <>
@@ -109,13 +112,13 @@ const TeamboardHome = () => {
         <StTodaysMeetBox>
           오늘의 안건 추천
           <StTodaysInnerBox>
-            <StReco>
+            {count==10?<StReco><StEgg src={seokwoo}/></StReco>:<StReco onClick={()=>setCount(count+1)}>
               <img src={recommendone} />
               <StDiv>
                 <StUp>회식 메뉴 추천</StUp>
                 <StDown>남녀노소 좋아하는 치킨? 든든한 삼겹살? 다양한 메뉴가 있는 중식?</StDown>
               </StDiv>
-            </StReco>
+            </StReco>}
             <StReco>
               <img src={recommendtwo} />
               <StDiv>
@@ -276,7 +279,11 @@ const TeamboardHome = () => {
   )
 }
 
-
+const StEgg = styled.img`
+  width: 362.67px;
+  height: 266px;
+  border-radius: 20px;
+`;
 
 const StDownInnerBox = styled.div`
   display: flex;
@@ -291,7 +298,7 @@ const StDownBox = styled.div`
   flex-direction:column;
   width : 1120px;
 
-  padding : 32px;
+  padding : 18px 32px 18px 32px;
   margin : 32px 0 0 0;
   background-color: white;
   border-radius: 20px;
@@ -378,7 +385,6 @@ const StDown = styled.div`
 `;
 
 const StUp = styled.div`
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -405,7 +411,7 @@ const StTodaysInnerBox = styled.div`
   justify-content : space-between;
   width : 100%;
   height : 266px;
-  margin : 0.7rem 0 0 0;
+  margin : 0.9rem 0 0 0;
   border-radius: 20px;
 `;
 
@@ -419,14 +425,9 @@ const StTodaysMeetBox = styled.div`
   box-shadow:0px 4px 10px rgba(0, 0, 0, 0.05)
 `;
 
-const StLastMeetBox = styled.div`
-  width : 848px;
-  height : 342px;
-  margin : 6rem 0 1rem 0;
-`;
 
 const StRight = styled.div`
-  width : 1184px;
+  width : 1195px;
   height : 86.5vh;
   display: flex;
   flex-direction: column;
@@ -434,7 +435,7 @@ const StRight = styled.div`
   padding: 0 30px 36px 36px;
   border-top-left-radius:20px;
   border-top-right-radius:20px;
-  background-color: #F2F6F9;
+  background-color: #EBF7FF;
   overflow-x: hidden;
   ::-webkit-scrollbar{
     width:10px;

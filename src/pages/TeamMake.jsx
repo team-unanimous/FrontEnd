@@ -132,6 +132,7 @@ const StPwInput = styled.input`
   height : 44px;
   border-radius: 6px;
   border: 1px solid #000000;
+  padding-left: 10px;
 `;
 
 const StEmailInputBox = styled.div`
@@ -147,7 +148,7 @@ const StEmailBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width : 541px;
-  height: 100px;
+  height: 80px;
   margin : 0 0 0 0;
 `;
 const StAgree = styled.button`

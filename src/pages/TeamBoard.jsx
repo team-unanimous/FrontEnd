@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import Header from '../components/Header';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import TeamboardHome from '../components/TeamboardHome';
 import MeetingManage from '../components/MeetingManage';
 import TeamSetting from '../components/TeamSetting';
@@ -17,7 +16,10 @@ import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
 import { useQueryClient } from 'react-query';
 import apis from '../api/main';
-import plusIcon from '../img/TeamBoard/floatingaction_add.svg'
+import yujin from '../img/Easter/yujin.jpg'
+import tuto1 from '../img/tuto1.png';
+import tuto2 from '../img/tuto2.png';
+import tutoBt from '../img/tutoBt1.png';
 
 const TeamBoard = () => {
 
@@ -32,6 +34,14 @@ const TeamBoard = () => {
   const nickname = decoded.USER_NICKNAME;
   const [imgfile, setImgfile] = useState("");
 
+  const [count, setCount] = useState(0);
+
+  const token = getCookie("token");
+
+  // if(!token){
+  //   navigate(`/login`)
+  // }
+
   useEffect(() => {
     const imageFy = async () => {
       const data = await apis.getTeam();
@@ -42,6 +52,9 @@ const TeamBoard = () => {
 
   if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ video: true,audio:true })
+  }else{
+    alert("카메라가 인식되지 않았습니다. 카메라를 확인해주세요.")
+  }
     //   .then(function (stream) {
     //     videoRef.current.srcObject = stream;
     //   })
@@ -50,58 +63,76 @@ const TeamBoard = () => {
     //     console.log(error);
     // return navigate('/');
     //   });
-}
+    // }
+  const easter = ()=>{
+    setCount(count+1);
+  }
+  console.log(count);
 
+  const [openone, setOpenone] = useState(false);
+  const [opentwo, setOpentwo] = useState(false);
 
 
   return (
-    <StBox>
-      <Header teamname={main?.teamname} />
-      <StDownBox>
-        <StLeft>
-          <StSmallBox>
-            <StTeamInfoBox>
-              {imgfile ? <StTeamImg src={main?.teamImage} /> : <></>}
-              <StInfoBox>
-                <StTeamName>{main?.teamname}</StTeamName>
-                {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
-              </StInfoBox>
-            </StTeamInfoBox>
-            <StBtBox>
-              <StButton1 page={page} onClick={() => { setPage(1) }}> {page == 1 ? <StImg src={homeselect} /> : <StImg src={home} />}홈 </StButton1>
-              <StButton2 page={page} onClick={() => { setPage(2) }}> {page == 2 ? <StImg src={meetingselect} /> : <StImg src={meeting} />}미팅 관리 </StButton2>
-              <StButton3 page={page} onClick={() => { setPage(3) }}> {page == 3 ? <StImg src={settingselect} /> : <StImg src={setting} />}환경설정 </StButton3>
-            </StBtBox>
-          </StSmallBox>
-        </StLeft>
-        <>
-          {page == 1 ? <TeamboardHome /> : <></>}
-          {page == 2 ? <MeetingManage /> : <></>}
-          {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
-        </>
-      </StDownBox>
-      {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}><img src={plusIcon} /></StMeetMake> : <></>}
+    <>
+      {openone?<StTutorial onClick={()=>{setOpenone(false);setOpentwo(true)}} src={tuto1}/>:<></>}
+      {opentwo?<StTutorial onClick={()=>{setOpentwo(false)}} src={tuto2}/>:<></>}
+      <StBox>
+        
+        <Header teamname={main?.teamname} />
+        <StDownBox>
+          <StLeft>
+            <StSmallBox>
+              <StTeamInfoBox>
+                {count==10?<StTeamImg src={yujin} onClick={()=>{easter}}></StTeamImg>:<>{imgfile ? <StTeamImg onClick={()=>{setPage(1);easter();}} src={main?.teamImage} /> : <></>}</>}
+                <StInfoBox>
+                  <StTeamName>{main?.teamname}</StTeamName>
+                  {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
+                </StInfoBox>
+              </StTeamInfoBox>
+              <StBtBox>
+                <StButton1 page={page} onClick={() => { setPage(1) }}> {page == 1 ? <StImg src={homeselect} /> : <StImg src={home} />}홈 </StButton1>
+                <StButton2 page={page} onClick={() => { setPage(2) }}> {page == 2 ? <StImg src={meetingselect} /> : <StImg src={meeting} />}미팅 관리 </StButton2>
+                <StLine/>
+                <StButton3 page={page} onClick={() => { setPage(3) }}> {page == 3 ? <StImg src={settingselect} /> : <StImg src={setting} />}환경설정 </StButton3>
+              </StBtBox>
+            </StSmallBox>
+          {/* <StLImg src={left}/> */}
+          <StTutorialBt src={tutoBt} onClick={()=>{setOpenone(true)}}/>
+          </StLeft>
+          <>
+            {page == 1 ? <TeamboardHome /> : <></>}
+            {page == 2 ? <MeetingManage /> : <></>}
+            {page == 3 ? <TeamSetting teamLeader={main?.teamManager} prop={main?.user} /> : <></>}
+          </>
+        </StDownBox>
+        {/* {page == 1 ? <StMeetMake onClick={() => { navigate(`/teamboard/${teamId}/meetmakeone`) }}><img src={plusIcon} /></StMeetMake> : <></>} */}
 
-    </StBox>
+      </StBox>
+    </>
   );
 };
 
-
-const StLLeft = styled.div`
-  width : 181px;
+const StTutorial = styled.img`
+  position : fixed;
+  width: 100vw;
+  height : 100vh;
+  z-index: 10;
 `;
 
-const StLRight = styled.div`
-  width : 38px;
-  margin-top : 16px;
-  background-color: #F2F6F9;
-  border-top-left-radius: 10px;
+const StTutorialBt = styled.img`
+  position : absolute;
+  bottom : 40px;
+  left : 190px;
+  width : 60px;
+  height: 60px;
+  cursor: pointer;
 `;
 
-const StRRight = styled.div`
-  width : 181px;
-  background-color: #F2F6F9;
-  margin : 16px 0 0 0;
+const StLine = styled.div`
+  width : 285px;
+  height : 0.1px;
+  background-color: #D9D9D9;
 `;
 
 const StImg = styled.img`
@@ -118,6 +149,7 @@ const StButton3 = styled.div`
     border-radius: 8px;
     background-color: ${props => (props.page == 3 ? "#EBF7FF;" : "none")};
     color:  ${props => (props.page == 3 ? "#2396F0;" : "#888888")};
+    cursor: pointer;
 `;
 
 const StButton2 = styled.div`
@@ -128,6 +160,7 @@ const StButton2 = styled.div`
     border-radius: 8px;
     background-color: ${props => (props.page == 2 ? "#EBF7FF;" : "none")};
     color:  ${props => (props.page == 2 ? "#2396F0;" : "#888888")};
+    cursor: pointer;
 `;
 
 const StButton1 = styled.div`
@@ -138,6 +171,7 @@ const StButton1 = styled.div`
     border-radius: 8px;
     background-color: ${props => (props.page == 1 ? "#EBF7FF;" : "none")};
     color:  ${props => (props.page == 1 ? "#2396F0;" : "#888888")};
+    cursor: pointer;
 `;
 
 const StBtBox = styled.div`
@@ -145,7 +179,7 @@ const StBtBox = styled.div`
     flex-direction: column;
     justify-content: space-between;
     width : 286px;
-    height : 156px;
+    height : 166px;
     margin : 48px 0 0 0;
 `;
 
@@ -155,7 +189,9 @@ const StTeamClass = styled.div`
     align-items: center;
     width : 88px;
     height : 25px;
-    margin : auto 0 0 0 ;
+    margin : 10px 0 0 0 ;
+    padding : 2px 10px;
+    font-size: 14px;
     border-radius: 100px;
     color:white;
     background: #2396F0;
@@ -165,8 +201,7 @@ const StTeamName = styled.div`
     display: flex;
     justify-content: center;
     width : 154px;
-    height : 24px;
-    font-family: 'Inter';
+    min-height : 24px;
     font-style: normal;
   
     font-size: 20px;
@@ -179,8 +214,8 @@ const StInfoBox = styled.div`
     flex-direction: column;
     align-items: center;
     width : 134px;
-    height: 61px;
-    margin : 0 0 0 0;
+    min-height: 61px;
+    margin : 0px 0 0 0;
 `;
 
 const StTeamImg = styled.img`
@@ -192,6 +227,7 @@ const StTeamImg = styled.img`
     object-fit: cover;
     border: 5px solid #FCFCFC;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
 `;
 
 const StTeamInfoBox = styled.div`
@@ -200,17 +236,19 @@ const StTeamInfoBox = styled.div`
     align-items: center;
     justify-content: space-between;
     width :214px;
-    height : 219px;
+    height : 189px;
     padding : 36px 16px 36px 24px;
+
 `;
 
 const StSmallBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     width : 286px;
-    height : 459px;
+    height : 659px;
+
     margin : 42px 0 0 0;
 `;
 
@@ -221,6 +259,7 @@ const StLeft = styled.div`
   flex-direction: column;
   align-items: center;
   padding : 0 0 0 0px;
+  /* background-color: #F2F6F9; */
   `;
 
 const StMeetMake = styled.div`

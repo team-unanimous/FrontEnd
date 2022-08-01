@@ -81,7 +81,6 @@ const StButton = styled.div`
     border-radius: 6px;
     background-color: #063250;
     color:white;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -91,7 +90,6 @@ const StButton = styled.div`
 const StDown = styled.div`
     width : 321px;
     height: 19px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -102,7 +100,6 @@ const StInput = styled.input`
     height : 19px;
     padding : 15px;
     border-radius: 6px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -112,7 +109,6 @@ const StUp = styled.div`
     display: flex;
     width : 63px;
     height: 19px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -132,7 +128,6 @@ const StTitle = styled.div`
     width : 484px;
     height: 44px;
     margin : 0 auto 0 auto;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
