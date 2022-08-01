@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import apis from '../api/main';
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react';
 import { useMutation } from 'react-query';
-import { setCookie, removeCookie } from '../Cookie';
+import { getCookie, setCookie } from '../Cookie';
 import frameimg from "../img/bgimg.svg"
 import logoimg from "../img/logoLogin.svg"
-import axios from 'axios';
+import GoogleLogin from 'react-google-login';
+import { useEffect } from 'react';
 
 
 const Login = () => {
@@ -28,7 +29,6 @@ const Login = () => {
   const { mutate } = useMutation(login, {
     onSuccess: () => {
       navigate('/teamselect');
-      alert("로그인 완료")
     },
     onError: (error) => {
       navigate('/login');
@@ -41,6 +41,7 @@ const Login = () => {
       username: email.current.value,
       password: password.current.value,
     })
+    navigate(`/teamselect`)
   }
 
   const movesign = () => {
@@ -51,16 +52,40 @@ const Login = () => {
     navigate('/PasswordFindOne')
   }
 
+  useEffect(()=>{
+    if(getCookie("token")){
+      navigate(`/teamselect`)
+    }
+  },[])
+
+
+  //Google 
+
+  const handleLogin=(res)=>{
+    console.log(res);
+  }
+
+  const handleFailure=(res)=>{
+    console.log(res);
+  }
+
+
+
+  let code = new URL(window.location.href).searchParams.get('code');
+  console.log(code);
+
 
   return (
     <StSignUp style={{ backgroundImage: `url(${frameimg})` }}>
       <StBox>
         <img src={logoimg} />
-        <StEmail ref={email} placeholder='이메일' />
-        <StPassword type='password' ref={password} placeholder='비밀번호' />
-        <StLoginButton onClick={loginFunction}>
-          로그인
-        </StLoginButton>
+        <StForm onSubmit={loginFunction}>
+          <StEmail ref={email} placeholder='이메일' />
+          <StPassword type='password' ref={password} placeholder='비밀번호' />
+          <StLoginButton type='submit'>
+            로그인
+          </StLoginButton>
+        </StForm>
         <StButtonBox>
           <StSignUpButton onClick={movesign}>
             회원가입
@@ -70,20 +95,22 @@ const Login = () => {
             비밀번호 찾기
           </StPwFind>
         </StButtonBox>
-       {/* <StGoogle onClick={oAuthHandler}>구글</StGoogle> */}
+        <GoogleLogin
+        clientId="661918598129-ljnr447gjothokh2h4iktgc2j2792kkp.apps.googleusercontent.com"
+        buttonText="Log in with Google" 
+        onSuccess={handleLogin} 
+        onFailure={handleFailure} 
+        cookiePolicy={'single_host_origin'}
+        ></GoogleLogin>
       </StBox>
     </StSignUp>
   )
 }
 
-const StGoogle = styled.div`
-  width : 100px;
-  height: 50px;
-  background-color: white;
-  border: 1px solid black;
+const StForm = styled.form`
+  display: flex;
+  flex-direction: column;
 `;
-
-
 
 
 const StSignUp = styled.div`

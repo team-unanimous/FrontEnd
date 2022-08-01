@@ -52,9 +52,9 @@ const TeamSelect = () => {
     const [openone, setOpenone] = useState(false);
     const [opentwo, setOpentwo] = useState(false);
 
-    if (!data) {
-        return <>Something wrong!</>
-    }
+    // if (!data) {
+    //     return <>Something wrong!</>
+    // }
     return (
         <>
         {openone?<StTutorial onClick={()=>{setOpenone(false)}} src={teamtuto1}/>:<></>}
@@ -67,7 +67,7 @@ const TeamSelect = () => {
                         >Unanimous팀에 참여하시겠습니까?</StUnanimousTeamJoin> */}
                     </StTitleWrapper>
                     <StTeamBox>
-                        {data.map((team, index) => (
+                        {data?.map((team, index) => (
                             <StTeamItemBox
                                 key={index}>
                                     <StTeamItem
@@ -85,7 +85,7 @@ const TeamSelect = () => {
                                 </StTeamItemBox>
                         ))}
                         {
-                            data.length > 4
+                            data?.length > 4
                             ? <></>
                             : <StTeamItemBox>
                             <StTeamItemDiv>

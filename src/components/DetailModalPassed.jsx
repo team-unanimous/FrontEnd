@@ -50,27 +50,62 @@ const DetailModalPassed = ({open, close,meetingTitle,meetingDate,meetingTime,mee
                     <StHostLeft>안건</StHostLeft>
                     {meetingThumbnail==1?<StIssues color="#FCF3E9">
                         {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                            return  <div key={index}>
+                                        <StIssueBoxs>
+                                            <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                                        </StIssueBoxs>
+                                        <StIssueResultBox>
+                                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                                        </StIssueResultBox>
+                                    </div>
                         })}
                     </StIssues>:<></>}
                     {meetingThumbnail==2?<StIssues color="#FCF7E7">
                         {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                            return  <div key={index}>
+                                        <StIssueBoxs>
+                                            <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                                        </StIssueBoxs>
+                                        <StIssueResultBox>
+                                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                                        </StIssueResultBox>
+                                    </div>
                         })}
                     </StIssues>:<></>}
                     {meetingThumbnail==3?<StIssues color="#F3F7F3">
                         {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                           return   <div key={index}>
+                                        <StIssueBoxs>
+                                            <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                                        </StIssueBoxs>
+                                        <StIssueResultBox>
+                                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                                        </StIssueResultBox>
+                                    </div>
                         })}
                     </StIssues>:<></>}
                     {meetingThumbnail==4?<StIssues color="#EFF7FB">
                         {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                            return  <div key={index}>
+                                        <StIssueBoxs>
+                                            <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                                        </StIssueBoxs>
+                                        <StIssueResultBox>
+                                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                                        </StIssueResultBox>
+                                    </div>
                         })}
                     </StIssues>:<></>}
                     {meetingThumbnail==5?<StIssues color="#FCF6F9">
                         {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                            return  <div key={index}>
+                                        <StIssueBoxs>
+                                            <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                                        </StIssueBoxs>
+                                        <StIssueResultBox>
+                                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                                        </StIssueResultBox>
+                                    </div>
                         })}
                     </StIssues>:<></>}
                 </StIssueBox>
@@ -83,52 +118,60 @@ const DetailModalPassed = ({open, close,meetingTitle,meetingDate,meetingTime,mee
 }
 
 
-
-const StCopy = styled.div`
+const StIssueResultBox = styled.div`
     display: flex;
-    align-items: center;
-    margin : 20px 0 0 0;
-    color : #2396F0;
-    cursor: pointer;
+    padding : 0 0 0 20px;
+    margin : 9px 0 24px 0;
 `;
 
-const StUrl = styled.div`
-
+const StIssueBoxs = styled.div`
+    display: flex;
+    align-content: center;
+    width : 312px;
+    height: 20px;
 `;
+
+const StRoundB = styled.div`
+    width : 5px;
+    height : 5px;
+    border-radius: 5px;
+    background-color: black;
+    margin : auto 10px auto 0;
+`;
+
+const StRoundG = styled.div`
+    width : 5px;
+    height : 5px;
+    border-radius: 5px;
+    border: 1px solid #848484;
+    margin : auto 10px auto 0;
+`;
+
+const StIssueResult = styled.div`
+    display: flex;
+    width: 312px;
+    height: 17px;
+    color: #848484;
+    font-size: 12px;
+`;
+
+const StIssuess = styled.div`
+    display: flex;
+    width: 302px;
+    height: 20px;
+    font-style: normal;
+    margin : 0 0 9px 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+`;
+
 
 const StCloseIcon = styled.img`
     position: absolute;
     top : 20px;
     right : 20px;
     cursor: pointer;
-`;
-
-const StIconImg = styled.img`
-    width : 24px;
-    height : 24px;
-`;
-
-const StButton = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width : 108px;
-    height : 24px;
-    padding : 15px 64px 15px 64px;
-    margin : 0 0 0 auto;
-    border: 1px solid black;
-    border-radius: 6px;
-    background-color: #063250;
-    border: none;
-    color : white;
-    cursor: pointer;
-`;
-
-const StLine = styled.div`
-    width : 600px;
-    height : 10px;
-
-    background-color: black;
 `;
 
 const StIssue = styled.div`
