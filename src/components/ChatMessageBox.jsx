@@ -21,7 +21,7 @@ const ChatMessageBox = ({ createdAt, nickname, msg, profileUrl, myName, scrollRe
                         {createdAt.slice(10,)}
                     </StMessageDate>
                 </StMessageWrapper>
-                <div ref={scrollRef}/>
+                <div ref={scrollRef}></div>
             </StBox>
         </>
     )

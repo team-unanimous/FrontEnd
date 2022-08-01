@@ -25,6 +25,7 @@ const MeetingRoomMain = () => {
     const nickname = decoded.USER_NICKNAME;
     const navigate = useNavigate();
     const teamId = useParams().teamid;
+    const [page, setPage] = useState("chat"); 
 
 
     const leaveSession = () => {
@@ -102,8 +103,25 @@ const MeetingRoomMain = () => {
                 </StMainThemeWrapper>
                 <StSidebarWrapper>
                     <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
-                    {/* <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle> */}
-                    <Meetinglast meetID={meetingId} main={main} />
+                    <StMeetingRoomTabBox>
+                        <StMeetingRoomTab>
+                            <StChattingTab page={page}
+                            onClick={()=>{
+                                setPage("chat");
+                            }}
+                            >채팅</StChattingTab>
+                            <StNoteTab page={page}
+                            onClick={()=>{
+                                setPage("note");
+                            }}
+                            >회의록</StNoteTab>
+                        </StMeetingRoomTab>
+                    </StMeetingRoomTabBox>
+                    {
+                        page == "chat"
+                        ? <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
+                        : <Meetinglast meetID={meetingId} main={main} /> //용우님
+                    }
                 </StSidebarWrapper>
             </StContainer>
         </>
@@ -172,7 +190,6 @@ const StSidebarWrapper = styled.div`
     height:930px;
     margin: 24px;
     box-sizing: border-box;
-    gap: 18px;
 `
 const StMainThemeWrapper = styled.div`
     display:flex;
@@ -186,6 +203,73 @@ const StMainThemeWrapper = styled.div`
 
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.05));
     border-radius: 24px;
+`
+const StMeetingRoomTabBox = styled.div`
+    /* Frame 146 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 75px;
+    width: 100%;
+
+    border-radius: 8px 8px 0px 0px;
+    background-color: #FCFCFC;
+    margin-top: 18px;
+`
+const StMeetingRoomTab = styled.div`
+    /* Frame 487 */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0px;
+
+    width: 316px;
+    height: 75px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+`
+const StChattingTab = styled.div`
+    /* 미팅 관리/탭/default */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 140px;
+    height: 68px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    /* color: #2396F0; */
+    color: ${props => props.page == "chat" ? "#2396F0": "black"};
+    background-color: #FCFCFC;
+    border-bottom: solid 4px ${props => props.page == "chat" ? "#2396F0": "#D7D7D7"};
+    box-sizing: border-box;
+    cursor: pointer;
+`
+const StNoteTab = styled.div`
+    /* 미팅 관리/탭/default */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 140px;
+    height: 68px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    color: ${props => props.page == "note" ? "#2396F0": "black"};
+    border-bottom: solid 4px ${props => props.page == "note" ? "#2396F0": "#D7D7D7"};
+    box-sizing: border-box;
+    cursor: pointer;
 `
 
 export default MeetingRoomMain;

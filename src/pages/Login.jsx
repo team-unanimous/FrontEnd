@@ -15,7 +15,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-
   const email = useRef(null);
   const password = useRef(null);
 
@@ -149,6 +148,7 @@ const StPassword = styled.input`
   padding : 15px;
   margin : 0 0 4.1875rem 0;
   border-radius: 6px;
+  border: 1px solid #5C5C5C;
 `;
 
 const StEmail = styled.input`
@@ -157,6 +157,7 @@ const StEmail = styled.input`
   border-radius: 6px;
   padding : 15px;
   margin : 60px 0 0.75rem 0;
+  border: 1px solid #5C5C5C;
 `;
 
 const StLogo = styled.div`
@@ -176,6 +177,8 @@ const StBox = styled.div`
   margin : auto auto auto auto;
   background-color: white;
   border-radius: 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, #FFFFFF 100%);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
 export default Login
