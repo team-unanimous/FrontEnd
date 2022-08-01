@@ -62,9 +62,9 @@ const Meetinglast = ({ meetID, main }) => {
                         (resp) => {
                             const newMessage = JSON.parse(resp.body);
                             if (newMessage.type == "RESULT") {
-                                console.log(newMessage)
+                                // console.log(newMessage)
                                 const newArray = JSON.parse(newMessage.message)
-                                console.log(newArray)
+                                // console.log(newArray)
                                 if (newArray.id === 1) {
                                     setSave1(newArray.value)
                                 }
@@ -437,16 +437,6 @@ const Meetinglast = ({ meetID, main }) => {
     return (
         <>
             <StChattingContainer>
-                <StChattingHeader>
-                    <StChattingHeaderWrapper>
-                        <StChattingTabBox>
-                            채팅
-                        </StChattingTabBox>
-                        <StNoteTabBox>
-                            회의록
-                        </StNoteTabBox>
-                    </StChattingHeaderWrapper>
-                </StChattingHeader>
                 <StChattingBody>
                     <StChattingMessageWrapper>
                         {agendalist?.[0] ?
