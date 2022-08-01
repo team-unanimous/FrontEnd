@@ -11,6 +11,8 @@ import { getCookie } from "../Cookie"
 import icon_participate from "../img/icon_participate.svg"
 import icon_add from "../img/icon_add.svg"
 import teamAddProfile from "../img/TeamAddProfile.png"
+import teamtuto1 from '../img/teamtuto1.png';
+import tutoBt from '../img/tutoBt1.png';
 
 const TeamSelect = () => {
     const token = getCookie('token')
@@ -47,11 +49,15 @@ const TeamSelect = () => {
     // const teamId = useParams().teamid;
     // const { data } = useGetTeamMain({ teamId });
 
+    const [openone, setOpenone] = useState(false);
+    const [opentwo, setOpentwo] = useState(false);
+
     if (!data) {
         return <>Something wrong!</>
     }
     return (
         <>
+        {openone?<StTutorial onClick={()=>{setOpenone(false)}} src={teamtuto1}/>:<></>}
             <StBox>
                 <StContainer>
                     <StTitleWrapper>
@@ -108,6 +114,7 @@ const TeamSelect = () => {
                             </StImage>
                             Unanimous 둘러보기 (체험용)
                         </StTeamMakeButton>
+                        <StTutorialBt src={tutoBt} onClick={()=>{setOpenone(true)}}/>
                     </StButtonWrapper>
                 </StContainer>
             </StBox>
@@ -337,6 +344,21 @@ const StImage = styled.div`
     z-index: 100;
     margin-right: 10px;
 `
+const StTutorialBt = styled.img`
+  position : absolute;
+  bottom : 40px;
+  left : 190px;
+  width : 60px;
+  height: 60px;
+  cursor: pointer;
+`;
+
+const StTutorial = styled.img`
+  position : fixed;
+  width: 100vw;
+  height : 100vh;
+  z-index: 10;
+`;
 
 
 export default TeamSelect;

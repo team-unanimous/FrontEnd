@@ -131,8 +131,9 @@ const StPwInput = styled.input`
   width : 541px;
   height : 44px;
   border-radius: 6px;
-  border: 1px solid #000000;
+  border: 1px solid #5C5c5c;
   padding-left: 10px;
+  background: transparent;
 `;
 
 const StEmailInputBox = styled.div`
@@ -171,7 +172,7 @@ const StCancel = styled.button`
   border-radius: 0.375rem;
   cursor: pointer;
   color: #888888;
-  background-color: #fff;
+  background: transparent;
   border: 1px solid #5C5C5C;
 `;
 

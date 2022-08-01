@@ -116,7 +116,7 @@ const SignupThree = () => {
 const StWarningTitle = styled.div`
   width : 400px;
   height : 19px;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 15px;
   margin-bottom: 25px;
 `;
@@ -179,7 +179,7 @@ const StPwInput = styled.input`
   width : 541px;
   height : 44px;
   border-radius: 6px;
-  border: 1px solid #000000;
+  border: 1px solid #5C5C5C;
   padding-left: 10px;
   margin-bottom: 20px;
 `;
@@ -200,6 +200,8 @@ const StContentBox = styled.div`
   justify-content: center;
   background-color: white;
   border-radius: 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, #FFFFFF 100%);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
 const StBtBox = styled.div`

@@ -135,7 +135,7 @@ const StlongEmailInput = styled.input`
   width : 540px;
   height : 44px;
   border-radius: 6px;
-  border: 1px solid #000000;
+  border: 1px solid #5C5C5C;
   // placeholder 앞간격
   padding-left: 10px;
 `;
@@ -197,7 +197,7 @@ const StEmailInput = styled.input`
   width : 390px;
   height : 44px;
   border-radius: 6px;
-  border: 1px solid #000000;
+  border: 1px solid #5C5C5C;
   // placeholder 앞간격
   padding-left: 10px;
 `;
@@ -225,6 +225,7 @@ const StWarningTitle = styled.div`
   font-size: 15px;
   margin-top: 10px;
   margin-bottom: 24px;
+  color: #EF6A61;
 `
 
 const StEmailBox = styled.div`
@@ -261,6 +262,8 @@ const StContentBox = styled.div`
   justify-content: center;
   background-color: white;
   border-radius: 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, #FFFFFF 100%);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
 const StBox = styled.div`
