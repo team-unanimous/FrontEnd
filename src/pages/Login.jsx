@@ -4,10 +4,11 @@ import apis from '../api/main';
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react';
 import { useMutation } from 'react-query';
-import { setCookie } from '../Cookie';
+import { getCookie, setCookie } from '../Cookie';
 import frameimg from "../img/bgimg.svg"
 import logoimg from "../img/logoLogin.svg"
 import GoogleLogin from 'react-google-login';
+import { useEffect } from 'react';
 
 
 const Login = () => {
@@ -51,6 +52,11 @@ const Login = () => {
     navigate('/PasswordFindOne')
   }
 
+  useEffect(()=>{
+    if(getCookie("token")){
+      navigate(`/teamselect`)
+    }
+  },[])
 
 
   //Google 

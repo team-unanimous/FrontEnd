@@ -8,7 +8,7 @@ import MeetingRight from '../components/MeetingRight';
 import { useGetPassed } from '../Hooks/useGetPassed';
 import { useGetReserve } from '../Hooks/useGetReserve';
 import { useGetOnAir } from '../Hooks/useGetOnAir';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DetailModalReserve from './DetailModalReserve';
 import { useQueryClient } from 'react-query';
 import { useEffect } from 'react';
@@ -25,12 +25,13 @@ import onReserveIcon from '../img/TeamBoard/defaultmessage_reservedmeeting.svg'
 import onPassedIcon from '../img/TeamBoard/defaultmessage_beforemeeting.svg'
 import MeetingDown from './MeetingDown'; 
 import seokwoo from '../img/hyunjatime.png'
+import { getCookie } from '../Cookie';
 
 
 const TeamboardHome = () => {
 
   const teamId = useParams().teamid;
-
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   useEffect(() => {
