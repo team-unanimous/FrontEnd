@@ -32,6 +32,18 @@ const Agenda = ({ main }) => {
         { id: 10 }
     ]
 
+    //임시저장값
+    const [save1, setSave1] = useState(null);
+    const [save2, setSave2] = useState(null);
+    const [save3, setSave3] = useState(null);
+    const [save4, setSave4] = useState(null);
+    const [save5, setSave5] = useState(null);
+    const [save6, setSave6] = useState(null);
+    const [save7, setSave7] = useState(null);
+    const [save8, setSave8] = useState(null);
+    const [save9, setSave9] = useState(null);
+    const [save10, setSave10] = useState(null);
+
     const meetID = useParams().sessionid;
     const token = getCookie('token');
     const decoded = jwt_decode(getCookie('token'));
@@ -69,9 +81,40 @@ const Agenda = ({ main }) => {
                                 console.log(numberagenda)
 
                             }
-                            if (newMessage.type == "STAMP") {
-                                const getarray = JSON.parse(newMessage.message);
-                                setNumber(getarray.id)
+                            if (newMessage.type == "RESULT") {
+                                console.log(newMessage)
+                                const newArray = JSON.parse(newMessage.message)
+                                console.log(newArray)
+                                if (newArray.id === 1) {
+                                    setSave1(newArray.value)
+                                }
+                                if (newArray.id === 2) {
+                                    setSave2(newArray.value)
+                                }
+                                if (newArray.id === 3) {
+                                    setSave3(newArray.value)
+                                }
+                                if (newArray.id === 4) {
+                                    setSave4(newArray.value)
+                                }
+                                if (newArray.id === 5) {
+                                    setSave5(newArray.value)
+                                }
+                                if (newArray.id === 6) {
+                                    setSave6(newArray.value)
+                                }
+                                if (newArray.id === 7) {
+                                    setSave7(newArray.value)
+                                }
+                                if (newArray.id === 8) {
+                                    setSave8(newArray.value)
+                                }
+                                if (newArray.id === 9) {
+                                    setSave9(newArray.value)
+                                }
+                                if (newArray.id === 10) {
+                                    setSave10(newArray.value)
+                                }
                             }
                         },
                         { token: token }
@@ -93,6 +136,7 @@ const Agenda = ({ main }) => {
     const useGetIssueLists = async ({ meetID }) => {
         const { data } = await apis.getIssueList({ meetID });
         // 안건정보 state저장
+        console.log(data)
         setAgendalist(data)
         return data;
     }
@@ -143,27 +187,45 @@ const Agenda = ({ main }) => {
 
     // console.log(numberagenda)
     // console.log(msg)
-    // console.log(agendalist)
+    console.log(agendalist)
 
     // 방장아닌유저 버튼사라짐 확실하게 고침
+
     console.log(main)
     console.log(main?.meetingCreator)
     console.log(decoded?.USER_NICKNAME)
+    console.log(save1)
     return (
         <>
             <Bigbox>
-                {1 <= numberagenda && main?.meetingCreator === decoded?.USER_NICKNAME ?
-                    <StImgLeft src={leftbtn} onClick={numberminus} />
-                    : <Stnumbtn />
-                }
-                <div>{main?.meetingTitle}의 {number}번째 안건<br />{msg}</div>
-                {agendalist?.length - 2 >= numberagenda && main?.meetingCreator === decoded?.USER_NICKNAME ?
-                    <StImgRight src={rightbtn} onClick={numberplus} />
-                    : <Stnumbtn />
-                }
-                {/* {stampvalue ?
-                    <StstampBtn src={stampbtn} /> : <></>
-                } */}
+                <div>
+                    {main?.meetingTitle}의 {1}번째 안건<br />
+                    {agendalist?.[0]?.issueContent}
+                    {save1 === null ?
+                        <></>
+                        : <StstampBtn src={stampbtn} />
+                    }
+                </div>
+            </Bigbox>
+            <Bigbox>
+                <div>
+                    {main?.meetingTitle}의 {2}번째 안건<br />
+                    {agendalist?.[1]?.issueContent}
+                    {save2 === null ?
+                        <></>
+                        : <StstampBtn src={stampbtn} />
+                    }
+                </div>
+            </Bigbox>
+            <Bigbox>
+                <div>
+                    {main?.meetingTitle}의 {3}번째 안건<br />
+                    {agendalist?.[2]?.issueContent}
+                    {save3 === null ?
+                        <></>
+                        : <StstampBtn src={stampbtn} />
+                    }
+                </div>
             </Bigbox>
         </>
     );
