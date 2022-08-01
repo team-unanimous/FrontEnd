@@ -4,7 +4,8 @@ import { getCookie } from "../Cookie";
 import jwt_decode from "jwt-decode";
 import styled from "styled-components";
 import ChatMessageBox from "./ChatMessageBox";
-import inputEnterVector from "../img/InputEnterVector.png"
+import inputEnterVector from "../img/InputEnterVector.png";
+import sendBtn from "../img/sendBtn.png";
 import Stomp from "stompjs";
 import sockJS from "sockjs-client";
 
@@ -118,14 +119,14 @@ const MeetingRoomStyle = ({ meetingId }) => {
     return (
         <>
             <StChattingContainer>
-                <StChattingHeader>
-                    <StChattingHeaderWrapper>
-                        <StChattingTabBox>
-                            채팅
-                        </StChattingTabBox>
-                        <StNoteTabBox>
-                            회의록
-                        </StNoteTabBox>
+                {/* <StChattingHeader> */}
+                    {/* <StChattingHeaderWrapper> */}
+                        {/* <StChattingTabBox> */}
+                            {/* 채팅 */}
+                        {/* </StChattingTabBox> */}
+                        {/* <StNoteTabBox> */}
+                            {/* 회의록 */}
+                        {/* </StNoteTabBox> */}
                         {/* <StChattingTitle> */}
                         {/* <StChattingTitleBox> */}
                         {/* 채팅 (0)데이터 바인딩 필요   */}
@@ -135,8 +136,8 @@ const MeetingRoomStyle = ({ meetingId }) => {
                         {/* <StChattingXbuttonBox type={"image"} src={xbutton}> */}
                         {/* </StChattingXbuttonBox> */}
                         {/* </StChattingXbutton> */}
-                    </StChattingHeaderWrapper>
-                </StChattingHeader>
+                    {/* </StChattingHeaderWrapper> */}
+                {/* </StChattingHeader> */}
                 <StChattingBody>
                     <StChattingMessageWrapper>
                         {
@@ -172,7 +173,7 @@ const MeetingRoomStyle = ({ meetingId }) => {
                         <StChattingInputForm onSubmit={HandleSend}>
                             {/* <StChattingInputForm onSubmit={HandleSendNoConnection}> */}
                             <StChattingInputBox placeholder="내용을 입력해주세요..." ref={inputRef} maxLength="100" />
-                            <StSendButton type={"image"} src={inputEnterVector} />
+                            <StSendButton type={"image"} src={sendBtn} />
                         </StChattingInputForm>
                     </StChattingInputWrapper>
                 </StChattingBody>
@@ -295,7 +296,7 @@ const StChattingMessageWrapper = styled.div`
     flex-direction: column;
     height: 100%;
     width: 100%;
-    background: #FCFCFC;
+    background-color: #FCFCFC;
     overflow-x: hidden;
   ::-webkit-scrollbar{
     width:10px;
@@ -337,7 +338,6 @@ const StChattingMessageWrapper = styled.div`
 
 const StChattingInputWrapper = styled.div`
     background: #FCFCFC;
-    /* background-color: blue; */
     /* Frame 142 */
     display: flex;
     flex-direction: column;
@@ -363,6 +363,20 @@ const StChattingInputForm = styled.form`
     padding: 2px;
     justify-content: center;
     align-items: center;
+    /* Frame 140 */
+    justify-content: center;
+    align-items: center;
+
+    width: 319px;
+    height: 44px;
+
+    background: #F1F1F1;
+    border-radius: 8px;
+    border-style: none;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 `
 const StChattingInputBox = styled.input`
     /* Frame 140 */
@@ -372,17 +386,21 @@ const StChattingInputBox = styled.input`
     align-items: center;
     flex-grow: 2;
 
-    width: 19rem;
+    width: 16.5rem;
     height: 2.75rem;
 
     padding-left: 1rem;
 
-    background: #F1f1f1;
+    background: transparent;
+    border: none;
     border-radius: 8px;
 
     flex: none;
     order: 0;
     flex-grow: 0;
+    &:focus{
+    outline: none;
+  }
 `
 const StSendButton = styled.input`
     height: 1.5rem;
