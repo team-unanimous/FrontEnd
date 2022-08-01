@@ -187,7 +187,6 @@ const StEmailBox = styled.div`
   justify-content: space-between;
   width : 541px;
   height: 220px;
-
 `;
 
 const StEmailInputBox = styled.div`
@@ -202,7 +201,7 @@ const StPwInput = styled.input`
   height : 44px;
   padding : 0 0 0 10px;
   border-radius: 6px;
-  border: 1px solid #000000;
+  border: 1px solid #5C5c5c;
 `;
 const StEmailButton = styled.button`
   width : 132px;

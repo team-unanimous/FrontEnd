@@ -15,7 +15,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-
   const email = useRef(null);
   const password = useRef(null);
 
@@ -29,7 +28,6 @@ const Login = () => {
   const { mutate } = useMutation(login, {
     onSuccess: () => {
       navigate('/teamselect');
-      alert("로그인 완료")
     },
     onError: (error) => {
       navigate('/login');
@@ -42,6 +40,7 @@ const Login = () => {
       username: email.current.value,
       password: password.current.value,
     })
+    navigate(`/teamselect`)
   }
 
   const movesign = () => {
@@ -74,11 +73,13 @@ const Login = () => {
     <StSignUp style={{ backgroundImage: `url(${frameimg})` }}>
       <StBox>
         <img src={logoimg} />
-        <StEmail ref={email} placeholder='이메일' />
-        <StPassword type='password' ref={password} placeholder='비밀번호' />
-        <StLoginButton onClick={loginFunction}>
-          로그인
-        </StLoginButton>
+        <StForm onSubmit={loginFunction}>
+          <StEmail ref={email} placeholder='이메일' />
+          <StPassword type='password' ref={password} placeholder='비밀번호' />
+          <StLoginButton type='submit'>
+            로그인
+          </StLoginButton>
+        </StForm>
         <StButtonBox>
           <StSignUpButton onClick={movesign}>
             회원가입
@@ -100,14 +101,10 @@ const Login = () => {
   )
 }
 
-const StGoogle = styled.div`
-  width : 100px;
-  height: 50px;
-  background-color: white;
-  border: 1px solid black;
+const StForm = styled.form`
+  display: flex;
+  flex-direction: column;
 `;
-
-
 
 
 const StSignUp = styled.div`
@@ -172,6 +169,7 @@ const StPassword = styled.input`
   padding : 15px;
   margin : 0 0 4.1875rem 0;
   border-radius: 6px;
+  border: 1px solid #5C5C5C;
 `;
 
 const StEmail = styled.input`
@@ -180,6 +178,7 @@ const StEmail = styled.input`
   border-radius: 6px;
   padding : 15px;
   margin : 60px 0 0.75rem 0;
+  border: 1px solid #5C5C5C;
 `;
 
 const StLogo = styled.div`
@@ -199,6 +198,8 @@ const StBox = styled.div`
   margin : auto auto auto auto;
   background-color: white;
   border-radius: 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, #FFFFFF 100%);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
 export default Login

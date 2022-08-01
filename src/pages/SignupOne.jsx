@@ -86,6 +86,8 @@ const StWrap = styled.div`
   width: 1155px;
   height: 740px;
   border-radius: 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, #FFFFFF 100%);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 `
 
 const StBtBox = styled.div`

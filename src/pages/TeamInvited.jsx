@@ -5,12 +5,14 @@ import { useRef } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import teamSelectImg from "../img/teamSelect.png";
+import axis from "../api/sub";
 
 const TeamInvited = () => {
     const uuidRef = useRef();
     const navigate = useNavigate();
     const [warning, setWarning] = useState(null);
     const [teamData, setTeamData] = useState(null);
+    const [teamInfo, setTeamInfo] = useState(null);
     const [teamName, setTeamName] = useState(null);
     const [teamId, setTeamId] = useState(null);
     const [UUID, setUUID] = useState('');
@@ -29,9 +31,11 @@ const TeamInvited = () => {
             //     setTeamData(false);
             //     setWarning(true);
             // }
+            setTeamInfo(resp.data);
             setTeamName(resp.data.teamname);
             setUUID(resp.data.uuid);
             setTeamId(resp.data.id);
+
             setWarning(false);
             setTeamData(true);
         },
@@ -41,15 +45,15 @@ const TeamInvited = () => {
         }
     });
     const teamJoin = async (data) =>{
-        return apis.postTeamJoin(data);
+        return axis.postTeamJoin(data);
     }
     const { mutate : joinMutate } = useMutation(teamJoin, {
         onSuccess: (data)=>{
             alert("성공");
-            ()=>navigate(`/teamboard/${teamId}`);
+            navigate(`/teamboard/${teamId}`);
         },
         onError: (error)=>{
-            alert("오류가 발생했습니다");
+            alert(error.response.data.message);
         }
     })
     // const mutation = useMutation(findUUID);
@@ -88,8 +92,8 @@ const TeamInvited = () => {
                 ? <StTeamBox>
                     <StTeamDataBox>
                     <StTeamDataWrapper>
-                        <StTeamProfileImg>
-                            {/* <img src={data?.data?.teamImage}></img> */}
+                        <StTeamProfileImg src={teamInfo.teamImage}>
+                            {/* <img src={teamInfo?.teamImage}></img> */}
                         </StTeamProfileImg>
                         <StTeamTitleDiv>
                             {teamName}
@@ -185,7 +189,7 @@ const StTitleButton = styled.button`
     width : 132px;
     height : 48px;
     border-radius : 6px;
-    background-color: #000;
+    background-color: #063250;
     margin-left: 6px;
     color: white;
 `
@@ -207,7 +211,6 @@ const StWarning = styled.div`
 `
 const StTeamBox = styled.div`
     /* Frame 277 */
-    background: #F5F5F5;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -222,6 +225,11 @@ const StTeamBox = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
+    /* login/main/profileframe */
+
+    background: #FCFCFC;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
 `
 const StTeamDataBox = styled.div`
     /* Frame 276 */
@@ -259,7 +267,7 @@ const StTeamJoinButton = styled.div`
     /* gap: 10px; */
     width: 236px;
     height: 54px;
-    background: #000000;
+    background: #2396F0;
     border-radius: 6px;
     margin-top: 32px;
     color: white;
@@ -276,11 +284,14 @@ const StTeamProfileImg = styled.div`
     height: 180px;
     background: #F1F1F1;
     border-radius: 87px;
+    background-image: ${props => `url(${props.src})`};
+    background-size: cover;
+    background-repeat: no-repeat;
 `
 const StTeamTitleDiv = styled.div`
     /* background-color: black; */
     /* 팀이름 */
-    width: 56px;
+    width: 100%;
     height: 24px;
     font-family: 'Inter';
     font-style: normal;
