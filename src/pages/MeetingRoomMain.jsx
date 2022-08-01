@@ -102,8 +102,8 @@ const MeetingRoomMain = () => {
                 </StMainThemeWrapper>
                 <StSidebarWrapper>
                     <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
-                    {/* <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle> */}
-                    <Meetinglast meetID={meetingId} main={main} />
+                    <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
+                    {/* <Meetinglast meetID={meetingId} main={main} /> */}
                 </StSidebarWrapper>
             </StContainer>
         </>

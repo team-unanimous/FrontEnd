@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import apis from '../api/main';
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react';
 import { useMutation } from 'react-query';
-import { setCookie, removeCookie } from '../Cookie';
+import { setCookie } from '../Cookie';
 import frameimg from "../img/bgimg.svg"
 import logoimg from "../img/logoLogin.svg"
-import axios from 'axios';
+import GoogleLogin from 'react-google-login';
 
 
 const Login = () => {
@@ -53,6 +53,23 @@ const Login = () => {
   }
 
 
+
+  //Google 
+
+  const handleLogin=(res)=>{
+    console.log(res);
+  }
+
+  const handleFailure=(res)=>{
+    console.log(res);
+  }
+
+
+
+  let code = new URL(window.location.href).searchParams.get('code');
+  console.log(code);
+
+
   return (
     <StSignUp style={{ backgroundImage: `url(${frameimg})` }}>
       <StBox>
@@ -71,7 +88,13 @@ const Login = () => {
             비밀번호 찾기
           </StPwFind>
         </StButtonBox>
-       {/* <StGoogle onClick={oAuthHandler}>구글</StGoogle> */}
+        <GoogleLogin
+        clientId="661918598129-ljnr447gjothokh2h4iktgc2j2792kkp.apps.googleusercontent.com"
+        buttonText="Log in with Google" 
+        onSuccess={handleLogin} 
+        onFailure={handleFailure} 
+        cookiePolicy={'single_host_origin'}
+        ></GoogleLogin>
       </StBox>
     </StSignUp>
   )
