@@ -98,7 +98,7 @@ const MeetingRoomMain = () => {
                                 <img src={closeIcon} />회의 나가기
                             </StLeave></div>}
                     <JoinRoom Theme={main?.meetingTheme} />
-                    {/* <Agenda meetID={meetingId} main={main} /> */}
+                    <Agenda meetID={meetingId} main={main} />
                 </StMainThemeWrapper>
                 <StSidebarWrapper>
                     <MeetingRoomInfo thumbnail={main?.meetingSum}></MeetingRoomInfo>
