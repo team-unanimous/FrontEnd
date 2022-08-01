@@ -21,9 +21,13 @@ const MeetingDown = (prop) => {
 
                     {prop.prop.issues.map((value,index)=>(
                         <div key={index}>
-                            <StIssue>{value.issueContent}</StIssue>
-                            <StIssueResult>{value.issueResult}</StIssueResult>
-                        </div>
+                        <StIssueBox>
+                            <StRoundB/><StIssue>{value.issueContent}</StIssue>
+                        </StIssueBox>
+                        <StIssueResultBox>
+                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                        </StIssueResultBox>
+                    </div>
                     ))}
                 </StInBox>
         </StBox>:<></>}
@@ -35,9 +39,13 @@ const MeetingDown = (prop) => {
                 <StInBox back="rgba(251, 243, 219, 0.5);">
                 {prop.prop.issues.map((value,index)=>(
                         <div key={index}>
-                            <StIssue>{value.issueContent}</StIssue>
-                            <StIssueResult>{value.issueResult}</StIssueResult>
-                        </div>
+                        <StIssueBox>
+                            <StRoundB/><StIssue>{value.issueContent}</StIssue>
+                        </StIssueBox>
+                        <StIssueResultBox>
+                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                        </StIssueResultBox>
+                    </div>
                     ))}
                 </StInBox>
         </StBox>:<></>}
@@ -49,9 +57,13 @@ const MeetingDown = (prop) => {
                 <StInBox back="rgba(237, 243, 236, 0.5);">
                 {prop.prop.issues.map((value,index)=>(
                         <div key={index}>
-                            <StIssue>{value.issueContent}</StIssue>
-                            <StIssueResult>{value.issueResult}</StIssueResult>
-                        </div>
+                        <StIssueBox>
+                             <StRoundB/><StIssue>{value.issueContent}</StIssue>
+                        </StIssueBox>
+                        <StIssueResultBox>
+                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                         </StIssueResultBox>
+                   </div>
                     ))}
                 </StInBox>
         </StBox>:<></>}
@@ -63,9 +75,13 @@ const MeetingDown = (prop) => {
                 <StInBox back="rgba(231, 243, 248, 0.5);">
                 {prop.prop.issues.map((value,index)=>(
                         <div key={index}>
-                            <StIssue>{value.issueContent}</StIssue>
-                            <StIssueResult>{value.issueResult}</StIssueResult>
-                        </div>
+                        <StIssueBox>
+                            <StRoundB/><StIssue>{value.issueContent}</StIssue>
+                        </StIssueBox>
+                        <StIssueResultBox>
+                            {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}    
+                        </StIssueResultBox>
+                    </div>
                     ))}
                 </StInBox>
         </StBox>:<></>}
@@ -77,8 +93,12 @@ const MeetingDown = (prop) => {
                 <StInBox back="rgba(250, 241, 245, 0.5);">
                 {prop.prop.issues.map((value,index)=>(
                         <div key={index}>
-                            <StIssue>{value.issueContent}</StIssue>
-                            <StIssueResult>{value.issueResult}</StIssueResult>
+                            <StIssueBox>
+                                <StRoundB/><StIssue>{value.issueContent}</StIssue>
+                            </StIssueBox>
+                            <StIssueResultBox>
+                                {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                            </StIssueResultBox>
                         </div>
                     ))}
                 </StInBox>
@@ -87,18 +107,50 @@ const MeetingDown = (prop) => {
   )
 }
 
+const StIssueResultBox = styled.div`
+    display: flex;
+    padding : 0 0 0 20px;
+    margin : 9px 0 24px 0;
+`;
+
+const StIssueBox = styled.div`
+    display: flex;
+    align-content: center;
+    width : 312px;
+    height: 20px;
+`;
+
+const StRoundB = styled.div`
+    width : 5px;
+    height : 5px;
+    border-radius: 5px;
+    background-color: black;
+    margin : auto 10px auto 0;
+`;
+
+const StRoundG = styled.div`
+    width : 5px;
+    height : 5px;
+    border-radius: 5px;
+    border: 1px solid #848484;
+    margin : auto 10px auto 0;
+`;
+
 const StIssueResult = styled.div`
     display: flex;
     width: 312px;
     height: 17px;
+    color: #848484;
+    font-size: 12px;
 `;
 
 const StIssue = styled.div`
     display: flex;
-    width: 312px;
+    width: 302px;
     height: 20px;
     font-style: normal;
-    font-weight: 500;
+    margin : 0 0 9px 0;
+    font-weight: 400;
     font-size: 14px;
     line-height: 20px;
 `;

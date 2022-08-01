@@ -42,12 +42,27 @@ const TeamBoard = () => {
   //   navigate(`/login`)
   // }
 
+  // useEffect(()=>{
+  //   if(getCookie("token")){
+      
+  //   }
+  //   else{
+  //     navigate(`/login`);
+  //   }
+  // },[])
+
   useEffect(() => {
     const imageFy = async () => {
       const data = await apis.getTeam();
       setImgfile(data.data[0].teamImage)
     }
     imageFy();
+    if(getCookie("token")){
+      
+    }
+    else{
+      navigate(`/login`);
+    }
   }, [])
 
   if (navigator.mediaDevices.getUserMedia) {

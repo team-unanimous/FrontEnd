@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components'
 import jwt_decode from "jwt-decode";
-import { getCookie } from '../Cookie';
+import { getCookie, removeCookie } from '../Cookie';
 import logo from '../img/favicon.svg'
 
 const Header = ({ teamname }) => {
@@ -29,15 +29,56 @@ const Header = ({ teamname }) => {
           {/* <StDropBox>
             <StDefault onClick={() => { setClicked(!clicked) }}>{teamname}</StDefault>
           </StDropBox> */}
-          <StMyPaged onClick={() => { navigate(`/mypage`);setClicked(!clicked); }} >
-            <StMyPage src={img} />
-            <StNick>{nickname}</StNick>
+          <StMyPaged  >
+            <StDy onClick={() => { setClicked(!clicked); }}>
+              <StMyPage src={img} />
+              <StNick>{nickname}</StNick>
+            </StDy>
+            <StDropBox click={clicked}>
+              <StDropContent onClick={()=>{navigate(`/mypage`); setClicked(!clicked)}}>마이페이지</StDropContent>
+              <StLine/>
+              <StDropContent onClick={()=>{setClicked(!clicked); navigate(`/login`); removeCookie("token");}}>로그아웃</StDropContent>
+            </StDropBox>
           </StMyPaged>
         </StRightBox>
     </StWhole>
   )
 }
 
+const StDy = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const StLine = styled.div`
+  height : 1px;
+  width: 160px;
+  background-color: #EAEAEA;
+`;
+
+const StDropContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 48px;
+  margin : 0 0 0px 0 ;
+  cursor: pointer;
+`;
+
+const StDropBox = styled.div`
+  position: absolute;
+  top : 50px;
+  left : 0px;
+  display: ${props=>props.click?"flex":"none"};
+  flex-direction: column;
+  width: 160px;
+  height: 97px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  background-color: white;
+`;
 
 const StPlus = styled.div`
   display: flex;
@@ -48,9 +89,10 @@ const StPlus = styled.div`
 `;
 
 const StMyPaged = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  padding : 0 15px 0 15px;
 `;
 
 const StMeet = styled.div`
@@ -96,7 +138,7 @@ const StMyPage = styled.img`
     width : 40px;
     height : 40px;
     background-color: skyblue;
-    margin : 0 16px 0 32px;
+    margin : 0 16px 0 0px;
     border-radius: 10rem;
 `;
 

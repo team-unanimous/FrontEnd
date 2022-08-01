@@ -221,7 +221,7 @@ const Mypage = () => {
 
     return (
         <StWrap>
-            <Header />
+           
             <ImageModal
                 open={imgmodalopen}
                 select={onLoadFile}
