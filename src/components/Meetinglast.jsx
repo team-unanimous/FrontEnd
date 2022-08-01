@@ -437,16 +437,6 @@ const Meetinglast = ({ meetID, main }) => {
     return (
         <>
             <StChattingContainer>
-                <StChattingHeader>
-                    <StChattingHeaderWrapper>
-                        <StChattingTabBox>
-                            채팅
-                        </StChattingTabBox>
-                        <StNoteTabBox>
-                            회의록
-                        </StNoteTabBox>
-                    </StChattingHeaderWrapper>
-                </StChattingHeader>
                 <StChattingBody>
                     <StChattingMessageWrapper>
                         {agendalist?.[0] ?
