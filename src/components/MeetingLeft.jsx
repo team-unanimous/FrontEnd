@@ -62,10 +62,11 @@ const StCount = styled.div`
 `;
 
 const StName = styled.div`
-    width: 175px;
+    width: 300px;
     height: 20px;
     font-weight: 500;
     font-size: 16px;
+
 `;
 
 const StInfo = styled.div`

@@ -33,7 +33,7 @@ const TeamSelect = () => {
     }
     const { mutate: unaJoinMutate } = useMutation(unaTeamJoin, {
         onSuccess: (data) => {
-            alert("성공! 팀으로 이동합니다");
+        
             () => navigate('/teamboard/1');
         },
         onError: (error) => {

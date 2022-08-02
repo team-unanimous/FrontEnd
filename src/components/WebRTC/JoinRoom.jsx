@@ -215,7 +215,6 @@ class JoinRoom extends Component {
         if (mySession) {
             mySession.disconnect();
         }
-        alert("회의에서 나갑니다.")
         this.OV = null;
         this.setState({
             session: undefined,

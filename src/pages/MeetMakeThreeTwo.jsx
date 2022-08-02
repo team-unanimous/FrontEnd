@@ -33,7 +33,6 @@ const MeetMakeThreeTwo = () => {
 
   const {mutate} = useMutation(makeIssue,{
     onSuccess:()=>{
-        alert("안건등록 성공")
     },
     onError:(error)=>{
         alert("안건등록 실패")
