@@ -50,7 +50,6 @@ const TeamSelect = () => {
     // const { data } = useGetTeamMain({ teamId });
 
     const [openone, setOpenone] = useState(false);
-    const [opentwo, setOpentwo] = useState(false);
 
     // if (!data) {
     //     return <>Something wrong!</>

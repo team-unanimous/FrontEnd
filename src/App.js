@@ -36,6 +36,7 @@ import MeetingEditTwoOne from "./pages/MeetingEditTwoOne";
 import MeetingEditTwoTwo from "./pages/MeetingEditTwoTwo";
 import JoinRoom from "./components/WebRTC/JoinRoom";
 import Meetinglast from "./components/Meetinglast"
+import ResultDoc from "./pages/ResultDoc";
 
 
 const queryClient = new QueryClient();
@@ -75,6 +76,7 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/passwordfindone" element={<PasswordFindOne />} />
         <Route path="/passwordfindtwo" element={<PasswordFindTwo />} />
+        <Route path="/meetingroom/:teamid/:sessionid/result" element={<ResultDoc />} />
         {/* <Route path="/meetingroom/:sessionid" element={<MeetingRoom/>}/> */}
       </Routes>
 
