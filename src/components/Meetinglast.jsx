@@ -7,8 +7,9 @@ import apis from "../api/main";
 import { useQuery, useMutation } from "react-query";
 import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 import jwt_decode from "jwt-decode";
-import changebtn from "../img/5.MeetingRoom/5.MeetingBook/meetingLastIcon.svg"
-import completebtn from "../img/5.MeetingRoom/5.MeetingBook/meetingLastComplete.svg"
+import changebtn from "../img/5.MeetingRoom/5.MeetingBook/btn_change.png"
+import completebtn from "../img/5.MeetingRoom/5.MeetingBook/btn_conclusion.png"
+import cancelbtn from "../img/5.MeetingRoom/5.MeetingBook/btn_cancel.png"
 
 
 const Meetinglast = ({ meetID, main }) => {
@@ -434,6 +435,8 @@ const Meetinglast = ({ meetID, main }) => {
     const [btnopen9, setBtnopen9] = useState(null);
     const [btnopen10, setBtnopen10] = useState(null);
 
+    console.log(btnopen1)
+
     return (
         <>
             <StChattingContainer>
@@ -456,8 +459,13 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen1 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={refone} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendone(); AgendaFunction1(); setBtnopen1(null); }} />
+                                                <StInput ref={refone}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save1 ? save1 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen1(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendone(); AgendaFunction1(); setBtnopen1(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
                                             <>
@@ -946,12 +954,30 @@ color: #FCFCFC;
 const StAgendaBlack = styled.div`
 width: 280px;
 height: 46px;
+/* min-height: 46px; */
 font-family: 'Hallym Gothic';
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
 line-height: 23px;
 color: #1E2222;
+`
+
+const StComBox = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+width: 200px;
+`
+
+const StCancelBtn = styled.img`
+display: flex;
+justify-content: center;
+align-items: center;
+height: 35px;
+border-radius: 5px;
+cursor: pointer;
 `
 
 const StCompleteBtn = styled.img`
@@ -1008,9 +1034,11 @@ align-items: center;
 padding: 16px;
 width: 272px;
 height: 107px;
+/* min-height: 107px; */
 background-color: #F1F1F1;
 border-radius: 0 0 8px 8px;
 margin-bottom: 15px;
+/* overflow: hidden; */
 `
 
 export default Meetinglast;
