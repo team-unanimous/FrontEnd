@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { postUserId } from '../redux/modules/post'
 import axis from '../api/sub'
 import frameimg from "../img/bgimg.svg"
+import test1 from "../font.css"
 
 const SignupThree = () => {
 
@@ -29,7 +30,7 @@ const SignupThree = () => {
   const DisableFunction = () => {
     if (pwcheck(password) === false)
       return true;
-    else if (password !== passwordCheck)
+    else if (password != passwordCheck)
       return true;
     else
       return false;
@@ -86,7 +87,7 @@ const SignupThree = () => {
               <StPwInput type='password' onChange={(e) => setPassword(e.target.value)} placeholder='비밀번호 입력' />
             </StEmailInputBox>
             <StEmailWarnning>
-              <StWarningTitle>영문자,숫자 및 특수문자 조합, 6~12자</StWarningTitle>
+              <StWarningTitle>문자, 숫자, 특수문자 조합, 6~12자</StWarningTitle>
             </StEmailWarnning>
           </StEmailBox>
           <StEmailBox>
@@ -122,6 +123,7 @@ const StWarningTitle = styled.div`
 `;
 
 const StNotAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: white;
@@ -133,7 +135,11 @@ const StNotAgree = styled.button`
   cursor: pointer;
 `;
 
+
+
 const StAgree = styled.button`
+/* font-family: 'Hallym Gothic' */
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: #063250;
@@ -148,6 +154,7 @@ const StAgree = styled.button`
     border: solid 1px #D7D7D7;
   }
 `;
+
 
 const StEmailBox = styled.div`
   display: flex;

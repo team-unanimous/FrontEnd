@@ -25,7 +25,7 @@ const MeetingRoomMain = () => {
     const nickname = decoded.USER_NICKNAME;
     const navigate = useNavigate();
     const teamId = useParams().teamid;
-    const [page, setPage] = useState("chat"); 
+    const [page, setPage] = useState("chat");
 
 
     const leaveSession = () => {
@@ -106,21 +106,21 @@ const MeetingRoomMain = () => {
                     <StMeetingRoomTabBox>
                         <StMeetingRoomTab>
                             <StChattingTab page={page}
-                            onClick={()=>{
-                                setPage("chat");
-                            }}
+                                onClick={() => {
+                                    setPage("chat");
+                                }}
                             >채팅</StChattingTab>
                             <StNoteTab page={page}
-                            onClick={()=>{
-                                setPage("note");
-                            }}
+                                onClick={() => {
+                                    setPage("note");
+                                }}
                             >회의록</StNoteTab>
                         </StMeetingRoomTab>
                     </StMeetingRoomTabBox>
                     {
                         page == "chat"
-                        ? <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
-                        : <Meetinglast meetID={meetingId} main={main} /> //용우님
+                            ? <MeetingRoomStyle meetingId={meetingId}></MeetingRoomStyle>
+                            : <Meetinglast meetID={meetingId} main={main} /> //용우님
                     }
                 </StSidebarWrapper>
             </StContainer>
@@ -248,9 +248,9 @@ const StChattingTab = styled.div`
     order: 0;
     flex-grow: 0;
     /* color: #2396F0; */
-    color: ${props => props.page == "chat" ? "#2396F0": "black"};
+    color: ${props => props.page == "chat" ? "#2396F0" : "black"};
     background-color: #FCFCFC;
-    border-bottom: solid 4px ${props => props.page == "chat" ? "#2396F0": "#D7D7D7"};
+    border-bottom: solid 4px ${props => props.page == "chat" ? "#2396F0" : "#D7D7D7"};
     box-sizing: border-box;
     cursor: pointer;
 `
@@ -266,8 +266,8 @@ const StNoteTab = styled.div`
     flex: none;
     order: 0;
     flex-grow: 0;
-    color: ${props => props.page == "note" ? "#2396F0": "black"};
-    border-bottom: solid 4px ${props => props.page == "note" ? "#2396F0": "#D7D7D7"};
+    color: ${props => props.page == "note" ? "#2396F0" : "black"};
+    border-bottom: solid 4px ${props => props.page == "note" ? "#2396F0" : "#D7D7D7"};
     box-sizing: border-box;
     cursor: pointer;
 `

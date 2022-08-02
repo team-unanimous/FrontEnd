@@ -6,32 +6,34 @@ const ImageModal = ({ open, close, select, save }) => {
     return (
         <>
             {open ?
-                <Stwrap >
-                    <StXbox onClick={close}>
-                        <img src={cancel} style={{ width: '20px' }} />
-                    </StXbox>
-                    <StBox>
-                        <StImageTitle>
-                            이미지변경
-                        </StImageTitle>
-                        <Stbtns>
-                            <StUploadBox htmlFor="ex_file">
-                                <StUploadTitle>
-                                    이미지 선택
-                                </StUploadTitle>
-                            </StUploadBox>
-                            <StInput id="ex_file"
-                                type="file"
-                                accept='img/*'
-                                onChange={select} />
-                            <StWhiteBox>
-                                <StBlackTitle onClick={save}>
-                                    이미지 저장
-                                </StBlackTitle>
-                            </StWhiteBox>
-                        </Stbtns>
-                    </StBox>
-                </Stwrap> : <></>
+                <>
+                    <StBack onClick={close} />
+                    <Stwrap >
+                        <StXbox onClick={close}>
+                            <img src={cancel} style={{ width: '20px' }} />
+                        </StXbox>
+                        <StBox>
+                            <StImageTitle>
+                                이미지 변경
+                            </StImageTitle>
+                            <Stbtns>
+                                <StUploadBox htmlFor="ex_file">
+                                    <StUploadTitle>
+                                        이미지 선택
+                                    </StUploadTitle>
+                                </StUploadBox>
+                                <StInput id="ex_file"
+                                    type="file"
+                                    accept='img/*'
+                                    onChange={select} />
+                                <StWhiteBox>
+                                    <StBlackTitle onClick={save}>
+                                        이미지 저장
+                                    </StBlackTitle>
+                                </StWhiteBox>
+                            </Stbtns>
+                        </StBox>
+                    </Stwrap> </> : <></>
             }
         </>
     );
@@ -75,6 +77,7 @@ font-weight: 700;
 font-size: 20px;
 line-height: 24px;
 color: white;
+cursor: pointer;
 `
 
 const StWhiteBox = styled.button`
@@ -104,10 +107,12 @@ background-color: #063250;
 `
 
 const StImageTitle = styled.div`
-font-weight: 600;
+font-weight: 700;
 font-size: 36px;
 line-height: 44px;
 color: #000000;
+margin-bottom: 30px;
+cursor: pointer;
 `
 
 const StBox = styled.div`
@@ -129,7 +134,18 @@ width: 594px;
 height: 318px;
 background: #FFFFFF;
 border-radius: 8px;
-border: 1px solid #000000;
 `
+
+const StBack = styled.div`
+    position : fixed;
+    top:0;
+    left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width : 100%;
+    height : 100%;
+    background-color: rgba(0,0,0,0.4);
+`;
 
 export default ImageModal

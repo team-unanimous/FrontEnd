@@ -52,20 +52,20 @@ const Login = () => {
     navigate('/PasswordFindOne')
   }
 
-  useEffect(()=>{
-    if(getCookie("token")){
+  useEffect(() => {
+    if (getCookie("token")) {
       navigate(`/teamselect`)
     }
-  },[])
+  }, [])
 
 
   //Google 
 
-  const handleLogin=(res)=>{
+  const handleLogin = (res) => {
     console.log(res);
   }
 
-  const handleFailure=(res)=>{
+  const handleFailure = (res) => {
     console.log(res);
   }
 
@@ -83,7 +83,7 @@ const Login = () => {
           <StEmail ref={email} placeholder='이메일' />
           <StPassword type='password' ref={password} placeholder='비밀번호' />
           <StLoginButton type='submit'>
-            로그인
+            <StLoginTitle>로그인</StLoginTitle>
           </StLoginButton>
         </StForm>
         <StButtonBox>
@@ -96,16 +96,28 @@ const Login = () => {
           </StPwFind>
         </StButtonBox>
         <GoogleLogin
-        clientId="661918598129-ljnr447gjothokh2h4iktgc2j2792kkp.apps.googleusercontent.com"
-        buttonText="Log in with Google" 
-        onSuccess={handleLogin} 
-        onFailure={handleFailure} 
-        cookiePolicy={'single_host_origin'}
+          clientId="661918598129-ljnr447gjothokh2h4iktgc2j2792kkp.apps.googleusercontent.com"
+          buttonText="Log in with Google"
+          onSuccess={handleLogin}
+          onFailure={handleFailure}
+          cookiePolicy={'single_host_origin'}
         ></GoogleLogin>
       </StBox>
     </StSignUp>
   )
 }
+
+const StLoginTitle = styled.div`
+width: 70px;
+height: 24px;
+font-family: "test1";
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 24px;
+text-align: center;
+color: #FFFFFF;
+`
 
 const StForm = styled.form`
   display: flex;
@@ -173,9 +185,13 @@ const StPassword = styled.input`
   width : 365px;
   height : 19px;
   padding : 15px;
-  margin : 0 0 4.1875rem 0;
+  margin-bottom : 45px;
   border-radius: 6px;
   border: 1px solid #5C5C5C;
+  font-size: 16px;
+::placeholder {
+  font-size: 16px;
+}
 `;
 
 const StEmail = styled.input`
@@ -185,6 +201,10 @@ const StEmail = styled.input`
   padding : 15px;
   margin : 60px 0 0.75rem 0;
   border: 1px solid #5C5C5C;
+  font-size: 16px;
+::placeholder {
+  font-size: 16px;
+}
 `;
 
 const StLogo = styled.div`
