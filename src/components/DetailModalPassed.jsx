@@ -9,6 +9,7 @@ import thumbnail3 from '../img/TeamBoard/3.beforemeeting/thumbnail3.svg'
 import thumbnail4 from '../img/TeamBoard/3.beforemeeting/thumbnail4.svg'
 import thumbnail5 from '../img/TeamBoard/3.beforemeeting/thumbnail5.svg'
 import closeIcon from '../img/TeamBoard/popup/close.svg'
+import go from '../img/icon_doc.svg'
 import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
 import copyIcon from '../img/TeamBoard/popup/icon_url.svg'
 
@@ -36,7 +37,9 @@ const DetailModalPassed = ({open, close,meetingTitle,meetingDate,meetingTime,mee
             {meetingThumbnail==4?<StImg src={thumbnail4}/>:<></>}
             {meetingThumbnail==5?<StImg src={thumbnail5}/>:<></>}
             <StTitle>회의명 '{meetingTitle}'</StTitle>
-            
+            <StBt onClick={()=>{navigate(`/meetingroom/${teamId}/${meetingId}/result`)}}>
+                <StIcon src={go}/><StDoc>문서로 보기</StDoc>
+            </StBt>
             <StInfo>
                 <StHostBox>
                     <StHostLeft>주최자</StHostLeft>
@@ -117,6 +120,31 @@ const DetailModalPassed = ({open, close,meetingTitle,meetingDate,meetingTime,mee
   )
 }
 
+const StIcon = styled.img`
+    width : 16px;
+    height : 16px;
+`;
+
+const StBt = styled.div`
+    display: flex;
+    justify-content: center;
+    width : 104px;
+    height : 20px;
+    padding : 8px 16px;
+    background-color: #EBF7FF;
+    border-radius: 100px;
+    cursor: pointer;
+`;
+
+const StDoc = styled.div`
+    width : 80px;
+    height : 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #2396F0;
+`;
 
 const StIssueResultBox = styled.div`
     display: flex;
@@ -165,7 +193,6 @@ const StIssuess = styled.div`
     font-size: 14px;
     line-height: 20px;
 `;
-
 
 const StCloseIcon = styled.img`
     position: absolute;
@@ -258,12 +285,10 @@ const StTitle = styled.div`
     height: 44px;
     margin : 32px 0 0 0;
     padding : 0 0 32px 0;
-    border-bottom: 2px solid #D9D9D9;
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
     line-height: 44px;
-
 `;
 
 const StImg = styled.img`
@@ -280,8 +305,8 @@ const StBox = styled.div`
     display: flex;
     flex-direction: column;
     width : 784px;
-    height : 528px;
-    padding : 120px 80px 80px 80px;
+    height : 568px;
+    padding : 80px 80px 80px 80px;
     border-radius: 8px;
     background-color: white;
     z-index: 20;

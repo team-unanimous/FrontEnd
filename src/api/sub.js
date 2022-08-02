@@ -5,7 +5,7 @@ import { getCookie } from "../Cookie";
 // 1. Axios instance생성
 const axi = axios.create({
 
-    baseURL: "https://sparta-ysh.shop"
+    baseURL: "https://dkworld.shop"
 
 })
 
