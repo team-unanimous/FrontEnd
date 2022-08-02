@@ -191,6 +191,10 @@ const Agenda = ({ main }) => {
     // console.log(main?.meetingCreator)
     // console.log(decoded?.USER_NICKNAME)
 
+    console.log(agendalist?.[0]?.issueContent)
+    console.log(agendalist?.[1]?.issueContent)
+    console.log(agendalist?.[2]?.issueContent)
+
     const [component, setComponent] = useState(1)
     return (
         <>
@@ -201,7 +205,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {1}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[0]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    {agendalist?.[1]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }
                     {save1 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
@@ -216,7 +223,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {2}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[1]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    {agendalist?.[2]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }
                     {save2 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
@@ -231,8 +241,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {3}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[2]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
-                    {save3 === null ?
+                    {agendalist?.[3]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }                    {save3 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
                     }
@@ -246,8 +258,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {4}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[3]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
-                    {save4 === null ?
+                    {agendalist?.[4]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }                    {save4 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
                     }
@@ -261,8 +275,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {5}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[4]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
-                    {save5 === null ?
+                    {agendalist?.[5]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }                    {save5 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
                     }
@@ -276,8 +292,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {6}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[5]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
-                    {save6 === null ?
+                    {agendalist?.[6]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }                    {save6 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
                     }
@@ -291,8 +309,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {7}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[6]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
-                    {save7 === null ?
+                    {agendalist?.[7]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }                    {save7 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
                     }
@@ -306,8 +326,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {8}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[7]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
-                    {save8 === null ?
+                    {agendalist?.[8]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }                    {save8 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
                     }
@@ -321,8 +343,10 @@ const Agenda = ({ main }) => {
                         <StAgendaTitle>'{main?.meetingTitle}'의 {9}번째 안건</StAgendaTitle>
                         <StAgendaSub>{agendalist?.[8]?.issueContent}</StAgendaSub>
                     </StCenterBox>
-                    <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
-                    {save9 === null ?
+                    {agendalist?.[9]?.issueContent === undefined ?
+                        <StImgRightLast />
+                        : <StImgRight src={rightbtn} onClick={() => setComponent(component + 1)} />
+                    }                    {save9 === null ?
                         <></>
                         : <StstampBtn src={stampbtn} />
                     }
