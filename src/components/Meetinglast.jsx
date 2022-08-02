@@ -310,7 +310,7 @@ const Meetinglast = ({ meetID, main }) => {
 
     // 안건 patch
     const patchAg = async (data) => {
-        console.log(data)
+
         const patchagenda = await apis.patchAgenda(data);
         return patchagenda;
     }
@@ -413,15 +413,9 @@ const Meetinglast = ({ meetID, main }) => {
         mutate(data)
     }
 
-    console.log(agendalist)
-    console.log(agendalist?.[0]?.issueContent)
-    console.log(save1)
-    console.log(save2)
-
+    
     // 방장유저 선별
-    console.log(main)
-    console.log(main?.meetingCreator)
-    console.log(decoded?.USER_NICKNAME)
+   
 
     const [btnopen1, setBtnopen1] = useState(null);
     const [btnopen2, setBtnopen2] = useState(null);

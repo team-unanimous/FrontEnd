@@ -135,7 +135,7 @@ const Agenda = ({ main }) => {
     const useGetIssueLists = async ({ meetID }) => {
         const { data } = await apis.getIssueList({ meetID });
         // 안건정보 state저장
-        console.log(data)
+    
         setAgendalist(data)
         setSave1(data?.[0]?.issueResult)
         setSave2(data?.[1]?.issueResult)
@@ -191,9 +191,7 @@ const Agenda = ({ main }) => {
     // console.log(main?.meetingCreator)
     // console.log(decoded?.USER_NICKNAME)
 
-    console.log(agendalist?.[0]?.issueContent)
-    console.log(agendalist?.[1]?.issueContent)
-    console.log(agendalist?.[2]?.issueContent)
+
 
     const [component, setComponent] = useState(1)
     return (

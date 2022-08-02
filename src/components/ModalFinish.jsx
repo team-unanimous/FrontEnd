@@ -5,6 +5,7 @@ import { useMutation } from 'react-query';
 import apis from '../api/main';
 import jwt_decode from "jwt-decode";
 import { getCookie } from '../Cookie';
+import {useGetMeetSpecific} from '../Hooks/useGetMeetSpecific'
 
 import thumbnail1 from '../img/TeamBoard/3.beforemeeting/thumbnail1.svg'
 import thumbnail2 from '../img/TeamBoard/3.beforemeeting/thumbnail2.svg'
@@ -12,8 +13,10 @@ import thumbnail3 from '../img/TeamBoard/3.beforemeeting/thumbnail3.svg'
 import thumbnail4 from '../img/TeamBoard/3.beforemeeting/thumbnail4.svg'
 import thumbnail5 from '../img/TeamBoard/3.beforemeeting/thumbnail5.svg'
 import closeIcon from '../img/TeamBoard/popup/close.svg'
-import participate from '../img/MeetingMangement-20220725T100748Z-001/MeetingMangement/icon_participate.svg'
+import go from '../img/icon_doc.svg'
 import copyIcon from '../img/TeamBoard/popup/icon_url.svg'
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 
 const ModalFinish = ({open, close,prop}) => {
@@ -22,13 +25,14 @@ const ModalFinish = ({open, close,prop}) => {
     const teamId = useParams().teamid;
     const decoded = jwt_decode(getCookie('token'));
     const nickname = decoded.USER_NICKNAME;
+    const meetingId =useParams().sessionid;
+
 
     // 복사하기 버튼
     const handleCopyClipBoard = async (text) => {
         await navigator.clipboard.writeText(text);
     }; 
     
-    const meetingId = useParams().sessionid;
     const meetingThumbnail = prop?.meetingSum;
     const meetingTitle = prop?.meetingTitle;
     const meetingCreator = prop?.meetingCreator;
@@ -36,7 +40,6 @@ const ModalFinish = ({open, close,prop}) => {
     const meetingTime = prop?.meetingTime;
     const issues = prop?.issues;
 
-    
     const leaveSession = () =>{
         navigate(`/teamboard/${teamId}`)
     }
@@ -75,6 +78,9 @@ const ModalFinish = ({open, close,prop}) => {
             {meetingThumbnail==4?<StImg src={thumbnail4}/>:<></>}
             {meetingThumbnail==5?<StImg src={thumbnail5}/>:<></>}
             <StTitle>회의명 '{meetingTitle}'</StTitle>
+            <StBt onClick={()=>{navigate(`/meetingroom/${teamId}/${meetingId}/result`)}}>
+                <StIcon src={go}/><StDoc>문서로 보기</StDoc>
+            </StBt>
             <StInfo>
                 <StHostBox>
                     <StHostLeft>주최자</StHostLeft>
@@ -88,27 +94,62 @@ const ModalFinish = ({open, close,prop}) => {
                     <StHostLeft>안건</StHostLeft>
                     {meetingThumbnail==1?<StIssues color="#FCF3E9">
                         {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                            return <div key={index}>
+                            <StIssueBoxs>
+                                <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                            </StIssueBoxs>
+                            <StIssueResultBox>
+                                {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                            </StIssueResultBox>
+                        </div>
                         })}
                     </StIssues>:<></>}
                     {meetingThumbnail==2?<StIssues color="#FCF7E7">
-                        {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                    {issues?.map((value,index)=>{
+                            return <div key={index}>
+                            <StIssueBoxs>
+                                <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                            </StIssueBoxs>
+                            <StIssueResultBox>
+                                {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                            </StIssueResultBox>
+                        </div>
                         })}
                     </StIssues>:<></>}
                     {meetingThumbnail==3?<StIssues color="#F3F7F3">
-                        {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                    {issues?.map((value,index)=>{
+                            return <div key={index}>
+                            <StIssueBoxs>
+                                <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                            </StIssueBoxs>
+                            <StIssueResultBox>
+                                {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                            </StIssueResultBox>
+                        </div>
                         })}
                     </StIssues>:<></>}
                     {meetingThumbnail==4?<StIssues color="#EFF7FB">
-                        {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                    {issues?.map((value,index)=>{
+                            return <div key={index}>
+                            <StIssueBoxs>
+                                <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                            </StIssueBoxs>
+                            <StIssueResultBox>
+                                {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                            </StIssueResultBox>
+                        </div>
                         })}
                     </StIssues>:<></>}
                     {meetingThumbnail==5?<StIssues color="#FCF6F9">
-                        {issues?.map((value,index)=>{
-                            return <StIssue key={index}>{index+1}. {value.issueContent}</StIssue>
+                    {issues?.map((value,index)=>{
+                            return <div key={index}>
+                            <StIssueBoxs>
+                                <StRoundB/><StIssuess>{value.issueContent}</StIssuess>
+                            </StIssueBoxs>
+                            <StIssueResultBox>
+                                {value.issueResult?<><StRoundG/><StIssueResult>{value.issueResult}</StIssueResult></>:<></>}
+                            </StIssueResultBox>
+                        </div>
                         })}
                     </StIssues>:<></>}
                 </StIssueBox>
@@ -132,7 +173,83 @@ const ModalFinish = ({open, close,prop}) => {
   )
 }
 
+const StIssueResultBox = styled.div`
+    display: flex;
+    padding : 0 0 0 20px;
+    margin : 9px 0 24px 0;
+`;
 
+const StIssueBoxs = styled.div`
+    display: flex;
+    align-content: center;
+    width : 312px;
+    height: 20px;
+`;
+
+const StRoundB = styled.div`
+    width : 5px;
+    height : 5px;
+    border-radius: 5px;
+    background-color: black;
+    margin : auto 10px auto 0;
+`;
+
+const StRoundG = styled.div`
+    width : 5px;
+    height : 5px;
+    border-radius: 5px;
+    border: 1px solid #848484;
+    margin : auto 10px auto 0;
+`;
+
+const StIssueResult = styled.div`
+    display: flex;
+    width: 312px;
+    height: 17px;
+    color: #848484;
+    font-size: 12px;
+`;
+
+const StIssuess = styled.div`
+    display: flex;
+    width: 302px;
+    height: 20px;
+    font-style: normal;
+    margin : 0 0 9px 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+`;
+
+const Line = styled.div`
+    border-bottom: 2px solid #D9D9D9;
+`;
+
+const StDoc = styled.div`
+    width : 80px;
+    height : 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #2396F0;
+`;
+
+const StIcon = styled.img`
+    width : 16px;
+    height : 16px;
+`;
+
+const StBt = styled.div`
+    display: flex;
+    justify-content: center;
+    width : 104px;
+    height : 20px;
+    padding : 8px 16px;
+    background-color: #EBF7FF;
+    border-radius: 100px;
+    cursor: pointer;
+`;
 
 const StCopy = styled.div`
     display: flex;
@@ -154,11 +271,6 @@ const StCloseIcon = styled.img`
     cursor: pointer;
 `;
 
-const StIconImg = styled.img`
-    width : 24px;
-    height : 24px;
-`;
-
 const StButton = styled.div`
     display: flex;
     justify-content: center;
@@ -175,13 +287,6 @@ const StButton = styled.div`
     font-weight : 700;
     color : white;
     cursor: pointer;
-`;
-
-const StLine = styled.div`
-    width : 600px;
-    height : 10px;
-    margin : 40px 0 60px 0;
-    background-color: black;
 `;
 
 const StIssue = styled.div`
@@ -269,7 +374,6 @@ const StTitle = styled.div`
     height: 44px;
     margin : 32px 0 0 0;
     padding : 0 0 32px 0;
-    border-bottom: 2px solid #D9D9D9;
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
