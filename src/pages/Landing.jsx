@@ -26,6 +26,15 @@ import footer_logo from "../img/footer_logo.svg";
 
 const Landing = () => {
     const navigate = useNavigate();
+    const [width, setWidth] = useState(window.innerWidth);
+    
+    useEffect(()=>{
+        const windowResize = () => {
+            setWidth(window.innerWidth);
+        }
+        window.addEventListener(`resize`, windowResize);
+    }, [])
+
     return (
         <>
         <StFull>
@@ -116,7 +125,117 @@ const Landing = () => {
                     </StFeatureCardWrapper>
                 </StUSPWrapper>
             </StUSPContainer>
-            <StTeamSectionContainer>
+            {
+                window.innerWidth < 600
+                ?
+                <StTeamSectionContainer>
+                <StTeamSectionTitleWrapper>
+                    <StUSPHeader>
+                        <StUSPHeaderTitle>
+                            Unanimous팀을 소개합니다
+                        </StUSPHeaderTitle>
+                        <StUSPHeaderText>
+                            여섯명의 개발자와 한명의 디자이너로 구성되어있습니다
+                        </StUSPHeaderText>
+                    </StUSPHeader>
+                </StTeamSectionTitleWrapper>
+                <StTeamSectionImageWrapper>
+                    <StTeamSectionImageUpper>
+                        <StTeamSectionImageItemBox>
+                            <StTeamSectionImageItem imgsrc={ProfileImg1} 
+                            // hoverImgsrc={}
+                            >
+                            </StTeamSectionImageItem>
+                            <StTeamSectionImageTextDiv>
+                                <StTeamSectionImageTitle>
+                                    강석우
+                                </StTeamSectionImageTitle>
+                                <StTeamSectionImageBody>
+                                    FrontEnd Developer
+                                </StTeamSectionImageBody>
+                            </StTeamSectionImageTextDiv>
+                        </StTeamSectionImageItemBox>
+                        <StTeamSectionImageItemBox>
+                            <StTeamSectionImageItem imgsrc={ProfileImg2}>
+                            </StTeamSectionImageItem>
+                            <StTeamSectionImageTextDiv>
+                                <StTeamSectionImageTitle>
+                                    곽동관
+                                </StTeamSectionImageTitle>
+                                <StTeamSectionImageBody>
+                                    BackEnd Developer
+                                </StTeamSectionImageBody>
+                            </StTeamSectionImageTextDiv>
+                        </StTeamSectionImageItemBox>
+                    </StTeamSectionImageUpper>
+                    <StTeamSectionImageMiddle>
+                    <StTeamSectionImageItemBox>
+                            <StTeamSectionImageItem imgsrc={ProfileImg3}>
+                            </StTeamSectionImageItem>
+                            <StTeamSectionImageTextDiv>
+                                <StTeamSectionImageTitle>
+                                    김용우
+                                </StTeamSectionImageTitle>
+                                <StTeamSectionImageBody>
+                                    FrontEnd Developer
+                                </StTeamSectionImageBody>
+                            </StTeamSectionImageTextDiv>
+                        </StTeamSectionImageItemBox>
+                        <StTeamSectionImageItemBox>
+                            <StTeamSectionImageItem imgsrc={ProfileImg4}>
+                            </StTeamSectionImageItem>
+                            <StTeamSectionImageTextDiv>
+                                <StTeamSectionImageTitle>
+                                    신상우
+                                </StTeamSectionImageTitle>
+                                <StTeamSectionImageBody>
+                                    BackEnd Developer
+                                </StTeamSectionImageBody>
+                            </StTeamSectionImageTextDiv>
+                        </StTeamSectionImageItemBox>
+                        <StTeamSectionImageItemBox>
+                            <StTeamSectionImageItem imgsrc={ProfileImg5}>
+                            </StTeamSectionImageItem>
+                            <StTeamSectionImageTextDiv>
+                                <StTeamSectionImageTitle>
+                                    양승훈
+                                </StTeamSectionImageTitle>
+                                <StTeamSectionImageBody>
+                                    BackEnd Developer
+                                </StTeamSectionImageBody>
+                            </StTeamSectionImageTextDiv>
+                        </StTeamSectionImageItemBox>
+                    </StTeamSectionImageMiddle>
+                    <StTeamSectionImageLower>
+                        <StTeamSectionImageItemBox>
+                            <StTeamSectionImageItem imgsrc={ProfileImg6}>
+                            </StTeamSectionImageItem>
+                            <StTeamSectionImageTextDiv>
+                                <StTeamSectionImageTitle>
+                                    임대균
+                                </StTeamSectionImageTitle>
+                                <StTeamSectionImageBody>
+                                    FrontEnd Developer
+                                </StTeamSectionImageBody>
+                            </StTeamSectionImageTextDiv>
+                        </StTeamSectionImageItemBox>
+                        <StTeamSectionImageItemBox>
+                            <StTeamSectionImageItem imgsrc={ProfileImg7}>
+                            </StTeamSectionImageItem>
+                            <StTeamSectionImageTextDiv>
+                                <StTeamSectionImageTitle>
+                                    조유진
+                                </StTeamSectionImageTitle>
+                                <StTeamSectionImageBody>
+                                    UI/UX Designer
+                                </StTeamSectionImageBody>
+                            </StTeamSectionImageTextDiv>
+                        </StTeamSectionImageItemBox>
+                    </StTeamSectionImageLower>
+                </StTeamSectionImageWrapper>
+                </StTeamSectionContainer>
+                :
+                <StTeamSectionContainer>
                 <StTeamSectionTitleWrapper>
                     <StUSPHeader>
                         <StUSPHeaderTitle>
@@ -217,7 +336,8 @@ const Landing = () => {
                         </StTeamSectionImageItemBox>
                     </StTeamSectionImageLower>
                 </StTeamSectionImageWrapper>
-            </StTeamSectionContainer>
+                </StTeamSectionContainer>
+            }
             <StBottomBrandingContainer>
                 <StBottomBrandingWrapper>
                     <StBottomBrandingTitle>
@@ -365,7 +485,7 @@ const StBodyText = styled.div`
 
     color: #5C5C5C;
     @media screen and (max-width: 600px) {
-    width: 60%;
+    width: 70%;
     align-self: flex-start;
     font-size: 13px;
     margin-top: 0;
@@ -383,7 +503,6 @@ const StBodyButton = styled.div`
     padding: 5px 9px;
 
     background: ${props => props.btnColor ||'#2396F0'};
-;
     border-radius: 6px;
 
     flex: none;
@@ -400,6 +519,10 @@ const StBodyButton = styled.div`
 
     margin-top: ${props => props.marginTop || '1.5rem'};
     cursor: pointer;
+    @media screen and (max-width: 600px) {
+        width: 96px;
+        height: 36px;
+    }
 `
 
 const StUSPContainer = styled.div`
@@ -710,6 +833,11 @@ const StTeamSectionImageWrapper = styled.div`
     @media screen and (max-width: 600px) {
         width: 80%;
         height: 500px;
+        /* Frame 457 */
+        gap: 24px;
+
+        width: 272px;
+        height: 460px;
     }
 `
 const StTeamSectionImageUpper = styled.div`
@@ -720,7 +848,19 @@ const StTeamSectionImageUpper = styled.div`
     width: 98%;
     height: 50%;
     @media screen and (max-width: 600px) {
-        height: 50%;
+        height: 33%;
+        justify-content: space-evenly;
+    }
+`
+const StTeamSectionImageMiddle = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 98%;
+    height: 50%;
+    @media screen and (max-width: 600px) {
+        height: 33%;
         justify-content: space-evenly;
     }
 `
@@ -732,7 +872,7 @@ const StTeamSectionImageLower = styled.div`
     width: 98%;
     height: 50%;
     @media screen and (max-width: 600px) {
-        height:30%;
+        height:33%;
     }
 `
 const StTeamSectionImageItemBox = styled.div`
@@ -746,7 +886,7 @@ const StTeamSectionImageItemBox = styled.div`
     height: 18rem;
     @media screen and (max-width: 600px) {
         width: 5rem;
-        height: 12rem;
+        height: 9rem;
     }
 
 `
@@ -760,6 +900,9 @@ const StTeamSectionImageItem = styled.div`
     background-image: ${props=>`url(${props.imgsrc})`};
     background-size: cover;
     background-repeat: no-repeat;
+    &:hover{  
+        background-image: ${props=>`url(${props.hoverImgsrc})`};
+    }
     @media screen and (max-width: 600px) {
         width: 80px;
         height: 80px;
@@ -771,11 +914,14 @@ const StTeamSectionImageTextDiv = styled.div`
     margin-top: 1rem;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width: 600px) {
+        margin-top: 0;
+    }
 `
 const StTeamSectionImageTitle = styled.div`
     /* Lorem Lorem */
     width: 9.5rem;
-    height: 1.8rem;
+    height: 1rem;
 
     font-family: 'Inter';
     font-style: normal;
@@ -791,6 +937,7 @@ const StTeamSectionImageTitle = styled.div`
     flex-grow: 0;
     @media screen and (max-width: 600px) {
         font-size: 15px;
+        width: 100%;
     }
 `
 const StTeamSectionImageBody = styled.div`
@@ -810,10 +957,10 @@ const StTeamSectionImageBody = styled.div`
     order: 2;
     flex-grow: 0;
     /* Developer */
-
     color: #5C5C5C;
     @media screen and (max-width: 600px) {
         font-size: 13px;
+        line-height:13px;
     }
 `
 const StBottomBrandingContainer = styled.div`
@@ -869,8 +1016,10 @@ const StBottomBrandingTitle = styled.div`
     order: 0;
     flex-grow: 0;
     @media screen and (max-width: 600px) {
+        line-height: 30px;
         width: 90%;
-        font-size: 40px;
+        font-size: 20px;
+        height: 60px;
     }
 `
 const StBottomBrandingBody = styled.div`
