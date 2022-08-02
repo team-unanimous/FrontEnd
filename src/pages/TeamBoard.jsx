@@ -82,7 +82,6 @@ const TeamBoard = () => {
   const easter = ()=>{
     setCount(count+1);
   }
-  console.log(count);
 
   const [openone, setOpenone] = useState(false);
   const [opentwo, setOpentwo] = useState(false);
@@ -99,7 +98,7 @@ const TeamBoard = () => {
           <StLeft>
             <StSmallBox>
               <StTeamInfoBox>
-                {count==10?<StTeamImg src={yujin} onClick={()=>{easter}}></StTeamImg>:<>{imgfile ? <StTeamImg onClick={()=>{setPage(1);easter();}} src={main?.teamImage} /> : <></>}</>}
+                {count==10?<StTeamImg src={yujin} onClick={()=>{setPage(1);easter();}}></StTeamImg>:<>{imgfile ? <StTeamImg onClick={()=>{setPage(1);easter();}} src={main?.teamImage} /> : <></>}</>}
                 <StInfoBox>
                   <StTeamName>{main?.teamname}</StTeamName>
                   {main?.teamManager == nickname ? <StTeamClass>Leader</StTeamClass> : <StTeamClass>member</StTeamClass>}
