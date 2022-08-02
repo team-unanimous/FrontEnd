@@ -14,7 +14,7 @@ const ResultDoc = () => {
     const { data: meetingInfo } = useGetMeetSpecific({ meetingId });
     const issues = meetingInfo?.issues
     const navigate = useNavigate();
-
+    console.log(issues);
     return(
         <>
             <StContainer>
@@ -49,7 +49,9 @@ const ResultDoc = () => {
                                     return (
                                     <StAgendaItem key={index}>
                                         <StAgendaTitle>• 안건 {index+1} </StAgendaTitle>
-                                        <StAgendaBody>{item.issueContent}</StAgendaBody>
+                                        <StAgendaBody>{item.issueContent}
+                                        <StAgendaResult>{item.issueResult}</StAgendaResult>
+                                        </StAgendaBody>
                                     </StAgendaItem>
                                     )}))
                                 :<></>
@@ -62,6 +64,24 @@ const ResultDoc = () => {
     )
 
 }
+
+const StAgendaResult = styled.div`
+    width: 100%;
+    height: fit-content;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+
+    color: #1E2222;
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    font-family: 'Hallym Gothic';
+`
 const StBackButtonDiv = styled.div`
     /* Frame 556 */
     display: flex;
@@ -103,6 +123,11 @@ const StAgendaBody = styled.div`
     order: 1;
     flex-grow: 0;
     word-break: break-all;
+    font-family: 'Hallym Gothic';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
 `
 const StAgendaTitle = styled.div`
     /* Frame 539 */
