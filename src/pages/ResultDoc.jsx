@@ -62,7 +62,6 @@ const ResultDoc = () => {
             </StContainer>
         </>
     )
-
 }
 
 const StAgendaResult = styled.div`
@@ -80,7 +79,6 @@ const StAgendaResult = styled.div`
     order: 1;
     align-self: stretch;
     flex-grow: 0;
-    font-family: 'Hallym Gothic';
 `
 const StBackButtonDiv = styled.div`
     /* Frame 556 */
@@ -123,7 +121,6 @@ const StAgendaBody = styled.div`
     order: 1;
     flex-grow: 0;
     word-break: break-all;
-    font-family: 'Hallym Gothic';
     font-style: normal;
     font-weight: 700;
     font-size: 20px;

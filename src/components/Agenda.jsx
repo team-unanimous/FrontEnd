@@ -121,7 +121,7 @@ const Agenda = ({ main }) => {
     const useGetIssueLists = async ({ meetID }) => {
         const { data } = await apis.getIssueList({ meetID });
         // 안건정보 state저장
-        console.log(data)
+
         setAgendalist(data)
         setSave1(data?.[0]?.issueResult)
         setSave2(data?.[1]?.issueResult)

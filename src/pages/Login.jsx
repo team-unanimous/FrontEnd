@@ -102,6 +102,13 @@ const Login = () => {
           onFailure={handleFailure}
           cookiePolicy={'single_host_origin'}
         ></GoogleLogin>
+        {/* <GoogleLogin
+        clientId="661918598129-ljnr447gjothokh2h4iktgc2j2792kkp.apps.googleusercontent.com"
+        buttonText="Log in with Google" 
+        onSuccess={handleLogin} 
+        onFailure={handleFailure} 
+        cookiePolicy={'single_host_origin'}
+        ></GoogleLogin> */}
       </StBox>
     </StSignUp>
   )

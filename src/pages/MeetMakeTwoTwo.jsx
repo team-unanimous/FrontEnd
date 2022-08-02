@@ -55,7 +55,6 @@ const MeetMakeTwoTwo = () => {
   const { mutate } = useMutation(makeTeam,{
     onSuccess:()=>{
       navigate(`/teamboard/${teamId}/${theme}/meetmakethreetwo`)
-      alert("미팅 만들기 성공")
     },
     onError:(error)=>{
       alert("미팅룸 이름을 설정해주세요");

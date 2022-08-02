@@ -49,7 +49,6 @@ const TeamInvited = () => {
     }
     const { mutate : joinMutate } = useMutation(teamJoin, {
         onSuccess: (data)=>{
-            alert("성공");
             navigate(`/teamboard/${teamId}`);
         },
         onError: (error)=>{
@@ -100,7 +99,7 @@ const TeamInvited = () => {
                         </StTeamTitleDiv>
                     </StTeamDataWrapper>
                     <StTeamJoinButton onClick={teamJoinHandler}>
-                        입장하기
+                        참여하기
                     </StTeamJoinButton>
                     </StTeamDataBox>
                 </StTeamBox>
