@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import apis from "../../api/main";
 import cancel from "../../img/cancel.png"
+import axis from "../../api/sub";
 
 
 const PasswordModal = ({ open, close }) => {
@@ -29,7 +30,7 @@ const PasswordModal = ({ open, close }) => {
     const DisableFunction = () => {
         if (pwlock(password) === false)
             return true;
-        else if (password !== passwordCheck)
+        else if (password != passwordCheck)
             return true;
         else
             return false;
@@ -38,14 +39,13 @@ const PasswordModal = ({ open, close }) => {
 
     // 비밀번호 쏘기
     const patchPw = async (data) => {
-        return await apis.patchPasswordChange(data);
+        return await axis.patchPasswordChange(data);
     }
 
 
 
     const { mutate } = useMutation(patchPw, {
         onSuccess: () => {
-            alert("비밀번호 변경에 성공했습니다")
             close();
         },
         onError: (error) => {
@@ -64,35 +64,35 @@ const PasswordModal = ({ open, close }) => {
     return (
         <>
             {open ?
-                <Stwrap>
-                    <StXbox onClick={close}>
-                        <img src={cancel} style={{ width: '20px' }} />
-                    </StXbox>
-                    <StTitle>
-                        비밀번호 변경
-                    </StTitle>
-                    <StBox>
-                        <StSubTitle>
-                            비밀번호
-                        </StSubTitle>
-                        <StInput type='password'
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="비밀번호 입력" />
-                        <StWarning>영문자 및 숫자 조합, 8~12자</StWarning>
-                        <StSubTitle>
-                            비밀번호 확인
-                        </StSubTitle>
-                        <StInput type='password'
-                            onChange={(e) => setPasswordCheck(e.target.value)}
-                            placeholder="비밀번호 재입력" />
-                    </StBox>
-                    <StBtn onClick={passwordFunction}
-                        disabled={DisableFunction()}>
-                        <StChangeTitle >
+                <>
+                    <StBack onClick={close} />
+                    <Stwrap >
+                        <StXbox onClick={close}>
+                            <img src={cancel} style={{ width: '20px' }} />
+                        </StXbox>
+                        <StTitle>
+                            비밀번호 변경
+                        </StTitle>
+                        <StBox>
+                            <StSubTitle>
+                                비밀번호
+                            </StSubTitle>
+                            <StInput type='password'
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="비밀번호 입력" />
+                            <StWarning>문자, 숫자, 특수문자 조합, 6~12자</StWarning>
+                            <StSubTitle>
+                                비밀번호 확인
+                            </StSubTitle>
+                            <StInput type='password'
+                                onChange={(e) => setPasswordCheck(e.target.value)}
+                                placeholder="비밀번호 재입력" />
+                        </StBox>
+                        <StBtn onClick={passwordFunction}
+                            disabled={DisableFunction()}>
                             변경
-                        </StChangeTitle>
-                    </StBtn>
-                </Stwrap> : <></>}
+                        </StBtn>
+                    </Stwrap> </> : <></>}
         </>
     );
 }
@@ -135,9 +135,15 @@ border: solid 1px #063250;
 border-radius: 6px;
 padding: 15px;
 margin-top: 60px;
+font-family: "test1";
+font-weight: 700;
+font-size: 20px;
+line-height: 27px;
+color:white;
 cursor: pointer;
 &:disabled{
     background-color: gray;
+    border: solid 1px gray;
   }
 `
 
@@ -147,7 +153,7 @@ flex-direction: row;
 align-items: center;
 width: 540px;
 height: 49px;
-border: 1px solid #000000;
+border: 1px solid #5C5C5C;
 border-radius: 6px;
 // placeholder 앞간격
 padding-left: 10px;
@@ -190,5 +196,17 @@ background: #FFFFFF;
 border-radius: 8px;
 border: 1px solid #000000;
 `
+
+const StBack = styled.div`
+            position : fixed;
+            top:0;
+            left:0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width : 100%;
+            height : 100%;
+            background-color: rgba(0,0,0,0.4);
+            `;
 
 export default PasswordModal

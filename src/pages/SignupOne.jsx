@@ -40,8 +40,10 @@ const SignupOne = () => {
     else {
       setActive(false);
     }
-
   })
+
+  console.log(checkOne)
+  console.log(checkTwo)
 
   return (
     <StBox style={{ backgroundImage: `url(${frameimg})` }}>
@@ -51,17 +53,22 @@ const SignupOne = () => {
         </StTitle>
         <StContentBox>
           <StCheckOneBox>
-            <StCheckBoxOne onClick={checkone} type="checkbox" />
-            <StCheckOne>
-              개인정보 수집 및 이용 약관을 확인하였으며 위 내용에 동의합니다.
-            </StCheckOne>
-            <StContent>
-              내용 보기
+            <StOneBox onChange={checkone} htmlFor="subscribeNews">
+              <StCheckBoxOne type="checkbox" id="subscribeNews" />
+              <StCheckOne >
+                개인정보 수집 및 이용 약관을 확인하였으며 위 내용에 동의합니다.
+              </StCheckOne>
+            </StOneBox>
+            <StContent onClick={() => window.open('termsofservice', '_blank')}>내용 보기
             </StContent>
           </StCheckOneBox>
           <StCheckTwoBox>
-            <StCheckBoxOne onClick={checktwo} type="checkbox" />
-            <StCheckTwo>만 14세 이상입니다.</StCheckTwo>
+            <StTwoBox onChange={checktwo} htmlFor="subscribeNewstwo">
+              <StCheckBoxTwo type="checkbox" id="subscribeNewstwo" />
+              <StCheckTwo >
+                만 14세 이상입니다.
+              </StCheckTwo>
+            </StTwoBox>
           </StCheckTwoBox>
           <StConfirm>필수 약관에 동의해주세요</StConfirm>
         </StContentBox>
@@ -77,6 +84,25 @@ const SignupOne = () => {
     </StBox>
   )
 }
+
+const StOneBox = styled.label`
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+height: 19px;
+width: 550px;
+`
+
+const StTwoBox = styled.label`
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+height: 19px;
+width: 200px;
+`
+
 const StWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -98,7 +124,10 @@ const StBtBox = styled.div`
   margin : 3.75rem 0 0 0;
 `;
 
-const StDisagree = styled.button`
+const StDisagree = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
   width : 200px;
   height : 54px;
   background-color: #D7D7D7;
@@ -110,7 +139,10 @@ const StDisagree = styled.button`
   cursor: pointer;
 `;
 
-const StAgree = styled.button`
+const StAgree = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
   width : 200px;
   height : 54px;
   background-color: #063250;
@@ -122,13 +154,17 @@ const StAgree = styled.button`
   cursor: pointer;
 `;
 
-const StCancel = styled.button`
+const StCancel = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
   width : 200px;
   height : 54px;
   font-weight: 700;
   font-size: 20px;
   color: #888888;
   border: solid 1px #5C5C5C;
+  background-color: white;
   border-radius: 0.375rem;
   cursor: pointer;
 `;
@@ -148,9 +184,14 @@ const StContentBox = styled.div`
 `;
 
 const StContent = styled.button`
+ display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width : 90px;
   height : 25px;
   border: solid 1px #2396F0;
+  padding: 13px 8px 13px 8px;
   border-radius: 5px;
   background-color: white;
   color: #2396F0;
@@ -158,7 +199,7 @@ const StContent = styled.button`
 `;
 
 const StCheckTwo = styled.div`
-  width: 438px;
+  width: 138px;
   height: 19px;
   font-weight: 400;
   font-size: 16px;
@@ -169,12 +210,20 @@ const StCheckTwoBox = styled.div`
 
 `;
 
+const StCheckBoxTwo = styled.input`
+height: 18px;
+width: 18px;
+margin : 0 1rem 0 1rem ;
+`
+
 const StCheckBoxOne = styled.input`
+height: 18px;
+width: 18px;
   margin : 0 1rem 0 1rem ;
 `;
 
 const StCheckOne = styled.div`
-  width: 650px;
+  width: 510px;
   height: 19px;
   font-weight: 400;
   font-size: 16px;
@@ -182,6 +231,7 @@ const StCheckOne = styled.div`
 
 const StCheckOneBox = styled.div`
   display : flex;
+  align-items: center;
   width : 100%;
   margin : 0 0 1.25rem 0;
  

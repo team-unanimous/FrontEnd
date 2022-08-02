@@ -128,7 +128,6 @@ const Mypage = () => {
     // 이미지 업로드
     const { mutate: pictureGo } = useMutation(picturePost, {
         onSuccess: () => {
-            alert("이미지 업로드에 성공하셨니다")
         },
         onError: (error) => {
             alert("이미지 업로드에 실패하셨습니다")
@@ -162,7 +161,6 @@ const Mypage = () => {
 
     const { mutate: defaultGo } = useMutation(defaultPost, {
         onSuccess: () => {
-            alert("이미지 업로드에 성공하셨니다")
         },
         onError: (error) => {
             alert("이미지 업로드에 실패하셨습니다")
@@ -183,24 +181,25 @@ const Mypage = () => {
 
 
     // 비밀번호 변경모달로 이동
-    const passwordPost = (data) => {
-        return apis.postPasswordChange(data)
-            .then((response) => {
-                // response.data
-                alert("비밀번호가 일치합니다")
-                PasswordModalOpen();
-            })
-            .catch(error => {
-                alert("비밀번호를 틀리셨습니다")
-            })
+    const passwordPost = async (data) => {
+        return await axis.postPasswordChange(data)
+        // .then((response) => {
+        //     // response.data
+        //     alert("비밀번호가 일치합니다")
+        //     PasswordModalOpen();
+        // })
+        // .catch(error => {
+        //     alert("비밀번호를 틀리셨습니다")
+        // })
     }
 
     const { mutate: passwordGo } = useMutation(passwordPost, {
-        onSuccess: () => {
-            // alert("비밀번호가 일치합니다")
+        onSuccess: (response) => {
+            PasswordModalOpen();
         },
         onError: (error) => {
-            // alert("비밀번호를 틀리셨습니다")
+            console.log(error)
+            alert("비밀번호를 틀리셨습니다")
         }
     })
     const posswordPostFunction = () => {
@@ -221,7 +220,6 @@ const Mypage = () => {
 
     return (
         <StWrap>
-           
             <ImageModal
                 open={imgmodalopen}
                 select={onLoadFile}
@@ -244,11 +242,8 @@ const Mypage = () => {
                     <StProfile src={usersimg} />
                     <StImgBox>
                         <StImgChangeBtn onClick={ImgModalOpen}>
-                            이미지 변경
+                            <StTitle>이미지 변경</StTitle>
                         </StImgChangeBtn>
-                        <StImgBasicChangeBtn onClick={defaultPostFunction}>
-                            기본 이미지
-                        </StImgBasicChangeBtn>
                     </StImgBox>
                     <StprofileTextmini>
                         닉네임
@@ -260,7 +255,7 @@ const Mypage = () => {
                             </StEmailletter>
                         </StChangeDiv>
                         <StChangeBtn onClick={NicknameModalOpen}>
-                            변경
+                            <StTitle>변경</StTitle>
                         </StChangeBtn>
                     </StChangeBox>
                     <StStraightLine />
@@ -283,7 +278,7 @@ const Mypage = () => {
                         />
                         <StChangeBtn onClick={posswordPostFunction}
                             disabled={DisableFunction()}>
-                            변경
+                            <StTitle>변경</StTitle>
                         </StChangeBtn>
                     </StChangeBox>
                     <StStraightLine />
@@ -293,7 +288,7 @@ const Mypage = () => {
                 </StProfileBox>
                 <StBtnBox>
                     <StCancelBtn onClick={gohome}>
-                        취소
+                        <StCancelTitle>취소</StCancelTitle>
                     </StCancelBtn>
                 </StBtnBox>
             </StBigBox>
@@ -301,22 +296,36 @@ const Mypage = () => {
     );
 }
 
-const StImgBasicChangeBtn = styled.button`
-                width : 132px;
-                height : 54px;
-                background-color: white;
-                color : black;
-                border: solid 1px #063250;
-                border-radius: 6px;
-                margin-top: 12px;
-                cursor: pointer;
-                `
+const StCancelTitle = styled.div`
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 27px;
+text-align: center;
+color: #888888;
+`
+
+const StTitle = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 90px;
+height: 21px;
+font-weight: 700;
+font-size: 16px;
+line-height: 21px;
+text-align: center;
+color: #FFFFFF;
+`
+
 
 const StImgBox = styled.div`
     display: flex;
     justify-content: space-between;
     width : 273px;
     height : 54px;
+    margin-bottom: 16px;
 `
 
 const StUpBox = styled.img`
@@ -324,13 +333,13 @@ width: 870px;
 height: 114px;
 border-radius: 8px;
 margin-top: 48px;
-margin-bottom: 32px;
+margin-bottom: 16px;
 object-fit: cover;
 `
 
 const StStraightLine = styled.div`
   background-color: #D9D9D9;
-  width : 100%;
+  width: 754px;
   height : 1px;
   margin-bottom: 37.25px;
 `;
@@ -340,6 +349,7 @@ const StLogoutTitle = styled.div`
     font-size: 16px;
     color: #EF6A61;
     cursor: pointer;
+    margin-bottom: 32px;
 `
 const StEmailletter = styled.div`
 display: flex;
@@ -353,9 +363,8 @@ line-height: 19px;
 const StEmailDiv = styled.div`
                 width: 526px;
                 height: 49px;
-                border: 1px solid #000000;
+                border: 1px solid #5C5C5C;
                 border-radius: 6px;
-                // placeholder 앞간격
                 padding-left: 10px;
                 `
 
@@ -376,28 +385,12 @@ const StBigBox = styled.div`
                 /* align-items: center; */
                 padding: 48px;
                 width: 754px;
-                height: 755px;
+                height: 780px;
                 background-color: white;
                 border-radius: 8px;
                 `
 
-const StMyTitle = styled.div`
-                text-align: center;
-                font-size: 24px;
-                font-weight: 600;
-                width: 121px;
-                height: 29px;
-                `
 
-const Sttext = styled.div`
-                justify-content: center;
-                width: 280px;
-                height: 17px;
-                font-family: 'Inter';
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 17px;
-                `
 
 const StProfileBox = styled.div`
                 display: flex;
@@ -422,13 +415,13 @@ const StBtnBox = styled.div`
                 height: 54px;
                 `
 
-const StCancelBtn = styled.button`
+const StCancelBtn = styled.div`
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 200px;
                 height: 54px;
-                border: 1px solid #000000;
+                border: 1px solid #5C5C5C;
                 border-radius: 6px;
                 background-color: white;
                 cursor: pointer;
@@ -455,22 +448,29 @@ const StChangeBox = styled.div`
 const StChangeInput = styled.input`
 width: 400px;
 height: 49px;
-border: 1px solid #000000;
+border: 1px solid #5C5C5C;
 border-radius: 6px;
-// placeholder 앞간격
 padding-left: 10px;
+font-size: 16px;
+::placeholder {
+  font-size: 16px;
+}
 `
 
 const StChangeDiv = styled.div`
                 width: 400px;
                 height: 49px;
-                border: 1px solid #000000;
+                border: 1px solid #5C5C5C;
                 border-radius: 6px;
                 // placeholder 앞간격
                 padding-left: 10px;
                 `
 
-const StImgChangeBtn = styled.button`
+const StImgChangeBtn = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
                 width : 132px;
                 height : 54px;
                 background-color: #063250;
@@ -481,7 +481,11 @@ const StImgChangeBtn = styled.button`
                 cursor: pointer;
                 `
 
-const StChangeBtn = styled.button`
+const StChangeBtn = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
                 width : 132px;
                 height : 52px;
                 margin : 0 0 0 9px;
@@ -498,6 +502,7 @@ const StprofileText = styled.div`
                 `
 
 const StprofileTextmini = styled.div`
+color: #818181;
                 font-weight: 500;
                 font-size: 14px;
                 margin-top: 16px;

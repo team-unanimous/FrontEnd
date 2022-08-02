@@ -19,6 +19,7 @@ const SignUpTwo = () => {
   const [code, setCode] = useState("");
   const [codein, setCodein] = useState(false);
   const [warningmsg, setWarningmsg] = useState(false);
+  const [success, setSuccess] = useState(false);
 
 
 
@@ -48,12 +49,13 @@ const SignUpTwo = () => {
     onSuccess: (data) => {
       setCodein(true)
       setWarningmsg(false)
-      alert("성공")
+      setSuccess(true)
     },
     onError: (error) => {
       navigate('/signuptwo')
       setWarningmsg(error.response.data.message)
       alert(error.response.data.message)
+      setSuccess(false)
     },
   })
 
@@ -72,7 +74,6 @@ const SignUpTwo = () => {
   const { mutate: codego } = useMutation(codePost, {
     onSuccess: () => {
       dispatch(tossUserId({ email }))
-      alert("코드 인증에 성공했습니다")
       navigate('/signupthree');
     },
     onError: (error) => {
@@ -103,10 +104,13 @@ const SignUpTwo = () => {
             <StEmailInputBox>
               <StEmailInput onChange={(e) => setEmail(e.target.value)} placeholder='이메일 입력' />
               <StEmailButton onClick={EmailFunction}>
-                코드 전송
+                <StSendTitle>코드 전송</StSendTitle>
               </StEmailButton>
             </StEmailInputBox>
-            {<StWarningTitle>{warningmsg}</StWarningTitle>}
+            {success === true ? <StSuccessTitle>
+              입력하신 메일로 회원 코드를 전송하였습니다. 메일을 확인해주세요.
+            </StSuccessTitle>
+              : <StWarningTitle>{warningmsg}</StWarningTitle>}
           </StEmailBox>
           <StEmailBox>
             <StEmailTitle>회원가입 코드</StEmailTitle>
@@ -131,6 +135,32 @@ const SignUpTwo = () => {
   )
 }
 
+const StSuccessTitle = styled.div`
+  width : 470px;
+  height : 19px;
+  font-weight: 400;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-bottom: 24px;
+  color: black;
+`
+
+const StSendTitle = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 70px;
+height: 21px;
+font-family: "test1";
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 21px;
+text-align: center;
+color: #FFFFFF;
+`
+
 const StlongEmailInput = styled.input`
   width : 540px;
   height : 44px;
@@ -138,9 +168,14 @@ const StlongEmailInput = styled.input`
   border: 1px solid #5C5C5C;
   // placeholder 앞간격
   padding-left: 10px;
+  font-size: 16px;
+  ::placeholder {
+  font-size: 16px;
+}
 `;
 
 const StNotAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: white;
@@ -153,6 +188,7 @@ const StNotAgree = styled.button`
 `;
 
 const StAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: #063250;
@@ -184,6 +220,10 @@ const StEmailWarnning = styled.div`
 `;
 
 const StEmailButton = styled.button`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
   width : 132px;
   height : 49px;
   margin : 0 0 0 9px;
@@ -191,6 +231,7 @@ const StEmailButton = styled.button`
   color : white;
   border: solid 1px #063250;
   border-radius: 6px;
+  cursor: pointer;
 `;
 
 const StEmailInput = styled.input`
@@ -200,6 +241,10 @@ const StEmailInput = styled.input`
   border: 1px solid #5C5C5C;
   // placeholder 앞간격
   padding-left: 10px;
+  font-size: 16px;
+::placeholder {
+  font-size: 16px;
+}
 `;
 
 const StEmailInputBox = styled.div`
@@ -219,13 +264,14 @@ const StEmailTitle = styled.div`
 `;
 
 const StWarningTitle = styled.div`
-  width : 400px;
-  height : 19px;
-  font-weight: 700;
-  font-size: 15px;
-  margin-top: 10px;
-  margin-bottom: 24px;
-  color: #EF6A61;
+font-weight: 400;
+line-height: 21px;
+font-size: 16px;
+width : 400px;
+height : 19px;
+margin-top: 10px;
+margin-bottom: 24px;
+color: #EF6A61;
 `
 
 const StEmailBox = styled.div`

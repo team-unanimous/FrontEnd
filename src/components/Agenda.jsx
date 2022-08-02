@@ -19,19 +19,6 @@ import jwt_decode from "jwt-decode";
 
 const Agenda = ({ main }) => {
 
-    const idarray = [
-        { id: 1 },
-        { id: 2 },
-        { id: 3 },
-        { id: 4 },
-        { id: 5 },
-        { id: 6 },
-        { id: 7 },
-        { id: 8 },
-        { id: 9 },
-        { id: 10 }
-    ]
-
     //임시저장값
     const [save1, setSave1] = useState(null);
     const [save2, setSave2] = useState(null);
@@ -44,6 +31,7 @@ const Agenda = ({ main }) => {
     const [save9, setSave9] = useState(null);
     const [save10, setSave10] = useState(null);
 
+
     const meetID = useParams().sessionid;
     const token = getCookie('token');
     const decoded = jwt_decode(getCookie('token'));
@@ -55,7 +43,6 @@ const Agenda = ({ main }) => {
     const [agendalist, setAgendalist] = useState(null);
     // 내가 보여줄 안건내용 저장
     const [msg, setMsg] = useState(null);
-    const [numberagenda, setNumberagenda] = useState(0);
     const [number, setNumber] = useState(1);
 
     const datas = {
@@ -78,7 +65,6 @@ const Agenda = ({ main }) => {
                                 setMsg(getagenda[0].issueContent)
                                 setNumber(getagenda[1].id)
                                 console.log("안건 받기 완료")
-                                console.log(numberagenda)
 
                             }
                             if (newMessage.type == "RESULT") {
@@ -135,7 +121,7 @@ const Agenda = ({ main }) => {
     const useGetIssueLists = async ({ meetID }) => {
         const { data } = await apis.getIssueList({ meetID });
         // 안건정보 state저장
-    
+
         setAgendalist(data)
         setSave1(data?.[0]?.issueResult)
         setSave2(data?.[1]?.issueResult)
@@ -150,23 +136,6 @@ const Agenda = ({ main }) => {
         return data;
     }
 
-
-    // 안건 서버로 보내기
-    const HandleSend = () => {
-        try {
-            const data = {
-                type: "ISSUE",
-                roomId: meetID,
-                sender: "string",
-                message: JSON.stringify([agendalist[numberagenda], idarray[numberagenda]]),
-            }
-            const token = getCookie("token")
-            waitForConnection(ws, function () {
-                ws.send("/pub/api/chat/message", { token: token }, JSON.stringify(data));
-            })
-        } catch (error) {
-        }
-    }
 
     // 웹소켓이 연결될 때 까지 실행하는 함수 
     function waitForConnection(ws, callback) {
@@ -190,7 +159,6 @@ const Agenda = ({ main }) => {
     // console.log(main)
     // console.log(main?.meetingCreator)
     // console.log(decoded?.USER_NICKNAME)
-
 
 
     const [component, setComponent] = useState(1)
@@ -444,8 +412,8 @@ box-sizing: border-box;
 width: 182px;
 height: 182px;
 position: absolute;
-left: 507px;
-top: 80px;
+left: 472px;
+top: 70px;
 `
 
 const Stnumbtn = styled.div`

@@ -95,7 +95,7 @@ const SignUpFour = () => {
           <StEmailInputBox>
             <StEmailInput placeholder='닉네임 입력' onChange={(e) => setNickname(e.target.value)} />
             <StEmailButton onClick={nickCheckFunction}>
-              중복 확인
+              <StSendTitle>중복 확인</StSendTitle>
             </StEmailButton>
           </StEmailInputBox>
           {<StEmailWarnning>{warning}</StEmailWarnning>}
@@ -114,8 +114,25 @@ const SignUpFour = () => {
   )
 }
 
+const StSendTitle = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 70px;
+height: 21px;
+font-family: 'test1';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 21px;
+text-align: center;
+color: #FFFFFF;
+`
+
 
 const StNotAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: white;
@@ -128,6 +145,7 @@ const StNotAgree = styled.button`
 `;
 
 const StAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: #063250;
@@ -158,6 +176,10 @@ const StEmailWarnning = styled.div`
 `;
 
 const StEmailButton = styled.button`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
   width : 132px;
   height : 49px;
   margin : 0 0 0 9px;
@@ -174,6 +196,10 @@ height : 44px;
 border-radius: 6px;
 border: 1px solid #5C5C5C;
 padding-left: 10px;
+font-size: 16px;
+::placeholder {
+  font-size: 16px;
+}
 `;
 
 

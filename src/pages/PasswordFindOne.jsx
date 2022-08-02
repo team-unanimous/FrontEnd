@@ -44,12 +44,10 @@ const PasswordFindOne = () => {
   const { mutate: emailGo } = useMutation(emailCodePost, {
     onSuccess: (response) => {
       dispatch(tossUserId({ email }))
-      alert("이메일 생성에 성공했습니다")
       setCodein(true)
     },
     onError: (error) => {
       setWarning(error.response.data)
-      alert(error.response.data)
     }
   })
 
@@ -68,7 +66,6 @@ const PasswordFindOne = () => {
 
   const { mutate: passwordGo } = useMutation(passwordCode, {
     onSuccess: () => {
-      alert("코드 인증에 성공하셨습니다")
       navigate("/passwordfindtwo")
     },
     onError: (error) => {
@@ -100,7 +97,7 @@ const PasswordFindOne = () => {
             <StEmailInputBox>
               <StEmailInput onChange={(e) => setEmail(e.target.value)} placeholder='이메일 입력' />
               <StEmailButton onClick={EmailFunction}>
-                코드 전송
+                <StSendTitle>코드 전송</StSendTitle>
               </StEmailButton>
             </StEmailInputBox>
             {<StWarningTitle>{warning}</StWarningTitle>}
@@ -129,6 +126,22 @@ const PasswordFindOne = () => {
   );
 }
 
+const StSendTitle = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 70px;
+height: 21px;
+font-family: 'test1';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 21px;
+text-align: center;
+color: #FFFFFF;
+`
+
 
 
 const StEmailInputtwo = styled.input`
@@ -138,9 +151,14 @@ const StEmailInputtwo = styled.input`
   border: 1px solid #000000;
   // placeholder 앞간격
   padding-left: 10px;
+  font-size: 16px;
+::placeholder {
+  font-size: 16px;
+}
 `;
 
 const StNotAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: white;
@@ -153,6 +171,7 @@ const StNotAgree = styled.button`
 `;
 
 const StAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: #063250;
@@ -183,6 +202,10 @@ const StEmailWarnning = styled.div`
 `;
 
 const StEmailButton = styled.button`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
   width : 132px;
   height : 49px;
   margin : 0 0 0 9px;
@@ -200,6 +223,10 @@ const StEmailInput = styled.input`
   border: 1px solid #000000;
   // placeholder 앞간격
   padding-left: 10px;
+  font-size: 16px;
+::placeholder {
+  font-size: 16px;
+}
 `;
 
 const StEmailInputBox = styled.div`
@@ -221,7 +248,7 @@ const StEmailTitle = styled.div`
 const StWarningTitle = styled.div`
   width : 400px;
   height : 19px;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 16px;
   margin-top: 10px;
   margin-bottom: 24px;

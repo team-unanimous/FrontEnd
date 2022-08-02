@@ -7,8 +7,9 @@ import apis from "../api/main";
 import { useQuery, useMutation } from "react-query";
 import { useGetMeetSpecific } from "../Hooks/useGetMeetSpecific";
 import jwt_decode from "jwt-decode";
-import changebtn from "../img/5.MeetingRoom/5.MeetingBook/meetingLastIcon.svg"
-import completebtn from "../img/5.MeetingRoom/5.MeetingBook/meetingLastComplete.svg"
+import changebtn from "../img/5.MeetingRoom/5.MeetingBook/btn_change.png"
+import completebtn from "../img/5.MeetingRoom/5.MeetingBook/btn_conclusion.png"
+import cancelbtn from "../img/5.MeetingRoom/5.MeetingBook/btn_cancel.png"
 
 
 const Meetinglast = ({ meetID, main }) => {
@@ -428,13 +429,15 @@ const Meetinglast = ({ meetID, main }) => {
     const [btnopen9, setBtnopen9] = useState(null);
     const [btnopen10, setBtnopen10] = useState(null);
 
+    console.log(btnopen1)
+
     return (
         <>
             <StChattingContainer>
                 <StChattingBody>
                     <StChattingMessageWrapper>
                         {agendalist?.[0] ?
-                            <>
+                            <StAgendaBox>
                                 {save1 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건1</StAgendaTitle>
@@ -450,26 +453,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen1 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={refone} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendone(); AgendaFunction1(); setBtnopen1(null); }} />
+                                                <StInput ref={refone}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save1 ? save1 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen1(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendone(); AgendaFunction1(); setBtnopen1(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save1}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen1(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save1}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[1] ?
-                            <>
+                            <StAgendaBox>
                                 {save2 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건2</StAgendaTitle>
@@ -485,26 +493,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen2 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={reftwo} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendtwo(); AgendaFunction2(); setBtnopen2(null); }} />
+                                                <StInput ref={reftwo}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save2 ? save2 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen2(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendtwo(); AgendaFunction2(); setBtnopen2(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save2}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen2(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save2}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[2] ?
-                            <>
+                            <StAgendaBox>
                                 {save3 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건3</StAgendaTitle>
@@ -520,26 +533,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen3 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={refthree} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendthree(); AgendaFunction3(); setBtnopen3(null); }} />
+                                                <StInput ref={refthree}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save3 ? save3 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen3(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendthree(); AgendaFunction3(); setBtnopen3(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save3}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen3(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save3}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[3] ?
-                            <>
+                            <StAgendaBox>
                                 {save4 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건4</StAgendaTitle>
@@ -555,26 +573,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen4 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={reffour} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendfour(); AgendaFunction4(); setBtnopen4(null); }} />
+                                                <StInput ref={reffour}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save4 ? save4 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen4(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendfour(); AgendaFunction4(); setBtnopen4(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save4}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen4(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save4}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[4] ?
-                            <>
+                            <StAgendaBox>
                                 {save5 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건5</StAgendaTitle>
@@ -590,26 +613,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen5 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={reffive} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendfive(); AgendaFunction5(); setBtnopen5(null); }} />
+                                                <StInput ref={reffive}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save5 ? save5 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen5(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendfive(); AgendaFunction5(); setBtnopen5(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save5}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen5(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save5}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[5] ?
-                            <>
+                            <StAgendaBox>
                                 {save6 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건6</StAgendaTitle>
@@ -625,26 +653,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen6 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={refsix} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendsix(); AgendaFunction6(); setBtnopen6(null); }} />
+                                                <StInput ref={refsix}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save6 ? save6 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen6(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendsix(); AgendaFunction6(); setBtnopen6(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save6}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen6(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save6}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[6] ?
-                            <>
+                            <StAgendaBox>
                                 {save7 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건7</StAgendaTitle>
@@ -660,26 +693,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen7 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={refseven} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendseven(); AgendaFunction7(); setBtnopen7(null); }} />
+                                                <StInput ref={refseven}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save7 ? save7 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen7(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendseven(); AgendaFunction7(); setBtnopen7(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save7}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen7(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save7}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[7] ?
-                            <>
+                            <StAgendaBox>
                                 {save8 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건8</StAgendaTitle>
@@ -695,26 +733,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen8 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={refeight} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendeight(); AgendaFunction8(); setBtnopen8(null); }} />
+                                                <StInput ref={refeight}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save8 ? save8 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen8(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendeight(); AgendaFunction8(); setBtnopen8(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save8}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen8(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save8}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[8] ?
-                            <>
+                            <StAgendaBox>
                                 {save9 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건9</StAgendaTitle>
@@ -730,26 +773,31 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen9 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={refnine} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendnine(); AgendaFunction9(); setBtnopen9(null); }} />
+                                                <StInput ref={refnine}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save9 ? save9 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen9(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendnine(); AgendaFunction9(); setBtnopen9(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save9}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen9(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save9}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                         {agendalist?.[9] ?
-                            <>
+                            <StAgendaBox>
                                 {save10 === null ?
                                     <Stdiv>
                                         <StAgendaTitle>안건10</StAgendaTitle>
@@ -765,22 +813,27 @@ const Meetinglast = ({ meetID, main }) => {
                                     {main?.meetingCreator === decoded?.USER_NICKNAME ?
                                         (btnopen10 === 1 ?
                                             <StInputBox>
-                                                <StInput ref={reften} />
-                                                <StCompleteBtn src={completebtn} onClick={() => { ResultSendten(); AgendaFunction10(); setBtnopen10(null); }} />
+                                                <StInput ref={reften}
+                                                    placeholder={"결론 내용을 입력해주세요"}
+                                                    defaultValue={save10 ? save10 : null} />
+                                                <StComBox>
+                                                    <StCancelBtn src={cancelbtn} onClick={() => setBtnopen10(null)} />
+                                                    <StCompleteBtn src={completebtn} onClick={() => { ResultSendten(); AgendaFunction10(); setBtnopen10(null); }} />
+                                                </StComBox>
                                             </StInputBox>
                                             :
-                                            <>
+                                            <StChangeBox>
                                                 <StAgendaBlack>{save10}</StAgendaBlack>
                                                 <StChangeImgBox>
                                                     <img src={changebtn} onClick={() => setBtnopen10(1)} />
                                                 </StChangeImgBox>
-                                            </>
+                                            </StChangeBox>
                                         )
                                         :
                                         <StAgendaBlack>{save10}</StAgendaBlack>
                                     }
                                 </Stdivunder>
-                            </>
+                            </StAgendaBox>
                             :
                             <></>}
                     </StChattingMessageWrapper>
@@ -789,6 +842,17 @@ const Meetinglast = ({ meetID, main }) => {
         </ >
     )
 }
+
+const StAgendaBox = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+const StChangeBox = styled.div`
+    display: flex;
+    flex-direction: column;
+
+`
 
 const StChangeImgBox = styled.div`
 display: flex;
@@ -820,7 +884,6 @@ const StChattingMessageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
     width: 100%;
     background: #FCFCFC;
     overflow-x: hidden;
@@ -840,71 +903,17 @@ const StChattingBody = styled.div`
     display: flex;
     flex-direction: column;
     height: 670px;
+    background-color: white;
+    /* min-height: 0px; */
+    /* overflow-x: hidden; */
 `
 
-const StNoteTabBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    width: 140px;
-    height: 68px;
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-`
-
-const StChattingTabBox = styled.div`
-    /* 미팅 관리/탭/default */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    gap: 10px;
-    width: 140px;
-    height: 68px;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-`
-
-const StChattingHeaderWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    
-    width: 90%;
-    height: 4rem;
-    border-bottom: 1px solid #D9D9D9;
-`
-
-const StChattingHeader = styled.div`
-    /* Frame 146 */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-
-    /* position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 0%;
-    bottom: 91.95%; */
-    height: 100px;
-
-    background: #FCFCFC;
-`
 
 const StChattingContainer = styled.div`
     /* 채팅창 */
     position: relative;
     width: 360px;
     height: 734px;
-    right: 0px;
     display: flex;
     flex-direction: column;
 
@@ -928,7 +937,7 @@ color: #FCFCFC;
 
 const StAgendaWhite = styled.div`
 width: 280px;
-height: 46px;
+height: 26px;
 font-family: 'Hallym Gothic';
 font-style: normal;
 font-weight: 400;
@@ -939,13 +948,31 @@ color: #FCFCFC;
 
 const StAgendaBlack = styled.div`
 width: 280px;
-height: 46px;
+/* height: 46px; */
+min-height: 0px;
 font-family: 'Hallym Gothic';
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
 line-height: 23px;
 color: #1E2222;
+`
+
+const StComBox = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+width: 200px;
+`
+
+const StCancelBtn = styled.img`
+display: flex;
+justify-content: center;
+align-items: center;
+height: 35px;
+border-radius: 5px;
+cursor: pointer;
 `
 
 const StCompleteBtn = styled.img`
@@ -974,10 +1001,9 @@ const StdivBlue = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-justify-content: center;
 padding: 16px;
 width: 272px;
-height: 107px;
+height: 72px;
 background-color: #2396F0;
 border-radius: 8px 8px 0px 0px;
 `
@@ -986,10 +1012,9 @@ const Stdiv = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-justify-content: center;
 padding: 16px;
 width: 272px;
-height: 107px;
+height: 72px;
 background-color: #BBBBBB;
 border-radius: 8px 8px 0px 0px;
 `
@@ -1001,7 +1026,8 @@ justify-content: center;
 align-items: center;
 padding: 16px;
 width: 272px;
-height: 107px;
+/* height: 107px; */
+min-height: 0px;
 background-color: #F1F1F1;
 border-radius: 0 0 8px 8px;
 margin-bottom: 15px;

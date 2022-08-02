@@ -77,7 +77,7 @@ const PasswordFindTwo = () => {
               <StPwInput type='password' onChange={(e) => setPassword(e.target.value)} placeholder='비밀번호 입력' />
             </StEmailInputBox>
             <StEmailWarnning>
-              <StWarningTitle>영문자,숫자 및 특수문자 조합, 6~12자</StWarningTitle>
+              <StWarningTitle>문자, 숫자, 특수문자 조합, 6~12자</StWarningTitle>
             </StEmailWarnning>
           </StEmailBox>
           <StEmailBox>
@@ -108,12 +108,13 @@ const PasswordFindTwo = () => {
 const StWarningTitle = styled.div`
   width : 400px;
   height : 19px;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 15px;
   margin-bottom: 25px;
 `;
 
 const StNotAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: white;
@@ -126,6 +127,7 @@ const StNotAgree = styled.button`
 `;
 
 const StAgree = styled.button`
+font-family: "test1";
   width : 200px;
   height : 54px;
   background-color: #063250;
@@ -174,6 +176,11 @@ const StPwInput = styled.input`
   border: 1px solid #000000;
   padding-left: 10px;
   margin-bottom: 20px;
+  font-size: 16px;
+::placeholder {
+  font-size: 16px;
+}
+
 `;
 
 const StEmailWarnning = styled.div`
