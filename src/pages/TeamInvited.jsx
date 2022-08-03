@@ -109,6 +109,7 @@ const TeamInvited = () => {
         </>
     )
 }
+
 const StBox = styled.div`
     width : 100%;
     height : 100vh;
