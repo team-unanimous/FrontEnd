@@ -21,15 +21,15 @@
 <br />
 
 ## 👥 팀 소개
-#### `Backend`
-<a href="https://github.com/minjoo-kou" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=Spring&message=양승훈 &color=08CE5D&style=for-the-badge&>"/></a>
-<a href="https://github.com/sun-land" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=Spring&message=곽동관 &color=08CE5D&style=for-the-badge&>"/></a>
-<a href="https://github.com/devssk" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=Spring&message=신상우 &color=08CE5D&style=for-the-badge&>"/></a>
-
 #### `Frontend`
  <a href="https://github.com/nevergettingold" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=React&message=강석우 &color=61dafb&style=for-the-badge&>"/></a>
  <a href="https://github.com/durukim" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=React&message=임대균 &color=61dafb&style=for-the-badge&>"/></a>
  <a href="https://github.com/jeonghwanJay" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=React&message=김용우 &color=61dafb&style=for-the-badge&>"/></a>
+ 
+#### `Backend`
+<a href="https://github.com/minjoo-kou" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=Spring&message=양승훈 &color=08CE5D&style=for-the-badge&>"/></a>
+<a href="https://github.com/sun-land" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=Spring&message=곽동관 &color=08CE5D&style=for-the-badge&>"/></a>
+<a href="https://github.com/devssk" target="_blank"><img height="40"  src="https://img.shields.io/static/v1?label=Spring&message=신상우 &color=08CE5D&style=for-the-badge&>"/></a>
 
 #### `Designer`
  <img width="180"  src="https://img.shields.io/static/v1?label=Design&message=조유진 &color=FF7F50&style=for-the-badge&>"/></a>
@@ -45,13 +45,10 @@
 ## 📜 기술스택
 |분류|기술|
 | :-: |:- |
-|Language|<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">|
-|Framework|<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"> <img src="https://img.shields.io/badge/Springboot-6DB33F?style=for-the-badge&logo=Springboot&logoColor=white">|
-|Build Tool|<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">|
-|DB|<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">|
-|Server|<img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=white"> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white">|
-|CI/CD|<img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white"> <img src="https://img.shields.io/badge/codedeploy-6DB33F?style=for-the-badge&logo=codedeploy&logoColor=white">|
-|proxy, 무중단배포|<img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white">|
+|Language|Javascript|
+|Framework|React|
+|Library|React-query, axios, redux|
+|배포|Amazon cloud Front,<br/>Amazon S3,<br/>Amazon Route53|
 
 
 <br />
@@ -63,13 +60,6 @@
 </details>
 
 <br />
-
-## 📕 ER 다이어그램     
-    
-<details>
-<summary> <b>ERD 바로보기</b> </summary>
-    <img src="https://user-images.githubusercontent.com/103565931/182826853-24fc3726-2a22-49dd-a826-dafef77c5e36.png"> 
-</details>
 
 
 
